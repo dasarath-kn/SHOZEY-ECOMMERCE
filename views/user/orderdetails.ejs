@@ -1,0 +1,126 @@
+<%- include('../user/layout/header.ejs') %>
+<main class="main">
+    <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+        <div class="container">
+            <h1 class="page-title">Order Details</h1>
+        </div><!-- End .container -->
+    </div><!-- End .page-header -->
+    <div class="container">
+        <div class="col-md-12" id="status">
+            <table class="table table-cart table-mobile">
+                <thead>
+                    <tr>
+                        <th>Products</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% orderdata.forEach((item) => { %>
+                        <% item.items.forEach((element) => { %>
+                          <tr>
+                            <td class="product-col">
+                              <div class="product">
+                                <figure class="product-media">
+                                  <a href="#">
+                                    <img src="/productimages/<%= element.productid.image[0] %>" alt="<%= element.productid.productname %>">
+                                  </a>
+                                </figure>
+                              </div><!-- End .product -->
+                            </td>
+                            <td class="price-col">
+                              <h3 class="product-title">
+                                <a href="#"><%= element.productid.productname %></a>
+                              </h3><!-- End .product-title -->
+                            </td>
+                            <td class="price-col"><%= element.productid.category %></td>
+                            <td class="price-col"><%= element.productid.price %></td>
+                            <td class="price-col"><%= element.count %></td>
+                            <td class="price-col">₹<%= element.productid.price * element.count %></td>
+                            <td class="price-col"><%= item.status %></td>
+
+                          </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+                     
+                      <div class="row">
+                        <div class="col-md-6">
+                            
+                            <% if (item.deliveryDetails && Array.isArray(item.deliveryDetails.userdata)) { %>
+                                <% item.deliveryDetails.userdata.forEach((data) => { %>
+                                  <div class="card card-dashboard">
+                                    <div class="card-body">
+                                      <h3>Delivery address</h3>
+                                      <p>
+                                        Name: <%= data.name %><br>
+                                        Mobile: <%= data.phonenumber %><br>
+                                        House name: <%= data.address %><br>
+                                        City: <%= data.city %><br>
+                                        State: <%= data.state %><br>
+                                        Pincode: <%= data.pincode %><br>
+                                      </p>
+                                    </div><!-- End .card-body -->
+                                  </div><!-- End .card-dashboard -->
+                                <% }); %>
+                              <% } %>
+
+                              
+                             <a href="/cancelorder?id=<%= item._id %>" onclick="return confirm('Are you sure? Do you want to Cancel')"> <button  style="margin-top: 20px; font-size: 16px; padding: 10px 20px; background-color: #3498db; color: #ffffff; border: none; border-radius: 5px; cursor: pointer;"> Cancel Order </button></a>
+                              <button style="margin-top: 20px; font-size: 16px; padding: 10px 20px; background-color: #3498db; color: #ffffff; border: none; border-radius: 5px; cursor: pointer;"><a href="/">Continue Shopping </a></button>
+                              <% }); %>
+                    
+          
+        
+    </div>
+</main>
+<script>
+   function cancelorder(id) {
+    console.log("started");
+    Swal.fire({
+        title: 'Are you sure?',
+        text: 'Do you want to cancel this order?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, cancel it',
+        cancelButtonText: 'No, keep it'
+    }).then((result) => {
+        if (result == true) {
+            console.log("User confirmed to cancel the order");
+
+            // Proceed with the cancellation via AJAX
+            $.ajax({
+                method: "POST",
+                url: "/cancelorder",
+                data: JSON.stringify({ id: id }),
+                contentType: 'application/json',
+                success: function(response) {
+                    if (response === true) {
+                        // If the order is successfully canceled, update the status
+                        $('#status').load('/cancelorder status');
+                        Swal.fire('Order Canceled', '', 'success');
+                    } else {
+                        console.log("Order cancellation failed");
+                        Swal.fire('Order Cancellation Failed', '', 'error');
+                    }
+                },
+                error: function() {
+                    console.log("Error in the AJAX request");
+                    Swal.fire('Error', 'There was an error while processing your request.', 'error');
+                }
+            });
+        } else {
+            console.log("User decided not to cancel the order");
+        }
+    });
+}
+
+
+
+    </script>

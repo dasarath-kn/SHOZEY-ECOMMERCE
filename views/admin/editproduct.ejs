@@ -1,0 +1,43 @@
+<%- include ('../admin/layouts/header.ejs')-%>
+  
+        <!-- partial -->
+        <div class="col-12 mt-5 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                
+                 <%  if(item){%>
+                  <!-- Your form for each item goes here -->
+                  <form class="forms-sample" action="/admin/editingproduct?id=<%= item._id %>" method="post">
+                      <!-- Form fields for this product -->
+                      <div class="form-group">
+                          <label for="exampleInputName1">Product Name</label>
+                          <input type="text" class="form-control" value="<%= item.productname %>" id="exampleInputName1" placeholder="Product Name" name="product" required>
+                      </div>
+                      <div class="form-group">
+                          <label for="exampleInputEmail3">Quantity</label>
+                          <input type="text" class="form-control" value="<%= item.quantity %>" id="exampleInputEmail3" placeholder="Quantity" name="quantity" required>
+                      </div>
+                      <div class="form-group">
+                          <label for="exampleInputPassword4">Price</label>
+                          <input type="number" class="form-control" value="<%= item.price %>" id="exampleInputPassword4" placeholder="Price" name="price" required>
+                      </div>
+                      <div class="form-group">
+                          <label for="exampleSelectGender">Category</label>
+                          <select class="form-control" id="exampleSelectGender" name="category" required>
+                              <option value="<%= item.category %>"><%= item.category %></option>
+                          </select>
+                      </div>
+                      <div class="form-group">
+                          <label for="exampleTextarea1">Description</label>
+                          <textarea class="form-control" id="exampleTextarea1" rows="4" name="description" required><%= item.description %></textarea>
+                      </div>
+                      <button type="submit" class="btn btn-primary mr-2" >Submit</button>
+                      <button class="btn btn-dark"><a href="/admin">Cancel</a></button>
+                  </form>
+                  <%} %>
+              
+              </div>
+            </div>
+          </div>
+       
+         <%- include ('../admin/layouts/footer.ejs')-%>

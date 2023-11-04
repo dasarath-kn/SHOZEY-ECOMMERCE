@@ -1,0 +1,22 @@
+<%- include ('../admin/layouts/header.ejs')-%>
+
+        <!-- partial -->
+        <div class="row">
+            <div class="col-md-12 mt-5 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Add Category</h4>
+                  <!-- <p class="card-description"> Basic form layout </p> -->
+                  <form class="forms-sample" action="/admin/category" method="post">
+                    <div class="form-group">
+                      <label for="exampleInputUsername1">Category Name</label>
+                      <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Categoryname" name="name">
+                    </div>
+                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    
+                  </form>
+                </div>
+              </div>
+            </div>
+       
+         <%- include ('../admin/layouts/footer.ejs')-%>

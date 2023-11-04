@@ -1,0 +1,172 @@
+<%- include('../user/layout/header.ejs')-%>
+	
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-md-12 col-lg-10">
+					<div class="wrap d-md-flex">
+						<div class="img" style="background-image: url('/images/signup.jpg');">
+			      </div>
+						<div class="login-wrap p-4 p-md-5">
+			      	<div class="d-flex">
+			      		<div class="w-100">
+			      			<h3 class="mb-4">Sign In</h3>
+			      		</div>
+								<div class="w-100">
+									<p class="social-media d-flex justify-content-end">
+										<a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-facebook"></span></a>
+										<a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-twitter"></span></a>
+									</p>
+								</div>
+			      	</div>
+							<form action="/show" method="post" class="signin-form">
+			      		<div class="form-group mb-3">
+			      			<label class="label" for="name">First Name</label>
+			      			<input type="text"  id="firstname" class="form-control" placeholder="First name" required name="firstname">
+							  <span id="nameError" style="color: red;"></span>
+						</div>
+		            <div class="form-group mb-3">
+		            	<label class="label" for="password">Last Name</label>
+		              <input type="text" id="lastname" class="form-control" placeholder="Last name" required name="lastname">
+					  <span id="lastError" style="color: red;"></span>
+		            </div>
+                    <div class="form-group mb-3">
+		            	<label class="label" for="password">Email</label>
+		              <input type="email" id="SignUp-mail" class="form-control" placeholder="Email" required name="email">
+					  <span id="emailError" style="color: red;"></span>
+		            </div>
+                    <div class="form-group mb-3">
+		            	<label class="label" for="password">Phone Number</label>
+		              <input type="phonenumber" id ="number"class="form-control" placeholder="Phone Number" required name="phonenumber">
+					  <span id="phonenumberError" style="color: red;"></span>
+		            </div>
+                    <div class="form-group mb-3">
+		            	<label class="label" for="password">Password</label>
+		              <input type="password" id="SignUp-password" class="form-control" placeholder="Password" required name="password">
+					  <span id="passwordError" style="color: red;"></span>
+		            </div>
+		            <div class="form-group">
+		            	<button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign In</button>
+		            </div>
+		            <div class="form-group d-md-flex">
+		            	<!-- <div class="w-50 text-left">
+			            	<label class="checkbox-wrap checkbox-primary mb-0">Remember Me
+									  <input type="checkbox" checked>
+									  <span class="checkmark"></span>
+										</label>
+									</div> -->
+									<!-- <div class="w-50 text-md-right">
+										<a href="#">Forgot Password</a>
+									</div> -->
+		            </div>
+		          </form>
+		          <p class="text-center">You have an already account <a href="/signin">Sign In</a></p>
+		        </div>
+		      </div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<script>
+		const mail = document.getElementById("SignUp-mail");
+	
+		mail.addEventListener("input", validateEmail);
+	
+		function validateEmail() {
+			const email = document.getElementById("SignUp-mail").value;
+			const emailPattern = /^[a-zA-Z]+[a-zA-Z0-9]*@[a-zA-Z]+\.[a-zA-Z]+$/;
+			if(email.trim()=== ""){
+				document.getElementById('emailError').innerHTML = "Please enter a valid Email "
+			}
+			else{
+			if (!email.match(emailPattern)) {
+				document.getElementById("emailError").innerHTML = "Invalid email format.";
+			} else {
+				document.getElementById("emailError").innerHTML = "";
+			}
+		}
+		}
+////////////////////////////////////////////////////////////////////
+		const phonenumber = document.getElementById('number');
+		phonenumber.addEventListener('input',validphonenumber);
+		function validphonenumber(){
+			const phonenumber=document.getElementById('number').value;
+			const phonenumberpattern =/^\d{10}$/
+			if(phonenumber.trim()==""){
+				document.getElementById("phonenumberError").innerHTML = "Please enter a valid phonenumber"
+			}
+			if(!phonenumber.match(phonenumberpattern)){
+				document.getElementById('phonenumberError').innerHTML="Invalid phonenumber format";
+			}else{
+				document.getElementById('phonenumberError').innerHTML="";
+			}
+		}
+////////////////////////////////////////////////////////////////
+		const password =document.getElementById("SignUp-password");
+
+		password.addEventListener('input',validpassword);
+		function validpassword(){
+			const password= document.getElementById("SignUp-password").value;
+			const passwordpattern = /^.{5,}$/
+
+				if(password.trim()===""){
+					document.getElementById('passwordError').innerHTML = "Please enter a password"
+				}
+				else{
+			if(!password.match(passwordpattern)){
+				document.getElementById('passwordError').innerHTML ="Invalid password format ";
+			}else{
+				document.getElementById('passwordError').innerHTML =" "
+			}
+		}
+
+		}
+	
+const firstname = document.getElementById("firstname");
+firstname.addEventListener('input', validname);
+
+function validname() {
+    const name = document.getElementById("firstname").value;
+
+    if (name.trim() === "") {
+        document.getElementById('nameError').innerHTML = "Please enter a name";
+		return false;
+    } else {
+        const namepattern = /^[A-Za-z]{2,}$/;
+        if (!name.match(namepattern)) {
+            document.getElementById('nameError').innerHTML = "Invalid name format";
+        } else {
+            document.getElementById('nameError').innerHTML = "";
+        }
+    }
+}
+
+const lastname = document.getElementById("lastname");
+lastname.addEventListener('input',valid);
+
+function valid(){
+	const name =document.getElementById('lastname').value;
+
+	if(name.trim() === ""){
+		document.getElementById('lastError').innerHTML = "Please enter a name ";
+		return false;
+	}
+	else{
+		const namepattern = /^[A-Za-z]{2,}$/;
+		if(!name.match(namepattern)){
+		document.getElementById('lastError').innerHTML = "Invalid name format";
+		}
+		else{
+			document.getElementById('lastError').innerHTML = " " ;
+		}
+	}
+
+}
+
+
+	</script>
+
+	<%- include('../user/layout/footer.ejs')-%>

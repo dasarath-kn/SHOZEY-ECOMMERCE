@@ -1,0 +1,86 @@
+<%- include ('../admin/layouts/header.ejs')-%>
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card bg-light border-0">
+              <div class="card border-0">
+                <div class="card-body bg-light border-0 ">
+                  <div>
+                    <h3 style="color: black;">Order details</h3>
+                  </div>
+                  <div class="card-body row col-12 d-flex">
+             <% if(orderdata){%>
+              <% let product = orderdata.items %>
+              <% let address = orderdata.deliveryDetails %>
+              <% for(let i =0 ;i<product.length;i++){%>
+                <% let productdata = product[i].productid %>
+                
+      <div class="col-lg-4 col-md-6 col-sm-12">
+        <img class="image-popup" style="width: 100%;" alt="" src="/productimages/<%=productdata.image[0] %>">
+        <p class="card-text" style="color: black;"></p>
+      </div>
+      <div class="col-lg-7 col-md-6 col-sm-12">
+        <h3 class="card-title style" style="color: black;"> <%= productdata.productname%></h3>
+
+        <p class="card-text">
+          <p style="font-size: 16px; color: black;">Quantity: <b style="color: black;"><%= product[i].count%></b></p>
+          <i class="fa-solid fa-file-invoice-dollar"></i>
+        </p>
+        <p style="font-size: 18px; color: black;">Amount: <b class="card-title mb-2" style="color: black;">₹<%= product[i].total%> </b></p>
+        <p style="font-size: 20px; color: black;" >Order Status: <b style="color: black;"><%= product[i].status %></b></p>
+      </div>
+      <%}%>
+</div>
+<div class="row">
+     
+      <div class="col-md-6">
+        <div class="card card-dashboard border-0">
+          <div class="card-body bg-light">
+            <h3 style="color: black;">Delivery address</h3>
+            <p style="color: black;">
+              Name:<%= address.name%> <br>
+              Mobile: <%= address.phonenumber %><br>
+              Address:<%= address.address %> <br>
+              City: <%= address.city%><br>
+              State: <%= address.state%><br>
+              Country: <%= address.country %>
+              Pincode: <%= address.pincode %><br>
+            </p>
+          </div><!-- End .card-body -->
+        </div><!-- End .card-dashboard -->
+      </div>
+      
+</div>
+                      <div class="col-md-6">
+                          <div class="card card-dashboard border-0">
+                              <div class="card-body bg-light ">
+                                  <h3 style="color: black;">Order summary</h3>
+                                  <p style="color: black;"><br>
+                                      Purchase date:<%= orderdata.purchaseDate.toLocaleDateString('en-US', { year:
+                                        'numeric', month: 'short', day: '2-digit'
+                                        }).replace(/\//g,'-')%>
+                                          <br>
+                                      Total amount:<%= orderdata.totalAmount %> <br>
+                                      Status:<br>
+                                      Payment method:<%= orderdata.paymentMethod %> <br>
+                                      Shipping method:<%= orderdata.shippingMethod %> <br>
+                                      Shipping charge:<%= orderdata.shippingFee %> <br>
+                                  </p>
+                              </div><!-- End .card-body -->
+                          </div><!-- End .card-dashboard -->
+                      </div>
+                      <%}%>
+                      <div class="col-md-12">
+                          <a href="/admin/orders"><button class="btn btn-primary btn-block">Go Back</button></a>
+                      </div>
+                     
+                             
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+<!--   
+<%- include('../admin/layouts/footer.ejs')-%> -->

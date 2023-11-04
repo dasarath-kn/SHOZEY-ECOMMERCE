@@ -1,0 +1,313 @@
+<%- include('../user/layout/header.ejs') %>
+
+<main class="main">
+    <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+        <div class="container">
+            <h1 class="page-title">Checkout</h1>
+        </div><!-- End .container -->
+    </div><!-- End .page-header -->
+    <nav aria-label="breadcrumb" class="breadcrumb-nav">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+
+    <div class="page-content">
+        <div class="checkout"  id="checkout">
+            <div class="container">
+                <div class="checkout-container" style="display: flex;">
+                    <div class="checkout-discount">
+                        <form action="#">
+                            <input type="text" class="form-control" required id="checkout-discount-input">
+                            <label for="checkout-discount-input" class="text-truncate">Have a coupon? <span>Click here to enter your code</span></label>
+                            <p id="address" style="color: red;" ></p>
+                        </form>
+                    </div><!-- End .checkout-discount -->
+                
+                    <div class="add-new-address" style="margin-left: auto; margin-top: 2rem;">
+                        <a href="#">Add New Address</a>
+                    </div>
+                </div>
+                
+                
+                <form   style="display: flex;" id="myForm">
+                   
+                    <div class="col-8 mt-3" >
+                        <% useraddress.forEach((item)=>{%>
+                            <% item.userdata.forEach((element)=>{%> 
+                        <label class="p-3 border rounded-4 m-2 custom-label"  th:each="address, iterStat : " style="width: 100%;">
+                            <div class="form-check d-flex align-items-center mx-4">
+                                <input class="form-check-input" type="radio" name="address" value="<%= item._id%>"
+                                       name="selectedAddressId" checked  >
+                                <div class="mx-3 mx-md-5">
+                                    <p class="text-dark">
+                                        <b><span><%= element.name %></span></b> ,
+                                        <span ><%= element.city %></span>, <span><%= element.state %></span>,
+                                        <span>Contact: <i class="fa-thin fa-mobile"></i>
+                                           <b style="color: #043a6c;">
+                                             <span style="font-size: 13px;" ><%= element.phonenumber %></span>
+                                           </b>
+                                        </span>
+                                    </p>
+                                    <p><%= element.address %></p>
+                                    <p ><%= element.pincode %></p>
+                                </div>
+                            </div>
+                        </label>
+                        <% }); %>
+                        <% }); %>
+                 </div>
+
+                 <aside class="col-lg-3">
+                    <div class="summary">
+                        <h3 class="summary-title">Your Order</h3><!-- End .summary-title -->
+
+                        <table class="table table-summary">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <% cartdata.forEach((item)=>{%>
+                                    <% item.items.forEach((element)=>{%>
+                                <tr>
+                                    <td><a href="#"><%= element.productid.productname %></a></td>
+                                    <td><%= element.productid.price %></td>
+                                </tr>
+                                <%}) %>
+                                <%}) %>
+                              
+                                <tr class="summary-subtotal">
+                                    <td>Subtotal:</td>
+                                    <td>Rs.<%= totalsum %></td>
+                                </tr><!-- End .summary-subtotal -->
+                                <tr>
+                                    <td>Shipping:</td>
+                                    <td>Free shipping</td>
+                                </tr>
+                                <tr class="summary-total">
+                                    <td>Total:</td>
+                                    <td id="total">Rs.<%= totalsum %></td>
+                                </tr><!-- End .summary-total -->
+                            </tbody>
+                        </table><!-- End .table table-summary -->
+                        <div class="d-flex align-items-center">
+                            <div class="mr-2">
+                              <input
+                                required
+                                type="radio"
+                                id="COD"
+                                name="payment"
+                                value="Cash on delivery"
+                                checked
+                              />
+                            </div>
+                            <a href="" class="d-block text-dark" for="pay1"
+                              >Cash On Delivery</a
+                            >
+                          </div>
+          
+                          <div class="d-flex align-items-center">
+                            <div class="mr-2">
+                              <input
+                                required
+                                type="radio"
+                                id="payment"
+                                name="payment"
+                                value="Online Payment"
+                                
+                                
+                              />
+                            </div>
+                            <a href="" class="d-block text-dark" for="pay2"
+                              >Online Payment</a
+                            >
+                          </div>
+          
+                          <div class="d-flex align-items-center">
+                            <div class="mr-2">
+                              <input
+                                required
+                                type="radio"
+                                id="wallet"
+                                name="payment"
+                                value="wallet"
+                              />
+                            </div>
+                            <a href="" class="d-block text-dark" for="pay3">Wallet</a>
+            </div>
+
+                        
+                        <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block" >
+                            <span class="btn-text">Place Order</span>
+                            <span class="btn-hover-text" >Proceed to Checkout</span>
+                        </button>
+                       
+                    </div><!-- End .summary -->
+                </aside><!-- End .col-lg-3 -->
+                    
+                </form>
+            </div><!-- End .container -->
+        </div><!-- End .checkout -->
+    </div><!-- End .page-content -->
+</main><!-- End .main -->
+<script>
+    // function selectaddress(radio){
+    //     const address= radio.value
+        
+    //     fetch('/ProceedOrder',{
+    //         method:'post',
+    //    headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({ value: address }),
+    //     })
+    // }
+
+//     function cartdatas(button) {
+//     const data = button.getAttribute('data-value'); // Get the value from the data-value attribute
+// console.log(data);
+//     fetch('/ProceedOrder', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ cart: data }),
+//     })
+// }
+// document.addEventListener("DOMContentLoaded", () => {
+//     const cart = document.getElementById('cart');
+//     const shipping = document.getElementById('shipping-options');
+//     const proceedCheckout = document.getElementById('proceed-to-checkout');
+
+//     proceedCheckout.addEventListener('click', (event) => {
+//         const selectedShipping = document.querySelector('input[name="shipping"]:checked');
+
+//         if (selectedShipping) {
+//             const shippingMethod = selectedShipping.value;
+//             console.log("Selected shipping method: " + shippingMethod);
+//         } else {
+//             const errorElement = document.getElementById('shipping');
+//             errorElement.textContent = 'Please select a shipping method before proceeding.';
+//             event.preventDefault(); // Prevent form submission and page refresh
+//         }
+//     });
+// });
+
+// document.addEventListener("DOMContentLoaded",()=>{
+//     const checkout = document.getElementById('checkout');
+//     const checkoutbtn= document.getElementById('checkout-form');
+//     const address = document.getElementById('address');
+
+//     checkoutbtn.addEventListener("click",(event)=>{
+//         const selected = document.querySelector('input[name="address"]:checked');
+
+//         if(selected){
+//             console.log("Selected address");
+//         }
+//         else{
+//             const errorElement = document.getElementById('address')
+//             errorElement.textContent = 'Please select a address before proceeding.';
+//             event.preventDefault(); 
+//         }
+//     })
+
+// })
+
+$(document).ready(function () {
+    
+        $('#myForm').submit(function (event) {
+            event.preventDefault();
+            var formData = $(this).serializeArray();
+
+            console.log(formData,);
+            $.ajax({
+                url: '/ProceedOrder',
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    console.log(response)
+                    if(response.success == true){
+                        window.location.href = '/orderplaced'
+                    }else if(response.online == true){
+                        console.log("wallet");
+                    }
+                    else{
+                        razorpayPayment(response.order)
+
+                    }
+                },
+                error: function (error) {
+                  
+                    console.error('Error:', error);
+                }
+            });
+        });
+    });
+
+
+    function razorpayPayment(order){
+        console.log(order);
+        var options = {
+        "key": "rzp_test_spjMMzxxQd5jRn",
+        "amount": order.amount, 
+        "currency": "INR",
+        "name": "Shozey",
+        "description": "Test Transaction",
+        "image": "/user/images/Fs Hat Logo.jpg",
+        "order_id": order.id, 
+        handler: function (response) {
+            verifyPayment(response, order);
+        },
+        "prefill": { 
+            "name": "Shozey", 
+            "email": "shozey@gmail.com",
+            "contact": "9000090000"
+        },
+        "notes": {
+            "address": "Shozey "
+        },
+        "theme": {
+            "color": "#cc9967"
+        }
+    };
+    var rzp1 = new Razorpay(options);
+    rzp1.open();
+    }
+
+
+    function verifyPayment(payment, order) {
+        const amount2 = document.getElementById("total").value;
+        console.log(amount2);
+        $.ajax({
+        url: "/verify-payment",
+        method: "post",
+        data: {
+            payment: payment,
+            amount2: amount2,
+            order: order,
+        },
+        success: (response) => {
+            if (response.placed == true) {
+                window.location.href = '/orderplaced'
+            } else {
+            swal.fire({
+                positon: "center",
+                icon: "error",
+                title: "Payment failed",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+            }
+        },
+ });
+ }
+
+</Script>

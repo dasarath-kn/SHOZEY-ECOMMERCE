@@ -1,0 +1,64 @@
+<%- include ('../admin/layouts/header.ejs')-%>
+
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+             
+              <div class="row">
+                <div class="col-lg-12  grid-margin stretch-card">
+                  <div class="card">
+                    <div class="card-body">
+                      <h4 class="card-title">Product Category</h4>
+                      <a href="/admin/addcategory" class="btn btn-primary">Add category</a>
+
+                      <div class="table-responsive">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th>No.</th>
+                              <th>Category Name</th>
+                              <th></th>
+                              <th> Block-Unblock</th>
+                              <th>Delete</th>
+                             
+                            </tr>
+                            <% let count=1; %>
+                            <% data.forEach((item) => { %>
+                              
+                              <tr>
+                                <td><%=  count %></td>
+                                <td><%= item.productcategory %></td>
+                                <td>
+                                  <% if (item.status === 0) { %>
+                                    <td>
+                                      <p><a href="/admin/block/category?id=<%= item._id %>" class="badge badge-success">Block</a></p>
+                                    </td>
+                                  <% } else { %>
+                                    <td>
+                                      <p><a href="/admin/block/category?id=<%= item._id %>" class="badge badge-danger">Unblock</a></p>
+                                    </td>
+                                    
+                                  <% } %>
+                                </td>
+                                
+                                <td>
+                                  <p><a href="/admin/delete/category?id=<%= item._id %>" class="badge badge-danger">Delete</a></p>
+                                </td>
+                                
+                              </tr>
+                              <% count++; %>
+                            <%  }); %>
+                            
+                          
+                          </thead>
+                          <tbody>
+                         
+                                
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+       
+         <%- include ('../admin/layouts/footer.ejs')-%>

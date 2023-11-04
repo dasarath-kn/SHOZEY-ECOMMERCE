@@ -1,0 +1,75 @@
+<%- include('../user/layout/header.ejs')-%>
+<main>
+    <% if (data && data.userdata) { %>
+        <% data.userdata.forEach((items) => { %>
+          <div class="main-add">
+            <div class="container">
+              <h1 class="m-5">Edit Address</h1>
+              <form action="/updatingaddress?id=<%= data._id %>" method="post">
+                <div class="form-group row">
+                  <div class="col-sm-9">
+                    <h5>Name:</h5>
+                    <input type="text" value="<%= items.name %>" class="form-control" id="userName" name="name" placeholder="Your name..">
+                  </div>
+                </div>
+      
+                <div class="form-group row">
+                  <div class="col-sm-9">
+                    <h5>Phone Number:</h5>
+                    <input type="text" value="<%= items.phonenumber %>" class="form-control" id="mobile" name="phonenumber" placeholder="Your phone number..">
+                  </div>
+                </div>
+      
+                <div class="form-group row">
+                  <div class="col-sm-9">
+                    <h5>Address:</h5>
+                    <input type="text" value="<%= items.address %>" class="form-control" id="address" name="address" placeholder="Your address..">
+                  </div>
+                </div>
+      
+                <div class="form-group row">
+                  <div class="col-sm-9">
+                    <h5>City:</h5>
+                    <input type="text" value="<%= items.city %>" class="form-control" id="city" name="city" placeholder="Your city..">
+                  </div>
+                </div>
+      
+                <div class="form-group row">
+                  <div class="col-sm-9">
+                    <h5>State:</h5>
+                    <input type="text" value="<%= items.state %>" class="form-control" id="state" name="state" placeholder="Your state..">
+                  </div>
+                </div>
+      
+                <div class="form-group row">
+                  <div class="col-sm-9">
+                    <h5>Country:</h5>
+                    <input type="text" value="<%= items.country %>" class="form-control" id="country" name="country" placeholder="Your country..">
+                  </div>
+                </div>
+      
+                <div class="form-group row">
+                  <div class="col-sm-9">
+                    <h5>Pin Code:</h5>
+                    <input type="text" value="<%= items.pincode %>" class="form-control" id="pinCode" name="pincode" placeholder="Your pin code..">
+                  </div>
+                </div>
+      
+                <div class="form-group row">
+                  <!-- Additional fields if needed -->
+                </div>
+      
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary rounded submit px-3">Submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        <% }) %>
+      <% } %>
+      
+
+  <!-- Shop Method End-->
+</main>
+
+<%- include('../user/layout/footer.ejs')-%>
