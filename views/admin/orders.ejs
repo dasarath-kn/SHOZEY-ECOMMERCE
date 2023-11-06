@@ -1,13 +1,13 @@
 <%- include ('../admin/layouts/header.ejs')-%>
  
         <!-- partial -->
-        <div class="main-panel" id="statuss">
+        <div class="main-panel" >
             <div class="content-wrapper">
              
               <div class="row">
                 <div class="col-lg-12 grid-margin stretch-card">
                   <div class="card">
-                    <div class="card-body"  >
+                    <div class="card-body" id="statuss"  >
                       <h4 class="card-title">User Management</h4>
                       <!-- <p class="card-description"> Add class <code>.table</code> -->
                       </p>
@@ -80,7 +80,9 @@
         contentType: 'application/json',
         success: function (response) {
             if(response.result === true){
-              $('#statuss').load('/admin/cartstatus  #statuss'); 
+              // $('#statuss').load('/admin/cartstatus #statuss'); 
+              window.location.href = '/admin/orders';
+
             }else{
                 Swal.fire({
                     title: 'error',

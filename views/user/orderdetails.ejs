@@ -45,7 +45,7 @@
                             <td class="price-col"><%= item.status %></td>
 
                           </tr>
-                        <% }); %>
+                        
                     </tbody>
                 </table>
             </div>
@@ -71,9 +71,14 @@
                                 <% }); %>
                               <% } %>
 
-                              
-                             <a href="/cancelorder?id=<%= item._id %>" onclick="return confirm('Are you sure? Do you want to Cancel')"> <button  style="margin-top: 20px; font-size: 16px; padding: 10px 20px; background-color: #3498db; color: #ffffff; border: none; border-radius: 5px; cursor: pointer;"> Cancel Order </button></a>
-                              <button style="margin-top: 20px; font-size: 16px; padding: 10px 20px; background-color: #3498db; color: #ffffff; border: none; border-radius: 5px; cursor: pointer;"><a href="/">Continue Shopping </a></button>
+                              <%if(item.status=="cancelled"){%>
+                                <button style="margin-top: 20px; font-size: 16px; padding: 10px 20px; background-color: #3498db; color: #ffffff; border: none; border-radius: 5px; cursor: pointer;"><a href="/">Continue Shopping </a></button>
+                                <%}
+                                else{%>
+                                  <a href="/cancelorder?id=<%= item._id %>" onclick="return confirm('Are you sure? Do you want to Cancel')"> <button  style="margin-top: 20px; font-size: 16px; padding: 10px 20px; background-color: #3498db; color: #ffffff; border: none; border-radius: 5px; cursor: pointer;"> Cancel Order </button></a>
+                                  <button style="margin-top: 20px; font-size: 16px; padding: 10px 20px; background-color: #3498db; color: #ffffff; border: none; border-radius: 5px; cursor: pointer;"><a href="/">Continue Shopping </a></button>
+                                  <%}%>
+                              <% }); %>
                               <% }); %>
                     
           

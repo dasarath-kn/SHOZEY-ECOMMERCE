@@ -135,6 +135,7 @@ const orderdetails = async(req,res)=>{
         const data =await product.find()
         const cartdata = await cart.find({userid:id}).populate("items.productid")
         const orderdata = await order.find({_id:id}).populate("items.productid")
+        
         console.log(orderdata);
 
         res.render('orderdetails',{orderdata,data,cartdata,user:req.session.name})
@@ -150,8 +151,13 @@ const orderdetails = async(req,res)=>{
 
 const cancelorder = async(req,res)=>{
     try {
-      const id= req.query.id
-      await order.findByIdAndUpdate(id,{status:"cancelled"})
+        const id= req.query.id
+        
+    //   const data ="cancelled"
+    //   console.log(id+"Fsdf",productid+"duhfisifhsh");
+    //  const val= await order.updateOne({ _id: id, "items.productid": productid }, { $set: { 'items.$.status': data } })
+   
+     await order.findByIdAndUpdate(id,{status:"cancelled"})
       const cartitems = await cart.findOne({userid:id}).populate("items.productid") 
     //   const values = cartitems.items
       console.log(cartitems);
@@ -164,7 +170,7 @@ const cancelorder = async(req,res)=>{
     //   }
       
         
-      res.redirect('/orderdetails')
+      res.redirect('/profile')
 
     } catch (error) {
         console.log(error.message);

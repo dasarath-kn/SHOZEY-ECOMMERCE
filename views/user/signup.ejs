@@ -74,8 +74,8 @@
 		const mail = document.getElementById("SignUp-mail");
 	
 		mail.addEventListener("input", validateEmail);
-	
-		function validateEmail() {
+		function validateEmail(event) {
+			event.preventDefault();
 			const email = document.getElementById("SignUp-mail").value;
 			const emailPattern = /^[a-zA-Z]+[a-zA-Z0-9]*@[a-zA-Z]+\.[a-zA-Z]+$/;
 			if(email.trim()=== ""){

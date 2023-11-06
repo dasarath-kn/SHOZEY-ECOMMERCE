@@ -38,6 +38,7 @@ router.get('/resendotp',usercontroller.resendOTP);
 //=================================== PRODUCT-DETAILS =====================================//
 
 router.get('/productdetails',usercontroller.productdetails);
+router.post('/searchproduct',usercontroller.search)
 
 //=================================== CART =====================================//
 
@@ -67,6 +68,9 @@ router.post('/addaddress',addresscontroller.addingAddress);
 router.get('/editaddress',addresscontroller.editaddress);
 router.post('/deleteaddress',addresscontroller.deletingAddress)
 router.post('/updatingaddress',addresscontroller.updatingaddress);
+
+//=================================== SHOP =====================================//
+router.get('/shop',usercontroller.shop)
 
 //=================================== LOGOUT =====================================//
 

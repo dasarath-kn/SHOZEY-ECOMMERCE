@@ -2,12 +2,12 @@
 
 <div class="main-panel">
     <div class="content-wrapper">
-      <div>
+      <!-- <div>
         <button class="btn-primary" onclick="fetchData('day')">DAY</button>
         <button class="btn-primary" onclick="fetchData('week')">WEEK</button>
         <button class="btn-primary" onclick="fetchData('month')">MONTH</button>
         <button class="btn-primary" onclick="fetchData('year')">YEAR</button>
-      </div>
+      </div> -->
       <div class="row mt-2" >
         <div class="col-sm-4 grid-margin">
           <div class="card">
@@ -118,7 +118,7 @@
                       <div th:each="order : ${latestOrders}" class="preview-item border-bottom">
                         <div class="preview-thumbnail">
                           <div class="preview-icon bg-primary">
-                            <img src="${order.product.productImages[0].imageName}" alt="Product Image" />
+                            <img src="/productimages/<%=data.image[0] %>" alt="Product Image" />
                           </div>
                         </div>
                         <div class="preview-item-content d-sm-flex flex-grow">
@@ -126,13 +126,15 @@
                             <h6 class="preview-subject mt-2 " ><%= data.productname %></h6>
                           </div>
                           <div class="flex-grow">
-                            <h6 class="preview-subject text-muted mt-2" ><%= item[j].count %></h6>
+                            <h6 class="preview-subject text-muted mt-2" ></h6>
                           </div>
                           <div>
-                            <h6 class="preview-subject text-muted mt-2 mr-5" ></h6>
+                            <h6 class="preview-subject text-muted mt-2 mr-5" ><%= data.total %></h6>
                           </div>
                           <div class="mr-auto text-sm-right pt-2 pt-sm-0 mt-2" >
-                            <p class="text-muted" th:text="'Date-' + ${order.order.orderedDate}">15 minutes ago</p>
+                            <p class="text-muted" ><%= orders[i].purchaseDate.toLocaleDateString('en-US', { year:
+                              'numeric', month: 'short', day: '2-digit'
+                              }).replace(/\//g,'-')%></p>
 
                           </div>
                         </div>
@@ -156,7 +158,7 @@
               <div class="row">
                 <div class="col-8 col-sm-12 col-xl-8 my-auto">
                   <div class="d-flex d-sm-block d-md-flex align-items-center">
-                    <h2 class="mb-0" th:text="${customer}">$32123</h2>
+                    <h2 class="mb-0" th:text="${customer}"><%= customer%></h2>
                     <p class="text-success ml-2 mb-0 font-weight-medium">+3.5%</p>
                   </div>
                   <h6 class="text-muted font-weight-normal">11.38% Since last month</h6>
@@ -175,7 +177,7 @@
               <div class="row">
                 <div class="col-8 col-sm-12 col-xl-8 my-auto">
                   <div class="d-flex d-sm-block d-md-flex align-items-center">
-                    <h2 class="mb-0" th:text="${Orders}"></h2>
+                    <h2 class="mb-0" ><%= ordercount%></h2>
                     <p class="text-success ml-2 mb-0 font-weight-medium">+8.3%</p>
                   </div>
                   <h6 class="text-muted font-weight-normal"> 9.61% Since last month</h6>
@@ -190,11 +192,11 @@
         <div class="col-sm-4 grid-margin">
           <div class="card">
             <div class="card-body">
-              <h5>Purchase</h5>
+              <h5>Cancelled orders</h5>
               <div class="row">
                 <div class="col-8 col-sm-12 col-xl-8 my-auto">
                   <div class="d-flex d-sm-block d-md-flex align-items-center">
-                    <h2 class="mb-0">$2039</h2>
+                    <h2 class="mb-0"><%= cancelledorders%></h2>
                     <p class="text-danger ml-2 mb-0 font-weight-medium">-2.1% </p>
                   </div>
                   <h6 class="text-muted font-weight-normal">2.27% Since last month</h6>

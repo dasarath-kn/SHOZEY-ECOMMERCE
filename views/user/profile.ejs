@@ -1,252 +1,312 @@
 <%- include('../user/layout/header.ejs') -%>
 
- <main class="main">
-        	<div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
-        		<div class="container">
-        			<h1 class="page-title">My Account<span>Shop</span></h1>
-        		</div><!-- End .container -->
-        	</div><!-- End .page-header -->
-            <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
-                <div class="container">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Shop</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">My Account</li>
-                    </ol>
-                </div><!-- End .container -->
-            </nav><!-- End .breadcrumb-nav -->
+	<main class="main">
+		<div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+			<div class="container">
+				<h1 class="page-title">My Account<span>Shop</span></h1>
+			</div><!-- End .container -->
+		</div><!-- End .page-header -->
+		<nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+			<div class="container">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="/">Home</a></li>
+					<li class="breadcrumb-item"><a href="#">Shop</a></li>
+					<li class="breadcrumb-item active" aria-current="page">My Account</li>
+				</ol>
+			</div><!-- End .container -->
+		</nav><!-- End .breadcrumb-nav -->
 
-            <div class="page-content">
-            	<div class="dashboard">
-	                <div class="container">
-	                	<div class="row">
-	                		<aside class="col-md-4 col-lg-3">
-	                			<ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
-								    <li class="nav-item">
-								        <a class="nav-link active" id="tab-dashboard-link" data-toggle="tab" href="#tab-dashboard" role="tab" aria-controls="tab-dashboard" aria-selected="true">Dashboard</a>
-								    </li>
-								    <li class="nav-item">
-								        <a class="nav-link" id="tab-orders-link" data-toggle="tab" href="#tab-orders" role="tab" aria-controls="tab-orders" aria-selected="false">Orders</a>
-								    </li>
-								    <li class="nav-item">
-								        <a class="nav-link" id="tab-downloads-link" data-toggle="tab" href="#tab-downloads" role="tab" aria-controls="tab-downloads" aria-selected="false">Downloads</a>
-								    </li>
-								    <li class="nav-item">
-								        <a class="nav-link" id="tab-address-link" data-toggle="tab" href="#tab-address" role="tab" aria-controls="tab-address" aria-selected="false">Adresses</a>
-								    </li>
-								    <li class="nav-item">
-								        <a class="nav-link" id="tab-account-link" data-toggle="tab" href="#tab-account" role="tab" aria-controls="tab-account" aria-selected="false">Account Details</a>
-								    </li>
-								    <li class="nav-item">
-								        <a class="nav-link" href="/logout">Sign Out</a>
-								    </li>
-								</ul>
-	                		</aside><!-- End .col-lg-3 -->
+		<div class="page-content">
+			<div class="dashboard">
+				<div class="container">
+					<div class="row">
+						<aside class="col-md-4 col-lg-3">
+							<ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
+								<li class="nav-item">
+									<a class="nav-link active" id="tab-dashboard-link" data-toggle="tab"
+										href="#tab-dashboard" role="tab" aria-controls="tab-dashboard"
+										aria-selected="true">Dashboard</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" id="tab-orders-link" data-toggle="tab" href="#tab-orders"
+										role="tab" aria-controls="tab-orders" aria-selected="false">Orders</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" id="tab-downloads-link" data-toggle="tab" href="#tab-downloads"
+										role="tab" aria-controls="tab-downloads" aria-selected="false">Downloads</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" id="tab-address-link" data-toggle="tab" href="#tab-address"
+										role="tab" aria-controls="tab-address" aria-selected="false">Adresses</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" id="tab-account-link" data-toggle="tab" href="#tab-account"
+										role="tab" aria-controls="tab-account" aria-selected="false">Account Details</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="/logout">Sign Out</a>
+								</li>
+							</ul>
+						</aside><!-- End .col-lg-3 -->
 
-	                		<div class="col-md-8 col-lg-9" id="sampleId">
-	                			<div class="tab-content">
-								    <div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel" aria-labelledby="tab-dashboard-link">
-								    	<p>Hello <span class="font-weight-normal text-dark">User</span> (not <span class="font-weight-normal text-dark">User</span>? <a href="#">Log out</a>) 
-								    	<br>
-								    	From your account dashboard you can view your <a href="#tab-orders" class="tab-trigger-link link-underline">recent orders</a>, manage your <a href="#tab-address" class="tab-trigger-link">shipping and billing addresses</a>, and <a href="#tab-account" class="tab-trigger-link">edit your password and account details</a>.</p>
-								    </div><!-- .End .tab-pane -->
+						<div class="col-md-8 col-lg-9" id="sampleId">
+							<div class="tab-content">
+								<div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel"
+									aria-labelledby="tab-dashboard-link">
+									<p>Hello <span class="font-weight-normal text-dark">User</span> (not <span
+											class="font-weight-normal text-dark">User</span>? <a href="#">Log out</a>)
+										<br>
+										From your account dashboard you can view your <a href="#tab-orders"
+											class="tab-trigger-link link-underline">recent orders</a>, manage your <a
+											href="#tab-address" class="tab-trigger-link">shipping and billing
+											addresses</a>, and <a href="#tab-account" class="tab-trigger-link">edit your
+											password and account details</a>.
+									</p>
+								</div><!-- .End .tab-pane -->
 
-								    <div class="tab-pane fade" id="tab-orders" role="tabpanel" aria-labelledby="tab-orders-link">
-								    	<div class="main-panel">
-											<div class="content-wrapper">
-											 
-											  <div class="row">
-												<div class="col-lg-12 grid-margin stretch-card">
-												  <div class="card">
-													<div class="card-body">
-													  <h4 class="card-title">Order Details</h4>
-													  <!-- <p class="card-description"> Add class <code>.table</code> -->
-													  </p>
-													  <div class="table-responsive">
-														<table class="table">
-														  <thead>
-															<tr><b>
-															  <th style="font-weight: 800;" >No.</th>
-															  <th style="font-weight: 800;" >Date</th>
-															  <th style="font-weight: 800;" >Amount</th>
-															  <th style="font-weight: 800;" >Payment</th>
-															  <th style="font-weight: 800;" >Status</th>
-															  <th style="font-weight: 800;" >Details</th>
-															</b>
-															</tr>
-														  </thead>
-														  <tbody>
-															<% let count=1; %>
-															<% orderdata.forEach((item)=>{%>
-															  <tr>
-																<td><%= count++ %></td>
-																<td><%= item.purchaseDate.toLocaleDateString('en-US', { year:
-																	'numeric', month: 'short', day: '2-digit'
-																	}).replace(/\//g,'-')%></td>
-																<td>Rs.<%= item.totalAmount %></td>
-																<td><%= item.paymentMethod %></td>
-																<td><%= item.status %></td>
-																<td><a href="/orderdetails?id=<%= item._id%>">Details</a></td>
-																</tr>
-																	<% }) %>
-														  </tbody>
-														</table>
-													  </div>
-													</div>
-												  </div>
-												</div>
-											  </div>
-											</div>
-								    </div><!-- .End .tab-pane -->
-									</div>
-								    <div class="tab-pane fade" id="tab-downloads" role="tabpanel" aria-labelledby="tab-downloads-link">
-								    	<p>No downloads available yet.</p>
-								    	<a href="category.html" class="btn btn-outline-primary-2"><span>GO SHOP</span><i class="icon-long-arrow-right"></i></a>
-								    </div><!-- .End .tab-pane -->
+								<div class="tab-pane fade" id="tab-orders" role="tabpanel"
+									aria-labelledby="tab-orders-link">
+									<div class="main-panel">
+										<div class="content-wrapper">
 
-								    <div class="tab-pane fade" id="tab-address" role="tabpanel" aria-labelledby="tab-address-link">
-								    	<p>The following addresses will be used on the checkout page by default.</p>
-										<div class="form-group">
-											<button type="submit" href="" class=" btn btn-primary rounded submit px-3"><a href="/address">Add Address</a></button>
-										
-										
 											<div class="row">
-												<% data.forEach((item) => { %>
-											  <div class="col-lg-6">
-												<div class="card card-dashboard">
-												  <div class="card-body">
-													<h3 class="card-title">Billing Address</h3><!-- End .card-title -->
-													<% item.userdata.forEach((userdata) => { %>
-													  <p><%= userdata.name %><br>
-													  <%= userdata.phonenumber %><br>
-													  <%= userdata.address %><br>
-													  <%= userdata.city %><br>
-													  <%= userdata.state %><br>
-													  <%= userdata.country %><br>
-													  <%= userdata.pincode %><br>
-													  <% }); %>
-													  <a href="/editaddress?id=<%= item._id %>">Edit <i class="icon-edit"></i></a></p>
-													<a style="color: initial; cursor: pointer;" onmouseover="this.style.color='blueviolet'" onmouseout="this.style.color='initial'" onclick="deleteaddress('<%= item._id %>')">Delete <i class="icon-edit"></i></a>
-
-												  </div><!-- End .card-body -->
-												</div><!-- End .card-dashboard -->
-											  </div><!-- End .col-lg-6 -->
-											  <% }); %>
+												<div class="col-lg-12 grid-margin stretch-card">
+													<div class="card">
+														<div class="card-body">
+															<h4 class="card-title">Order Details</h4>
+															<!-- <p class="card-description"> Add class <code>.table</code> -->
+															</p>
+															<div class="table-responsive">
+																<table class="table">
+																	<thead>
+																		<tr><b>
+																				<th style="font-weight: 800;">No.</th>
+																				<th style="font-weight: 800;">Date</th>
+																				<th style="font-weight: 800;">Amount
+																				</th>
+																				<th style="font-weight: 800;">Payment
+																				</th>
+																				<th style="font-weight: 800;">Status
+																				</th>
+																				<th style="font-weight: 800;">Details
+																				</th>
+																			</b>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		<% let count=1; %>
+																			<% for(let i=0;i<orderdata.length; i++){%>
+																				<% let item=orderdata[i].items %>
+																					<% for(let j=0;j<item.length;j++){%>
+																						<% let
+																							productdata=item[j].productid%>
+																							<tr>
+																								<td>
+																									<%= count++ %>
+																								</td>
+																								<td>
+																									<%= orderdata[i].purchaseDate.toLocaleDateString('en-US',
+																										{
+																										year: 'numeric'
+																										, month: 'short'
+																										, day: '2-digit'
+																										}).replace(/\//g,'-')%>
+																								</td>
+																								<td>Rs.<%= item[j].total
+																										%>
+																								</td>
+																								<td>
+																									<%= orderdata[i].paymentMethod
+																										%>
+																								</td>
+																								<td>
+																									<%= orderdata[i].status
+																										%>
+																								</td>
+																								<td><a
+																										href="/orderdetails?id=<%= orderdata[i]._id%>">Details</a>
+																								</td>
+																							</tr>
+																							<%}%>
+																								<%}%>
+																	</tbody>
+																</table>
+															</div>
+														</div>
+													</div>
+												</div>
 											</div>
-										 
-										  
-								    		<div class="col-lg-6">
-								    			<div class="card card-dashboard">
-								    				<div class="card-body">
-								    					<h3 class="card-title">Shipping Address</h3><!-- End .card-title -->
-
-														<p>You have not set up this type of address yet.<br>
-														<a href="#">Edit <i class="icon-edit"></i></a></p>
-								    				</div><!-- End .card-body -->
-								    			</div><!-- End .card-dashboard -->
-								    		</div><!-- End .col-lg-6 -->
-								    	</div><!-- End .row -->
-								    </div><!-- .End .tab-pane -->
-
-								    <div class="tab-pane fade" id="tab-account" role="tabpanel" aria-labelledby="tab-account-link">
-								    	<form action="/newPassword" method="post">
-			                				<div class="row">
-			                					<div class="col-sm-6">
-			                						<label>First Name *</label>
-			                						<input type="text" class="form-control" required>
-			                					</div><!-- End .col-sm-6 -->
-
-			                					<div class="col-sm-6">
-			                						<label>Last Name *</label>
-			                						<input type="text" class="form-control" required>
-			                					</div><!-- End .col-sm-6 -->
-			                				</div><!-- End .row -->
-
-		            						<label>Display Name *</label>
-		            						<input type="text" class="form-control" required>
-		            						<small class="form-text">This will be how your name will be displayed in the account section and in reviews</small>
-
-		                					<label>Email address *</label>
-		        							<input type="email" class="form-control" required name="Email">
-											<div id="email-error-message" class="text-danger"></div>
-
-		            						<label>Current password (leave blank to leave unchanged)</label>
-		            						<input type="password" class="form-control" name="CurrentPassword" required>
-
-		            						<label>New password (leave blank to leave unchanged)</label>
-		            						<input type="password" class="form-control" name="NewPassword" required >
-
-		            						<label>Confirm new password</label>
-		            						<input type="password" class="form-control mb-2" name="ConfirmNewPassword" required >
-											
-		                					<button type="submit" onclick="return confirm('Are you sure? Do you want to Change your password')" class="btn btn-outline-primary-2">
-			                					<span>SAVE CHANGES</span>
-			            						<i class="icon-long-arrow-right"></i>
-			                				</button>
-			                			</form>
-								    </div><!-- .End .tab-pane -->
+										</div>
+									</div><!-- .End .tab-pane -->
 								</div>
-	                		</div><!-- End .col-lg-9 -->
-	                	</div><!-- End .row -->
-	                </div><!-- End .container -->
-                </div><!-- End .dashboard -->
-            </div><!-- End .page-content -->
-        </main><!-- End .main -->
+								<div class="tab-pane fade" id="tab-downloads" role="tabpanel"
+									aria-labelledby="tab-downloads-link">
+									<p>No downloads available yet.</p>
+									<a href="category.html" class="btn btn-outline-primary-2"><span>GO SHOP</span><i
+											class="icon-long-arrow-right"></i></a>
+								</div><!-- .End .tab-pane -->
 
-		<script>
-
-			
-function deleteaddress(id) {
-console.log(id);
-  $.ajax({
-    method: "post", 
-    url: "/deleteaddress", 
-    data: { id: id }, 
-    success: function (response) {
-      if (response.res === true) { 
-		// console.log('operation sucess');
-        $('#sampleId').load('/profile #sampleId');
-      } else {
-        console.log('Error:', response);
-      }
-    },
-    error: function (error) {
-      console.log('Error:', error);
-    }
-  });
-}
+								<div class="tab-pane fade" id="tab-address" role="tabpanel"
+									aria-labelledby="tab-address-link">
+									<p>The following addresses will be used on the checkout page by default.</p>
+									<div class="form-group">
+										<button type="submit" href="" class=" btn btn-primary rounded submit px-3"><a
+												href="/address">Add Address</a></button>
 
 
+										<div class="row">
+											<% data.forEach((item)=> { %>
+												<div class="col-lg-6">
+													<div class="card card-dashboard">
+														<div class="card-body">
+															<h3 class="card-title">Billing Address</h3>
+															<!-- End .card-title -->
+															<% item.userdata.forEach((userdata)=> { %>
+																<p>
+																	<%= userdata.name %><br>
+																		<%= userdata.phonenumber %><br>
+																			<%= userdata.address %><br>
+																				<%= userdata.city %><br>
+																					<%= userdata.state %><br>
+																						<%= userdata.country %><br>
+																							<%= userdata.pincode %><br>
+																								<% }); %>
+																									<a
+																										href="/editaddress?id=<%= item._id %>">Edit
+																										<i
+																											class="icon-edit"></i></a>
+																</p>
+																<a style="color: initial; cursor: pointer;"
+																	onmouseover="this.style.color='blueviolet'"
+																	onmouseout="this.style.color='initial'"
+																	onclick="deleteaddress('<%= item._id %>')">Delete <i
+																		class="icon-edit"></i></a>
+
+														</div><!-- End .card-body -->
+													</div><!-- End .card-dashboard -->
+												</div><!-- End .col-lg-6 -->
+												<% }); %>
+										</div>
 
 
-document.addEventListener('DOMContentLoaded', function () {
-  const emailInput = document.querySelector('input[name="Email"]');
-  const emailErrorMessage = document.getElementById('email-error-message');
+										<div class="col-lg-6">
+											<div class="card card-dashboard">
+												<div class="card-body">
+													<h3 class="card-title">Shipping Address</h3><!-- End .card-title -->
 
-  emailInput.addEventListener('blur', async function () {
-    const email = emailInput.value;
+													<p>You have not set up this type of address yet.<br>
+														<a href="#">Edit <i class="icon-edit"></i></a>
+													</p>
+												</div><!-- End .card-body -->
+											</div><!-- End .card-dashboard -->
+										</div><!-- End .col-lg-6 -->
+									</div><!-- End .row -->
+								</div><!-- .End .tab-pane -->
 
-    const response = await fetch('/check-email', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email }),
-    });
+								<div class="tab-pane fade" id="tab-account" role="tabpanel"
+									aria-labelledby="tab-account-link">
+									<form action="/newPassword" method="post">
+										<div class="row">
+											<div class="col-sm-6">
+												<label>First Name *</label>
+												<input type="text" class="form-control" required>
+											</div><!-- End .col-sm-6 -->
 
-    const data = await response.json();
+											<div class="col-sm-6">
+												<label>Last Name *</label>
+												<input type="text" class="form-control" required>
+											</div><!-- End .col-sm-6 -->
+										</div><!-- End .row -->
 
-    if (data.emailExists) {
-      emailErrorMessage.textContent = '';
-    } else {
-      emailErrorMessage.textContent = 'Email does not match our records';
-    }
-  });
-});
+										<label>Display Name *</label>
+										<input type="text" class="form-control" required>
+										<small class="form-text">This will be how your name will be displayed in the
+											account section and in reviews</small>
+
+										<label>Email address *</label>
+										<input type="email" class="form-control" required name="Email">
+										<div id="email-error-message" class="text-danger"></div>
+
+										<label>Current password (leave blank to leave unchanged)</label>
+										<input type="password" class="form-control" name="CurrentPassword" required>
+
+										<label>New password (leave blank to leave unchanged)</label>
+										<input type="password" class="form-control" name="NewPassword" required>
+
+										<label>Confirm new password</label>
+										<input type="password" class="form-control mb-2" name="ConfirmNewPassword"
+											required>
+
+										<button type="submit"
+											onclick="return confirm('Are you sure? Do you want to Change your password')"
+											class="btn btn-outline-primary-2">
+											<span>SAVE CHANGES</span>
+											<i class="icon-long-arrow-right"></i>
+										</button>
+									</form>
+								</div><!-- .End .tab-pane -->
+							</div>
+						</div><!-- End .col-lg-9 -->
+					</div><!-- End .row -->
+				</div><!-- End .container -->
+			</div><!-- End .dashboard -->
+		</div><!-- End .page-content -->
+	</main><!-- End .main -->
+
+	<script>
+
+
+		function deleteaddress(id) {
+			console.log(id);
+			$.ajax({
+				method: "post",
+				url: "/deleteaddress",
+				data: { id: id },
+				success: function (response) {
+					if (response.res === true) {
+						// console.log('operation sucess');
+						$('#sampleId').load('/profile #sampleId');
+					} else {
+						console.log('Error:', response);
+					}
+				},
+				error: function (error) {
+					console.log('Error:', error);
+				}
+			});
+		}
 
 
 
 
-			</script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const emailInput = document.querySelector('input[name="Email"]');
+			const emailErrorMessage = document.getElementById('email-error-message');
 
-<%- include('../user/layout/footer.ejs') -%>
+			emailInput.addEventListener('blur', async function () {
+				const email = emailInput.value;
+
+				const response = await fetch('/check-email', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({ email }),
+				});
+
+				const data = await response.json();
+
+				if (data.emailExists) {
+					emailErrorMessage.textContent = '';
+				} else {
+					emailErrorMessage.textContent = 'Email does not match our records';
+				}
+			});
+		});
+
+
+
+
+	</script>
+
+	<%- include('../user/layout/footer.ejs') -%>

@@ -1,63 +1,70 @@
-
-
 <%- include ('../admin/layouts/header.ejs')-%>
-    
-        <!-- partial -->
-        <div class="main-panel">
-          <div class="content-wrapper">
-           
-            <div class="row">
-              <div class="col-lg-12  grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <h4 class="card-title">Product Management</h4>
-                    <a href="/admin/addproduct" class="btn btn-primary">Add Product</a>
 
-                    <div class="table-responsive">
-                      <table class="table">
-                        <thead>
-                          <tr>
-                            <th>Product Name</th>
-                            <th> Category</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
-                          </tr>
-                         
-                          <% data.forEach((item)=>{ %>
-                            <tr>
-                            <td><%= item.productname %></td>
-                            <td><%= item.category %></td>
-                            <td><%= item.quantity %></td>
-                            <td><%= item.price %></td>
-                            <td>
-                              <p><a href="/admin/delete/product?id=<%= item._id %>" class="badge badge-danger" onclick="return confirm('Are you sure? Do you want to Delete')">Delete</a></p>
-                            </td>
-                            <td>
-                              <p><a href="/admin/edit/product?id=<%= item._id %>" class="btn btn-primary">Edit</a></p>
-                            </td>
-                            <td><% if(item.status == 0){%><p><a href="/admin/list/product?id=<%= item._id %>" class="badge badge-danger"  onclick="return confirm('Are you sure? Do you want to Unlist')">Unlist</a></p>
-                              <%
-                            }
-                            else{ %><p><a href="/admin/list/product?id=<%= item._id %>" class="badge badge-success" onclick="return confirm('Are you sure? Do you want to list')">List</a></p>
-                            <%
-                            }%></td>
-                          </tr>  <% });
-                           %>
-                          
-                          
-                        
-                        </thead>
-                        <tbody>
-                       
-                              
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
+  <!-- partial -->
+  <div class="main-panel">
+    <div class="content-wrapper">
+
+      <div class="row">
+        <div class="col-lg-12  grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Product Management</h4>
+              <a href="/admin/addproduct" class="btn btn-primary">Add Product</a>
+
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Product Name</th>
+                      <th> Category</th>
+                      <th>Quantity</th>
+                      <th>Price</th>
+                    </tr>
+
+                    <% data.forEach((item)=>{ %>
+                      <tr>
+                        <td>
+                          <%= item.productname %>
+                        </td>
+                        <td>
+                          <%= item.category %>
+                        </td>
+                        <td>
+                          <%= item.quantity %>
+                        </td>
+                        <td>
+                          <%= item.price %>
+                        </td>
+                        <td>
+                          <p><a href="/admin/delete/product?id=<%= item._id %>" class="badge badge-danger"
+                              onclick="return confirm('Are you sure? Do you want to Delete')">Delete</a></p>
+                        </td>
+                        <td>
+                          <p><a href="/admin/edit/product?id=<%= item._id %>" class="btn btn-primary">Edit</a></p>
+                        </td>
+                        <td>
+                          <% if(item.status==0){%>
+                            <p><a href="/admin/list/product?id=<%= item._id %>" class="badge badge-danger"
+                                onclick="return confirm('Are you sure? Do you want to Unlist')">Unlist</a></p>
+                            <% } else{ %>
+                              <p><a href="/admin/list/product?id=<%= item._id %>" class="badge badge-success"
+                                  onclick="return confirm('Are you sure? Do you want to list')">List</a></p>
+                              <% }%>
+                        </td>
+                      </tr>
+                      <% }); %>
+
+
+
+                  </thead>
+                  <tbody>
+
+
+                  </tbody>
+                </table>
               </div>
-       
-         <%- include ('../admin/layouts/footer.ejs')-%>
+            </div>
+          </div>
+        </div>
 
-
-
+        <%- include ('../admin/layouts/footer.ejs')-%>

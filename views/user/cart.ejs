@@ -52,7 +52,7 @@
                                     
                                 </li>
                                 <li>
-                                    <a href="category.html" class="sf-with-ul">Shop</a>
+                                    <a href="/shop" class="sf-with-ul">Shop</a>
 
                                    
                                 </li>
@@ -305,7 +305,7 @@
                                                                     <button style="min-width: 26px" class="btn btn-decrement btn-spinner" onclick="AddingCount(-1,'<%= element.productid._id %>')" type="button" fdprocessedid="oe68nu">
                                                                         <i class="icon-minus"></i></button>
                                                                     </div>
-                                                                    <input type="text" style="text-align: center" class="form-control " required="" placeholder="" fdprocessedid="kzohym"value="<%= element.count %>">
+                                                                    <input type="text" style="text-align: center" id="value" class="form-control " required="" placeholder="" fdprocessedid="kzohym"value="<%= element.count %>" >
                                                                     <div class="input-group-append">
                                                                         <button style="min-width: 26px" class="btn btn-increment btn-spinner" onclick="AddingCount(1,'<%= element.productid._id %>')" type="button" fdprocessedid="4dpds">
                                                                             <i class="icon-plus"></i></button>
@@ -474,6 +474,10 @@ console.log(finalamount);
 const result = document.querySelector('#total');
 result.textContent = "Rs" + parseInt(finalamount);
 }
+
+document.getElementById('value')
+
+
 
         </script>
 
