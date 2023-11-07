@@ -22,7 +22,7 @@ const users = new mongoose.Schema({
     },
     is_verified:{
         type: Number,
-        requiredP:true
+        default:0
     },status:{
         type: Number,
         required:true

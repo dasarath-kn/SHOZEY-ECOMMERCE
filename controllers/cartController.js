@@ -100,13 +100,14 @@ const AddingProductCount = async(req,res)=>{
         const id=req.session.userId
         const val =req.body.val
         const data = await product.findOne({_id:productid})
-        const cartitems = await cart.findOne({userid:id}).populate("items.productid") 
-        
-      
-        
+        console.log(productid);
+        const cartitems = await cart.findOne({userid:id,'items.productid':productid},{ 'items.$': 1 }) 
+          const count = cartitems.items[0].count
+        console.log(count);
+
         if(data.quantity >0 ){
             if(val ==1){
-                if(data.quantity >0  ){
+                if(data.quantity >= count  ){
              await cart.updateOne(
             { userid: id, "items.productid": productid },
             { $inc: { "items.$.count": 1 } });
@@ -121,13 +122,17 @@ const AddingProductCount = async(req,res)=>{
             }
 
             else if(val == -1){
-                
+                if(count>1){
                 await cart.updateOne(
                  { userid: id, "items.productid": productid },
                  { $inc: { "items.$.count": -1 } });
                  console.log("count decreased");
                 
                  res.json({result:true})
+                }
+                 else{
+                    console.log("Count 1 is fixed");
+                 }
 
             }
             

@@ -100,6 +100,17 @@ const validation = async (req, res) => {
                     req.session.name = check.firstname;
                     res.redirect('/home');
                 }
+                else if(check.is_verified == 0 && check.status ==0){
+                    console.log("hfghjhj");
+                 const id = req.body.email
+                 const username = await user.findOne({email:id})
+                 const name = username.name
+                 const _id =username._id 
+                 sendVerifyMail( name,req.body.email);
+                    res.render('otp',{userid: _id })
+                   
+                    res.redirect('/cart')
+                }
                 else {
 
                     res.render('signin', { message: "Please verify your mail", user: req.session.name, cartdata });
@@ -108,7 +119,7 @@ const validation = async (req, res) => {
             }
 
         } else if (check != req.body.password) {
-            res.render('signin', { message: "Invalid password", user: req.session.name.cartdata })
+            res.render('signin', { message: "Invalid password", user: req.session.name,cartdata })
         }
         else {
             res.render('signin', { message: "Invalid mail", user: req.session.name, cartdata });
@@ -161,7 +172,7 @@ const insertdata = async (req, res) => {
 
             const data = await userdata.save();
             if (userdata) {
-                sendVerifyMail(req.body.firstname, req.body.email, userdata._id);
+                sendVerifyMail(req.body.firstname, req.body.email);
                 email2 = req.body.email
                 firstname = req.body.firstname
                 res.render('otp', { userid: data._id })
@@ -184,11 +195,11 @@ function otpgenerator() {
     otpsend = Math.floor(100000 + Math.random() * 900000);
 }
 
-const sendVerifyMail = async (name, email, user_id) => {
+const sendVerifyMail = async (name, email) => {
     try {
-        setTimeout(() => {
+        
             otpgenerator();
-        }, 120000)
+       
 
         const transporter = nodemailer.createTransport({
             host: 'smtp.gmail.com',
@@ -208,7 +219,7 @@ const sendVerifyMail = async (name, email, user_id) => {
             from: process.env.EMAIL,
             to: email,
             subject: "For Verification ",
-            html: `<p>Hi,</p><p>Your OTP is: <strong>${otpsend}</strong></p>`
+            html: `<p>Hi,</p><p><b>${name}</b>Your OTP is: <strong>${otpsend}</strong></p>`
         }
         transporter.sendMail(mailoptions, (error, info) => {
             if (error) {
@@ -234,10 +245,13 @@ const verifymail = async (req, res) => {
         // console.log("user enterd otp"+req.body.otp);
 
         if (req.body.otp == otpsend) {
+            console.log("helloooooooooooooooooooooooo");
+            const id= req.query.id
+            console.log(id);
             const updateinfo = await user.updateOne({ _id: req.query.id }, { $set: { is_verified: 1 } });
 
             console.log(updateinfo);
-            res.redirect('/home')
+            res.redirect('/signin')
         } else {
             console.log("Not verified");
         }

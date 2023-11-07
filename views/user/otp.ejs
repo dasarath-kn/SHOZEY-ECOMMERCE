@@ -24,7 +24,7 @@
             border-radius: 20px; /* Increased border radius */
         }
         .card-header {
-            background-color: #2c3e50;
+            background-color: rgb(243, 243, 243);
             color: #fff;
             text-align: center;
             border-radius: 20px 20px 0 0; /* Adjusted border radius */
@@ -44,14 +44,14 @@
             font-size: 18px; /* Increased font size */
         }
         .btn-primary {
-            background-color: #2c3e50;
+            background-color: #e3b04b;
             border: none;
             border-radius: 10px; /* Increased border radius */
             font-size: 20px; /* Increased font size */
             padding: 15px 20px; /* Increased padding */
         }
         .btn-primary:hover {
-            background-color: #1a252f;
+            background-color: rgb(193, 193, 193);
         }
     </style>
 </head>
@@ -59,7 +59,7 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                <h2>OTP Verification</h2> <!-- Increased header font size -->
+                <h2 style="color: black;">OTP Verification</h2> <!-- Increased header font size -->
             </div>
             <div class="card-body">
                 <form action="/verifymail?id=<%= userid %>" method="post">
@@ -71,10 +71,10 @@
                     <button type="submit" class="btn btn-primary btn-block">Verify OTP</button>
                 </form>
                 
+                <form action="/resendotp?id=<%= userid %>" >
+                    <button type="submit" class="btn btn-light btn-block">Resend OTP</button>
+                </form>
             </div>
-            <form action="/resendotp?id=<%= userid %>" >
-                <button type="submit" class="btn btn-secondary btn-block">Resend OTP</button>
-            </form>
         </div>
     </div>
 
