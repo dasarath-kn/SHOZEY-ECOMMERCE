@@ -2,6 +2,7 @@ const user = require('../models/userModel');
 const category = require('../models/categoryModel');
 const product = require('../models/productModel');
 const order = require('../models/orderModel');
+const coupon = require("../models/couponModel");
 // const { render } = require('ejs');
 const sharp = require('sharp');
 const data = {
@@ -366,7 +367,7 @@ const dashboard = async (req, res) => {
         const orders = await order.find().sort({ purchaseDate: -1 }).populate("items.productid");
         const customer = await user.find().count();
         const ordercount = await order.find().count();
-        const cancelledorders = await order.find({status:'cancelled'}).count();
+        const cancelledorders = await order.find({ status: 'cancelled' }).count();
         const orderdata = await order.aggregate([{ $match: { status: "delivered" } },
         { $group: { _id: null, total: { $sum: '$totalAmount' } } }])
         const data = orderdata[0].total
@@ -388,7 +389,7 @@ const dashboard = async (req, res) => {
         const online = await order.aggregate([{ $match: { status: 'delivered', paymentMethod: 'Online Payment' } }, { $group: { _id: null, total: { $sum: '$totalAmount' } } }])
         const onlinetotal = online[0].total
 
-        res.render('dashboard', { orders, data, value, stock, codcount, onlinecount, codtotal, onlinetotal,customer,ordercount,cancelledorders})
+        res.render('dashboard', { orders, data, value, stock, codcount, onlinecount, codtotal, onlinetotal, customer, ordercount, cancelledorders })
     } catch (error) {
         console.log(error.message);
     }
@@ -398,16 +399,16 @@ const dashboard = async (req, res) => {
 
 const salesreport = async (req, res) => {
     try {
-        var data=[]
-        var k=0
+        var data = []
+        var k = 0
         const orderdata = await order.find().populate('items.productid').sort({ purchaseDate: -1 })
         // const orderproducts = await order.aggregate([{$project:{"items.productid":productname}}]).populate("items.productid")
         // console.log(orderproducts);
-        const week1= await order.find({status:"delivered"}).count()
+        const week1 = await order.find({ status: "delivered" }).count()
         console.log(week1);
-       
+
         console.log(data);
-        res.render('salesreport', { orderdata,week1 })
+        res.render('salesreport', { orderdata, week1 })
     } catch (error) {
         console.log(error.message);
     }
@@ -422,13 +423,94 @@ const salessort = async (req, res) => {
         const isoDate2 = new Date(dateend);
 
         const orderdata = await order.find({ purchaseDate: { $gte: isoDate1, $lte: isoDate2 } })
-        const week1= await order.find({status:"delivered"}).count()
+        const week1 = await order.find({ status: "delivered" }).count()
         console.log(week1);
 
         console.log(orderdata);
-        res.render('salesreport', { orderdata,week1 })
+        res.render('salesreport', { orderdata, week1 })
         // console.log(data);
         // console.log(isoDate);
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+//=================================== COUPON =====================================//
+
+const couponmanagement = async (req, res) => {
+    try {
+        const coupondata = await coupon.find()
+        res.render('coupon', { coupondata });
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+
+const addcoupon = async (req, res) => {
+    try {
+        res.render('addcoupon')
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const coupondata = async (req, res) => {
+    try {
+
+        const data = new coupon({
+            couponname: req.body.couponname,
+            couponcode: req.body.couponcode,
+            discountamount: req.body.discountamount,
+            activationdate: req.body.activationdate,
+            expirydate: req.body.expirydate,
+            criteriaamount: req.body.criteriaamount,
+            userslimit: req.body.userslimit,
+            description: req.body.description
+
+        })
+        await data.save()
+        console.log(data);
+        res.redirect('/admin/coupon')
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const editingcoupon = async (req, res) => {
+    try {
+        const id = req.query.id
+        const coupondata = await coupon.findOne({ _id: id });
+
+        res.render('editcoupon', { coupondata })
+
+    } catch (error) {
+        console.log(error.message);
+    }
+
+}
+
+const editedcoupondata = async (req, res) => {
+    try {
+        const id = req.query.id
+
+        await coupon.updateOne({_id: id }, {
+            $set: {
+                couponname: req.body.couponname,
+                couponcode: req.body.couponcode,
+                discountamount: req.body.discountamount,
+                activationdate: req.body.activationdate,
+                expirydate: req.body.expirydate,
+                criteriaamount: req.body.criteriaamount,
+                userslimit: req.body.userslimit,
+                description: req.body.description
+            }
+        })
+          res.redirect('/admin/coupon')
+
 
     } catch (error) {
         console.log(error.message);
@@ -473,5 +555,10 @@ module.exports = {
     orderdetails,
     dashboard,
     salesreport,
-    salessort
+    salessort,
+    couponmanagement,
+    addcoupon,
+    coupondata,
+    editingcoupon,
+    editedcoupondata
 }

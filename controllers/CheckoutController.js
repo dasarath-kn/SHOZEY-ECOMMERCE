@@ -195,7 +195,7 @@ const verifypayment = async(req,res)=>{
         const cartData = await cart.findOne({userid:user_id})
         console.log(cartData);
     
-        const hmac = crypto.createHmac("sha256", 'EclX20mfIDWVRBGPneTZWpqV');
+        const hmac = crypto.createHmac("sha256", process.env.ROZORPAYSECRETKEY);
         hmac.update( paymentData.payment.razorpay_order_id  +"|" +  paymentData.payment.razorpay_payment_id );
         const hmacValue = hmac.digest("hex");
     

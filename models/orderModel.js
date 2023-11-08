@@ -55,6 +55,10 @@ const orderdetails = mongoose.Schema({
        shippingFee: {
          type: String,
          required: true
+       },
+       couponid:{
+        type:String,
+        ref:"coupon"
        }
 });
 

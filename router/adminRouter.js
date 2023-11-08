@@ -69,6 +69,13 @@ router.get('/dashboard',adminController.dashboard)
 router.get('/salesreport',adminController.salesreport)
 router.post('/salessort',adminController.salessort)
 
+//=================================== COUPON =====================================//
+
+router.get('/coupon',adminController.couponmanagement);
+router.get('/addcoupon',adminController.addcoupon);
+router.post('/coupondata',adminController.coupondata)
+router.get('/editingcoupon',adminController.editingcoupon);
+router.post('/editedcoupondata',adminController.editedcoupondata)
 //=================================== LOG-OUT =====================================//
 
 

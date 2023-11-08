@@ -1,0 +1,62 @@
+<%- include ('../admin/layouts/header.ejs')-%>
+
+    <!-- partial -->
+    <div class="col-12 mt-5 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title"></h4>
+                <!-- <p class="card-description"> Basic form elements </p> -->
+                <form class="forms-sample" action="/admin/coupondata" method="post" >
+                    <div class="form-group">
+                        <label for="exampleInputName1">Coupon Name</label>
+                        <input type="text" class="form-control" id="exampleInputName1" placeholder="Coupon Name "
+                            name="couponname" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail3">Coupon Code</label>
+                        <input type="text" class="form-control" id="exampleInputEmail3" placeholder="Coupon Code"
+                            name="couponcode" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword4">Discount Amount</label>
+                        <input type="number" class="form-control" id="exampleInputPassword4"
+                           name="discountamount" placeholder="Discount Amount" name="price" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="avtivationDate">Activation Date</label>
+                        <input type="date" class="form-control" id="activationErr" 
+                          name="activationdate"  placeholder="activation date" style="color: white;" required>
+                        <p style="color: red;" id="activationErr"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="avtivationDate">Expiry Date</label>
+                        <input type="date" class="form-control" id="activationErr"
+                          name="expirydate"  placeholder="activation date" style="color: white;" required>
+                        <p style="color: red;" id="activationErr"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword4">Criteria Amount</label>
+                        <input type="number" class="form-control" id="exampleInputPassword4"
+                            placeholder="Criteria Amount" name="criteriaamount" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword4">Users limit</label>
+                        <input type="number" class="form-control" id="exampleInputPassword4" placeholder="Users limit"
+                            name="userslimit" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleTextarea1">Description</label>
+                        <textarea class="form-control" id="exampleTextarea1" rows="4" placeholder="Description"
+                            name="description" required></textarea>
+                    </div>
+
+
+                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <button class="btn btn-dark"><a href="/admin/coupon">Cancel</a></button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <%- include ('../admin/layouts/footer.ejs')-%>
