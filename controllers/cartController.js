@@ -46,20 +46,28 @@ const cartAdding= async(req,res)=>{
         const productid = req.body.id
        
         const data = await product.findOne({_id:productid});
-       console.log(data);
         const cartdata = await cart.findOne({userid:id,"items.productid":productid});
         
-        if(id){
         
-        if(data.quantity>1){
-
-            if(cartdata){
+        if(id){
+            
+            if(data.quantity>1){
+                
+                if(cartdata){
+                const cartitems = await cart.findOne({userid:id,'items.productid':productid},{ 'items.$': 1 }) 
+                const count = cartitems.items[0].count
+               
+                if(data.quantity > count  ){
                 console.log("Existing data on cart");
                 await cart.updateOne(
                     { userid: id, "items.productid": productid },
                     { $inc: { "items.$.count": 1 } }
                   );
             console.log("Cart product count increased");
+            res.json({count:true})}
+            else{
+                res.json({result:false})
+            }
             
             }
             else{
@@ -107,7 +115,7 @@ const AddingProductCount = async(req,res)=>{
 
         if(data.quantity >0 ){
             if(val ==1){
-                if(data.quantity >= count  ){
+                if(data.quantity > count  ){
              await cart.updateOne(
             { userid: id, "items.productid": productid },
             { $inc: { "items.$.count": 1 } });
@@ -151,6 +159,7 @@ const AddingProductCount = async(req,res)=>{
 
 const deleteCartItems = async(req,res)=>{
     try {
+        console.log("eiooijoewj");
         const id = req.query.id
         const sessionid = req.session.userId;
       

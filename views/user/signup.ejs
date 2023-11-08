@@ -40,12 +40,12 @@
 		            </div>
                     <div class="form-group mb-3">
 		            	<label class="label" for="password">Phone Number</label>
-		              <input type="phonenumber" id ="number"class="form-control" placeholder="Phone Number" required name="phonenumber">
+		              <input type="phonenumber" id ="number"class="form-control" placeholder="Phone Number"  name="phonenumber" required>
 					  <span id="phonenumberError" style="color: red;"></span>
 		            </div>
                     <div class="form-group mb-3">
 		            	<label class="label" for="password">Password</label>
-		              <input type="password" id="SignUp-password" class="form-control" placeholder="Password" required name="password">
+		              <input type="password" id="SignUp-password" class="form-control" placeholder="Password"  name="password" required>
 					  <span id="passwordError" style="color: red;"></span>
 		            </div>
 		            <div class="form-group">
@@ -98,13 +98,15 @@
 		const phonenumber = document.getElementById('number');
 		phonenumber.addEventListener('input',validphonenumber);
 		function validphonenumber(){
-			const phonenumber=document.getElementById('number').value;
-			const phonenumberpattern =/^\d{10}$/;
-			if(phonenumber.trim()==""){
+			const phone=document.getElementById('number').value;
+			const phonenumberpattern =/\b\d{10}\b/
+
+;
+			if(phone.trim()==""){
 				document.getElementById("phonenumberError").innerHTML = "Please enter a valid phonenumber"
 				phonenumber.setCustomValidity("Please enter a valid phonenumber");
 			}
-			if(!phonenumber.match(phonenumberpattern)){
+			if(!phone.match(phonenumberpattern)){
 				document.getElementById('phonenumberError').innerHTML="Phonenumber must contain 10 digits";
 				phonenumber.setCustomValidity("Phonenumber must contain 10 digits");
 			}else{
@@ -117,16 +119,16 @@
 
 		password.addEventListener('input',validpassword);
 		function validpassword(){
-			const password= document.getElementById("SignUp-password").value;
+			const pass= document.getElementById("SignUp-password").value;
 			const passwordpattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/
 
 
-				if(password.trim()===""){
+				if(pass.trim()=== ""){
 					document.getElementById('passwordError').innerHTML = "Please enter a password"
 					password.setCustomValidity("Please enter a password");
 				}
 				else{
-			if(!password.match(passwordpattern)){
+			if(!pass.match(passwordpattern)){
 				document.getElementById('passwordError').innerHTML ="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters";
 				password.setCustomValidity("Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters");
 			}else{

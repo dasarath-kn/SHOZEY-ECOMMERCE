@@ -82,22 +82,27 @@
      const otp =   document.getElementById('otp');
      otp.addEventListener("input",otpvalid)
      function otpvalid () {
-        const otp = document.getElementById('otp').value;
-        const otpformat = /^[0-9]+$/
+        const otpdata = document.getElementById('otp').value;
+        const otpformat = "<%= otpnumber %>"
 
-        if(otp.trim()===""){
+        if(otpdata.trim()===""){
             document.getElementById("otpError").innerHTML = "Enter the otp"
+            otp.setCustomValidity("Enter the otp");
         }
         else{
-            if(!otp.match(otpformat)){
-                document.getElementById("otpError").innerHTML = "Invalid otp format "
+            if(!otpdata.match(otpformat)){
+                document.getElementById("otpError").innerHTML = "Invalid otp entered "
+                otp.setCustomValidity("Invalid otp entered");
             }
             else{
                 document.getElementById('otpError').innerHTML = " "
-            }
+                otp.setCustomValidity("");
         }
         
      }
+    }8
+
+     
         </script>
     <!-- Add Bootstrap JS and jQuery scripts here -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

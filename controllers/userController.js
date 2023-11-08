@@ -11,6 +11,7 @@ const { orderplaced } = require('./CheckoutController');
 
 let nameResend
 let email2
+let items
 
 
 const admin = async (req, res) => {
@@ -107,7 +108,8 @@ const validation = async (req, res) => {
                  const name = username.name
                  const _id =username._id 
                  sendVerifyMail( name,req.body.email);
-                    res.render('otp',{userid: _id })
+                 const otpnumber=items.otp
+                    res.render('otp',{userid: _id,otpnumber })
                    
                     res.redirect('/cart')
                 }
@@ -175,7 +177,8 @@ const insertdata = async (req, res) => {
                 sendVerifyMail(req.body.firstname, req.body.email);
                 email2 = req.body.email
                 firstname = req.body.firstname
-                res.render('otp', { userid: data._id })
+                const otpnumber=items.otp
+                res.render('otp', { userid: data._id,otpnumber })
 
             } else {
                 res.redirect('/signup');
@@ -228,7 +231,7 @@ const sendVerifyMail = async (name, email) => {
                 console.log("Email has been send:-", info.response, otpsend);
             }
         })
-        const items = new otpmodel({
+         items = new otpmodel({
             email: email,
             otp: otpsend
         })

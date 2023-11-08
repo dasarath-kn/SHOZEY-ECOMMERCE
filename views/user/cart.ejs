@@ -292,7 +292,7 @@
                                                                     </figure>
                                         
                                                                     <h3 class="product-title">
-                                                                        <a href="#"><%= element.productid.productname %></a>
+                                                                        <a href="/productdetails?id=<%= item._id %>"><%= element.productid.productname %></a>
                                                                     </h3>
                                                                 </div>
                                                             </td>
@@ -314,6 +314,7 @@
                                                             </td>
                                                             <td class="total-col">Rs.<%= element.productid.price * element.count %></td>
                                                             <td class="remove-col">
+                                                                
                                                                 <a href="/deleteCartItems?id=<%= element.productid._id %>" class="btn-remove">
                                                                     <i class="icon-close"></i>
                                                                 </a>
@@ -414,7 +415,7 @@
 
                                 </div><!-- End .summary -->
 
-		            			<a href="category.html" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE SHOPPING</span><i class="icon-refresh"></i></a>
+		            			<a href="/" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE SHOPPING</span><i class="icon-refresh"></i></a>
 	                		</aside><!-- End .col-lg-3 -->
                             <%}%>
                             
@@ -437,7 +438,8 @@
                    $('#Cart').load('/cart #Cart') 
                    $('#downCart').load('/cart #downCart') 
 
-                } else if(response.result === false){
+                }
+                 else if(response.result === false){
                     Swal.fire({
                     title:'OUT OF STOCK',
                     text:'product is out of stock',
