@@ -29,7 +29,7 @@
                                     <button onclick="couponsubmit('<%= totalsum %>')"
                                         class="btn btn-outline-primary-2" type="button"><i
                                             class="icon-long-arrow-right"></i></button>
-                                    <button type="button">
+                                    <button type="button" onclick="coupondelete('<%= totalsum %>')">
                                         <i class="icon-close"></i>
                                     </button>
 
@@ -65,11 +65,11 @@
                                                                     </h3>
                                                                     <div
                                                                         class="coupon-code-container mt-2">
-                                                                        <h6
+                                                                        <h4
                                                                             class="card-subtitle mb-2 text-muted">
                                                                             Code: <%= coupondata[i].
                                                                                 couponcode %>
-                                                                        </h6>
+                                                                        </h4>
                                                                         <span class="copy-icon"
                                                                             onclick="console.log(this.getAttribute('data-coupon-code')); copyCouponCode(this.getAttribute('data-coupon-code'))">
                                                                             <i class="fas fa-copy"></i>
@@ -96,8 +96,8 @@
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
                                                     data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary">Save
-                                                    changes</button>
+                                                <!-- <button type="button" class="btn btn-primary">Save
+                                                    changes</button> -->
                                             </div>
                                         </div>
                                     </div>
@@ -171,10 +171,12 @@
                                     <td>Shipping:</td>
                                     <td>Free shipping</td>
                                 </tr>
+                                <div id="reload">
                                 <tr class="summary-total">
                                     <td>Total:</td>
                                     <td id="total">Rs.<%= totalsum %></td>
                                 </tr><!-- End .summary-total -->
+                            </div>
                             </tbody>
                         </table><!-- End .table table-summary -->
                         <div class="d-flex align-items-center">
@@ -238,6 +240,7 @@
     </div><!-- End .page-content -->
 </main><!-- End .main -->
 <script>
+
     // function selectaddress(radio){
     //     const address= radio.value
         
@@ -340,6 +343,11 @@ function couponsubmit(amount) {
             }
 
 
+          function  coupondelete(amount){
+            console.log("jlkdsf");
+
+          }
+
 
 $(document).ready(function () {
     
@@ -431,3 +439,4 @@ $(document).ready(function () {
  }
 
 </Script>
+<%- include('../user/layout/footer.ejs') -%>
