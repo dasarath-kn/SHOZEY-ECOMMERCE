@@ -1,12 +1,14 @@
 const user =require('../models/userModel');
 const product = require('../models/productModel');
 const cart= require('../models/cartModel');
+const coupon =require('../models/couponModel');
 
 //=================================== CART-MANAGEMENT =====================================//
 const cartRendering =async (req,res)=>{
 
     
     try {
+    const coupondata =await coupon.find()
     const id = req.session.userId;
     const data = await cart.find({ userid: id });
     const total = await cart.findOne({ userid: id }).populate('items.total');
@@ -26,7 +28,7 @@ const cartRendering =async (req,res)=>{
     const cartdata = await cart.find({ userid: id }).populate("items.productid");
     
     if (data) {
-        res.render('cart', { user: req.session.name, cartdata, data, id, totalsum,express,standard });
+        res.render('cart', { user: req.session.name, cartdata, data, id, totalsum,express,standard,coupondata });
     } else {
         console.log("Your cart is empty.");
     }

@@ -20,13 +20,92 @@
         <div class="checkout"  id="checkout">
             <div class="container">
                 <div class="checkout-container" style="display: flex;">
-                    <div class="checkout-discount">
+                    <div class="cart-discount">
                         <form action="#">
-                            <input type="text" class="form-control" required id="checkout-discount-input">
-                            <label for="checkout-discount-input" class="text-truncate">Have a coupon? <span>Click here to enter your code</span></label>
-                            <p id="address" style="color: red;" ></p>
+                            <div class="input-group">
+                                <input type="text" id="couponcode" class="form-control" required
+                                    placeholder="coupon code">
+                                <div class="input-group-append">
+                                    <button onclick="couponsubmit('<%= totalsum %>')"
+                                        class="btn btn-outline-primary-2" type="button"><i
+                                            class="icon-long-arrow-right"></i></button>
+                                    <button type="button">
+                                        <i class="icon-close"></i>
+                                    </button>
+
+                                </div><!-- .End .input-group-append -->
+                                <button type="button" id="proceed-to-checkout" data-toggle="modal"
+                                    data-target="#exampleModalLong"
+                                    class="btn btn-outline-primary-2 btn-order btn-block">Select Coupon
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModalLong" tabindex="-1"
+                                    role="dialog" aria-labelledby="exampleModalLongTitle"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLongTitle">
+                                                    Coupons
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <% for(let i=0;i<coupondata.length;i++){%>
+                                                    <% if(coupondata[i].status==0) {%>
+                                                        <div>
+                                                            <div class="card" style="width: 29rem;">
+                                                                <div class="card-body">
+                                                                    <h3 class="card-title">
+                                                                        <%= coupondata[i]. couponname %>
+                                                                    </h3>
+                                                                    <div
+                                                                        class="coupon-code-container mt-2">
+                                                                        <h6
+                                                                            class="card-subtitle mb-2 text-muted">
+                                                                            Code: <%= coupondata[i].
+                                                                                couponcode %>
+                                                                        </h6>
+                                                                        <span class="copy-icon"
+                                                                            onclick="console.log(this.getAttribute('data-coupon-code')); copyCouponCode(this.getAttribute('data-coupon-code'))">
+                                                                            <i class="fas fa-copy"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                    <span>only for up to: <p>
+                                                                            <%= coupondata[i].
+                                                                                expirydate.toLocaleDateString('en-US',
+                                                                                { year: 'numeric' ,
+                                                                                month: 'short' ,
+                                                                                day: '2-digit'
+                                                                                }).replace(/\//g,'-')%>
+                                                                        </p></span>
+                                                                    <p class="card-text">
+                                                                        <%= coupondata[i]. description%>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <%}%>
+                                                            <%}%>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary">Save
+                                                    changes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div><!-- End .input-group -->
                         </form>
-                    </div><!-- End .checkout-discount -->
+                    </div>
                 
                     <div class="add-new-address" style="margin-left: auto; margin-top: 2rem;">
                         <a href="/address">Add New Address</a>
@@ -220,6 +299,47 @@
 //     })
 
 // })
+
+function couponsubmit(amount) {
+                const value = document.getElementById('couponcode').value
+                console.log(value);
+                $.ajax({
+                    method: "post",
+                    url: "/coupondata",
+                    data: JSON.stringify({ val: value, total: amount }),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        if (response.result == true) {
+                            $('#total').text('Rs.' + response.reducedamount);
+                            $('#reload').load('/cart #reload')
+
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "success",
+                                title: "Coupon Added Successfully"
+                            });
+
+                        }
+                        else {
+                            Swal.fire("ERROR");
+                        }
+                    }
+
+
+                })
+            }
+
+
 
 $(document).ready(function () {
     

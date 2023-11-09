@@ -1,8 +1,9 @@
 const user =require('../models/userModel');
 const cart = require('../models/cartModel');
-const product =require('../models/productModel')
-const address = require('../models/addressModel')
-const order = require('../models/orderModel')
+const product =require('../models/productModel');
+const address = require('../models/addressModel');
+const order = require('../models/orderModel');
+const coupon = require('../models/couponModel');
 const Razorpay = require('razorpay');
 const crypto = require("crypto")
 require('dotenv').config()
@@ -12,9 +13,25 @@ var instance = new Razorpay({
     key_secret:process.env.ROZORPAYSECRETKEY,
   });
 
+  const checkoutdata = async(req,res)=>{
+    try {
+        const total = req.body.val
+        console.log(total);
+        if(total==0){
+            res.json({result:false})
+        }else{
+            res.json({result:true})
+        }
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+  }
+
 const ProceedtoCheckout = async(req,res)=>{
     try {
 
+        const coupondata = await coupon.find()
         const useraddress = await address.find({userId:req.session.userId});
         const id=req.session.userId;
         const data =await product.find()
@@ -30,7 +47,7 @@ const ProceedtoCheckout = async(req,res)=>{
             });
         }
         const cartdata = await cart.find({userid:id}).populate("items.productid")
-        res.render('checkout',{user:req.session.name,data,cartdata,useraddress,totalsum});
+        res.render('checkout',{user:req.session.name,data,cartdata,useraddress,totalsum,coupondata});
         
     } catch (error) {
         console.log(error.message);
@@ -231,5 +248,6 @@ module.exports={
     orderdetails,
     cancelorder,
     orderplaced,
-    verifypayment
+    verifypayment,
+    checkoutdata
 }

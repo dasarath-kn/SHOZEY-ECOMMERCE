@@ -3,6 +3,7 @@
 
 
 <!-- molla/cart.html  22 Nov 2019 09:55:06 GMT -->
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -32,7 +33,7 @@
 <body>
     <div class="page-wrapper">
         <header class="header">
-           
+
 
             <div class="header-middle sticky-header">
                 <div class="container">
@@ -42,19 +43,21 @@
                             <i class="icon-bars"></i>
                         </button>
 
-                        <h1 class="display-4 text-center mt-3" style="color: #00008B; font-weight: bold; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); font-family: 'Cursive', sans-serif; letter-spacing: 2px; text-transform: uppercase;">SHOZEY</h1>
+                        <h1 class="display-4 text-center mt-3"
+                            style="color: #00008B; font-weight: bold; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); font-family: 'Cursive', sans-serif; letter-spacing: 2px; text-transform: uppercase;">
+                            SHOZEY</h1>
 
                         <nav class="main-nav">
                             <ul class="menu sf-arrows">
                                 <li class="megamenu-container active">
                                     <a href="/" class="sf-with-ul">Home</a>
 
-                                    
+
                                 </li>
                                 <li>
                                     <a href="/shop" class="sf-with-ul">Shop</a>
 
-                                   
+
                                 </li>
                                 <li>
                                     <a href="product.html" class="sf-with-ul">Product</a>
@@ -122,76 +125,89 @@
                                             <ul>
                                                 <li><a href="single.html">Default with sidebar</a></li>
                                                 <li><a href="single-fullwidth.html">Fullwidth no sidebar</a></li>
-                                                <li><a href="single-fullwidth-sidebar.html">Fullwidth with sidebar</a></li>
+                                                <li><a href="single-fullwidth-sidebar.html">Fullwidth with sidebar</a>
+                                                </li>
                                             </ul>
                                         </li>
                                     </ul>
                                 </li>
                                 <li>
                                     <% if (!user) { %>
-                                        <li>
-                                            <a href="#" class="sf-with-ul">Profile</a>
-                                            <ul>
-                                              <li><a href="/signin">Login</a></li>
-                                              <li><a href="/profile">Profile</a></li>
-                                              <li><a href="/cart">Cart</a></li>
-                                            </ul>
-                                          </li>
-                                      <% } else { %>
-                                        
-                                        <li>
-                                            <a href="#" class="sf-with-ul"><%= user %></a>
-                                            <ul>
-                                              <li><a href="/signin">Login</a></li>
-                                              <li><a href="/logout">Logout</a></li>
-                                              <li><a href="/profile">Profile</a></li>
-                                              <li><a href="/cart">Cart</a></li>
-                                            </ul>
-                                          </li>
-                                      <% } %>
-
+                                <li>
+                                    <a href="#" class="sf-with-ul">Profile</a>
+                                    <ul>
+                                        <li><a href="/signin">Login</a></li>
+                                        <li><a href="/profile">Profile</a></li>
+                                        <li><a href="/cart">Cart</a></li>
+                                    </ul>
                                 </li>
+                                <% } else { %>
+
+                                    <li>
+                                        <a href="#" class="sf-with-ul">
+                                            <%= user %>
+                                        </a>
+                                        <ul>
+                                            <li><a href="/signin">Login</a></li>
+                                            <li><a href="/logout">Logout</a></li>
+                                            <li><a href="/profile">Profile</a></li>
+                                            <li><a href="/cart">Cart</a></li>
+                                        </ul>
+                                    </li>
+                                    <% } %>
+
+                                        </li>
                             </ul><!-- End .menu -->
                         </nav><!-- End .main-nav -->
                     </div><!-- End .header-left -->
 
                     <div class="header-right">
                         <div class="header-search">
-                            <a href="#" class="search-toggle" role="button" title="Search"><i class="icon-search"></i></a>
+                            <a href="#" class="search-toggle" role="button" title="Search"><i
+                                    class="icon-search"></i></a>
                             <form action="#" method="get">
                                 <div class="header-search-wrapper">
                                     <label for="q" class="sr-only">Search</label>
-                                    <input type="search" class="form-control" name="q" id="q" placeholder="Search in..." required>
+                                    <input type="search" class="form-control" name="q" id="q" placeholder="Search in..."
+                                        required>
                                 </div><!-- End .header-search-wrapper -->
                             </form>
                         </div><!-- End .header-search -->
                         <div class="dropdown compare-dropdown">
-                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static" title="Compare Products" aria-label="Compare Products">
+                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false" data-display="static"
+                                title="Compare Products" aria-label="Compare Products">
                                 <i class="icon-random"></i>
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right">
-                              
+
                                 <ul class="compare-products">
                                     <li class="compare-product">
-                                        <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                                        <h4 class="compare-product-title"><a href="product.html">Blue Night Dress</a></h4>
+                                        <a href="#" class="btn-remove" title="Remove Product"><i
+                                                class="icon-close"></i></a>
+                                        <h4 class="compare-product-title"><a href="product.html">Blue Night Dress</a>
+                                        </h4>
                                     </li>
                                     <li class="compare-product">
-                                        <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                                        <h4 class="compare-product-title"><a href="product.html">White Long Skirt</a></h4>
+                                        <a href="#" class="btn-remove" title="Remove Product"><i
+                                                class="icon-close"></i></a>
+                                        <h4 class="compare-product-title"><a href="product.html">White Long Skirt</a>
+                                        </h4>
                                     </li>
                                 </ul>
 
                                 <div class="compare-actions">
                                     <a href="#" class="action-link">Clear All</a>
-                                    <a href="#" class="btn btn-outline-primary-2"><span>Compare</span><i class="icon-long-arrow-right"></i></a>
+                                    <a href="#" class="btn btn-outline-primary-2"><span>Compare</span><i
+                                            class="icon-long-arrow-right"></i></a>
                                 </div>
                             </div><!-- End .dropdown-menu -->
                         </div><!-- End .compare-dropdown -->
 
                         <div class="dropdown cart-dropdown" id="downCart">
-                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false" data-display="static">
                                 <i class="icon-shopping-cart"></i>
                                 <span class="cart-count">2</span>
                             </a>
@@ -199,43 +215,50 @@
                             <div class="dropdown-menu dropdown-menu-right">
                                 <% cartdata.forEach((item)=>{%>
                                     <% item.items.forEach((element)=>{%>
-                                <div class="dropdown-cart-products">
-                                    <div class="product" >
-                                        <div class="product-cart-details">
-                                            <h4 class="product-title">
-                                                <a href="product.html"><%= element.productid.productname %></a>
-                                            </h4>
-    
-                                            <span class="cart-product-info">
-                                                <span class="cart-product-qty"></span>
-                                               <%= element.count %> x Rs.<%= element.productid.price * element.count %>
-                                            </span>
-                                        </div><!-- End .product-cart-details -->
-    
-                                        <figure class="product-image-container">
-                                            <a href="" class="product-image">
-                                                <img src="/productimages/<%= element.productid.image[0] %>" alt="product">
-                                            </a>
-                                        </figure>
-                                        <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                                    </div><!-- End .product -->
-    
-                                  
-                                    
-                                </div><!-- End .cart-product -->
-                                <%}) %>
-                                <% })%>
+                                        <div class="dropdown-cart-products">
+                                            <div class="product">
+                                                <div class="product-cart-details">
+                                                    <h4 class="product-title">
+                                                        <a href="product.html">
+                                                            <%= element.productid.productname %>
+                                                        </a>
+                                                    </h4>
 
-                                <div class="dropdown-cart-total">
-                                    <span>Total</span>
+                                                    <span class="cart-product-info">
+                                                        <span class="cart-product-qty"></span>
+                                                        <%= element.count %> x Rs.<%= element.productid.price *
+                                                                element.count %>
+                                                    </span>
+                                                </div><!-- End .product-cart-details -->
 
-                                    <span class="cart-total-price">Rs.<%= totalsum %></span>
-                                </div><!-- End .dropdown-cart-total -->
+                                                <figure class="product-image-container">
+                                                    <a href="" class="product-image">
+                                                        <img src="/productimages/<%= element.productid.image[0] %>"
+                                                            alt="product">
+                                                    </a>
+                                                </figure>
+                                                <a href="#" class="btn-remove" title="Remove Product"><i
+                                                        class="icon-close"></i></a>
+                                            </div><!-- End .product -->
 
-                                <div class="dropdown-cart-action">
-                                    <a href="/cart" class="btn btn-primary">View Cart</a>
-                                    <a href="checkout.html" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
-                                </div><!-- End .dropdown-cart-total -->
+
+
+                                        </div><!-- End .cart-product -->
+                                        <%}) %>
+                                            <% })%>
+
+                                                <div class="dropdown-cart-total">
+                                                    <span>Total</span>
+
+                                                    <span class="cart-total-price">Rs.<%= totalsum %></span>
+                                                </div><!-- End .dropdown-cart-total -->
+
+                                                <div class="dropdown-cart-action">
+                                                    <a href="/cart" class="btn btn-primary">View Cart</a>
+                                                    <a href="checkout.html"
+                                                        class="btn btn-outline-primary-2"><span>Checkout</span><i
+                                                            class="icon-long-arrow-right"></i></a>
+                                                </div><!-- End .dropdown-cart-total -->
                             </div><!-- End .dropdown-menu -->
                         </div><!-- End .cart-dropdown -->
                     </div><!-- End .header-right -->
@@ -244,11 +267,11 @@
         </header><!-- End .header -->
 
         <main class="main">
-        	<div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
-        		<div class="container">
-        			<h1 class="page-title">Shopping Cart<span>Shop</span></h1>
-        		</div><!-- End .container -->
-        	</div><!-- End .page-header -->
+            <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+                <div class="container">
+                    <h1 class="page-title">Shopping Cart<span>Shop</span></h1>
+                </div><!-- End .container -->
+            </div><!-- End .page-header -->
             <nav aria-label="breadcrumb" class="breadcrumb-nav">
                 <div class="container">
                     <ol class="breadcrumb">
@@ -260,235 +283,406 @@
             </nav><!-- End .breadcrumb-nav -->
 
             <div class="page-content" id="Cart">
-            	<div class="cart">
-	                <div class="container">
-	                	<div class="row" >
-	                		<div class="col-lg-9">
-	                			<table class="table table-cart table-mobile">
-									<thead>
-                                        <p id="shipping" style="color: red;" ></p>
-										<tr>
-											<th>Product</th>
-											<th>Price</th>
-											<th>Quantity</th>
-											<th>Total</th>
-											<th></th>
-										</tr>
-									</thead>
+                <div class="cart">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-9">
+                                <table class="table table-cart table-mobile">
+                                    <thead>
+                                        <p id="shipping" style="color: red;"></p>
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Total</th>
 
-									<tbody>
-										
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+
                                         <% if (id) { %>
-                                            <% if (cartdata.length > 0) { %>
-                                                <% cartdata.forEach((item) => { %>
-                                                    <% item.items.forEach((element) => { %>
+                                            <% if (cartdata.length> 0) { %>
+                                                <% cartdata.forEach((item)=> { %>
+                                                    <% item.items.forEach((element)=> { %>
                                                         <tr>
                                                             <td class="product-col">
                                                                 <div class="product">
                                                                     <figure class="product-media">
                                                                         <a href="#">
-                                                                            <img src="/productimages/<%= element.productid.image[0] %>" alt="Product image">
+                                                                            <img src="/productimages/<%= element.productid.image[0] %>"
+                                                                                alt="Product image">
                                                                         </a>
                                                                     </figure>
-                                        
+
                                                                     <h3 class="product-title">
-                                                                        <a href="/productdetails?id=<%= item._id %>"><%= element.productid.productname %></a>
+                                                                        <a href="/productdetails?id=<%= item._id %>">
+                                                                            <%= element.productid.productname %>
+                                                                        </a>
                                                                     </h3>
                                                                 </div>
                                                             </td>
-                                                            <td class="price-col">Rs.<%= element.productid.price %></td>
+                                                            <td class="price-col">Rs.<%= element.productid.price %>
+                                                            </td>
                                                             <td class="quantity-col">
                                                                 <div class="cart-product-quantity">
                                                                     <div class="input-group  input-spinner">
                                                                         <!-- <input type="number" class="form-control" value="<%= element.count %>" min="1" max="10" step="1" data-decimals="0" required> -->
                                                                         <div class="input-group-prepend">
-                                                                    <button style="min-width: 26px" class="btn btn-decrement btn-spinner" onclick="AddingCount(-1,'<%= element.productid._id %>')" type="button" fdprocessedid="oe68nu">
-                                                                        <i class="icon-minus"></i></button>
-                                                                    </div>
-                                                                    <input type="text" style="text-align: center" id="value" class="form-control " required="" placeholder="" fdprocessedid="kzohym"value="<%= element.count %>" >
-                                                                    <div class="input-group-append">
-                                                                        <button style="min-width: 26px" class="btn btn-increment btn-spinner" onclick="AddingCount(1,'<%= element.productid._id %>')" type="button" fdprocessedid="4dpds">
-                                                                            <i class="icon-plus"></i></button>
+                                                                            <button style="min-width: 26px"
+                                                                                class="btn btn-decrement btn-spinner"
+                                                                                onclick="AddingCount(-1,'<%= element.productid._id %>')"
+                                                                                type="button" fdprocessedid="oe68nu">
+                                                                                <i class="icon-minus"></i></button>
+                                                                        </div>
+                                                                        <input type="text" style="text-align: center"
+                                                                            id="value" class="form-control " required=""
+                                                                            placeholder="" fdprocessedid="kzohym"
+                                                                            value="<%= element.count %>">
+                                                                        <div class="input-group-append">
+                                                                            <button style="min-width: 26px"
+                                                                                class="btn btn-increment btn-spinner"
+                                                                                onclick="AddingCount(1,'<%= element.productid._id %>')"
+                                                                                type="button" fdprocessedid="4dpds">
+                                                                                <i class="icon-plus"></i></button>
                                                                         </div>
                                                                     </div>
                                                             </td>
-                                                            <td class="total-col">Rs.<%= element.productid.price * element.count %></td>
+                                                            <td class="total-col">Rs.<%= element.productid.price *
+                                                                    element.count %>
+                                                            </td>
                                                             <td class="remove-col">
-                                                                
-                                                                <a href="/deleteCartItems?id=<%= element.productid._id %>" class="btn-remove">
+
+                                                                <a href="/deleteCartItems?id=<%= element.productid._id %>"
+                                                                    class="btn-remove">
                                                                     <i class="icon-close"></i>
                                                                 </a>
                                                             </td>
                                                         </tr>
-                                                    <% }) %>
-                                                <% }) %>
-                                            <% } else { %>
-                                                <tr>
-                                                    <td colspan="5">Your cart is empty.</td>
-                                                </tr>
-                                            <% } %>
-                                        <% } else { %>
-                                            <tr>
-                                                <td>This is the content for the table row.</td>
-                                            </tr>
-                                        <% } %>
-                                        
+                                                        <% }) %>
+                                                            <% }) %>
+                                                                <% } else { %>
+                                                                    <tr>
+                                                                        <td colspan="5">Your cart is empty.</td>
+                                                                    </tr>
+                                                                    <% } %>
+                                                                        <% } else { %>
+                                                                            <tr>
+                                                                                <td>This is the content for the table
+                                                                                    row.</td>
+                                                                            </tr>
+                                                                            <% } %>
 
-									</tbody>
-								</table><!-- End .table table-wishlist -->
 
-	                			<div class="cart-bottom">
-			            			<div class="cart-discount">
-			            				<form action="#">
-			            					<div class="input-group">
-				        						<input type="text" class="form-control" required placeholder="coupon code">
-				        						<div class="input-group-append">
-													<button class="btn btn-outline-primary-2" type="submit"><i class="icon-long-arrow-right"></i></button>
-												</div><!-- .End .input-group-append -->
-			        						</div><!-- End .input-group -->
-			            				</form>
-			            			</div><!-- End .cart-discount -->
+                                    </tbody>
+                                </table><!-- End .table table-wishlist -->
 
-			            			<a href="#" class="btn btn-outline-dark-2"><span>UPDATE CART</span><i class="icon-refresh"></i></a>
-		            			</div><!-- End .cart-bottom -->
-	                		</div><!-- End .col-lg-9 -->
+                                <div class="cart-bottom">
+                                    <div class="cart-discount">
+                                        <form action="#">
+                                            <div class="input-group">
+                                                <input type="text" id="couponcode" class="form-control" required
+                                                    placeholder="coupon code">
+                                                <div class="input-group-append">
+                                                    <button onclick="couponsubmit('<%= totalsum %>')"
+                                                        class="btn btn-outline-primary-2" type="button"><i
+                                                            class="icon-long-arrow-right"></i></button>
+                                                    <button type="button">
+                                                        <i class="icon-close"></i>
+                                                    </button>
+
+                                                </div><!-- .End .input-group-append -->
+                                                <button type="button" id="proceed-to-checkout" data-toggle="modal"
+                                                    data-target="#exampleModalLong"
+                                                    class="btn btn-outline-primary-2 btn-order btn-block">Select Coupon
+                                                </button>
+
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="exampleModalLong" tabindex="-1"
+                                                    role="dialog" aria-labelledby="exampleModalLongTitle"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLongTitle">
+                                                                    Coupons
+                                                                </h5>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <% for(let i=0;i<coupondata.length;i++){%>
+                                                                    <% if(coupondata[i].status==0) {%>
+                                                                        <div>
+                                                                            <div class="card" style="width: 29rem;">
+                                                                                <div class="card-body">
+                                                                                    <h3 class="card-title">
+                                                                                        <%= coupondata[i]. couponname %>
+                                                                                    </h3>
+                                                                                    <div
+                                                                                        class="coupon-code-container mt-2">
+                                                                                        <h6
+                                                                                            class="card-subtitle mb-2 text-muted">
+                                                                                            Code: <%= coupondata[i].
+                                                                                                couponcode %>
+                                                                                        </h6>
+                                                                                        <span class="copy-icon"
+                                                                                            onclick="console.log(this.getAttribute('data-coupon-code')); copyCouponCode(this.getAttribute('data-coupon-code'))">
+                                                                                            <i class="fas fa-copy"></i>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                    <span>only for up to: <p>
+                                                                                            <%= coupondata[i].
+                                                                                                expirydate.toLocaleDateString('en-US',
+                                                                                                { year: 'numeric' ,
+                                                                                                month: 'short' ,
+                                                                                                day: '2-digit'
+                                                                                                }).replace(/\//g,'-')%>
+                                                                                        </p></span>
+                                                                                    <p class="card-text">
+                                                                                        <%= coupondata[i]. description%>
+                                                                                    </p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <%}%>
+                                                                            <%}%>
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal">Close</button>
+                                                                <button type="button" class="btn btn-primary">Save
+                                                                    changes</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div><!-- End .input-group -->
+                                        </form>
+                                    </div><!-- End .cart-discount -->
+
+                                    <a href="#" class="btn btn-outline-dark-2"><span>UPDATE CART</span><i
+                                            class="icon-refresh"></i></a>
+                                </div><!-- End .cart-bottom -->
+                            </div><!-- End .col-lg-9 -->
                             <% if(id){%>
-	                		<aside class="col-lg-3" >
-	                			<div class="summary summary-cart" id="shipping-options">
-	                				<h3 class="summary-title">Cart Total</h3><!-- End .summary-title -->
 
-	                				<table class="table table-summary">
-	                					<tbody>
-	                						<tr class="summary-subtotal" >
-	                							<td>Subtotal:</td>
-	                							<td >Rs.<%= totalsum %></td>
-	                						</tr><!-- End .summary-subtotal -->
-	                						<tr class="summary-shipping">
-	                							<td>Shipping:</td>
-	                							<td>&nbsp;</td>
-	                						</tr>
+                                <aside class="col-lg-3">
+                                    <div class="summary summary-cart" id="shipping-options">
+                                        <h3 class="summary-title">Cart Total</h3><!-- End .summary-title -->
 
-	                						<tr class="summary-shipping-row">
-	                							<td>
-													<div class="custom-control custom-radio">
-														<input type="radio" id="free-shipping" name="shipping" class="custom-control-input">
-														<label class="custom-control-label" onclick="sample(0,'<%= totalsum%>')" for="free-shipping">Free Shipping</label>
-													</div><!-- End .custom-control -->
-	                							</td>
-	                							<td>Rs.0.00</td>
-	                						</tr><!-- End .summary-shipping-row -->
+                                        <table class="table table-summary">
+                                            <tbody>
+                                                <tr class="summary-subtotal">
+                                                    <td>Subtotal:</td>
+                                                    <td>Rs.<%= totalsum %>
+                                                    </td>
+                                                </tr><!-- End .summary-subtotal -->
+                                                <tr class="summary-shipping">
+                                                    <td>Shipping:</td>
+                                                    <td>&nbsp;</td>
+                                                </tr>
 
-	                						<tr class="summary-shipping-row">
-	                							<td>
-	                								<div class="custom-control custom-radio">
-														<input type="radio" id="standart-shipping" name="shipping" class="custom-control-input">
-														<label class="custom-control-label"  onclick="sample(49,'<%= totalsum%>')" for="standart-shipping">Standart:</label>
-													</div><!-- End .custom-control -->
-	                							</td>
-	                							<td>Rs.<%= standard%></td>
-	                						</tr><!-- End .summary-shipping-row -->
+                                                <tr class="summary-shipping-row">
+                                                    <td>
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" id="free-shipping" name="shipping"
+                                                                class="custom-control-input">
+                                                            <label class="custom-control-label"
+                                                                onclick="sample(0,'<%= totalsum%>')"
+                                                                for="free-shipping">Free Shipping</label>
+                                                        </div><!-- End .custom-control -->
+                                                    </td>
+                                                    <td>Rs.0.00</td>
+                                                </tr><!-- End .summary-shipping-row -->
 
-	                						<tr class="summary-shipping-row">
-	                							<td>
-	                								<div class="custom-control custom-radio">
-														<input type="radio" id="express-shipping" name="shipping" class="custom-control-input">
-														<label class="custom-control-label" onclick="sample(99,'<%= totalsum%>')"  for="express-shipping">Express:</label>
-													</div><!-- End .custom-control -->
-	                							</td>
-	                							<td>Rs.<%= express  %></td>
-	                						</tr><!-- End .summary-shipping-row -->
+                                                <tr class="summary-shipping-row">
+                                                    <td>
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" id="standart-shipping" name="shipping"
+                                                                class="custom-control-input">
+                                                            <label class="custom-control-label"
+                                                                onclick="sample(49,'<%= totalsum%>')"
+                                                                for="standart-shipping">Standart:</label>
+                                                        </div><!-- End .custom-control -->
+                                                    </td>
+                                                    <td>Rs.<%= standard%>
+                                                    </td>
+                                                </tr><!-- End .summary-shipping-row -->
 
-	                						<tr class="summary-shipping-estimate">
-	                							<td>Estimate for Your Country<br> <a href="dashboard.html">Change address</a></td>
-	                							<td>&nbsp;</td>
-	                						</tr><!-- End .summary-shipping-estimate -->
+                                                <tr class="summary-shipping-row">
+                                                    <td>
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" id="express-shipping" name="shipping"
+                                                                class="custom-control-input" checked>
+                                                            <label class="custom-control-label"
+                                                                onclick="sample(99,'<%= totalsum%>')"
+                                                                for="express-shipping">Express:</label>
+                                                        </div><!-- End .custom-control -->
+                                                    </td>
+                                                    <td>Rs.<%= express %>
+                                                    </td>
+                                                </tr><!-- End .summary-shipping-row -->
 
-	                						<tr class="summary-total">
-	                							<td>Total:</td>
-	                							<td id="total" >Rs.<%= totalsum %> </td>
-	                						</tr><!-- End .summary-total -->
-	                					</tbody>
-	                				</table><!-- End .table table-summary -->
-                                        
-	                				<a href="/ProceedtoCheckout" id="proceed-to-checkout" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO CHECKOUT</a>
-                                    <!-- <button  onclick="proceedtocheckout()"  type="button" id="proceed-to-checkout" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO CHECKOUT</button> -->
+                                                <tr class="summary-shipping-estimate">
+                                                    <td>Estimate for Your Country<br> <a href="dashboard.html">Change
+                                                            address</a></td>
+                                                    <td>&nbsp;</td>
+                                                </tr><!-- End .summary-shipping-estimate -->
+                                                <div id="reload">
+                                                    <tr class="summary-total">
+                                                        <td>Total:</td>
+                                                        <td id="total">Rs.<%= totalsum %>
+                                                        </td>
+                                                    </tr><!-- End .summary-total -->
+                                                </div>
+                                            </tbody>
 
-                                </div><!-- End .summary -->
+                                        </table><!-- End .table table-summary -->
 
-		            			<a href="/" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE SHOPPING</span><i class="icon-refresh"></i></a>
-	                		</aside><!-- End .col-lg-3 -->
-                            <%}%>
-                            
-	                	</div><!-- End .row -->
-	                </div><!-- End .container -->
+                                        <a onclick="proceedtocheckout('<%= totalsum %>')" id="proceed-to-checkout"
+                                            class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO
+                                            CHECKOUT</a>
+                                        <!-- <button  onclick="proceedtocheckout()"  type="button" id="proceed-to-checkout" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO CHECKOUT</button> -->
+
+                                    </div><!-- End .summary -->
+
+                                    <a href="/" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE
+                                            SHOPPING</span><i class="icon-refresh"></i></a>
+                                </aside><!-- End .col-lg-3 -->
+
+                                <%}%>
+
+                        </div><!-- End .row -->
+                    </div><!-- End .container -->
                 </div><!-- End .cart -->
             </div><!-- End .page-content -->
         </main><!-- End .main -->
 
-      <script>
-        function AddingCount(val,id){
-        console.log("started");
-        $.ajax({
-            method:"post",
-            url:"/AddingProductCount",
-            data:JSON.stringify({id:id, val:val}),
-            contentType:'application/json',
-            success:function(response){
-                if(response.result == true){
-                   $('#Cart').load('/cart #Cart') 
-                   $('#downCart').load('/cart #downCart') 
+        <script>
+            function AddingCount(val, id) {
+                console.log("started");
+                $.ajax({
+                    method: "post",
+                    url: "/AddingProductCount",
+                    data: JSON.stringify({ id: id, val: val }),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        if (response.result == true) {
+                            $('#Cart').load('/cart #Cart')
+                            $('#downCart').load('/cart #downCart')
 
-                }
-                 else if(response.result === false){
-                    Swal.fire({
-                    title:'OUT OF STOCK',
-                    text:'product is out of stock',
-                    icon:'failed',
-                    confirmButtonText:'OK'
-                });
-                }
+                        }
+                        else if (response.result === false) {
+                            Swal.fire({
+                                title: 'OUT OF STOCK',
+                                text: 'product is out of stock',
+                                icon: 'failed',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    }
+
+
+                })
+            }
+
+            function proceedtocheckout(val) {
+                console.log(val);
+
+                $.ajax({
+                    method: 'post',
+                    url: "/checkoutdata",
+                    data: JSON.stringify({ val: val }),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        if (response.result == true) {
+                            window.location.href = '/ProceedtoCheckout';
+                        } else {
+                            Swal.fire("The cart is empty so can't proceed");
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                })
+            }
+
+            function couponsubmit(amount) {
+                const value = document.getElementById('couponcode').value
+                console.log(value);
+                $.ajax({
+                    method: "post",
+                    url: "/coupondata",
+                    data: JSON.stringify({ val: value, total: amount }),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        if (response.result == true) {
+                            $('#total').text('Rs.' + response.reducedamount);
+                            $('#reload').load('/cart #reload')
+
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "success",
+                                title: "Coupon Added Successfully"
+                            });
+
+                        }
+                        else {
+                            Swal.fire("ERROR");
+                        }
+                    }
+
+
+                })
             }
 
 
-        })
-    }
+            document.addEventListener("DOMContentLoaded", () => {
+                const cart = document.getElementById('cart');
+                const shipping = document.getElementById('shipping-options');
+                const proceedCheckout = document.getElementById('proceed-to-checkout');
 
-    function proceedtocheckout(){
-        console.log("started");
-    }
+                proceedCheckout.addEventListener('click', (event) => {
+                    const selectedShipping = document.querySelector('input[name="shipping"]:checked');
 
+                    if (selectedShipping) {
+                        const shippingMethod = selectedShipping.value;
+                        console.log("Selected shipping method: " + shippingMethod);
+                    } else {
+                        const errorElement = document.getElementById('shipping');
+                        errorElement.textContent = 'Please select a shipping method before proceeding.';
+                        event.preventDefault();
+                    }
+                });
+            });
 
-    document.addEventListener("DOMContentLoaded", () => {
-    const cart = document.getElementById('cart');
-    const shipping = document.getElementById('shipping-options');
-    const proceedCheckout = document.getElementById('proceed-to-checkout');
+            function sample(val, totalsum) {
+                const finalamount = parseInt(val) + parseInt(totalsum);
+                console.log(finalamount);
+                const result = document.querySelector('#total');
+                result.textContent = "Rs" + parseInt(finalamount);
+            }
 
-    proceedCheckout.addEventListener('click', (event) => {
-        const selectedShipping = document.querySelector('input[name="shipping"]:checked');
-
-        if (selectedShipping) {
-            const shippingMethod = selectedShipping.value;
-            console.log("Selected shipping method: " + shippingMethod);
-        } else {
-            const errorElement = document.getElementById('shipping');
-            errorElement.textContent = 'Please select a shipping method before proceeding.';
-            event.preventDefault(); 
-        }
-    });
-});
-
-function sample(val,totalsum) {
-const finalamount = parseInt(val) + parseInt(totalsum);
-console.log(finalamount);
-const result = document.querySelector('#total');
-result.textContent = "Rs" + parseInt(finalamount);
-}
-
-document.getElementById('value')
+            document.getElementById('value')
 
 
 
         </script>
 
-        
-<%- include('../user/layout/footer.ejs') -%>
+
+        <%- include('../user/layout/footer.ejs') -%>

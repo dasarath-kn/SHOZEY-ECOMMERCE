@@ -6,6 +6,7 @@ const cartcontroller=require("../controllers/cartController")
 const profileController=require("../controllers/profileController");
 const addresscontroller = require("../controllers/addressController");
 const checkoutcontroller = require('../controllers/CheckoutController');
+const couponcontroller = require('../controllers/CouponController')
 const auth = require('../middleware/userAuth')
 
 router.set('view engine', 'ejs')
@@ -48,7 +49,7 @@ router.get('/deleteCartItems',cartcontroller.deleteCartItems);
 router.post('/AddingProductCount',cartcontroller.AddingProductCount)
 
 //=================================== CHECK-OUT =====================================//
-
+router.post('/checkoutdata',checkoutcontroller.checkoutdata)
 router.get('/ProceedtoCheckout',checkoutcontroller.ProceedtoCheckout)
 router.post('/ProceedOrder',checkoutcontroller.ProceedOrder)
 router.get('/orderdetails',checkoutcontroller.orderdetails)
@@ -71,6 +72,10 @@ router.post('/updatingaddress',addresscontroller.updatingaddress);
 
 //=================================== SHOP =====================================//
 router.get('/shop',usercontroller.shop)
+
+//=================================== COUPON =====================================//
+
+router.post('/coupondata',couponcontroller.coupondata);
 
 //=================================== LOGOUT =====================================//
 

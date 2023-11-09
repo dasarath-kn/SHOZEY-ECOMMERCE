@@ -3,6 +3,7 @@
 
 
 <!-- molla/index-10.html  22 Nov 2019 09:58:04 GMT -->
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -45,8 +46,8 @@
 <body>
     <div class="page-wrapper">
         <header class="header header-8">
-            
-    
+
+
             <div class="header-middle sticky-header">
                 <div class="container">
                     <div class="header-left">
@@ -54,41 +55,43 @@
                             <span class="sr-only">Toggle mobile menu</span>
                             <i class="icon-bars"></i>
                         </button>
-    
+
                         <a href="index.html" class="logo">
 
-                            <h1 class="display-4 text-center mt-3" style="color: #00008B; font-weight: bold; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); font-family: 'Cursive', sans-serif; letter-spacing: 2px; text-transform: uppercase;">SHOZEY</h1>
+                            <h1 class="display-4 text-center mt-3"
+                                style="color: #00008B; font-weight: bold; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); font-family: 'Cursive', sans-serif; letter-spacing: 2px; text-transform: uppercase;">
+                                SHOZEY</h1>
 
 
 
                         </a>
                     </div><!-- End .header-left -->
-    
+
                     <div class="header-right">
                         <nav class="main-nav">
                             <ul class="menu sf-arrows">
                                 <li class="megamenu-container active">
                                     <a href="/" class="sf-with-ul">Home</a>
-    
-                                    
+
+
                                 </li>
                                 <li>
                                     <a href="/shop" class="sf-with-ul">Shop</a>
-    
-                                  
+
+
                                 </li>
                                 <li>
                                     <a href="product.html" class="sf-with-ul">Product</a>
-    
-                                   
+
+
                                 </li>
                                 <li>
                                     <a href="#" class="sf-with-ul">Pages</a>
-    
+
                                     <ul>
                                         <li>
                                             <a href="about.html" class="sf-with-ul">About</a>
-    
+
                                             <ul>
                                                 <li><a href="about.html">About 01</a></li>
                                                 <li><a href="about-2.html">About 02</a></li>
@@ -96,7 +99,7 @@
                                         </li>
                                         <li>
                                             <a href="contact.html" class="sf-with-ul">Contact</a>
-    
+
                                             <ul>
                                                 <li><a href="contact.html">Contact 01</a></li>
                                                 <li><a href="contact-2.html">Contact 02</a></li>
@@ -110,7 +113,7 @@
                                 </li>
                                 <li>
                                     <a href="blog.html" class="sf-with-ul">Blog</a>
-    
+
                                     <ul>
                                         <li><a href="blog.html">Classic</a></li>
                                         <li><a href="blog-listing.html">Listing</a></li>
@@ -144,136 +147,149 @@
                                             <ul>
                                                 <li><a href="single.html">Default with sidebar</a></li>
                                                 <li><a href="single-fullwidth.html">Fullwidth no sidebar</a></li>
-                                                <li><a href="single-fullwidth-sidebar.html">Fullwidth with sidebar</a></li>
+                                                <li><a href="single-fullwidth-sidebar.html">Fullwidth with sidebar</a>
+                                                </li>
                                             </ul>
                                         </li>
                                     </ul>
                                 </li>
                                 <li>
-                                    
-                                    
+
+
                                     <% if (!user) { %>
-                                        <li>
-                                            <a href="#" class="sf-with-ul">Profile</a>
-                                            <ul>
-                                              <li><a href="/signin">Login</a></li>
-                                              <!-- <li><a href="/profile">Profile</a></li>
+                                <li>
+                                    <a href="#" class="sf-with-ul">Profile</a>
+                                    <ul>
+                                        <li><a href="/signin">Login</a></li>
+                                        <!-- <li><a href="/profile">Profile</a></li>
                                               <li><a href="/cart">Cart</a></li>
  -->
 
-                                            
-                                            </ul>
-                                          </li>
-                                      <% } else { %>
-                                        
-                                        <li>
-                                            <a href="#" class="sf-with-ul"><%= user %></a>
-                                            <ul>
-                                              <li><a href="/signin">Login</a></li>
-                                              <li><a href="/logout">Logout</a></li>
-                                              <li><a href="/profile">Profile</a></li>
-                                    
-                                              <li><a href="/cart">Cart</a></li>
-                                              
-                                            </ul>
-                                          </li>
-                                      <% } %>
-                             
+
+                                    </ul>
+                                </li>
+                                <% } else { %>
+
+                                    <li>
+                                        <a href="#" class="sf-with-ul">
+                                            <%= user %>
+                                        </a>
+                                        <ul>
+                                            <li><a href="/signin">Login</a></li>
+                                            <li><a href="/logout">Logout</a></li>
+                                            <li><a href="/profile">Profile</a></li>
+
+                                            <li><a href="/cart">Cart</a></li>
+
+                                        </ul>
+                                    </li>
+                                    <% } %>
+
                             </ul><!-- End .menu -->
-                            
-                              
-                            
+
+
+
                         </nav><!-- End .main-nav -->
-                        
-    
+
+
                         <div class="header-search">
                             <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
                             <form action="/searchproduct" method="post">
                                 <div class="header-search-wrapper">
                                     <label for="q" class="sr-only">Search</label>
-                                    <input type="search" class="form-control" name="product" id="q" placeholder="Search in..." required>
+                                    <input type="search" class="form-control" name="product" id="q"
+                                        placeholder="Search in..." required>
                                 </div><!-- End .header-search-wrapper -->
                             </form>
                         </div><!-- End .header-search -->
-                            
+
                         <div class="dropdown cart-dropdown" id="downCart">
-                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                                <i  class="icon-shopping-cart"></i>
+                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false" data-display="static">
+                                <i class="icon-shopping-cart"></i>
                                 <!-- <span class="cart-count">2</span> -->
                             </a>
-                            
+
                             <div class="dropdown-menu dropdown-menu-right">
                                 <% if(cartdata){%>
-                                <% cartdata.forEach((item)=>{%>
-                                    <% item.items.forEach((element)=>{%>
-                                <div class="dropdown-cart-products" >
-                                
-                                    <div class="product" >
-                                        <div class="product-cart-details">
-                                            <h4 class="product-title">
-                                                <a href="product.html"><%= element.productid.productname %></a>
-                                            </h4>
-    
-                                            <span class="cart-product-info">
-                                                <span class="cart-product-qty"></span>
-                                               <%= element.count %> x Rs.<%= element.productid.price * element.count %>
-                                            </span>
-                                        </div><!-- End .product-cart-details -->
-    
-                                        <figure class="product-image-container">
-                                            <a href="" class="product-image">
-                                                <img src="/productimages/<%= element.productid.image[0] %>" alt="product">
-                                            </a>
-                                        </figure>
-                                        <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                                    </div><!-- End .product -->
-    
-                                  
-                                    
-                                </div><!-- End .cart-product -->
-                                <%}) %>
-                                <% })%>
-                                <%}
-                                else{%>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                      
-                                        <div class="dropdown-cart-products" >
-                                        
-                                            <div class="product" >
-                                                <div class="product-cart-details">
-                                                    <h4 class="product-title">
-                                                        <a href="product.html"></a>
-                                                    </h4>
-            
-                                                    <span class="cart-product-info">
-                                                        <span class="cart-product-qty"></span>
-                                                       
-                                                    </span>
-                                                </div><!-- End .product-cart-details -->
-            
-                                                <figure class="product-image-container">
-                                                    <a href="" class="product-image">
-                                                        <img src="" alt="product">
-                                                    </a>
-                                                </figure>
-                                                <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                                            </div><!-- End .product -->
-            
-                                          
-                                            
-                                        </div><!-- End .cart-product -->
-                                    
-                                    <%}%>
-                                
-                                
-                                <div class="dropdown-cart-action">
-                                    <a href="/cart" class="btn btn-primary">View Cart</a>
-                                    <a href="ProceedtoCheckout" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
-                                </div><!-- End .dropdown-cart-total -->
-                            </div><!-- End .dropdown-menu -->
-                        </div><!-- End .cart-dropdown -->
-                    </div><!-- End .header-right -->
-                </div><!-- End .container -->
-            </div><!-- End .header-middle -->
+                                    <% cartdata.forEach((item)=>{%>
+                                        <% item.items.forEach((element)=>{%>
+                                            <div class="dropdown-cart-products">
+
+                                                <div class="product">
+                                                    <div class="product-cart-details">
+                                                        <h4 class="product-title">
+                                                            <a href="product.html">
+                                                                <%= element.productid.productname %>
+                                                            </a>
+                                                        </h4>
+
+                                                        <span class="cart-product-info">
+                                                            <span class="cart-product-qty"></span>
+                                                            <%= element.count %> x Rs.<%= element.productid.price *
+                                                                    element.count %>
+                                                        </span>
+                                                    </div><!-- End .product-cart-details -->
+
+                                                    <figure class="product-image-container">
+                                                        <a href="" class="product-image">
+                                                            <img src="/productimages/<%= element.productid.image[0] %>"
+                                                                alt="product">
+                                                        </a>
+                                                    </figure>
+                                                    <a href="#" class="btn-remove" title="Remove Product"><i
+                                                            class="icon-close"></i></a>
+                                                </div><!-- End .product -->
+
+
+
+                                            </div><!-- End .cart-product -->
+                                            <%}) %>
+                                                <% })%>
+                                                    <%} else{%>
+                                                        <div class="dropdown-menu dropdown-menu-right">
+
+                                                            <div class="dropdown-cart-products">
+
+                                                                <div class="product">
+                                                                    <div class="product-cart-details">
+                                                                        <h4 class="product-title">
+                                                                            <a href="product.html"></a>
+                                                                        </h4>
+
+                                                                        <span class="cart-product-info">
+                                                                            <span class="cart-product-qty"></span>
+
+                                                                        </span>
+                                                                    </div><!-- End .product-cart-details -->
+
+                                                                    <figure class="product-image-container">
+                                                                        <a href="" class="product-image">
+                                                                            <img src="" alt="product">
+                                                                        </a>
+                                                                    </figure>
+                                                                    <a href="#" class="btn-remove"
+                                                                        title="Remove Product"><i
+                                                                            class="icon-close"></i></a>
+                                                                </div><!-- End .product -->
+
+
+
+                                                            </div><!-- End .cart-product -->
+
+                                                            <%}%>
+
+
+                                                                <div class="dropdown-cart-action">
+                                                                    <a href="/cart" class="btn btn-primary">View
+                                                                        Cart</a>
+                                                                    <a href="ProceedtoCheckout"
+                                                                        class="btn btn-outline-primary-2"><span>Checkout</span><i
+                                                                            class="icon-long-arrow-right"></i></a>
+                                                                </div><!-- End .dropdown-cart-total -->
+                                                        </div><!-- End .dropdown-menu -->
+                            </div><!-- End .cart-dropdown -->
+                        </div><!-- End .header-right -->
+                    </div><!-- End .container -->
+                </div><!-- End .header-middle -->
         </header><!-- End .header -->
-    
