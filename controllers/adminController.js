@@ -389,7 +389,19 @@ const dashboard = async (req, res) => {
         const online = await order.aggregate([{ $match: { status: 'delivered', paymentMethod: 'Online Payment' } }, { $group: { _id: null, total: { $sum: '$totalAmount' } } }])
         const onlinetotal = online[0].total
 
-        res.render('dashboard', { orders, data, value, stock, codcount, onlinecount, codtotal, onlinetotal, customer, ordercount, cancelledorders })
+        res.render('dashboard', {
+            orders,
+            data,
+            value,
+            stock,
+            codcount,
+            onlinecount,
+            codtotal,
+            onlinetotal,
+            customer,
+            ordercount,
+            cancelledorders
+        })
     } catch (error) {
         console.log(error.message);
     }
@@ -497,7 +509,7 @@ const editedcoupondata = async (req, res) => {
     try {
         const id = req.query.id
 
-        await coupon.updateOne({_id: id }, {
+        await coupon.updateOne({ _id: id }, {
             $set: {
                 couponname: req.body.couponname,
                 couponcode: req.body.couponcode,
@@ -509,7 +521,7 @@ const editedcoupondata = async (req, res) => {
                 description: req.body.description
             }
         })
-          res.redirect('/admin/coupon')
+        res.redirect('/admin/coupon')
 
 
     } catch (error) {

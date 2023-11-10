@@ -1,442 +1,522 @@
 <%- include('../user/layout/header.ejs') %>
-
-<main class="main">
-    <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
-        <div class="container">
-            <h1 class="page-title">Checkout</h1>
-        </div><!-- End .container -->
-    </div><!-- End .page-header -->
-    <nav aria-label="breadcrumb" class="breadcrumb-nav">
-        <div class="container">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Shop</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Checkout</li>
-            </ol>
-        </div><!-- End .container -->
-    </nav><!-- End .breadcrumb-nav -->
-
-    <div class="page-content">
-        <div class="checkout"  id="checkout">
+<style>
+	.swal2-toast {
+	width: 900px; /* Adjust the width as needed */
+	height: 100px; /* Adjust the height as needed */
+	font-size: 18px;
+	margin-top: 70px;
+  }
+  </style>
+    <main class="main">
+        <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
             <div class="container">
-                <div class="checkout-container" style="display: flex;">
-                    <div class="cart-discount">
-                        <form action="#">
-                            <div class="input-group">
-                                <input type="text" id="couponcode" class="form-control" required
-                                    placeholder="coupon code">
-                                <div class="input-group-append">
-                                    <button onclick="couponsubmit('<%= totalsum %>')"
-                                        class="btn btn-outline-primary-2" type="button"><i
-                                            class="icon-long-arrow-right"></i></button>
-                                    <button type="button" onclick="coupondelete('<%= totalsum %>')">
-                                        <i class="icon-close"></i>
+                <h1 class="page-title">Checkout</h1>
+            </div><!-- End .container -->
+        </div><!-- End .page-header -->
+        <nav aria-label="breadcrumb" class="breadcrumb-nav">
+            <div class="container">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+                </ol>
+            </div><!-- End .container -->
+        </nav><!-- End .breadcrumb-nav -->
+
+        <div class="page-content">
+            <div class="checkout" id="checkout">
+                <div class="container">
+                    <div class="checkout-container" style="display: flex;">
+                        <div class="cart-discount" id="couponfield">
+                            <form action="#">
+                                <div class="input-group">
+
+                                    <input type="text" id="couponcode" class="form-control" required
+                                        placeholder="coupon code" name="couponcode">
+                                    <div class="input-group-append">
+                                        <button onclick="couponsubmit('<%= totalsum %>')"
+                                            class="btn btn-outline-primary-2" type="button"><i
+                                                class="icon-long-arrow-right"></i></button>
+                                        <button type="button" onclick="coupondelete('<%= totalsum %>')">
+                                            <i class="icon-close"></i>
+                                        </button>
+
+                                    </div><!-- .End .input-group-append -->
+                                    <button type="button" id="proceed-to-checkout" data-toggle="modal"
+                                        data-target="#exampleModalLong"
+                                        class="btn btn-outline-primary-2 btn-order btn-block">Select Coupon
                                     </button>
 
-                                </div><!-- .End .input-group-append -->
-                                <button type="button" id="proceed-to-checkout" data-toggle="modal"
-                                    data-target="#exampleModalLong"
-                                    class="btn btn-outline-primary-2 btn-order btn-block">Select Coupon
-                                </button>
-
-                                <!-- Modal -->
-                                <div class="modal fade" id="exampleModalLong" tabindex="-1"
-                                    role="dialog" aria-labelledby="exampleModalLongTitle"
-                                    aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLongTitle">
-                                                    Coupons
-                                                </h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <% for(let i=0;i<coupondata.length;i++){%>
-                                                    <% if(coupondata[i].status==0) {%>
-                                                        <div>
-                                                            <div class="card" style="width: 29rem;">
-                                                                <div class="card-body">
-                                                                    <h3 class="card-title">
-                                                                        <%= coupondata[i]. couponname %>
-                                                                    </h3>
-                                                                    <div
-                                                                        class="coupon-code-container mt-2">
-                                                                        <h4
-                                                                            class="card-subtitle mb-2 text-muted">
-                                                                            Code: <%= coupondata[i].
-                                                                                couponcode %>
-                                                                        </h4>
-                                                                        <span class="copy-icon"
-                                                                            onclick="console.log(this.getAttribute('data-coupon-code')); copyCouponCode(this.getAttribute('data-coupon-code'))">
-                                                                            <i class="fas fa-copy"></i>
-                                                                        </span>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLongTitle">
+                                                        Coupons
+                                                    </h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <% for(let i=0;i<coupondata.length;i++){%>
+                                                        <% if(coupondata[i].status==0) {%>
+                                                            <div>
+                                                                <div class="card" style="width: 29rem;">
+                                                                    <div class="card-body">
+                                                                        <h3 class="card-title">
+                                                                            <%= coupondata[i]. couponname %>
+                                                                        </h3>
+                                                                        <div class="coupon-code-container mt-2">
+                                                                            <h4 class="card-subtitle mb-2 text-muted">
+                                                                                Code: <%= coupondata[i]. couponcode %>
+                                                                            </h4>
+                                                                            <span class="copy-icon"
+                                                                                onclick="console.log(this.getAttribute('data-coupon-code')); copyCouponCode(this.getAttribute('data-coupon-code'))">
+                                                                                <i class="fas fa-copy"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                        <span>only for up to: <p>
+                                                                                <%= coupondata[i].
+                                                                                    expirydate.toLocaleDateString('en-US',
+                                                                                    { year: 'numeric' , month: 'short' ,
+                                                                                    day: '2-digit'
+                                                                                    }).replace(/\//g,'-')%>
+                                                                            </p></span>
+                                                                        <p class="card-text">
+                                                                            <%= coupondata[i]. description%>
+                                                                        </p>
                                                                     </div>
-                                                                    <span>only for up to: <p>
-                                                                            <%= coupondata[i].
-                                                                                expirydate.toLocaleDateString('en-US',
-                                                                                { year: 'numeric' ,
-                                                                                month: 'short' ,
-                                                                                day: '2-digit'
-                                                                                }).replace(/\//g,'-')%>
-                                                                        </p></span>
-                                                                    <p class="card-text">
-                                                                        <%= coupondata[i]. description%>
-                                                                    </p>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <%}%>
                                                             <%}%>
+                                                                <%}%>
 
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-dismiss="modal">Close</button>
-                                                <!-- <button type="button" class="btn btn-primary">Save
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Close</button>
+                                                    <!-- <button type="button" class="btn btn-primary">Save
                                                     changes</button> -->
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+
+                                </div><!-- End .input-group -->
+                            </form>
+                        </div>
+
+                        <div class="add-new-address" style="margin-left: auto; margin-top: 2rem;">
+                            <a href="/address">Add New Address</a>
+                        </div>
+                    </div>
+
+
+                    <form style="display: flex;" id="myForm">
+
+                        <div class="col-8 mt-3">
+                            <% useraddress.forEach((item)=>{%>
+                                <% item.userdata.forEach((element)=>{%>
+                                    <label class="p-3 border rounded-4 m-2 custom-label" th:each="address, iterStat : "
+                                        style="width: 100%;">
+                                        <div class="form-check d-flex align-items-center mx-4">
+                                            <input class="form-check-input" type="radio" name="address"
+                                                value="<%= item._id%>" name="selectedAddressId" checked>
+                                            <div class="mx-3 mx-md-5">
+                                                <p class="text-dark">
+                                                    <b><span>
+                                                            <%= element.name %>
+                                                        </span></b> ,
+                                                    <span>
+                                                        <%= element.city %>
+                                                    </span>, <span>
+                                                        <%= element.state %>
+                                                    </span>,
+                                                    <span>Contact: <i class="fa-thin fa-mobile"></i>
+                                                        <b style="color: #043a6c;">
+                                                            <span style="font-size: 13px;">
+                                                                <%= element.phonenumber %>
+                                                            </span>
+                                                        </b>
+                                                    </span>
+                                                </p>
+                                                <p>
+                                                    <%= element.address %>
+                                                </p>
+                                                <p>
+                                                    <%= element.pincode %>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </label>
+                                    <% }); %>
+                                        <% }); %>
+                        </div>
+
+                        <aside class="col-lg-3">
+                            <div class="summary">
+                                <h3 class="summary-title">Your Order</h3><!-- End .summary-title -->
+
+                                <table class="table table-summary">
+                                    <thead>
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <% cartdata.forEach((item)=>{%>
+                                            <% item.items.forEach((element)=>{%>
+                                                <tr>
+                                                    <td><a href="#">
+                                                            <%= element.productid.productname %>
+                                                        </a></td>
+                                                    <td>
+                                                        <%= element.productid.price %>
+                                                    </td>
+                                                </tr>
+                                                <%}) %>
+                                                    <%}) %>
+
+                                                        <tr class="summary-subtotal">
+                                                            <td>Subtotal:</td>
+                                                            <td>Rs.<%= totalsum %>
+                                                            </td>
+                                                        </tr><!-- End .summary-subtotal -->
+                                                        <tr>
+                                                            <td>Shipping:</td>
+                                                            <td>Free shipping</td>
+                                                        </tr>
+                                                        
+                                                                <tr>
+                                                            <td>Coupon Amount:</td>
+                                                            <td name="amount" id="couponamount">Rs.0</td>
+                                                        </tr>
+                                                    </form>
+                                                        <div id="reload">
+                                                            <tr class="summary-total">
+                                                                <td>Total:</td>
+                                                                <td id="total">Rs.<%= totalsum %>
+                                                                </td>
+                                                            </tr><!-- End .summary-total -->
+                                                        </div>
+                                    </tbody>
+                                </table><!-- End .table table-summary -->
+                                <div class="d-flex align-items-center">
+                                    <div class="mr-2">
+                                        <input required type="radio" id="COD" name="payment" value="Cash on delivery"
+                                            checked />
+                                    </div>
+                                    <a href="" class="d-block text-dark" for="pay1">Cash On Delivery</a>
                                 </div>
 
-                            </div><!-- End .input-group -->
-                        </form>
-                    </div>
-                
-                    <div class="add-new-address" style="margin-left: auto; margin-top: 2rem;">
-                        <a href="/address">Add New Address</a>
-                    </div>
-                </div>
-                
-                
-                <form   style="display: flex;" id="myForm">
-                   
-                    <div class="col-8 mt-3" >
-                        <% useraddress.forEach((item)=>{%>
-                            <% item.userdata.forEach((element)=>{%> 
-                        <label class="p-3 border rounded-4 m-2 custom-label"  th:each="address, iterStat : " style="width: 100%;">
-                            <div class="form-check d-flex align-items-center mx-4">
-                                <input class="form-check-input" type="radio" name="address" value="<%= item._id%>"
-                                       name="selectedAddressId" checked  >
-                                <div class="mx-3 mx-md-5">
-                                    <p class="text-dark">
-                                        <b><span><%= element.name %></span></b> ,
-                                        <span ><%= element.city %></span>, <span><%= element.state %></span>,
-                                        <span>Contact: <i class="fa-thin fa-mobile"></i>
-                                           <b style="color: #043a6c;">
-                                             <span style="font-size: 13px;" ><%= element.phonenumber %></span>
-                                           </b>
-                                        </span>
-                                    </p>
-                                    <p><%= element.address %></p>
-                                    <p ><%= element.pincode %></p>
+                                <div class="d-flex align-items-center">
+                                    <div class="mr-2">
+                                        <input required type="radio" id="payment" name="payment"
+                                            value="Online Payment" />
+                                    </div>
+                                    <a href="" class="d-block text-dark" for="pay2">Online Payment</a>
                                 </div>
-                            </div>
-                        </label>
-                        <% }); %>
-                        <% }); %>
-                 </div>
 
-                 <aside class="col-lg-3">
-                    <div class="summary">
-                        <h3 class="summary-title">Your Order</h3><!-- End .summary-title -->
+                                <div class="d-flex align-items-center">
+                                    <div class="mr-2">
+                                        <input required type="radio" id="wallet" name="payment" value="wallet" />
+                                    </div>
+                                    <a href="" class="d-block text-dark" for="pay3">Wallet</a>
+                                </div>
 
-                        <table class="table table-summary">
-                            <thead>
-                                <tr>
-                                    <th>Product</th>
-                                    <th>Total</th>
-                                </tr>
-                            </thead>
 
-                            <tbody>
-                                <% cartdata.forEach((item)=>{%>
-                                    <% item.items.forEach((element)=>{%>
-                                <tr>
-                                    <td><a href="#"><%= element.productid.productname %></a></td>
-                                    <td><%= element.productid.price %></td>
-                                </tr>
-                                <%}) %>
-                                <%}) %>
-                              
-                                <tr class="summary-subtotal">
-                                    <td>Subtotal:</td>
-                                    <td>Rs.<%= totalsum %></td>
-                                </tr><!-- End .summary-subtotal -->
-                                <tr>
-                                    <td>Shipping:</td>
-                                    <td>Free shipping</td>
-                                </tr>
-                                <div id="reload">
-                                <tr class="summary-total">
-                                    <td>Total:</td>
-                                    <td id="total">Rs.<%= totalsum %></td>
-                                </tr><!-- End .summary-total -->
-                            </div>
-                            </tbody>
-                        </table><!-- End .table table-summary -->
-                        <div class="d-flex align-items-center">
-                            <div class="mr-2">
-                              <input
-                                required
-                                type="radio"
-                                id="COD"
-                                name="payment"
-                                value="Cash on delivery"
-                                checked
-                              />
-                            </div>
-                            <a href="" class="d-block text-dark" for="pay1"
-                              >Cash On Delivery</a
-                            >
-                          </div>
-          
-                          <div class="d-flex align-items-center">
-                            <div class="mr-2">
-                              <input
-                                required
-                                type="radio"
-                                id="payment"
-                                name="payment"
-                                value="Online Payment"
-                                
-                                
-                              />
-                            </div>
-                            <a href="" class="d-block text-dark" for="pay2"
-                              >Online Payment</a
-                            >
-                          </div>
-          
-                          <div class="d-flex align-items-center">
-                            <div class="mr-2">
-                              <input
-                                required
-                                type="radio"
-                                id="wallet"
-                                name="payment"
-                                value="wallet"
-                              />
-                            </div>
-                            <a href="" class="d-block text-dark" for="pay3">Wallet</a>
-            </div>
+                                <button   type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
+                                    <span class="btn-text">Place Order</span>
+                                    <span class="btn-hover-text">Place Order</span>
+                                </button>
 
-                        
-                        <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block" >
-                            <span class="btn-text">Place Order</span>
-                            <span class="btn-hover-text" >Proceed to Checkout</span>
-                        </button>
-                       
-                    </div><!-- End .summary -->
-                </aside><!-- End .col-lg-3 -->
-                    
-                </form>
-            </div><!-- End .container -->
-        </div><!-- End .checkout -->
-    </div><!-- End .page-content -->
-</main><!-- End .main -->
-<script>
+                            </div><!-- End .summary -->
+                        </aside><!-- End .col-lg-3 -->
 
-    // function selectaddress(radio){
-    //     const address= radio.value
-        
-    //     fetch('/ProceedOrder',{
-    //         method:'post',
-    //    headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify({ value: address }),
-    //     })
-    // }
+                    </form>
+                </div><!-- End .container -->
+            </div><!-- End .checkout -->
+        </div><!-- End .page-content -->
+    </main><!-- End .main -->
+    <script>
 
-//     function cartdatas(button) {
-//     const data = button.getAttribute('data-value'); // Get the value from the data-value attribute
-// console.log(data);
-//     fetch('/ProceedOrder', {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({ cart: data }),
-//     })
-// }
-// document.addEventListener("DOMContentLoaded", () => {
-//     const cart = document.getElementById('cart');
-//     const shipping = document.getElementById('shipping-options');
-//     const proceedCheckout = document.getElementById('proceed-to-checkout');
+        // function selectaddress(radio){
+        //     const address= radio.value
 
-//     proceedCheckout.addEventListener('click', (event) => {
-//         const selectedShipping = document.querySelector('input[name="shipping"]:checked');
+        //     fetch('/ProceedOrder',{
+        //         method:'post',
+        //    headers: {
+        //             'Content-Type': 'application/json',
+        //         },
+        //         body: JSON.stringify({ value: address }),
+        //     })
+        // }
 
-//         if (selectedShipping) {
-//             const shippingMethod = selectedShipping.value;
-//             console.log("Selected shipping method: " + shippingMethod);
-//         } else {
-//             const errorElement = document.getElementById('shipping');
-//             errorElement.textContent = 'Please select a shipping method before proceeding.';
-//             event.preventDefault(); // Prevent form submission and page refresh
-//         }
-//     });
-// });
+        //     function cartdatas(button) {
+        //     const data = button.getAttribute('data-value'); // Get the value from the data-value attribute
+        // console.log(data);
+        //     fetch('/ProceedOrder', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //         },
+        //         body: JSON.stringify({ cart: data }),
+        //     })
+        // }
+        // document.addEventListener("DOMContentLoaded", () => {
+        //     const cart = document.getElementById('cart');
+        //     const shipping = document.getElementById('shipping-options');
+        //     const proceedCheckout = document.getElementById('proceed-to-checkout');
 
-// document.addEventListener("DOMContentLoaded",()=>{
-//     const checkout = document.getElementById('checkout');
-//     const checkoutbtn= document.getElementById('checkout-form');
-//     const address = document.getElementById('address');
+        //     proceedCheckout.addEventListener('click', (event) => {
+        //         const selectedShipping = document.querySelector('input[name="shipping"]:checked');
 
-//     checkoutbtn.addEventListener("click",(event)=>{
-//         const selected = document.querySelector('input[name="address"]:checked');
+        //         if (selectedShipping) {
+        //             const shippingMethod = selectedShipping.value;
+        //             console.log("Selected shipping method: " + shippingMethod);
+        //         } else {
+        //             const errorElement = document.getElementById('shipping');
+        //             errorElement.textContent = 'Please select a shipping method before proceeding.';
+        //             event.preventDefault(); // Prevent form submission and page refresh
+        //         }
+        //     });
+        // });
 
-//         if(selected){
-//             console.log("Selected address");
-//         }
-//         else{
-//             const errorElement = document.getElementById('address')
-//             errorElement.textContent = 'Please select a address before proceeding.';
-//             event.preventDefault(); 
-//         }
-//     })
+        // document.addEventListener("DOMContentLoaded",()=>{
+        //     const checkout = document.getElementById('checkout');
+        //     const checkoutbtn= document.getElementById('checkout-form');
+        //     const address = document.getElementById('address');
 
-// })
+        //     checkoutbtn.addEventListener("click",(event)=>{
+        //         const selected = document.querySelector('input[name="address"]:checked');
 
-function couponsubmit(amount) {
-                const value = document.getElementById('couponcode').value
-                console.log(value);
+        //         if(selected){
+        //             console.log("Selected address");
+        //         }
+        //         else{
+        //             const errorElement = document.getElementById('address')
+        //             errorElement.textContent = 'Please select a address before proceeding.';
+        //             event.preventDefault(); 
+        //         }
+        //     })
+
+        // })
+
+        function couponsubmit(amount) {
+            const value = document.getElementById('couponcode').value
+            console.log(value);
+            $.ajax({
+                method: "post",
+                url: "/coupondata",
+                data: JSON.stringify({ val: value, total: amount }),
+                contentType: 'application/json',
+                success: function (response) {
+                    if (response.result == true) {
+                        $('#total').text('Rs.' + response.reducedamount);
+                        $('#couponamount').text('Rs.' + response.discountamount);
+
+                        $('#reload').load('/cart #reload')
+
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: "Coupon added successfully"
+                        });
+
+                    }else if(response.result== false){
+                        Swal.fire("The field is empty");
+                    }
+                    else if(response.date == false){
+                        Swal.fire("This Coupon is expired ");
+                    }
+
+                    else {
+                        Swal.fire("The coupon already redeemed");
+                    }
+                }
+
+
+            })
+        }
+
+
+        function coupondelete(amount) {
+            const value = document.getElementById('couponcode').value
+            const total = document.getElementById('total')
+
+            $.ajax({
+                method: "delete",
+                url: "/deletecoupon",
+                data: JSON.stringify({ total: amount, value: value }),
+                contentType: 'application/json',
+                success: function (response) {
+                    if (response.result == true) {
+                        $('#total').text('Rs.' + response.total);
+                        $('#couponamount').text('Rs.' + 0);
+
+                        $('#couponfield').load('/ProceedtoCheckout #couponfield')
+                        $('#reload').load('/cart #reload')
+
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            },
+                            
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: "Coupon Removed Successfully"
+                        });
+
+                    } else {
+                        console.log("Nothing to delete");
+
+                    }
+                }
+            })
+
+        }
+
+
+        $(document).ready(function () {
+            // const val = amount.spilt('.')
+            // const numericValue = parseInt(val[1]);
+            
+            $('#myForm').submit(function (event) {
+                const amount = document.getElementById('couponamount').innerText
+                const val = amount.split('.')
+                const totalamount = val[1]
+                const couponcode =document.getElementById('couponcode').value
+                console.log(couponcode);
+                console.log(totalamount);
+                event.preventDefault();
+                var formData = $(this).serializeArray();
+                formData.push({name:"total",value:totalamount})
+                formData.push({name:"couponcode",value:couponcode})
+                console.log(formData);
                 $.ajax({
-                    method: "post",
-                    url: "/coupondata",
-                    data: JSON.stringify({ val: value, total: amount }),
-                    contentType: 'application/json',
+                    url: '/ProceedOrder',
+                    method: 'POST',
+                    data: formData,
                     success: function (response) {
-                        if (response.result == true) {
-                            $('#total').text('Rs.' + response.reducedamount);
-                            $('#reload').load('/cart #reload')
-
-                            const Toast = Swal.mixin({
-                                toast: true,
-                                position: "top-end",
-                                showConfirmButton: false,
-                                timer: 3000,
-                                timerProgressBar: true,
-                                didOpen: (toast) => {
-                                    toast.onmouseenter = Swal.stopTimer;
-                                    toast.onmouseleave = Swal.resumeTimer;
-                                }
-                            });
-                            Toast.fire({
-                                icon: "success",
-                                title: "Coupon Added Successfully"
-                            });
-
+                        console.log(response)
+                        if (response.success == true) {
+                            window.location.href = '/orderplaced'
+                        } else if (response.online == true) {
+                            console.log("wallet");
                         }
                         else {
-                            Swal.fire("ERROR");
+                            razorpayPayment(response.order)
+
                         }
+                    },
+                    error: function (error) {
+
+                        console.error('Error:', error);
                     }
-
-
-                })
-            }
-
-
-          function  coupondelete(amount){
-            console.log("jlkdsf");
-
-          }
-
-
-$(document).ready(function () {
-    
-        $('#myForm').submit(function (event) {
-            event.preventDefault();
-            var formData = $(this).serializeArray();
-
-            console.log(formData,);
-            $.ajax({
-                url: '/ProceedOrder',
-                method: 'POST',
-                data: formData,
-                success: function(response) {
-                    console.log(response)
-                    if(response.success == true){
-                        window.location.href = '/orderplaced'
-                    }else if(response.online == true){
-                        console.log("wallet");
-                    }
-                    else{
-                        razorpayPayment(response.order)
-
-                    }
-                },
-                error: function (error) {
-                  
-                    console.error('Error:', error);
-                }
+                });
             });
         });
-    });
 
+        // function discountamount(){
+        //     console.log("fhjfhfhfhf");
+        //     const amount = document.getElementById('couponamount')
+        //     const numericValue = parseInt(amount.innerText.replace('Rs.', '').trim());
 
-    function razorpayPayment(order){
-        console.log(order);
-        var options = {
-        "key": "rzp_test_spjMMzxxQd5jRn",
-        "amount": order.amount, 
-        "currency": "INR",
-        "name": "Shozey",
-        "description": "Test Transaction",
-        "image": "/user/images/Fs Hat Logo.jpg",
-        "order_id": order.id, 
-        handler: function (response) {
-            verifyPayment(response, order);
-        },
-        "prefill": { 
-            "name": "Shozey", 
-            "email": "shozey@gmail.com",
-            "contact": "9000090000"
-        },
-        "notes": {
-            "address": "Shozey "
-        },
-        "theme": {
-            "color": "#cc9967"
+        //     console.log(numericValue);
+        //   $.ajax({
+        //     url:"/ProceedOrder",
+        //     method:"post",
+        //     data:JSON.stringify({amount:numericValue}),
+        //     contentType:'application/json',
+        //     success:function(response){
+        //         if(response.result==true){
+        //             console.log("success");
+        //         }else{
+        //             console.log("error");
+        //         }
+        //     }
+        // })
+        // }
+
+        function razorpayPayment(order) {
+            console.log(order);
+            var options = {
+                "key": "rzp_test_spjMMzxxQd5jRn",
+                "amount": order.amount,
+                "currency": "INR",
+                "name": "Shozey",
+                "description": "Test Transaction",
+                "image": "/user/images/Fs Hat Logo.jpg",
+                "order_id": order.id,
+                handler: function (response) {
+                    verifyPayment(response, order);
+                },
+                "prefill": {
+                    "name": "Shozey",
+                    "email": "shozey@gmail.com",
+                    "contact": "9000090000"
+                },
+                "notes": {
+                    "address": "Shozey "
+                },
+                "theme": {
+                    "color": "#cc9967"
+                }
+            };
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
         }
-    };
-    var rzp1 = new Razorpay(options);
-    rzp1.open();
-    }
 
 
-    function verifyPayment(payment, order) {
-        const amount2 = document.getElementById("total").value;
-        console.log(amount2);
-        $.ajax({
-        url: "/verify-payment",
-        method: "post",
-        data: {
-            payment: payment,
-            amount2: amount2,
-            order: order,
-        },
-        success: (response) => {
-            if (response.placed == true) {
-                window.location.href = '/orderplaced'
-            } else {
-            swal.fire({
-                positon: "center",
-                icon: "error",
-                title: "Payment failed",
-                showConfirmButton: false,
-                timer: 1500,
+        function verifyPayment(payment, order) {
+            const amount2 = document.getElementById("total").value;
+            console.log(amount2);
+            $.ajax({
+                url: "/verify-payment",
+                method: "post",
+                data: {
+                    payment: payment,
+                    amount2: amount2,
+                    order: order,
+                },
+                success: (response) => {
+                    if (response.placed == true) {
+                        window.location.href = '/orderplaced'
+                    } else {
+                        swal.fire({
+                            positon: "center",
+                            icon: "error",
+                            title: "Payment failed",
+                            showConfirmButton: false,
+                            timer: 1500,
+                        });
+                    }
+                },
             });
-            }
-        },
- });
- }
+        }
 
-</Script>
-<%- include('../user/layout/footer.ejs') -%>
+    </Script>
+    <%- include('../user/layout/footer.ejs') -%>

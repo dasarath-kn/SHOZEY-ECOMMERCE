@@ -76,6 +76,7 @@ router.get('/shop',usercontroller.shop)
 //=================================== COUPON =====================================//
 
 router.post('/coupondata',couponcontroller.coupondata);
+router.delete('/deletecoupon',couponcontroller.deletecoupon)
 
 //=================================== LOGOUT =====================================//
 

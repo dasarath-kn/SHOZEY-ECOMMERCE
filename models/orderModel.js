@@ -59,6 +59,10 @@ const orderdetails = mongoose.Schema({
        couponid:{
         type:String,
         ref:"coupon"
+       },
+       discountamount:{
+        type:Number
+
        }
 });
 

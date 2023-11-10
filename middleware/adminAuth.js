@@ -1,40 +1,41 @@
 
 //===================================  CHECKING ADMIN IS LOG-IN =====================================//
 
-const checkadminisLogin= async (req,res,next)=>{
- try{
-  if(req.session.adminId){
-  next();
- }
- else {
-  res.redirect('/admin')
-    
- }
- }
+const checkadminisLogin = async (req, res, next) => {
+  try {
+    if (req.session.adminId) {
+      next();
+    }
+    else {
+      res.redirect('/admin')
 
-catch(error){
-  console.log(error);
-}
+    }
+  }
+
+  catch (error) {
+    console.log(error);
+  }
 
 }
 
 //===================================  CHECKING ADMIN IS LOG-OUT =====================================//
 
-const checkadminisLogout = async(req,res,next)=>{
-  try{
-    if(!req.session.adminId){
+const checkadminisLogout = async (req, res, next) => {
+  try {
+    if (!req.session.adminId) {
       next()
     }
-    else{
+    else {
       res.redirect('/admin/usermanagement');
     }
   }
-  catch(error){rs
+  catch (error) {
+    rs
     console.log(error);
   }
 }
 
-module.exports={
+module.exports = {
   checkadminisLogin,
   checkadminisLogout
 }

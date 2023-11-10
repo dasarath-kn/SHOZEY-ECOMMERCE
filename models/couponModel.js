@@ -37,7 +37,11 @@ const coupondata=new mongoose.Schema({
     status:{
         type:Number,
         default:0
-    }
+    },
+    claimedusers:[{
+        type:Array
+    }]
+
 
 })
 module.exports = mongoose.model("coupon",coupondata);

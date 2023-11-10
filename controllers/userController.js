@@ -101,16 +101,16 @@ const validation = async (req, res) => {
                     req.session.name = check.firstname;
                     res.redirect('/home');
                 }
-                else if(check.is_verified == 0 && check.status ==0){
+                else if (check.is_verified == 0 && check.status == 0) {
                     console.log("hfghjhj");
-                 const id = req.body.email
-                 const username = await user.findOne({email:id})
-                 const name = username.name
-                 const _id =username._id 
-                 sendVerifyMail( name,req.body.email);
-                 const otpnumber=items.otp
-                    res.render('otp',{userid: _id,otpnumber })
-                   
+                    const id = req.body.email
+                    const username = await user.findOne({ email: id })
+                    const name = username.name
+                    const _id = username._id
+                    sendVerifyMail(name, req.body.email);
+                    const otpnumber = items.otp
+                    res.render('otp', { userid: _id, otpnumber })
+
                     res.redirect('/cart')
                 }
                 else {
@@ -121,7 +121,7 @@ const validation = async (req, res) => {
             }
 
         } else if (check != req.body.password) {
-            res.render('signin', { message: "Invalid password", user: req.session.name,cartdata })
+            res.render('signin', { message: "Invalid password", user: req.session.name, cartdata })
         }
         else {
             res.render('signin', { message: "Invalid mail", user: req.session.name, cartdata });
@@ -177,8 +177,8 @@ const insertdata = async (req, res) => {
                 sendVerifyMail(req.body.firstname, req.body.email);
                 email2 = req.body.email
                 firstname = req.body.firstname
-                const otpnumber=items.otp
-                res.render('otp', { userid: data._id,otpnumber })
+                const otpnumber = items.otp
+                res.render('otp', { userid: data._id, otpnumber })
 
             } else {
                 res.redirect('/signup');
@@ -200,9 +200,9 @@ function otpgenerator() {
 
 const sendVerifyMail = async (name, email) => {
     try {
-        
-            otpgenerator();
-       
+
+        otpgenerator();
+
 
         const transporter = nodemailer.createTransport({
             host: 'smtp.gmail.com',
@@ -231,7 +231,7 @@ const sendVerifyMail = async (name, email) => {
                 console.log("Email has been send:-", info.response, otpsend);
             }
         })
-         items = new otpmodel({
+        items = new otpmodel({
             email: email,
             otp: otpsend
         })
@@ -249,7 +249,7 @@ const verifymail = async (req, res) => {
 
         if (req.body.otp == otpsend) {
             console.log("helloooooooooooooooooooooooo");
-            const id= req.query.id
+            const id = req.query.id
             console.log(id);
             const updateinfo = await user.updateOne({ _id: req.query.id }, { $set: { is_verified: 1 } });
 
@@ -304,7 +304,7 @@ const shop = async (req, res) => {
 
         const cartdata = await cart.find({ userid: id }).populate("items.productid")
 
-        res.render('shop', { user: req.session.name, cartdata, productdata,id,productcategory})
+        res.render('shop', { user: req.session.name, cartdata, productdata, id, productcategory })
 
     } catch (error) {
         console.log(error.message);
@@ -312,18 +312,18 @@ const shop = async (req, res) => {
 }
 //=================================== SEARCH =====================================//
 
-const search= async(req,res)=>{
- 
+const search = async (req, res) => {
+
     try {
         console.log("fsfsfsdfds");
         const data = req.body.product
-        const id =req.session.userId
+        const id = req.session.userId
         const productdata = await product.find({ productname: { $regex: data, $options: 'i' } });
 
         const cartdata = await cart.find({ userid: id }).populate("items.productid")
 
-         res.render('shop',{user:req.session.name,productdata,cartdata,id})
-        
+        res.render('shop', { user: req.session.name, productdata, cartdata, id })
+
     } catch (error) {
         console.log(error.message);
     }

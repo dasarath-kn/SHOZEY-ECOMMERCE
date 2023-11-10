@@ -1,4 +1,4 @@
-const  multer = require('multer')
+const multer = require('multer')
 const path = require('path')
 
 const storage = multer.diskStorage({
@@ -35,6 +35,6 @@ const Bannerstorage = multer.diskStorage({
   },
 });
 
-const bannerUpload = multer({storage:Bannerstorage})
+const bannerUpload = multer({ storage: Bannerstorage })
 
-module.exports = { productImagesUpload, bannerUpload}
+module.exports = { productImagesUpload, bannerUpload }
