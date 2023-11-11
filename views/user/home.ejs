@@ -269,7 +269,7 @@
                                                     class="product-image">
                                             </a>
                                             <div class="product-action-vertical">
-                                                <a href="#"
+                                                <a onclick="wishlist('<%= item._id %>')"
                                                     class="btn-product-icon btn-wishlist btn-expandable"><span>add to
                                                         wishlist</span></a>
                                             </div>
@@ -2531,8 +2531,8 @@
                             confirmButtonText: 'OK'
                         });
 
-                    }else if(response.count==true){
-                       
+                    } else if (response.count == true) {
+
                         $('#downCart').load('/ #downCart');
                         Swal.fire({
                             position: "top-end",
@@ -2540,10 +2540,10 @@
                             title: "Product count increased",
                             showConfirmButton: false,
                             timer: 1500
-                            });         
-                    
+                        });
+
                     }
-                     else {
+                    else {
                         Swal.fire({
                             title: 'Failed',
                             text: 'product is out of stock',
@@ -2577,6 +2577,44 @@
                 }
             });
 
+        }
+
+
+        function wishlist(id) {
+            console.log("hshfjfl");
+
+            $.ajax({
+                method: "post",
+                url: "/addtowishlist",
+                data: JSON.stringify({ id: id }),
+                contentType: 'application/json',
+                success: function (response) {
+                    if (response.result == true) {
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "Sucessfully added to wishlist",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        console.log("sucess");
+                    }else if(response.res==false){
+                        Swal.fire(" Item already exist in wishlist");
+                    } 
+                    else {
+                        Swal.fire({
+                            title: 'Login required',
+                            text: 'Please login',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = '/signin';
+                            }
+                        });
+                    }
+                }
+            })
         }
     </script>
 

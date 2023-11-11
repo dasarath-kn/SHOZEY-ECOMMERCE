@@ -40,6 +40,11 @@ router.get('/resendotp',usercontroller.resendOTP);
 
 router.get('/productdetails',usercontroller.productdetails);
 router.post('/searchproduct',usercontroller.search)
+//=================================== WISHLIST =====================================//
+
+router.post('/addtowishlist',cartcontroller.addtowishlist)
+router.get('/wishlist',cartcontroller.wishlistview);
+router.delete('/deletewishlist',cartcontroller.deletewishlist)
 
 //=================================== CART =====================================//
 
