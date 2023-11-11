@@ -58,7 +58,7 @@ router.post('/checkoutdata',checkoutcontroller.checkoutdata)
 router.get('/ProceedtoCheckout',checkoutcontroller.ProceedtoCheckout)
 router.post('/ProceedOrder',checkoutcontroller.ProceedOrder)
 router.get('/orderdetails',checkoutcontroller.orderdetails)
-router.get('/cancelorder',checkoutcontroller.cancelorder)
+router.post('/cancelorder',checkoutcontroller.cancelorder)
 router.get('/orderplaced',checkoutcontroller.orderplaced);
 router.post('/verify-payment',checkoutcontroller.verifypayment)
 //=================================== PROFILE =====================================//
@@ -72,8 +72,9 @@ router.get('/address',addresscontroller.useraddress);
 router.post('/addaddress',addresscontroller.addingAddress);
 
 router.get('/editaddress',addresscontroller.editaddress);
-router.post('/deleteaddress',addresscontroller.deletingAddress)
+router.delete('/deleteaddress',addresscontroller.deletingAddress)
 router.post('/updatingaddress',addresscontroller.updatingaddress);
+router.post('/addnewaddress',addresscontroller.addnewaddress)
 
 //=================================== SHOP =====================================//
 router.get('/shop',usercontroller.shop)

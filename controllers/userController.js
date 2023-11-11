@@ -298,6 +298,8 @@ const otp = async (req, res) => {
 
 const shop = async (req, res) => {
     try {
+        const price =req.query.val
+        console.log(price);
         const id = req.session.id
         const productdata = await product.find()
         const productcategory = await category.find()

@@ -602,7 +602,10 @@
                     success: function (response) {
                         if (response.result == true) {
                             window.location.href = '/ProceedtoCheckout';
-                        } else {
+                        }else if(response.res == true){
+                            Swal.fire("The product is outofstock");
+                        } 
+                        else {
                             Swal.fire("The cart is empty so can't proceed");
                         }
                     },

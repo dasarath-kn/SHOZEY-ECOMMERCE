@@ -1,12 +1,14 @@
 <%- include('../user/layout/header.ejs') %>
-<style>
-	.swal2-toast {
-	width: 900px; /* Adjust the width as needed */
-	height: 100px; /* Adjust the height as needed */
-	font-size: 18px;
-	margin-top: 70px;
-  }
-  </style>
+    <style>
+        .swal2-toast {
+            width: 900px;
+            /* Adjust the width as needed */
+            height: 100px;
+            /* Adjust the height as needed */
+            font-size: 18px;
+            margin-top: 70px;
+        }
+    </style>
     <main class="main">
         <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
             <div class="container">
@@ -111,7 +113,94 @@
                         </div>
 
                         <div class="add-new-address" style="margin-left: auto; margin-top: 2rem;">
-                            <a href="/address">Add New Address</a>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#exampleModalCenter">
+                                Add new address
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="/addnewaddress" method="post" >
+                                                <div class="form-group row">
+                                                  <div class="col-sm-9">
+                                                    <h5>Name:</h5>
+                                                    <input type="text" class="form-control" id="userName"  name="name" placeholder="Your name.." required>
+                                                  </div>
+                                                </div>
+                                        
+                                                <div class="form-group row">
+                                                  <div class="col-sm-9">
+                                                    <h5>Phone Number:</h5>
+                                                    <input type="text" class="form-control" id="mobile" name="phonenumber" placeholder="Your phone number.." required>
+                                        
+                                                  </div>
+                                                </div>
+                                        
+                                                
+                                                <div class="form-group row">
+                                                  <div class="col-sm-9">
+                                                    <h5>Address:</h5>
+                                                    <input type="text" class="form-control" id="address"  name="address" placeholder="Your address.." required>
+                                                  </div>
+                                                </div>
+                                        
+                                                <div class="form-group row">
+                                                  <div class="col-sm-9">
+                                                    <h5>City:</h5>
+                                                    <input type="text" class="form-control" id="city"  name="city" placeholder="Your city.." required>
+                                        
+                                                  </div>
+                                                </div>
+                                        
+                                                <div class="form-group row">
+                                                  <div class="col-sm-9">
+                                                    <h5>State:</h5>
+                                                    <input type="text" class="form-control" id="state"  name="state" placeholder="Your state.." required>
+                                                  </div>
+                                                </div>
+                                        
+                                                <div class="form-group row">
+                                                  <div class="col-sm-9">
+                                                    <h5>Country:</h5>
+                                                    <input type="text" class="form-control" id="country"  name="country" placeholder="Your country.." required>
+                                                  </div>
+                                                </div>
+                                        
+                                                <div class="form-group row">
+                                                  <div class="col-sm-9">
+                                                    <h5>Pin Code:</h5>
+                                                    <input type="text" class="form-control" id="pinCode"  name="pincode" placeholder="Your pin code.." required>
+                                                  </div>
+                                                </div>
+                                        
+                                                <div class="form-group row">
+                                                  <!-- Additional fields if needed -->
+                                                </div>
+                                         <div class="form-group">
+                                                                <button type="submit" class=" btn btn-primary rounded submit px-3">Submit</button>
+                                                            </div>
+                                              </form>
+                                        
+                                        </div>
+                                        <!-- <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -192,56 +281,54 @@
                                                             <td>Shipping:</td>
                                                             <td>Free shipping</td>
                                                         </tr>
-                                                        
-                                                                <tr>
+
+                                                        <tr>
                                                             <td>Coupon Amount:</td>
                                                             <td name="amount" id="couponamount">Rs.0</td>
                                                         </tr>
-                                                    </form>
-                                                        <div id="reload">
-                                                            <tr class="summary-total">
-                                                                <td>Total:</td>
-                                                                <td id="total">Rs.<%= totalsum %>
-                                                                </td>
-                                                            </tr><!-- End .summary-total -->
-                                                        </div>
-                                    </tbody>
-                                </table><!-- End .table table-summary -->
-                                <div class="d-flex align-items-center">
-                                    <div class="mr-2">
-                                        <input required type="radio" id="COD" name="payment" value="Cash on delivery"
-                                            checked />
-                                    </div>
-                                    <a href="" class="d-block text-dark" for="pay1">Cash On Delivery</a>
-                                </div>
+                    </form>
+                    <div id="reload">
+                        <tr class="summary-total">
+                            <td>Total:</td>
+                            <td id="total">Rs.<%= totalsum %>
+                            </td>
+                        </tr><!-- End .summary-total -->
+                    </div>
+                    </tbody>
+                    </table><!-- End .table table-summary -->
+                    <div class="d-flex align-items-center">
+                        <div class="mr-2">
+                            <input required type="radio" id="COD" name="payment" value="Cash on delivery" checked />
+                        </div>
+                        <a href="" class="d-block text-dark" for="pay1">Cash On Delivery</a>
+                    </div>
 
-                                <div class="d-flex align-items-center">
-                                    <div class="mr-2">
-                                        <input required type="radio" id="payment" name="payment"
-                                            value="Online Payment" />
-                                    </div>
-                                    <a href="" class="d-block text-dark" for="pay2">Online Payment</a>
-                                </div>
+                    <div class="d-flex align-items-center">
+                        <div class="mr-2">
+                            <input required type="radio" id="payment" name="payment" value="Online Payment" />
+                        </div>
+                        <a href="" class="d-block text-dark" for="pay2">Online Payment</a>
+                    </div>
 
-                                <div class="d-flex align-items-center">
+                    <!-- <div class="d-flex align-items-center">
                                     <div class="mr-2">
                                         <input required type="radio" id="wallet" name="payment" value="wallet" />
                                     </div>
                                     <a href="" class="d-block text-dark" for="pay3">Wallet</a>
-                                </div>
+                                </div> -->
 
 
-                                <button   type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
-                                    <span class="btn-text">Place Order</span>
-                                    <span class="btn-hover-text">Place Order</span>
-                                </button>
+                    <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
+                        <span class="btn-text">Place Order</span>
+                        <span class="btn-hover-text">Place Order</span>
+                    </button>
 
-                            </div><!-- End .summary -->
-                        </aside><!-- End .col-lg-3 -->
+                </div><!-- End .summary -->
+                </aside><!-- End .col-lg-3 -->
 
-                    </form>
-                </div><!-- End .container -->
-            </div><!-- End .checkout -->
+                </form>
+            </div><!-- End .container -->
+        </div><!-- End .checkout -->
         </div><!-- End .page-content -->
     </main><!-- End .main -->
     <script>
@@ -339,10 +426,10 @@
                             title: "Coupon added successfully"
                         });
 
-                    }else if(response.result== false){
+                    } else if (response.result == false) {
                         Swal.fire("The field is empty");
                     }
-                    else if(response.date == false){
+                    else if (response.date == false) {
                         Swal.fire("This Coupon is expired ");
                     }
 
@@ -383,7 +470,7 @@
                                 toast.onmouseenter = Swal.stopTimer;
                                 toast.onmouseleave = Swal.resumeTimer;
                             },
-                            
+
                         });
                         Toast.fire({
                             icon: "success",
@@ -401,20 +488,18 @@
 
 
         $(document).ready(function () {
-            // const val = amount.spilt('.')
-            // const numericValue = parseInt(val[1]);
-            
+          
             $('#myForm').submit(function (event) {
                 const amount = document.getElementById('couponamount').innerText
                 const val = amount.split('.')
                 const totalamount = val[1]
-                const couponcode =document.getElementById('couponcode').value
+                const couponcode = document.getElementById('couponcode').value
                 console.log(couponcode);
                 console.log(totalamount);
                 event.preventDefault();
                 var formData = $(this).serializeArray();
-                formData.push({name:"total",value:totalamount})
-                formData.push({name:"couponcode",value:couponcode})
+                formData.push({ name: "total", value: totalamount })
+                formData.push({ name: "couponcode", value: couponcode })
                 console.log(formData);
                 $.ajax({
                     url: '/ProceedOrder',

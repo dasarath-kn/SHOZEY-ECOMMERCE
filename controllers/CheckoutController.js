@@ -15,12 +15,33 @@ var instance = new Razorpay({
 
 const checkoutdata = async (req, res) => {
     try {
-        const total = req.body.val
-        console.log(total);
+        const total = req.body.val;
+        const session = req.session.userId;
+        const cartdata = await cart.findOne({userid:session});
+        const data = cartdata.items;
+        
+        let count=0
+        for(let i=0 ;i<data.length;i++){
+            let productid = data[i].productid;
+            let productcount =data[i].count;
+            const productdata = await product.findOne({_id:productid});
+            const productquantity = productdata.quantity; 
+            if(productcount<=productquantity ){
+                count++
+            }else{
+                count=0
+              break;
+            }
+        }
+        console.log(count);
         if (total == 0) {
             res.json({ result: false })
         } else {
-            res.json({ result: true })
+            if(count>=1){
+            res.json({ result: true })}
+            else{
+                res.json({res:true})
+            }
         }
 
     } catch (error) {
@@ -182,26 +203,35 @@ const orderdetails = async (req, res) => {
 
 const cancelorder = async (req, res) => {
     try {
-        const id = req.query.id
+        console.log("uhshufdhj");
+        const id = req.body.id;
+        console.log(id);
+         const val = await order.findOne({_id:id})
+         const productid=val.items[0].productid;
 
-        //   const data ="cancelled"
-        //   console.log(id+"Fsdf",productid+"duhfisifhsh");
-        //  const val= await order.updateOne({ _id: id, "items.productid": productid }, { $set: { 'items.$.status': data } })
+        if(id){
+        // await order.findByIdAndUpdate(id, { status: "cancelled" })
+        await order.updateOne(
+            {
+              _id:id,
+              'items.productid': productid,
+            },
+            {
+              $set: {
+                'items.$.status': "cancelled",
+              },
+            }
+          );
+        res.json({result:true})
+        }else{
+            console.log("Status is not changed ");
+        }
+       
 
-        await order.findByIdAndUpdate(id, { status: "cancelled" })
-        const cartitems = await cart.findOne({ userid: id }).populate("items.productid")
-        //   const values = cartitems.items
-        console.log(cartitems);
-
-        //   for(let i=0;i<values.length;i++){
-        //     let products = values[i].productid._id
-        //      let data= values[i].count
-        //       await product.updateOne({_id:products},{$inc:{quantity:+data}})
-
-        //   }
+        
 
 
-        res.redirect('/profile')
+       
 
     } catch (error) {
         console.log(error.message);

@@ -15,6 +15,8 @@ const useraddress = async (req, res) => {
 const addingAddress = async (req, res) => {
 
     try {
+        const name = req.body.name
+        console.log(name);
         const userid = req.session.userId;
         const checkdata = await address.findOne({ _id: userid });
         if (checkdata) {
@@ -32,7 +34,7 @@ const addingAddress = async (req, res) => {
                     }
                 }
             })
-            res.redirect('/profile');
+            res.json({result:true})
         }
         else {
             const data = new address({
@@ -51,7 +53,7 @@ const addingAddress = async (req, res) => {
             console.log(data);
             await data.save();
 
-            res.redirect('/profile');
+            res.json({result:true})
         }
 
     }
@@ -119,10 +121,59 @@ const deletingAddress = async (req, res) => {
     }
 }
 
+const addnewaddress =async(req,res)=>{
+    try {
+        const userid = req.session.userId;
+        const checkdata = await address.findOne({ _id: userid });
+        if (checkdata) {
+            await address.updateOne({ userId: userid }, {
+                $set: {
+                    userdata: {
+                        name: req.body.name,
+                        phonenumber: req.body.phonenumber,
+                        address: req.body.address,
+                        city: req.body.city,
+                        state: req.body.state,
+                        country: req.body.country,
+                        pincode: req.body.pincode
+
+                    }
+                }
+            })
+            res.redirect('/ProceedtoCheckout');
+        }
+        else {
+            const data = new address({
+                userId: userid,
+                userdata: [{
+
+                    name: req.body.name,
+                    phonenumber: req.body.phonenumber,
+                    address: req.body.address,
+                    city: req.body.city,
+                    state: req.body.state,
+                    country: req.body.country,
+                    pincode: req.body.pincode
+                }]
+            })
+            console.log(data);
+            await data.save();
+
+            res.redirect('/ProceedtoCheckout');
+        }
+
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+
 module.exports = ({
     useraddress,
     addingAddress,
     editaddress,
     deletingAddress,
-    updatingaddress
+    updatingaddress,
+    addnewaddress
 })
