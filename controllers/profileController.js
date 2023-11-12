@@ -16,7 +16,7 @@ const profile = async (req, res) => {
         const id = req.query.id;
         const data = userdata
         const orderdata = await order.find({ user_Id: req.session.userId }).sort({ purchaseDate: -1 })
-        // console.log(orderdata,"yftftftftftftftftft");
+        console.log(orderdata,"yftftftftftftftftft");
         res.render('profile', { data, user: req.session.name, cartdata, orderdata })
 
     } catch (error) {

@@ -19,51 +19,41 @@
                                 <th style="font-weight: 800;" >Date</th>
                                 <th style="font-weight: 800;" >Amount</th>
                                 <th style="font-weight: 800;" >Payment</th>
-                                <th style="font-weight: 800;" >Status</th>
-                                <th style="font-weight: 800;" >UpdateStatus</th>
+                                <th style="font-weight: 800;" >Details</th>
+                                <!-- <th style="font-weight: 800;" >UpdateStatus</th> -->
                                 <!-- <th style="font-weight: 800;" >Details</th> -->
                             </tr>
                           </thead>
                           <tbody>
-                            <% let count = 1; %>
-                            <% for(let i=0; i<orderdata.length ; i++) { %>
-                              <% let data = orderdata[i].items %>
-                              <% for(let j=0; j<data.length;j++) {%>
-                                <% productdata = data[j].productid %>
-                              <tr>
-                                <td><%= count++ %></td>
-                                <td><%= orderdata[i].purchaseDate.toLocaleDateString('en-US', {
-                                  year: 'numeric',
-                                  month: 'short',
-                                  day: '2-digit'
-                                }).replace(/\//g, '-') %></td>
-                                <td>Rs.<%= data[j].total * data[j].count %></td>
-                                <td><%= orderdata[i].paymentMethod %></td>
-                                <td><%= data[j].status %></td>
-                                <td>
-                                <% if (data[j].status == 'cancelled') { %>
-                                  <span style="color: red;">Cancelled</span>
-                                  <% }
-                                   else if(data[j].status == 'delivered') { %>
-                                    <span style="color: rgb(9, 255, 0);">Delivered</span> <%} 
-                                  else { %>
-                                  <select name="status" id="" class="form-control" onchange="updateOrder('<%= orderdata[i]._id %>','<%= productdata %>',this.value)" required>
-                                    <option value="" disabled selected><%= data[j].status %></option>
-                                    <option value="shipped">shipped</option>
-                                    <option value="out for delivery">out for delivery</option>
-                                    <option value="delivered">delivered</option>
-                                    <option value="cancelled">cancel</option>
-                                    <option value="placed">placed</option>
-                                  </select>
-                          <% }%>
-                        </td>
-                                <td><a href="/admin/orderdetails?id=<%= data[j].productid %>">Details</a></td>
-                              </tr>
-                              <%}%>
-                            <% } %>
-                        
-                                
-                          </tbody>
+                            <% let count=1; %>
+                            <% for(let i=0;i<orderdata.length; i++){%>
+                                    <tr>
+                                      <td>
+                                        <%= count++ %>
+                                      </td>
+                                      <td>
+                                        <%= orderdata[i].purchaseDate.toLocaleDateString('en-US',
+                                          {
+                                          year: 'numeric'
+                                          , month: 'short'
+                                          , day: '2-digit'
+                                          }).replace(/\//g,'-')%>
+                                      </td>
+                                      <td>Rs.<%= orderdata[i].totalAmount
+                                          %>
+                                      </td>
+                                      <td>
+                                        <%= orderdata[i].paymentMethod
+                                          %>
+                                      </td>
+                                      
+                                      <td><a
+                                          href="/admin/orderdetails?id=<%= orderdata[i]._id%>">Details</a>
+                                      </td>
+                                    </tr>
+                                    <%}%>
+                                      
+                        </tbody>
                         </table>
                       </div>
                     </div>
@@ -71,33 +61,7 @@
                 </div>
                 <script>
           
-          function updateOrder(id,product,data) {
-   console.log("the data is :"+product);
-      $.ajax({
-        method: 'post',
-        url: '/admin/cartstatus', 
-        data: JSON.stringify({id:id,product:product, data:data}),
-        contentType: 'application/json',
-        success: function (response) {
-            if(response.result === true){
-              // $('#statuss').load('/admin/cartstatus #statuss'); 
-              window.location.href = '/admin/orders';
-
-            }else{
-                Swal.fire({
-                    title: 'error',
-                    text: 'something wrong',
-                    icon: 'failed',
-                    confirmButtonText: 'OK'
-                  });
-            }
-        },
-        error: function (error) {
-
-            console.error(error);
-  }
-});
-}
+         
                     </script>
        
          <%- include ('../admin/layouts/footer.ejs')-%>

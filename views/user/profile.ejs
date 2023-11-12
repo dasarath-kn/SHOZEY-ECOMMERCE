@@ -86,8 +86,8 @@
 																				</th>
 																				<th style="font-weight: 800;">Payment
 																				</th>
-																				<th style="font-weight: 800;">Status
-																				</th>
+																				<!-- <th style="font-weight: 800;">Status
+																				</th> -->
 																				<th style="font-weight: 800;">Details
 																				</th>
 																			</b>
@@ -96,10 +96,6 @@
 																	<tbody>
 																		<% let count=1; %>
 																			<% for(let i=0;i<orderdata.length; i++){%>
-																				<% let item=orderdata[i].items %>
-																					<% for(let j=0;j<item.length;j++){%>
-																						<% let
-																							productdata=item[j].productid%>
 																							<tr>
 																								<td>
 																									<%= count++ %>
@@ -112,23 +108,20 @@
 																										, day: '2-digit'
 																										}).replace(/\//g,'-')%>
 																								</td>
-																								<td>Rs.<%= item[j].total
+																								<td>Rs.<%= orderdata[i].totalAmount
 																										%>
 																								</td>
 																								<td>
 																									<%= orderdata[i].paymentMethod
 																										%>
 																								</td>
-																								<td>
-																									<%= item[j].status
-																										%>
-																								</td>
+																								
 																								<td><a
 																										href="/orderdetails?id=<%= orderdata[i]._id%>">Details</a>
 																								</td>
 																							</tr>
 																							<%}%>
-																								<%}%>
+																								
 																	</tbody>
 																</table>
 															</div>

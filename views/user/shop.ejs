@@ -18,7 +18,7 @@
         <div class="page-content">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-9">
+                    <div class="col-lg-9" id="shop-reload">
                         <div class="toolbox">
                             <div class="toolbox-left">
                                 <div class="toolbox-info">
@@ -262,19 +262,19 @@
                                 <div class="collapse show" id="widget-4">
                                     <div class="widget-body">
                                         <div class="filter-items">
-                                            <div class="filter-item">
-                                                <div class="custom-control custom-checkbox" >
-                                                    <input type="checkbox" class="custom-control-input" id="brand-1">
-                                                    <label class="custom-control-label" for="brand-1"><a onclick="lowtohigh(1)">Price low to high</a></label>
-                                                </div><!-- End .custom-checkbox -->
-                                            </div><!-- End .filter-item -->
+                                            <!-- <div class="filter-item"> -->
+                                                <!-- <div class="custom-control custom-checkbox" > -->
+                                                    <!-- <input type="checkbox" class="custom-control-input" id="brand-1"> -->
+                                                    <a style="cursor:pointer;" onclick="lowtohigh(1)">Price low to high</a>
+                                                <!-- </div>End .custom-checkbox -->
+                                            <!-- </div>End .filter-item -->
 
                                             <div class="filter-item">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="brand-2">
-                                                    <label class="custom-control-label" for="brand-2"><a onclick="lowtohigh(-1)"> Price high to low</a> 
-                                                        </label>
-                                                </div><!-- End .custom-checkbox -->
+                                                <!-- <div class="custom-control custom-checkbox"> -->
+                                                    <!-- <input type="checkbox" class="custom-control-input" id="brand-2"> -->
+                                                    <a style="cursor:pointer;" onclick="lowtohigh(-1)"> Price high to low</a> 
+                                                        
+                                                <!-- </div>End .custom-checkbox -->
                                             </div><!-- End .filter-item -->
 
                                            
@@ -364,15 +364,15 @@ console.log(checkboxes);
 function lowtohigh(id){
     console.log(id);
     $.ajax({
-        method:'get',
-        url:'/shop',
-        data:JSON.stringify({val:id}),
-        contentType:'application/json',
+        method:'post',
+        url:'/pricesort',
+        data:({val:id}),
         success:function(response){
             if(response.result==true){
-                console.log("ss");
-            }else{
-                console.log("ererr");
+                console.log("fghhhhhhhh")
+                window.location.href = '/pricehightolow';
+            }else if(response.result==false){
+                window.location.href = '/pricelowtohigh';
             }
         }
     })

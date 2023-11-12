@@ -350,7 +350,8 @@ const orderdetails = async (req, res) => {
     try {
         const id = req.query.id;
         console.log(id);
-        const orderdata = await order.findOne({ "items.productid": id }).populate("items.productid");
+        const orderdata = await order.find({_id:id}).populate("items.productid");
+        
         //  const cartdata = await cart.findOne({userid:id,"items.productid":productid});
         console.log(orderdata);
         res.render('orderdetails', { orderdata, id });

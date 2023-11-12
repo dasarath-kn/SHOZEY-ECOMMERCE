@@ -298,12 +298,10 @@ const otp = async (req, res) => {
 
 const shop = async (req, res) => {
     try {
-        const price =req.query.val
-        console.log(price);
         const id = req.session.id
-        const productdata = await product.find()
-        const productcategory = await category.find()
 
+        const productcategory = await category.find()
+        const productdata= await product.find()
         const cartdata = await cart.find({ userid: id }).populate("items.productid")
 
         res.render('shop', { user: req.session.name, cartdata, productdata, id, productcategory })
@@ -331,6 +329,57 @@ const search = async (req, res) => {
     }
 
 }
+
+const pricesort = async(req,res)=>{
+    try {
+        const val = req.body.val
+        if(val==-1){
+            res.json({result:true})
+        }else if(val ==1){
+            res.json({result:false})
+        }
+        
+    } catch (error) {
+        
+        console.log(error.message);
+    }
+}
+
+const pricehightolow = async(req,res)=>{
+    try {
+        const id = req.session.id
+
+        const productcategory = await category.find()
+        const productdata = await product.find().sort({price:-1})
+
+        const cartdata = await cart.find({ userid: id }).populate("items.productid")
+
+        res.render('shop', { user: req.session.name, cartdata, productdata, id, productcategory })
+
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const pricelowtohigh = async(req,res)=>{
+    try {
+        const id = req.session.id
+
+        const productcategory = await category.find()
+        const productdata = await product.find().sort({price:1})
+
+        const cartdata = await cart.find({ userid: id }).populate("items.productid")
+
+        res.render('shop', { user: req.session.name, cartdata, productdata, id, productcategory })
+
+        
+    } catch (error) {
+        console.log(error.message);
+        
+    }
+}
+
 
 // const errorpage = async (req,res) => {
 //     try{
@@ -368,7 +417,10 @@ module.exports = {
     productdetails,
     resendOTP,
     shop,
-    search
+    search,
+    pricehightolow,
+    pricesort,
+    pricelowtohigh
     // errorpage
 }
 

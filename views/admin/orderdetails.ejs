@@ -1,86 +1,168 @@
-<%- include ('../admin/layouts/header.ejs')-%>
-      <div class="main-panel">
-        <div class="content-wrapper">
-          <div class="row">
-            <div class="col-lg-12 grid-margin stretch-card bg-light border-0">
-              <div class="card border-0">
-                <div class="card-body bg-light border-0 ">
-                  <div>
-                    <h3 style="color: black;">Order details</h3>
-                  </div>
-                  <div class="card-body row col-12 d-flex">
-             <% if(orderdata){%>
-              <% let product = orderdata.items %>
-              <% let address = orderdata.deliveryDetails %>
-              <% for(let i =0 ;i<product.length;i++){%>
-                <% let productdata = product[i].productid %>
-                
-      <div class="col-lg-4 col-md-6 col-sm-12">
-        <img class="image-popup" style="width: 100%;" alt="" src="/productimages/<%=productdata.image[0] %>">
-        <p class="card-text" style="color: black;"></p>
-      </div>
-      <div class="col-lg-7 col-md-6 col-sm-12">
-        <h3 class="card-title style" style="color: black;"> <%= productdata.productname%></h3>
+<%- include('../admin/layouts/header.ejs') %>
+    <main class="main mt-5">
+        <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+            <div class="container">
+                <h1 class="page-title">Order Details</h1>
+            </div><!-- End .container -->
+        </div><!-- End .page-header -->
+        <div class="container" >
+            <div class="col-md-12"  >
+                <table class="table table-cart table-mobile" id="reload">
+                    <thead>
+                        <tr>
+                            <th>Products</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Cancel Order</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-        <p class="card-text">
-          <p style="font-size: 16px; color: black;">Quantity: <b style="color: black;"><%= product[i].count%></b></p>
-          <i class="fa-solid fa-file-invoice-dollar"></i>
-        </p>
-        <p style="font-size: 18px; color: black;">Amount: <b class="card-title mb-2" style="color: black;">₹<%= product[i].total%> </b></p>
-        <p style="font-size: 20px; color: black;" >Order Status: <b style="color: black;"><%= product[i].status %></b></p>
-      </div>
-      <%}%>
-</div>
-<div class="row">
-     
-      <div class="col-md-6">
-        <div class="card card-dashboard border-0">
-          <div class="card-body bg-light">
-            <h3 style="color: black;">Delivery address</h3>
-            <p style="color: black;">
-              Name:<%= address.name%> <br>
-              Mobile: <%= address.phonenumber %><br>
-              Address:<%= address.address %> <br>
-              City: <%= address.city%><br>
-              State: <%= address.state%><br>
-              Country: <%= address.country %>
-              Pincode: <%= address.pincode %><br>
-            </p>
-          </div><!-- End .card-body -->
-        </div><!-- End .card-dashboard -->
-      </div>
-      
-</div>
-                      <div class="col-md-6">
-                          <div class="card card-dashboard border-0">
-                              <div class="card-body bg-light ">
-                                  <h3 style="color: black;">Order summary</h3>
-                                  <p style="color: black;"><br>
-                                      Purchase date:<%= orderdata.purchaseDate.toLocaleDateString('en-US', { year:
-                                        'numeric', month: 'short', day: '2-digit'
-                                        }).replace(/\//g,'-')%>
-                                          <br>
-                                      Total amount:<%= orderdata.totalAmount %> <br>
-                                      Status:<br>
-                                      Payment method:<%= orderdata.paymentMethod %> <br>
-                                      Shipping method:<%= orderdata.shippingMethod %> <br>
-                                      Shipping charge:<%= orderdata.shippingFee %> <br>
-                                  </p>
-                              </div><!-- End .card-body -->
-                          </div><!-- End .card-dashboard -->
-                      </div>
-                      <%}%>
-                      <div class="col-md-12">
-                          <a href="/admin/orders"><button class="btn btn-primary btn-block">Go Back</button></a>
-                      </div>
-                     
-                             
-                  </div>
-                </div>
-              </div>
+                        <% let product=orderdata[0].items %>
+                            <% for(let j=0; j<product.length; j++){%>
+                                <% var productdata=product[j].productid %>
+                                    <% var status=product[j].status %>
+                                        <% var id=orderdata[0]._id %>
+                                            <tr>
+                                                <td class="product-col">
+                                                    <div class="product">
+                                                        <figure class="product-media">
+                                                            <a href="#">
+                                                                <img src="/productimages/<%= productdata.image[0] %>"
+                                                                    alt="Product image">
+                                                            </a>
+                                                        </figure>
+                                                    </div><!-- End .product -->
+                                                </td>
+                                                <td class="price-col" style="margin-left: 20%;">
+                                                    <h3 class="product-title">
+                                                        <a href="#">
+                                                            <%= productdata.productname%>
+                                                        </a>
+                                                    </h3><!-- End .product-title -->
+                                                </td>
+                                                <td class="price-col">
+                                                    <%= productdata. category %>
+                                                </td>
+                                                <td class="price-col">₹<%= productdata.price%>
+                                                </td>
+                                                <td class="price-col">
+                                                    <%= product[j].count%>
+                                                </td>
+                                                <td class="price-col">₹<%= product[j].count *productdata.price %>
+                                                </td>
+                                                <td class="price-col">₹<%= product[j].status %>
+                                                </td>
+                                                <td>
+                                                  <% if (status == 'cancelled') { %>
+                                                    <span style="color: red;">Cancelled</span>
+                                                    <% }
+                                                     else if(status == 'delivered') { %>
+                                                      <span style="color: rgb(9, 255, 0);">Delivered</span> <%} 
+                                                    else { %>
+                                                    <select name="status" id="" class="form-control" onclick="updatestatus('<%= orderdata[0]._id%>','<%= productdata._id %>',this.value)" required>
+                                                      <option value="" disabled selected><%= status %></option>
+                                                      <option value="shipped">shipped</option>
+                                                      <option value="out for delivery">out for delivery</option>
+                                                      <option value="delivered">delivered</option>
+                                                      <option value="cancelled">cancel</option>
+                                                      <option value="placed">placed</option>
+                                                    </select>
+                                            <% }%>
+                                          </td>
+
+                                            </tr>
+                                            <%}%>
+
+
+                    </tbody>
+                </table>
             </div>
-          </div>
+            <div class="row">
+                <div class="col-md-6">
+
+                    <div class="card card-dashboard">
+                        <div class="card-body">
+                            <h3>Delivery address</h3>
+
+                            <p>Name:<%= orderdata[0].deliveryDetails.name%> <br>
+                                    Mobile:<%= orderdata[0].deliveryDetails.phonenumber%> <br>
+                                        Address:<%= orderdata[0].deliveryDetails.address%><br>
+                                            City:<%= orderdata[0].deliveryDetails.city%> <br>
+                                                State:<%= orderdata[0].deliveryDetails.state%> <br>
+                                                    Country:<%= orderdata[0].deliveryDetails.country %> <br>
+                                                        Pincode:<%= orderdata[0].deliveryDetails.pincode %><br>
+                            </p>
+                        </div><!-- End .card-body -->
+                    </div><!-- End .card-dashboard -->
+                </div>
+                <div class="col-md-6">
+                    <div class="card card-dashboard">
+                        <div class="card-body">
+                            <h3>Order summary</h3>
+                            <p>Order id:<%= orderdata[0]._id %> <br>
+                                    Purchase date: <%= orderdata[0].purchaseDate.toLocaleDateString('en-US', {
+                                        year: 'numeric' , month: 'short' , day: '2-digit' }).replace(/\//g, '-') %><br>
+                                        Total amount:<%= orderdata[0].totalAmount %> <br>
+                                            Status:<%= orderdata[0].totalAmount %> <br>
+                                                Payment method:<%= orderdata[0].paymentMethod %> <br>
+                                                    Shipping method:<%= orderdata[0].ShippingMethod %> <br>
+                                                        Shipping charge:<%= orderdata[0].Shippingfee %> <br>
+                            </p>
+                        </div><!-- End .card-body -->
+                    </div><!-- End .card-dashboard -->
+                </div>
+                <div class="col-md-6">
+                    <a href="/admin/orders"><button class="btn btn-primary btn-block">Go Back</button></a>
+                </div>
+                
+
+            </div>
         </div>
+    </main><!-- End .main -->
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+
+function updatestatus (id,product,data) {
+   console.log("the data is :"+product);
+      $.ajax({
+        method: 'post',
+        url: '/admin/cartstatus', 
+        data: JSON.stringify({id:id,product:product, data:data}),
+        contentType: 'application/json',
+        success: function (response) {
+            if(response.result === true){
+               $('#reload').load('/admin/cartstatus #reload'); 
+              // window.location.href = '/admin/orderdetails';
+
+            }else{
+                Swal.fire({
+                    title: 'error',
+                    text: 'something wrong',
+                    icon: 'failed',
+                    confirmButtonText: 'OK'
+                  });
+            }
+        },
+        error: function (error) {
+
+            console.error(error);
+  }
+});
+}
+
+
+// function updatestatus(id,product){
+// console.log(product);
+// }
+
       
-<!--   
-<%- include('../admin/layouts/footer.ejs')-%> -->
+
+
+    </script>

@@ -77,8 +77,10 @@ router.post('/updatingaddress',addresscontroller.updatingaddress);
 router.post('/addnewaddress',addresscontroller.addnewaddress)
 
 //=================================== SHOP =====================================//
-router.get('/shop',usercontroller.shop)
-
+router.get('/shop',usercontroller.shop);
+router.post('/pricesort',usercontroller.pricesort);
+router.get('/pricehightolow',usercontroller.pricehightolow);
+router.get('/pricelowtohigh',usercontroller.pricelowtohigh);
 //=================================== COUPON =====================================//
 
 router.post('/coupondata',couponcontroller.coupondata);
