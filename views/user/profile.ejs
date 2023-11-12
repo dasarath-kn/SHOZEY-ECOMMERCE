@@ -169,6 +169,8 @@
 																	<input type="text" class="form-control"
 																		id="userName" name="name"
 																		placeholder="Your name.." required>
+																		<span id="nameError" style="color: red;"></span>
+
 																</div>
 															</div>
 
@@ -178,6 +180,8 @@
 																	<input type="text" class="form-control" id="mobile"
 																		name="phonenumber"
 																		placeholder="Your phone number.." required>
+																		<span id="phonenumberError" style="color: red;"></span>
+
 
 																</div>
 															</div>
@@ -189,6 +193,8 @@
 																	<input type="text" class="form-control" id="address"
 																		name="address" placeholder="Your address.."
 																		required>
+																		<span id="addressError" style="color: red;"></span>
+
 																</div>
 															</div>
 
@@ -197,6 +203,7 @@
 																	<h5>City:</h5>
 																	<input type="text" class="form-control" id="city"
 																		name="city" placeholder="Your city.." required>
+																		<span id="cityError" style="color: red;"></span>
 
 																</div>
 															</div>
@@ -207,6 +214,8 @@
 																	<input type="text" class="form-control" id="state"
 																		name="state" placeholder="Your state.."
 																		required>
+																		<span id="state" style="color: red;"></span>
+
 																</div>
 															</div>
 
@@ -216,6 +225,8 @@
 																	<input type="text" class="form-control" id="country"
 																		name="country" placeholder="Your country.."
 																		required>
+																		<span id="country" style="color: red;"></span>
+
 																</div>
 															</div>
 
@@ -225,6 +236,8 @@
 																	<input type="text" class="form-control" id="pinCode"
 																		name="pincode" placeholder="Your pin code.."
 																		required>
+																		<span id="pincodeError" style="color: red;"></span>
+
 																</div>
 															</div>
 
@@ -447,7 +460,81 @@
 		});
 
 
+		const phonenumber = document.getElementById('mobile');
+		phonenumber.addEventListener('input',validphonenumber);
+		function validphonenumber(){
+			const phone=document.getElementById('mobile').value;
+			const phonenumberpattern =/\b\d{10}\b/
 
+;
+			if(phone.trim()==""){
+				document.getElementById("phonenumberError").innerHTML = "Please enter a valid phonenumber"
+				phonenumber.setCustomValidity("Please enter a valid phonenumber");
+			}
+			if(!phone.match(phonenumberpattern)){
+				document.getElementById('phonenumberError').innerHTML="Phonenumber must contain 10 digits";
+				phonenumber.setCustomValidity("Phonenumber must contain 10 digits");
+			}else{
+				document.getElementById('phonenumberError').innerHTML="";
+				phonenumber.setCustomValidity("");
+			}
+		}
+
+
+		const firstname = document.getElementById("userName");
+firstname.addEventListener('input', validname);
+
+function validname() {
+    const name = document.getElementById("userName").value;
+
+    if (name.trim() === "") {
+        document.getElementById('nameError').innerHTML = "Please enter a name";
+		firstname.setCustomValidity("Please enter a firstname");
+    } else {
+        const namepattern = /^[A-Za-z0-9]{5,15}$/;
+;
+        if (!name.match(namepattern)) {
+            document.getElementById('nameError').innerHTML = "Firstname must be alphanumeric and between 5-15 characters";
+            firstname.setCustomValidity("Invalid name format");
+        } else {
+            document.getElementById('nameError').innerHTML = "";
+            firstname.setCustomValidity("");
+        }
+    }
+}
+
+const address = document.getElementById("address");
+address.addEventListener('input', validaddress);
+
+function validaddress() {
+    const name = document.getElementById("address").value;
+
+    if (name.trim() === "") {
+        document.getElementById('addressError').innerHTML = "Please enter a address";
+		firstname.setCustomValidity("Please enter a firstname");
+    } else {
+        const namepattern = /^[a-zA-Z0-9\s\.,#-]+$/;
+;
+        if (!name.match(namepattern)) {
+            document.getElementById('addressError').innerHTML = "Address ";
+            firstname.setCustomValidity("Invalid name format");
+        } else {
+            document.getElementById('addressError').innerHTML = "";
+            firstname.setCustomValidity("");
+        }
+    }
+}
+function validcity() {
+    const city = document.getElementById("city").value;
+
+    if (name.trim() === "") {
+        document.getElementById('cityError').innerHTML = "Please enter a cityname";
+		city.setCustomValidity("Please enter a cityname");
+	}else {
+            document.getElementById('cityError').innerHTML = "";
+            city.setCustomValidity("");
+        }
+}
 
 	</script>
 

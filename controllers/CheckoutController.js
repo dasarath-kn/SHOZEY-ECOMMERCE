@@ -208,7 +208,8 @@ const cancelorder = async (req, res) => {
         console.log(id);
          const val = await order.findOne({_id:id})
           const productid =req.body.productid ;
-
+        // const ordercount= await order.findOne({_id:id},{'items.productid':productid})
+        // console.log(ordercount);
         if(id){
         // await order.findByIdAndUpdate(id, { status: "cancelled" })
       const data=  await order.updateOne(
