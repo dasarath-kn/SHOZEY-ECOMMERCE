@@ -87,6 +87,8 @@
                             <div class="row justify-content-center">
                                 <% for(let i=0; i<productdata.length;i++){%>
                                     <% if(productdata[i].status==0){%>
+                                        <input type="hidden" id="category" name="yourHiddenField" value="<%= productdata[i].category %>">
+
                                 <div class="col-6 col-md-4 col-lg-4">
                                     <div class="product product-7 text-center">
                                         <figure class="product-media">
@@ -195,64 +197,7 @@
                             </div>
 
                            
-                				<div class="widget widget-collapsible">
-    								<h3 class="widget-title">
-									    <a data-toggle="collapse" href="#widget-1" role="button" aria-expanded="true" aria-controls="widget-1">
-									        Category
-									    </a>
-									</h3><!-- End .widget-title -->
-
-									<div class="collapse show" id="widget-1">
-										<div class="widget-body">
-											<div class="filter-items filter-items-count">
-												<div class="filter-item">
-													<!-- <div class="custom-control custom-checkbox">
-														<input type="checkbox" class="custom-control-input" id="cat-1" value="Men's Formal Shoes"> -->
-														<!-- <label class="custom-control-label" for="cat-1">Men's Formal Shoes
-                                                        </label> -->
-                                                        <a style="cursor:pointer;" href="/Mformalshoes %>">Men's Formal Shoes</a> 
-
-													<!-- </div>
-													<span class="item-count"></span> -->
-												</div><!-- End .filter-item -->
-
-												<div class="filter-item">
-													<!-- <div class="custom-control custom-checkbox">
-														<input type="checkbox" class="custom-control-input" id="cat-2" value="Men's Casual Shoes">
-														<label class="custom-control-label" for="cat-2"> Men's Casual Shoes</label> -->
-                                                        <a style="cursor:pointer;" href="/Mcasualshoes ">Men's Casual Shoes</a>
-                                                    <!-- </div>
-													<span class="item-count"></span> -->
-												</div><!-- End .filter-item -->
-
-												<div class="filter-item">
-													<!-- <div class="custom-control custom-checkbox">
-														<input type="checkbox" class="custom-control-input" id="cat-3" value="Men's Sport Shoes"> -->
-														<!-- <label class="custom-control-label" for="cat-3">Men's Sport Shoes</label> -->
-                                                        <a style="cursor:pointer;" href="/Msportshoes">Men's Sport Shoes</a>
-													<!-- </div>< End .custom-checkbox -->
-													<!-- <span class="item-count"></span> --> 
-												</div><!-- End .filter-item -->
-
-												<div class="filter-item">
-													<!-- <div class="custom-control custom-checkbox">
-														<input type="checkbox" class="custom-control-input" id="cat-4" value="Women's casual"> -->
-														<!-- <label class="custom-control-label" for="cat-4">Women's casual</label> -->
-                                                        <a style="cursor:pointer;" href="/Wcasualshoes">Women's casual</a>
-
-													<!-- </div>
-													<span class="item-count"></span> -->
-												</div><!-- End .filter-item -->
-
-											
-
-												
-
-												
-											</div><!-- End .filter-items -->
-										</div><!-- End .widget-body -->
-									</div><!-- End .collapse -->
-        						</div><!-- End .widget -->
+                				
  
                             
                           
@@ -271,14 +216,14 @@
                                             <!-- <div class="filter-item"> -->
                                                 <!-- <div class="custom-control custom-checkbox" > -->
                                                     <!-- <input type="checkbox" class="custom-control-input" id="brand-1"> -->
-                                                    <a style="cursor:pointer;" onclick="lowtohigh(1)">Price low to high</a>
+                                                    <a style="cursor:pointer;" href="/categorysort?category=<%= productdata[0].category%>">Price low to high</a>
                                                 <!-- </div>End .custom-checkbox -->
                                             <!-- </div>End .filter-item -->
 
                                             <div class="filter-item">
                                                 <!-- <div class="custom-control custom-checkbox"> -->
                                                     <!-- <input type="checkbox" class="custom-control-input" id="brand-2"> -->
-                                                    <a style="cursor:pointer;" onclick="lowtohigh(-1)"> Price high to low</a> 
+                                                    <a style="cursor:pointer;" href="/categorysort?categories=<%= productdata[0].category%>"> Price high to low</a> 
                                                         
                                                 <!-- </div>End .custom-checkbox -->
                                             </div><!-- End .filter-item -->
@@ -367,22 +312,16 @@ console.log(checkboxes);
     
 }
 
-function lowtohigh(id){
-    console.log(id);
-    $.ajax({
-        method:'post',
-        url:'/pricesort',
-        data:({val:id}),
-        success:function(response){
-            if(response.result==true){
-                console.log("fghhhhhhhh")
-                window.location.href = '/pricehightolow';
-            }else if(response.result==false){
-                window.location.href = '/pricelowtohigh';
-            }
-        }
-    })
-}
+// function lowtohigh(id){
+//     const category=  document.getElementById('category').value
+//     console.log(id,category);
+//     $.ajax({
+//         method:'get',
+//         url:'/categorysort',
+//         data:({val:id,category:category})
+       
+//     })
+// }
 
 // function formalshoes(){
 //     $.ajax({

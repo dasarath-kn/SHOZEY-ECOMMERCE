@@ -9,14 +9,21 @@ const coupondata = async (req, res) => {
         const totalAmount = req.body.total
         const coupondata = await coupon.findOne({ couponcode: data });
         const checkcoupon =await coupon.findOne({ couponcode: data,claimedusers: req.session.userId  })
+        const  claimedusers =await coupon.findOne({couponcode:data},{_id:0,claimedusers:1}).count()
+        console.log(claimedusers);
         const  date = Date.now()
-        console.log(coupondata);
+        // console.log(coupondata);
+
+        const userlimit = coupondata.userslimit
+        const criteriaamount = coupondata.criteriaamount
         if (checkcoupon ) {
           res.json({res:false})
         }
         else {
                 if(coupondata){
             if (coupondata.couponcode == data) {
+                if(userlimit>=claimedusers){
+                if(criteriaamount<=totalAmount){
                 if(coupondata.expirydate >date){
                 const discountamount = coupondata.discountamount;
                 const reducedamount = totalAmount - discountamount
@@ -25,11 +32,17 @@ const coupondata = async (req, res) => {
                 res.json({ result: true, reducedamount: reducedamount, discountamount: discountamount })}
                 else{
                     res.json({date:false})
+                }}
+                else{
+                    res.json({amount:false})
+                }}else{
+                    res.json({userlimit:false})
                 }
             }
             else {
                 res.json({ result: false })
             }}
+
             else{
                 res.json({ result: false })
             }

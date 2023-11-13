@@ -121,7 +121,7 @@ const validation = async (req, res) => {
             }
 
         } else if (check != req.body.password) {
-            res.render('signin', { message: "Invalid password", user: req.session.name, cartdata })
+            res.render('signin', { message: "Invalid password and Email", user: req.session.name, cartdata })
         }
         else {
             res.render('signin', { message: "Invalid mail", user: req.session.name, cartdata });
@@ -380,6 +380,100 @@ const pricelowtohigh = async(req,res)=>{
     }
 }
 
+const Menformalshoes = async(req,res)=>{
+    try {
+        
+        const id =req.session.id
+      
+        const productdata = await product.find({ category: "Men's Formal Shoes" });
+        console.log(productdata);
+        const productcategory = await category.find()
+        const cartdata = await cart.find({ userid: id }).populate("items.productid")
+        res.render('filter', { user: req.session.name, cartdata, productdata, id, productcategory })
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const Mencasualshoes =async(req,res)=>{
+    try {
+        const id =req.session.id
+      
+        const productdata = await product.find({ category: "Men's Casual Shoes" });
+        console.log(productdata);
+        const productcategory = await category.find()
+        const cartdata = await cart.find({ userid: id }).populate("items.productid")
+        res.render('filter', { user: req.session.name, cartdata, productdata, id, productcategory })
+        
+        
+    } catch (error) {
+       console.log(error.message); 
+    }
+}
+
+const Mensportsshoes = async(req,res)=>{
+    try {
+        const id =req.session.id
+      
+        const productdata = await product.find({ category: "Men's Sport Shoes" });
+        console.log(productdata);
+        const productcategory = await category.find()
+        const cartdata = await cart.find({ userid: id }).populate("items.productid")
+        res.render('filter', { user: req.session.name, cartdata, productdata, id, productcategory })
+        
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+
+}
+const Womencasualshoes = async(req,res)=>{
+    try {
+        const id =req.session.id
+      
+        const productdata = await product.find({ category: "Women's casual" });
+        console.log(productdata);
+        const productcategory = await category.find()
+        const cartdata = await cart.find({ userid: id }).populate("items.productid")
+        res.render('filter', { user: req.session.name, cartdata, productdata, id, productcategory })
+        
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+
+}
+
+
+const categorysort = async(req,res)=>{
+
+    try {
+        console.log("uiujhhjjh");
+        const id =req.session.id
+        const categorys =req.query.category
+        const categories =req.query.categories
+
+         if(categorys){
+        const productdata = await product.find({ category: categorys }).sort({price:1});  
+      console.log(productdata);      
+        const productcategory = await category.find()
+        const cartdata = await cart.find({ userid: id }).populate("items.productid")
+        res.render('filter', { user: req.session.name, cartdata, productdata, id, productcategory })
+         }
+         else{
+            const productdata = await product.find({ category: categories }).sort({price:-1});  
+            console.log(productdata);      
+              const productcategory = await category.find()
+              const cartdata = await cart.find({ userid: id }).populate("items.productid")
+              res.render('filter', { user: req.session.name, cartdata, productdata, id, productcategory })
+         }
+        
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
 
 // const errorpage = async (req,res) => {
 //     try{
@@ -420,7 +514,12 @@ module.exports = {
     search,
     pricehightolow,
     pricesort,
-    pricelowtohigh
+    pricelowtohigh,
+    Menformalshoes,
+    Mencasualshoes,
+    Mensportsshoes,
+    Womencasualshoes,
+    categorysort
     // errorpage
 }
 

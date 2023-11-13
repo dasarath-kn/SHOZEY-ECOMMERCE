@@ -81,6 +81,14 @@ router.get('/shop',usercontroller.shop);
 router.post('/pricesort',usercontroller.pricesort);
 router.get('/pricehightolow',usercontroller.pricehightolow);
 router.get('/pricelowtohigh',usercontroller.pricelowtohigh);
+router.get('/Mformalshoes',usercontroller.Menformalshoes)
+router.get('/Mcasualshoes',usercontroller.Mencasualshoes)
+router.get('/Msportshoes',usercontroller.Mensportsshoes)
+ router.get('/Wcasualshoes',usercontroller.Womencasualshoes)
+router.get('/categorysort',usercontroller.categorysort)
+
+
+
 //=================================== COUPON =====================================//
 
 router.post('/coupondata',couponcontroller.coupondata);

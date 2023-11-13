@@ -66,6 +66,7 @@
                                                 <div class="modal-body">
                                                     <% for(let i=0;i<coupondata.length;i++){%>
                                                         <% if(coupondata[i].status==0) {%>
+                                                            <% if(Date.now()<= coupondata[i].expirydate){%>
                                                             <div>
                                                                 <div class="card" style="width: 29rem;">
                                                                     <div class="card-body">
@@ -94,6 +95,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                           <%}%>
                                                             <%}%>
                                                                 <%}%>
 
@@ -135,7 +137,7 @@
                                                 <div class="form-group row">
                                                   <div class="col-sm-9">
                                                     <h5>Name:</h5>
-                                                    <input type="text" class="form-control" id="userName"  name="name" placeholder="Your name.." required>
+                                                    <input type="text" class="form-control" id="username"  name="name" placeholder="Your name.." required>
                                                   </div>
                                                 </div>
                                         
@@ -431,6 +433,15 @@
                     }
                     else if (response.date == false) {
                         Swal.fire("This Coupon is expired ");
+                    }else if(response.amount ==false){
+                        Swal.fire("Purchase does not meet the minimum required for the discount")
+                    }else if(response.userlimit ==false){
+                        Swal.fire("User limit exceeded")
+
+                    }else if(response.res ==false){
+                        Swal.fire("Invalid couponcode")
+
+
                     }
 
                     else {
@@ -602,6 +613,156 @@
                 },
             });
         }
+
+		const phonenumber = document.getElementById('mobile');
+		phonenumber.addEventListener('input',validphonenumber);
+		function validphonenumber(){
+			const phone=document.getElementById('mobile').value;
+			const phonenumberpattern =/\b\d{10}\b/
+
+;
+			if(phone.trim()==""){
+				document.getElementById("phonenumberError").innerHTML = "Please enter a valid phonenumber"
+				phonenumber.setCustomValidity(" Enter a valid phonenumber");
+			}
+			if(!phone.match(phonenumberpattern)){
+				document.getElementById('phonenumberError').innerHTML="Phonenumber must contain 10 digits";
+				phonenumber.setCustomValidity("Phonenumber must contain 10 digits");
+			}else{
+				document.getElementById('phonenumberError').innerHTML="";
+				phonenumber.setCustomValidity("");
+			}
+		}
+
+
+		const firstname = document.getElementById("username");
+firstname.addEventListener('input', validname);
+
+function validname() {
+    const name = document.getElementById("username").value;
+
+    if (name.trim() === "") {
+        document.getElementById('nameError').innerHTML = " Enter a name";
+		firstname.setCustomValidity("Enter a name");
+    } else {
+        const namepattern = /^[A-Za-z0-9]{5,15}$/;
+;
+        if (!name.match(namepattern)) {
+            document.getElementById('nameError').innerHTML = "Name must be alphanumeric and between 5-15 characters";
+            firstname.setCustomValidity("Enter a name");
+        } else {
+            document.getElementById('nameError').innerHTML = "";
+            firstname.setCustomValidity("");
+        }
+    }
+}
+
+const address = document.getElementById("address");
+address.addEventListener('input', validaddress);
+
+function validaddress() {
+    const name = document.getElementById("address").value;
+
+    if (name.trim() === "") {
+        document.getElementById('addressError').innerHTML = " Enter your address";
+		firstname.setCustomValidity("Enter a address");
+    } else {
+        const namepattern = /^[a-zA-Z0-9\s\.,#-]+$/;
+;
+        if (!name.match(namepattern)) {
+            document.getElementById('addressError').innerHTML = " Enter a address ";
+            firstname.setCustomValidity("Enter a address");
+        } else {
+            document.getElementById('addressError').innerHTML = "";
+            firstname.setCustomValidity("");
+        }
+    }
+}
+
+const city = document.getElementById("city");
+city.addEventListener('input', validcity);
+
+function validcity() {
+    const citys = document.getElementById("city").value;
+
+    if (citys.trim() === "") {
+        document.getElementById('cityError').innerHTML = "Enter your city";
+        city.setCustomValidity("Enter a city");
+    } else {
+        const citypattern = /^(.*[a-zA-Z]){2,}/;
+        if (!citys.match(citypattern)) {
+            document.getElementById('cityError').innerHTML = "Enter a city ";
+            city.setCustomValidity("Enter a city");
+        } else {
+            document.getElementById('cityError').innerHTML = "";
+            city.setCustomValidity("");
+        }
+    }
+}
+
+const state = document.getElementById("state");
+state.addEventListener('input', validstate);
+
+function validstate() {
+    const states = document.getElementById("state").value;
+
+    if (states.trim() === "") {
+        document.getElementById('stateError').innerHTML = "Enter your state";
+        state.setCustomValidity("Enter a state");
+    } else {
+        const statepattern = /^(.*[a-zA-Z]){2,}/;
+        if (!states.match(statepattern)) {
+            document.getElementById('stateError').innerHTML = "Enter a state ";
+            state.setCustomValidity("Enter a state");
+        } else {
+            document.getElementById('stateError').innerHTML = "";
+            state.setCustomValidity("");
+        }
+    }
+}
+
+const country = document.getElementById("country");
+country.addEventListener('input', validcountry);
+
+function validcountry() {
+    const countries = document.getElementById("country").value;
+
+    if (countries.trim() === "") {
+        document.getElementById('countryError').innerHTML = "Enter your country";
+        countries.setCustomValidity("Enter a country");
+    } else {
+        const statepattern = /^(.*[a-zA-Z]){2,}/;
+        if (!countries.match(statepattern)) {
+            document.getElementById('countryError').innerHTML = "Enter a country";
+            countries.setCustomValidity("Enter a country");
+        } else {
+            document.getElementById('countryError').innerHTML = "";
+            countries.setCustomValidity("");
+        }
+    }
+}
+
+const pincode = document.getElementById("pinCode");
+pincode.addEventListener('input', validpincode);
+
+function validpincode() {
+    const pinCode = document.getElementById("pinCode").value;
+
+    if (pinCode.trim() === "") {
+        document.getElementById('pincodeError').innerHTML = "Enter your pincode";
+        pincode.setCustomValidity("Please enter a pincode");
+    } else {
+        const pincodepattern = /^[0-9]+$/;
+        if (!pinCode.match(pincodepattern)) {
+            document.getElementById('pincodeError').innerHTML = "Enter a valid pincode";
+            pincode.setCustomValidity("Invalid pincode format");
+        } else {
+            document.getElementById('pincodeError').innerHTML = "";
+            pincode.setCustomValidity("");
+        }
+    }
+}
+
 
     </Script>
     <%- include('../user/layout/footer.ejs') -%>

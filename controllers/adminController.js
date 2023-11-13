@@ -530,6 +530,36 @@ const editedcoupondata = async (req, res) => {
     }
 }
 
+const blockunblockcoupon = async(req,res)=>{
+    try {
+        const id=req.body.id
+        const couponid = req.body.couponid
+        console.log(couponid,id);
+        if(id==1){
+            await coupon.updateOne({_id:couponid},{$set:{status:1}});
+            res.json({result:true})
+        }else{
+            await coupon.updateOne({_id:couponid},{$set:{status:0}})
+            res.json({result:true})
+        }
+    } catch (error) {
+        console.log(error.message);
+        
+    }
+}
+
+const deletecoupon = async(req,res)=>{
+    try {
+        const id = req.body.id
+        console.log(id);
+        await coupon.deleteOne({_id:id})
+        res.json({result:true})
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 //=================================== LOGOUT =====================================//
 const logout = async (req, res) => {
     try {
@@ -573,5 +603,7 @@ module.exports = {
     addcoupon,
     coupondata,
     editingcoupon,
-    editedcoupondata
+    editedcoupondata,
+    blockunblockcoupon,
+    deletecoupon
 }

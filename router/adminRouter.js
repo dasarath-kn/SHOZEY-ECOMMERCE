@@ -75,7 +75,9 @@ router.get('/coupon',adminController.couponmanagement);
 router.get('/addcoupon',adminController.addcoupon);
 router.post('/coupondata',adminController.coupondata)
 router.get('/editingcoupon',adminController.editingcoupon);
-router.post('/editedcoupondata',adminController.editedcoupondata)
+router.post('/editedcoupondata',adminController.editedcoupondata);
+router.post('/block-unblockcoupon',adminController.blockunblockcoupon);
+router.delete('/deletecoupon',adminController.deletecoupon)
 //=================================== LOG-OUT =====================================//
 
 

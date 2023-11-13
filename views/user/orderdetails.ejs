@@ -6,9 +6,9 @@
                 <h1 class="page-title">Order Details</h1>
             </div><!-- End .container -->
         </div><!-- End .page-header -->
-        <div class="container">
+        <div class="container" id="reloadw">
             <div class="col-md-12">
-                <table class="table table-cart table-mobile" id="reloadw">
+                <table class="table table-cart table-mobile" >
                     <thead>
                         <tr>
                             <th>Products</th>
@@ -142,7 +142,7 @@
                         contentType: 'application/json',
                         success: function (response) {
                             if (response.result == true) {
-                                $('#reloadw').load('/orderdetails #reloadw')
+                                 $('#reloadw').load('/orderdetails #reloadw');
                                 Swal.fire({
                                     title: "Cancelled!",
                                     text: "Your order has been cancelled.",
