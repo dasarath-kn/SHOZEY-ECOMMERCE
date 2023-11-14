@@ -65,7 +65,8 @@ router.post('/verify-payment',checkoutcontroller.verifypayment)
 
 router.get('/profile',profileController.profile);
 router.post('/newPassword',profileController.resetPassword);
-
+router.put('/editprofile',profileController.editprofile);
+router.get('/wallet',profileController.wallet);
 //=================================== USER-ADDRESS =====================================//
 
 router.get('/address',addresscontroller.useraddress);

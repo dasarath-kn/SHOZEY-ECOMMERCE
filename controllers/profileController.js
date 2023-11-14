@@ -10,14 +10,15 @@ const order = require('../models/orderModel');
 
 const profile = async (req, res) => {
     try {
+        const users = await user.findOne({_id:req.session.userId});
+        console.log(users);
         const userdata = await address.find({ userId: req.session.userId });
-        console.log(userdata);
         const cartdata = await cart.find().populate("items.productid")
         const id = req.query.id;
         const data = userdata
         const orderdata = await order.find({ user_Id: req.session.userId }).sort({ purchaseDate: -1 })
-        console.log(orderdata,"yftftftftftftftftft");
-        res.render('profile', { data, user: req.session.name, cartdata, orderdata })
+       
+        res.render('profile', { data, user: req.session.name, cartdata, orderdata,users })
 
     } catch (error) {
         console.log(error.message);
@@ -85,9 +86,44 @@ const resetPassword = async (req, res) => {
     }
 }
 
+const editprofile = async(req,res)=>{
+    try {
+        const id =req.session.userId
+        const firstname =req.body.firstname
+        const lastname = req.body.lastname
+        const email = req.body.email
+        
+        const edit = await user.updateOne({_id:id},{$set:{
+            firstname:firstname,
+            lastname:lastname,
+            email:email
+        }})
+        res.json({result:true})
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const wallet = async(req,res)=>{
+    try {
+
+            const id = req.session.id
+        const cartdata = await cart.find({ userid: id }).populate("items.productid")
+
+        res.render('wallet',{user:req.session.name,cartdata})
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+
 module.exports = {
     profile,
     resetPassword,
-    securepassword
+    securepassword,
+    editprofile,
+    wallet
 
 }

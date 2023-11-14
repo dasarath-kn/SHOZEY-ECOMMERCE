@@ -26,6 +26,10 @@ const users = new mongoose.Schema({
     },status:{
         type: Number,
         required:true
+    },
+    refercode:{
+        type:String
+
     }
 })
 

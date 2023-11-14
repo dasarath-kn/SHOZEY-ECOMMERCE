@@ -8,11 +8,24 @@ const cart = require('../models/cartModel');
 const otpmodel = require('../models/otpModel');
 const category = require('../models/categoryModel');
 const { orderplaced } = require('./CheckoutController');
+const { wallet } = require('./profileController');
+const Wallet = require('../models/walletModel');
 
 let nameResend
 let email2
 let items
 
+function generateRandomString(length) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let randomString = '';
+
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        randomString += characters.charAt(randomIndex);
+    }
+
+    return randomString;
+}
 
 const admin = async (req, res) => {
     try {
@@ -153,6 +166,7 @@ const sign = async (req, res) => {
 
 const insertdata = async (req, res) => {
     try {
+        const referalcode = req.body.referalcode
         const emaildata = req.body.email;
         const item = await user.findOne({ email: emaildata });
         if (item) {
@@ -160,7 +174,8 @@ const insertdata = async (req, res) => {
             res.redirect('/signup');
         }
         else {
-
+         const referalcode = req.body.referalcode
+         console.log(referalcode);
             const spassword = await securepassword(req.body.password)
             const userdata = new user({
                 firstname: req.body.firstname,
@@ -168,11 +183,49 @@ const insertdata = async (req, res) => {
                 email: req.body.email,
                 phonenumber: req.body.phonenumber,
                 password: spassword,
-                status: 0
+                status: 0,
+                refercode:generateRandomString(8)
 
             })
 
             const data = await userdata.save();
+            const userdatas = await user.findOne({email:req.body.email});
+
+            const walletdata = new Wallet({
+                userid:userdatas._id
+            })
+           const walletitems = await walletdata.save();
+
+            if(referalcode){
+                const id = await user.findOne({refercode:referalcode})
+                const value = await Wallet.updateOne(
+                    { userid: id._id },
+                    {
+                        $inc: { balance: 100 },
+                        $push: {
+                            items: {
+                                date: Date.now(),
+                                amount: 100,
+                                type: 'Referal Reward',
+                                referaluser: userdatas._id
+                            }
+                        }
+                    }
+                );
+
+                const  userwallet = await Wallet.updateOne({userid:userdatas._id},{$inc:{balance:100},
+                    $push: {
+                        items: {
+                            date: Date.now(),
+                            amount: 100,
+                            type: 'Referal Reward',
+                            
+                        }
+                    }
+                })
+                
+            }
+
             if (userdata) {
                 sendVerifyMail(req.body.firstname, req.body.email);
                 email2 = req.body.email

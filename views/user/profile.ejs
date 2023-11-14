@@ -22,11 +22,11 @@
 					<div class="row">
 						<aside class="col-md-4 col-lg-3">
 							<ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
-								<!-- <li class="nav-item">
+								<li class="nav-item">
 									<a class="nav-link active" id="tab-dashboard-link" data-toggle="tab"
 										href="#tab-dashboard" role="tab" aria-controls="tab-dashboard"
 										aria-selected="true">Dashboard</a>
-								</li> -->
+								</li>
 								<li class="nav-item">
 									<a class="nav-link" id="tab-orders-link" data-toggle="tab" href="#tab-orders"
 										role="tab" aria-controls="tab-orders" aria-selected="false">Orders</a>
@@ -51,18 +51,184 @@
 
 						<div class="col-md-8 col-lg-9">
 							<div class="tab-content">
-								<!-- <div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel"
+								<div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel"
 									aria-labelledby="tab-dashboard-link">
-									<p>Hello <span class="font-weight-normal text-dark">User</span> (not <span
-											class="font-weight-normal text-dark">User</span>? <a href="#">Log out</a>)
-										<br>
-										From your account dashboard you can view your <a href="#tab-orders"
-											class="tab-trigger-link link-underline">recent orders</a>, manage your <a
-											href="#tab-address" class="tab-trigger-link">shipping and billing
-											addresses</a>, and <a href="#tab-account" class="tab-trigger-link">edit your
-											password and account details</a>.
-									</p>
-								</div> -->
+									<%if(users){%>
+										<div class="row">
+											<div class="col-sm-6">
+												<label>First Name *</label>
+												<input type="text" class="form-control" value="<%= users.firstname  %>"
+													required disabled>
+											</div><!-- End .col-sm-6 -->
+
+											<div class="col-sm-6">
+												<label>Last Name *</label>
+												<input type="text" class="form-control" value="<%= users.lastname  %>"
+													required disabled>
+											</div><!-- End .col-sm-6 -->
+										</div><!-- End .row -->
+										<%}%>
+
+											<label>Email address *</label>
+											<input type="email" class="form-control" required
+												value="<%= users.email  %>" name="Email" disabled>
+											<div id="email-error-message" class="text-danger"></div>
+											<label>Referal Code *</label>
+											<input type="text" class="form-control" value="<%= users.refercode  %> "
+												required disabled>
+											<small class="form-text">This will be how your name will be displayed in the
+												account section and in reviews</small>
+											<button onclick='' type="button"
+												class=" btn btn-primary rounded submit px-3" data-toggle="modal"
+												data-target="#exampleModalLong">Edit profile</button>
+
+											<!-- Modal -->
+											<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+												aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+												<div class="modal-dialog" role="document">
+													<div class="modal-content">
+														<div class="modal-header">
+															<h5 class="modal-title" id="exampleModalLongTitle">Modal
+																title</h5>
+															<button type="button" class="close" data-dismiss="modal"
+																aria-label="Close">
+																<span aria-hidden="true">&times;</span>
+															</button>
+														</div>
+														<div class="modal-body">
+															<div class="modal-body">
+																<form action="" method="">
+																	<div class="form-group row">
+																		<div class="col-sm-9">
+																			<h5>First Name:</h5>
+																			<input type="text" class="form-control"
+																				id="firstname" name="firstname" value="<%= users.firstname %>"
+																				placeholder="" required>
+																			<span id="nameError" style="color: red;"></span>
+		
+																		</div>
+																	</div>
+		
+																	<div class="form-group row">
+																		<div class="col-sm-9">
+																			<h5>Last Name:</h5>
+																			<input type="text" class="form-control" id="lastname"
+																				name="lastname" value="<%= users.lastname %>"
+																				placeholder="" required>
+																			<span id="lastnameError"
+																				style="color: red;"></span>
+		
+		
+																		</div>
+																	</div>
+		
+		
+																	<div class="form-group row">
+																		<div class="col-sm-9">
+																			<h5>Email:</h5>
+																			<input type="text" class="form-control" id="Email"
+																				name="Email" placeholder="" value="<%= users.email %>"
+																				required>
+																			<span id="addressError" style="color: red;"></span>
+		
+																		</div>
+																	</div>		
+																	<div class="form-group row">
+																		<!-- Additional fields if needed -->
+																	</div>
+																	<div class="form-group">
+																		<button onclick="editprofile()" type="button"
+																			class=" btn btn-primary rounded submit px-3">Submit</button>
+																	</div>
+																</form>
+		
+															</div>
+														</div>
+														<!-- <div class="modal-footer">
+															<button type="button" class="btn btn-secondary"
+																data-dismiss="modal">Close</button>
+															<button type="button" class="btn btn-primary">Save
+																changes</button>
+														</div> -->
+													</div>
+												</div>
+											</div>
+
+
+
+											<button onclick='' type="button"
+												class=" btn btn-primary rounded submit px-3" 
+												 data-toggle="modal" data-target="#exampleModal">Change Password </button>
+
+												<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+													<div class="modal-dialog" role="document">
+													  <div class="modal-content">
+														<div class="modal-header">
+														  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+														  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														  </button>
+														</div>
+														<div class="modal-body">
+															<form action="" method="">
+																<div class="form-group row">
+																	<div class="col-sm-9">
+																		<h5>Current password :</h5>
+																		<input type="text" class="form-control"
+																			id="firstname" name="firstname" value=""
+																			placeholder="" required>
+																		<span id="nameError" style="color: red;"></span>
+	
+																	</div>
+																</div>
+	
+																<div class="form-group row">
+																	<div class="col-sm-9">
+																		<h5>New password:</h5>
+																		<input type="text" class="form-control" id="lastname"
+																			name="lastname" value=""
+																			placeholder="" required>
+																		<span id="lastnameError"
+																			style="color: red;"></span>
+	
+	
+																	</div>
+																</div>
+	
+	
+																<div class="form-group row">
+																	<div class="col-sm-9">
+																		<h5>Confirm new password</h5>
+																		<input type="text" class="form-control" id="Email"
+																			name="Email" placeholder="" value=""
+																			required>
+																		<span id="addressError" style="color: red;"></span>
+	
+																	</div>
+																</div>		
+																<div class="form-group row">
+																	<!-- Additional fields if needed -->
+																</div>
+																<div class="form-group">
+																	<button onclick="editprofile()" type="button"
+																		class=" btn btn-primary rounded submit px-3">Submit</button>
+																</div>
+															</form>
+	
+														</div>
+														
+													  </div>
+													</div>
+												  </div>
+
+												 <a href="/wallet"><button onclick='' type="button"
+												class=" btn btn-primary rounded submit px-3" 
+												>Wallet </button></a> 
+
+												
+
+
+								</div>
 
 								<div class="tab-pane fade" id="tab-orders" role="tabpanel"
 									aria-labelledby="tab-orders-link">
@@ -96,32 +262,31 @@
 																	<tbody>
 																		<% let count=1; %>
 																			<% for(let i=0;i<orderdata.length; i++){%>
-																							<tr>
-																								<td>
-																									<%= count++ %>
-																								</td>
-																								<td>
-																									<%= orderdata[i].purchaseDate.toLocaleDateString('en-US',
-																										{
-																										year: 'numeric'
-																										, month: 'short'
-																										, day: '2-digit'
-																										}).replace(/\//g,'-')%>
-																								</td>
-																								<td>Rs.<%= orderdata[i].totalAmount
-																										%>
-																								</td>
-																								<td>
-																									<%= orderdata[i].paymentMethod
-																										%>
-																								</td>
-																								
-																								<td><a
-																										href="/orderdetails?id=<%= orderdata[i]._id%>">Details</a>
-																								</td>
-																							</tr>
-																							<%}%>
-																								
+																				<tr>
+																					<td>
+																						<%= count++ %>
+																					</td>
+																					<td>
+																						<%= orderdata[i].purchaseDate.toLocaleDateString('en-US',
+																							{ year: 'numeric' ,
+																							month: 'short' ,
+																							day: '2-digit'
+																							}).replace(/\//g,'-')%>
+																					</td>
+																					<td>Rs.<%= orderdata[i].totalAmount
+																							%>
+																					</td>
+																					<td>
+																						<%= orderdata[i].paymentMethod
+																							%>
+																					</td>
+
+																					<td><a
+																							href="/orderdetails?id=<%= orderdata[i]._id%>">Details</a>
+																					</td>
+																				</tr>
+																				<%}%>
+
 																	</tbody>
 																</table>
 															</div>
@@ -169,7 +334,7 @@
 																	<input type="text" class="form-control"
 																		id="userName" name="name"
 																		placeholder="Your name.." required>
-																		<span id="nameError" style="color: red;"></span>
+																	<span id="nameError" style="color: red;"></span>
 
 																</div>
 															</div>
@@ -180,7 +345,8 @@
 																	<input type="text" class="form-control" id="mobile"
 																		name="phonenumber"
 																		placeholder="Your phone number.." required>
-																		<span id="phonenumberError" style="color: red;"></span>
+																	<span id="phonenumberError"
+																		style="color: red;"></span>
 
 
 																</div>
@@ -193,7 +359,7 @@
 																	<input type="text" class="form-control" id="address"
 																		name="address" placeholder="Your address.."
 																		required>
-																		<span id="addressError" style="color: red;"></span>
+																	<span id="addressError" style="color: red;"></span>
 
 																</div>
 															</div>
@@ -203,7 +369,7 @@
 																	<h5>City:</h5>
 																	<input type="text" class="form-control" id="city"
 																		name="city" placeholder="Your city.." required>
-																		<span id="cityError" style="color: red;"></span>
+																	<span id="cityError" style="color: red;"></span>
 
 																</div>
 															</div>
@@ -214,7 +380,7 @@
 																	<input type="text" class="form-control" id="state"
 																		name="state" placeholder="Your state.."
 																		required>
-																		<span id="stateError" style="color: red;"></span>
+																	<span id="stateError" style="color: red;"></span>
 
 																</div>
 															</div>
@@ -225,7 +391,7 @@
 																	<input type="text" class="form-control" id="country"
 																		name="country" placeholder="Your country.."
 																		required>
-																		<span id="countryError" style="color: red;"></span>
+																	<span id="countryError" style="color: red;"></span>
 
 																</div>
 															</div>
@@ -236,7 +402,7 @@
 																	<input type="text" class="form-control" id="pinCode"
 																		name="pincode" placeholder="Your pin code.."
 																		required>
-																		<span id="pincodeError" style="color: red;"></span>
+																	<span id="pincodeError" style="color: red;"></span>
 
 																</div>
 															</div>
@@ -434,6 +600,40 @@
 		}
 
 
+		function editprofile(){
+			const firstname =document.getElementById('firstname').value;
+			const lastname = document.getElementById('lastname').value;
+			const email = document.getElementById('Email').value
+			console.log("hfgfjgfhyjghygj"+lastname,firstname,email);
+			$.ajax({
+				method:'put',
+				url:'/editprofile',
+				data:JSON.stringify({firstname:firstname,lastname:lastname,email:email}),
+				contentType:'application/json',
+				success:function(response){
+					if(response.result == true){
+						const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            },
+
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: "Profile updated"
+                        });
+						window.location.href = '/profile'
+
+					}
+				}
+			})
+		}
 
 
 		document.addEventListener('DOMContentLoaded', function () {
@@ -463,153 +663,153 @@
 
 
 		const phonenumber = document.getElementById('mobile');
-		phonenumber.addEventListener('input',validphonenumber);
-		function validphonenumber(){
-			const phone=document.getElementById('mobile').value;
-			const phonenumberpattern =/\b\d{10}\b/
+		phonenumber.addEventListener('input', validphonenumber);
+		function validphonenumber() {
+			const phone = document.getElementById('mobile').value;
+			const phonenumberpattern = /\b\d{10}\b/
 
-;
-			if(phone.trim()==""){
+				;
+			if (phone.trim() == "") {
 				document.getElementById("phonenumberError").innerHTML = "Please enter a valid phonenumber"
 				phonenumber.setCustomValidity(" Enter a valid phonenumber");
 			}
-			if(!phone.match(phonenumberpattern)){
-				document.getElementById('phonenumberError').innerHTML="Phonenumber must contain 10 digits";
+			if (!phone.match(phonenumberpattern)) {
+				document.getElementById('phonenumberError').innerHTML = "Phonenumber must contain 10 digits";
 				phonenumber.setCustomValidity("Phonenumber must contain 10 digits");
-			}else{
-				document.getElementById('phonenumberError').innerHTML="";
+			} else {
+				document.getElementById('phonenumberError').innerHTML = "";
 				phonenumber.setCustomValidity("");
 			}
 		}
 
 
 		const firstname = document.getElementById("userName");
-firstname.addEventListener('input', validname);
+		firstname.addEventListener('input', validname);
 
-function validname() {
-    const name = document.getElementById("userName").value;
+		function validname() {
+			const name = document.getElementById("userName").value;
 
-    if (name.trim() === "") {
-        document.getElementById('nameError').innerHTML = " Enter a name";
-		firstname.setCustomValidity("Enter a name");
-    } else {
-        const namepattern = /^[A-Za-z0-9]{5,15}$/;
-;
-        if (!name.match(namepattern)) {
-            document.getElementById('nameError').innerHTML = "Name must be alphanumeric and between 5-15 characters";
-            firstname.setCustomValidity("Enter a name");
-        } else {
-            document.getElementById('nameError').innerHTML = "";
-            firstname.setCustomValidity("");
-        }
-    }
-}
+			if (name.trim() === "") {
+				document.getElementById('nameError').innerHTML = " Enter a name";
+				firstname.setCustomValidity("Enter a name");
+			} else {
+				const namepattern = /^[A-Za-z0-9]{5,15}$/;
+				;
+				if (!name.match(namepattern)) {
+					document.getElementById('nameError').innerHTML = "Name must be alphanumeric and between 5-15 characters";
+					firstname.setCustomValidity("Enter a name");
+				} else {
+					document.getElementById('nameError').innerHTML = "";
+					firstname.setCustomValidity("");
+				}
+			}
+		}
 
-const address = document.getElementById("address");
-address.addEventListener('input', validaddress);
+		const address = document.getElementById("address");
+		address.addEventListener('input', validaddress);
 
-function validaddress() {
-    const name = document.getElementById("address").value;
+		function validaddress() {
+			const name = document.getElementById("address").value;
 
-    if (name.trim() === "") {
-        document.getElementById('addressError').innerHTML = " Enter your address";
-		firstname.setCustomValidity("Enter a address");
-    } else {
-        const namepattern = /^[a-zA-Z0-9\s\.,#-]+$/;
-;
-        if (!name.match(namepattern)) {
-            document.getElementById('addressError').innerHTML = " Enter a address ";
-            firstname.setCustomValidity("Enter a address");
-        } else {
-            document.getElementById('addressError').innerHTML = "";
-            firstname.setCustomValidity("");
-        }
-    }
-}
+			if (name.trim() === "") {
+				document.getElementById('addressError').innerHTML = " Enter your address";
+				firstname.setCustomValidity("Enter a address");
+			} else {
+				const namepattern = /^[a-zA-Z0-9\s\.,#-]+$/;
+				;
+				if (!name.match(namepattern)) {
+					document.getElementById('addressError').innerHTML = " Enter a address ";
+					firstname.setCustomValidity("Enter a address");
+				} else {
+					document.getElementById('addressError').innerHTML = "";
+					firstname.setCustomValidity("");
+				}
+			}
+		}
 
-const city = document.getElementById("city");
-city.addEventListener('input', validcity);
+		const city = document.getElementById("city");
+		city.addEventListener('input', validcity);
 
-function validcity() {
-    const citys = document.getElementById("city").value;
+		function validcity() {
+			const citys = document.getElementById("city").value;
 
-    if (citys.trim() === "") {
-        document.getElementById('cityError').innerHTML = "Enter your city";
-        city.setCustomValidity("Enter a city");
-    } else {
-        const citypattern = /^(.*[a-zA-Z]){2,}/;
-        if (!citys.match(citypattern)) {
-            document.getElementById('cityError').innerHTML = "Enter a city ";
-            city.setCustomValidity("Enter a city");
-        } else {
-            document.getElementById('cityError').innerHTML = "";
-            city.setCustomValidity("");
-        }
-    }
-}
+			if (citys.trim() === "") {
+				document.getElementById('cityError').innerHTML = "Enter your city";
+				city.setCustomValidity("Enter a city");
+			} else {
+				const citypattern = /^(.*[a-zA-Z]){2,}/;
+				if (!citys.match(citypattern)) {
+					document.getElementById('cityError').innerHTML = "Enter a city ";
+					city.setCustomValidity("Enter a city");
+				} else {
+					document.getElementById('cityError').innerHTML = "";
+					city.setCustomValidity("");
+				}
+			}
+		}
 
-const state = document.getElementById("state");
-state.addEventListener('input', validstate);
+		const state = document.getElementById("state");
+		state.addEventListener('input', validstate);
 
-function validstate() {
-    const states = document.getElementById("state").value;
+		function validstate() {
+			const states = document.getElementById("state").value;
 
-    if (states.trim() === "") {
-        document.getElementById('stateError').innerHTML = "Enter your state";
-        state.setCustomValidity("Enter a state");
-    } else {
-        const statepattern = /^(.*[a-zA-Z]){2,}/;
-        if (!states.match(statepattern)) {
-            document.getElementById('stateError').innerHTML = "Enter a state ";
-            state.setCustomValidity("Enter a state");
-        } else {
-            document.getElementById('stateError').innerHTML = "";
-            state.setCustomValidity("");
-        }
-    }
-}
+			if (states.trim() === "") {
+				document.getElementById('stateError').innerHTML = "Enter your state";
+				state.setCustomValidity("Enter a state");
+			} else {
+				const statepattern = /^(.*[a-zA-Z]){2,}/;
+				if (!states.match(statepattern)) {
+					document.getElementById('stateError').innerHTML = "Enter a state ";
+					state.setCustomValidity("Enter a state");
+				} else {
+					document.getElementById('stateError').innerHTML = "";
+					state.setCustomValidity("");
+				}
+			}
+		}
 
-const country = document.getElementById("country");
-country.addEventListener('input', validcountry);
+		const country = document.getElementById("country");
+		country.addEventListener('input', validcountry);
 
-function validcountry() {
-    const countries = document.getElementById("country").value;
+		function validcountry() {
+			const countries = document.getElementById("country").value;
 
-    if (countries.trim() === "") {
-        document.getElementById('countryError').innerHTML = "Enter your country";
-        countries.setCustomValidity("Enter a country");
-    } else {
-        const statepattern = /^(.*[a-zA-Z]){2,}/;
-        if (!countries.match(statepattern)) {
-            document.getElementById('countryError').innerHTML = "Enter a country";
-            countries.setCustomValidity("Enter a country");
-        } else {
-            document.getElementById('countryError').innerHTML = "";
-            countries.setCustomValidity("");
-        }
-    }
-}
+			if (countries.trim() === "") {
+				document.getElementById('countryError').innerHTML = "Enter your country";
+				countries.setCustomValidity("Enter a country");
+			} else {
+				const statepattern = /^(.*[a-zA-Z]){2,}/;
+				if (!countries.match(statepattern)) {
+					document.getElementById('countryError').innerHTML = "Enter a country";
+					countries.setCustomValidity("Enter a country");
+				} else {
+					document.getElementById('countryError').innerHTML = "";
+					countries.setCustomValidity("");
+				}
+			}
+		}
 
-const pincode = document.getElementById("pinCode");
-pincode.addEventListener('input', validpincode);
+		const pincode = document.getElementById("pinCode");
+		pincode.addEventListener('input', validpincode);
 
-function validpincode() {
-    const pinCode = document.getElementById("pinCode").value;
+		function validpincode() {
+			const pinCode = document.getElementById("pinCode").value;
 
-    if (pinCode.trim() === "") {
-        document.getElementById('pincodeError').innerHTML = "Enter your pincode";
-        pincode.setCustomValidity("Please enter a pincode");
-    } else {
-        const pincodepattern = /^[0-9]+$/;
-        if (!pinCode.match(pincodepattern)) {
-            document.getElementById('pincodeError').innerHTML = "Enter a valid pincode";
-            pincode.setCustomValidity("Invalid pincode format");
-        } else {
-            document.getElementById('pincodeError').innerHTML = "";
-            pincode.setCustomValidity("");
-        }
-    }
-}
+			if (pinCode.trim() === "") {
+				document.getElementById('pincodeError').innerHTML = "Enter your pincode";
+				pincode.setCustomValidity("Please enter a pincode");
+			} else {
+				const pincodepattern = /^[0-9]+$/;
+				if (!pinCode.match(pincodepattern)) {
+					document.getElementById('pincodeError').innerHTML = "Enter a valid pincode";
+					pincode.setCustomValidity("Invalid pincode format");
+				} else {
+					document.getElementById('pincodeError').innerHTML = "";
+					pincode.setCustomValidity("");
+				}
+			}
+		}
 
 
 
