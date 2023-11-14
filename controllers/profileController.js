@@ -3,7 +3,7 @@ const address = require('../models/addressModel');
 const cart = require('../models/cartModel')
 const bcrypt = require('bcrypt')
 const order = require('../models/orderModel');
-
+const Wallet = require('../models/walletModel');
 
 
 //=================================== DASH-BOARD =====================================//
@@ -109,9 +109,10 @@ const wallet = async(req,res)=>{
     try {
 
             const id = req.session.id
+            const walletdata = await Wallet.findOne({userid:req.session.userId}); 
         const cartdata = await cart.find({ userid: id }).populate("items.productid")
 
-        res.render('wallet',{user:req.session.name,cartdata})
+        res.render('wallet',{user:req.session.name,cartdata,walletdata})
         
     } catch (error) {
         console.log(error.message);
