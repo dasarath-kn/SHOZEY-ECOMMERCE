@@ -78,6 +78,11 @@ router.get('/editingcoupon',adminController.editingcoupon);
 router.post('/editedcoupondata',adminController.editedcoupondata);
 router.post('/block-unblockcoupon',adminController.blockunblockcoupon);
 router.delete('/deletecoupon',adminController.deletecoupon)
+
+//=================================== Offer management =====================================//
+
+router.get('/offermanagement',adminController.offermanagement)
+
 //=================================== LOG-OUT =====================================//
 
 

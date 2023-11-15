@@ -5,6 +5,7 @@ const order = require('../models/orderModel');
 const coupon = require("../models/couponModel");
 // const { render } = require('ejs');
 const sharp = require('sharp');
+const { render } = require('../router/userRouter');
 const data = {
     email: "admin@gmail.com",
     password: "12345"
@@ -51,7 +52,7 @@ const admin = async (req, res) => {
 const usermanagement = async (req, res) => {
     try {
         const data = await user.find();
-        res.render('usermanagement', { data });
+        res.redirect('/admin/dashboard');
     }
     catch (error) {
         console.log(error.message);
@@ -574,6 +575,16 @@ const logout = async (req, res) => {
 }
 
 
+const offermanagement = async(req,res)=>{
+    try {
+        console.log("sduhhjkfsd");
+       res.render('offermanagement')
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 
 module.exports = {
     adminlogin,
@@ -605,5 +616,6 @@ module.exports = {
     editingcoupon,
     editedcoupondata,
     blockunblockcoupon,
-    deletecoupon
+    deletecoupon,
+    offermanagement
 }

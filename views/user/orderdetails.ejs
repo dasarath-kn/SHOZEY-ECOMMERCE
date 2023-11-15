@@ -75,10 +75,13 @@
                                                                 class="btn btn-primary btn-block"  type="button" onclick="returnorder('<%= productdata._id%>','<%=orderdata[0]._id %>','<%= product[j].count *productdata.price %>','<%= product[j].count%>')" >ReturnOrder</button></td>
                                                     <%} else if(product[j].status=="cancelled" ){%>
 
-                                                        <%} else{%>
+                                                        <%}else if(product[j].status=="returned" ){%>
+
+                                                            <%}
+                                                         else{%>
                                                             <td class="price-col" id="statusbuttons">
                                                                 <button class="btn btn-primary btn-block"
-                                                                    onclick="cancelorder('<%= id %>','<%=productdata._id%>')">CancelOrder</button>
+                                                                    onclick="cancelorder('<%= id %>','<%=productdata._id%>','<%= product[j].count%>')">CancelOrder</button>
                                                             </td>
                                                             <%} %>
 
@@ -139,7 +142,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        function cancelorder(id, productdata) {
+        function cancelorder(id, productdata,count) {
             console.log(productdata);
             Swal.fire({
                 title: "Are you sure?",
@@ -154,7 +157,7 @@
                     $.ajax({
                         method: "post",
                         url: "/cancelorder",
-                        data: JSON.stringify({ id: id, productid: productdata }),
+                        data: JSON.stringify({ id: id, productid: productdata,count:count }),
                         contentType: 'application/json',
                         success: function (response) {
                             if (response.result == true) {

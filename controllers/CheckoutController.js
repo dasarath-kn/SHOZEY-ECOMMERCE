@@ -208,6 +208,7 @@ const cancelorder = async (req, res) => {
     try {
         console.log("uhshufdhj");
         const id = req.body.id;
+        const count = req.body.count
         console.log(id);
          const val = await order.findOne({_id:id})
           const productid =req.body.productid ;
@@ -226,6 +227,7 @@ const cancelorder = async (req, res) => {
               },
             }
           );
+          const productdata = await product.updateOne({_id:productid},{$inc:{quantity:count}});
           console.log(data);
         res.json({result:true})
         }else{
