@@ -60,7 +60,8 @@ router.post('/ProceedOrder',checkoutcontroller.ProceedOrder)
 router.get('/orderdetails',checkoutcontroller.orderdetails)
 router.post('/cancelorder',checkoutcontroller.cancelorder)
 router.get('/orderplaced',checkoutcontroller.orderplaced);
-router.post('/verify-payment',checkoutcontroller.verifypayment)
+router.post('/verify-payment',checkoutcontroller.verifypayment);
+router.post('/returnorder',checkoutcontroller.returnorder)
 //=================================== PROFILE =====================================//
 
 router.get('/profile',profileController.profile);

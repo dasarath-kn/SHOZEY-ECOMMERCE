@@ -18,9 +18,9 @@
                             <th>Quantity</th>
                             <th>Total</th>
                             <th>Status</th>
-                            <th>Cancel Order</th>
+                            <th> Change status</th>
                         </tr>
-                    </thead>
+                    </thead> 
                     <tbody>
 
                         <% let product=orderdata[0].items %>
@@ -53,18 +53,30 @@
                                                 </td>
                                                 <td class="price-col">
                                                     <%= product[j].count%>
+                                                    
                                                 </td>
                                                 <td class="price-col">₹<%= product[j].count *productdata.price %>
+                                                    <input type="hidden" id="productid" name="user_Id" value="<%= product[j].productid%>">
                                                 </td>
-                                                <td class="price-col">₹<%= product[j].status %>
+                                                <td class="price-col" id="status">₹<%= product[j].status %>
                                                 </td>
                                                 <% if (product[j].status=="delivered" ){%>
-                                                    <td class="price-col"><button
-                                                            class="btn btn-primary btn-block">ReturnOrder</button></td>
+                                                    
+                                                   
+                                                        <td><select name="status" id="reason" class="form-control"  required>
+                                                         
+                                                        <option value="Bad Quality">Bad Quality</option>
+                                                        <option value="Damaged due to poor packing">Damaged due to poor packing</option>
+                                                                <option value="Received wrong product">Received wrong product </option>
+                                                                <option value="Accidental order">Accidental order</option>
+                                                                <option value="Other reason">Other reason</option>
+                                                              </select></td>
+                                                              <td class="price-col" id="statusbuttons"><button
+                                                                class="btn btn-primary btn-block"  type="button" onclick="returnorder('<%= productdata._id%>','<%=orderdata[0]._id %>','<%= product[j].count *productdata.price %>','<%= product[j].count%>')" >ReturnOrder</button></td>
                                                     <%} else if(product[j].status=="cancelled" ){%>
 
                                                         <%} else{%>
-                                                            <td class="price-col">
+                                                            <td class="price-col" id="statusbuttons">
                                                                 <button class="btn btn-primary btn-block"
                                                                     onclick="cancelorder('<%= id %>','<%=productdata._id%>')">CancelOrder</button>
                                                             </td>
@@ -119,6 +131,10 @@
             </div>
         </div>
     </main><!-- End .main -->
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/bootstrap-input-spinner.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -160,6 +176,40 @@
 
         }
 
+  function returnorder(productid,orderid,amount,count){
+     const reason = document.getElementById('reason').value
+   console.log(reason);
+    $.ajax({
+        method:'post',
+        url:'/returnorder',
+        data:JSON.stringify({productid:productid,orderid:orderid,amount:amount,count:count,reason:reason}),
+        contentType:'application/json',
+        success:function(response){
+            if(response.result==true){
+                console.log('success');
+                const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            },
 
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: "Product Returned"
+                        });
+                        $('#status').load('/oderdetails #status')
+                        $('#statusbuttons').load('/orderdetails #statusbuttons')
+                        // window.location.href = '/orderdetails';
+            }
+        }
+    })
+  } 
 
     </script>
+ 

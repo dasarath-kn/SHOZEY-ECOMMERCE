@@ -32,7 +32,8 @@ const cartRendering = async (req, res) => {
         if (data) {
             res.render('cart', { user: req.session.name, cartdata, data, id, totalsum, express, standard, coupondata });
         } else {
-            console.log("Your cart is empty.");
+            res.render('cart', { user: req.session.name, data, id, totalsum, express, standard, coupondata });
+
         }
     }
     catch (error) {

@@ -5,7 +5,10 @@ const address = require('../models/addressModel');
 const order = require('../models/orderModel');
 const coupon = require('../models/couponModel');
 const Razorpay = require('razorpay');
-const crypto = require("crypto")
+const crypto = require("crypto");
+const Return = require('../models/returnModel');
+const Wallet = require('../models/walletModel');
+const { log } = require('console');
 require('dotenv').config()
 
 var instance = new Razorpay({
@@ -288,6 +291,52 @@ const verifypayment = async (req, res) => {
         console.log(error.message);
     }
 }
+
+
+const returnorder = async(req,res)=>{
+    try {
+        const reason = req.body.reason
+        const orderid = req.body.orderid
+        const productid = req.body.productid
+        const amount = req.body.amount
+        const count = req.body.count
+        console.log(reason);
+        console.log(amount);
+        console.log(count);
+        console.log(productid+"ppp");
+        console.log(orderid);
+        
+        const data = new Return({
+            orderid:orderid,
+            userid:req.session.userId,
+            productid:productid,
+            reason:reason
+        })
+        await data.save()
+
+        const wallet = await Wallet.updateOne(  { userid:req.session.userId },
+            {
+                $inc: { balance:amount  },
+                $push: {
+                    items: {
+                        date: Date.now(),
+                        amount:amount ,
+                        type: 'Return'
+                        
+                    }
+                }
+            })
+        const productdata = await product.updateOne({_id:productid},{$inc:{quantity:count}});
+        await order.updateOne({ _id: orderid, "items.productid": productid }, { $set: { 'items.$.status': "returned" } })
+
+        res.json({result:true});
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+
 module.exports = {
     ProceedtoCheckout,
     ProceedOrder,
@@ -295,5 +344,6 @@ module.exports = {
     cancelorder,
     orderplaced,
     verifypayment,
-    checkoutdata
+    checkoutdata,
+    returnorder
 }
