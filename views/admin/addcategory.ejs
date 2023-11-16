@@ -7,16 +7,44 @@
                 <div class="card-body">
                   <h4 class="card-title">Add Category</h4>
                   <!-- <p class="card-description"> Basic form layout </p> -->
-                  <form class="forms-sample" action="/admin/category" method="post">
+                  <form class="forms-sample" action="" method="">
                     <div class="form-group">
                       <label for="exampleInputUsername1">Category Name</label>
-                      <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Categoryname" name="name">
+                      <input type="text" class="form-control" id="category" placeholder="Categoryname" name="name">
                     </div>
-                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <button type="button" class="btn btn-primary mr-2" onclick="addcategory()">Submit</button>
                     
                   </form>
                 </div>
               </div>
             </div>
+           
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+            <script>
+             function addcategory(){
+              const categoryname = document.getElementById('category').value
+             
+              $.ajax({
+                method:'post',
+                url:'/admin/category',
+                data:JSON.stringify({category:categoryname}),
+                contentType:'application/json',
+                success:function(response){
+                  if(response.result == false){
+                  alert('Category already exist')
+                   window.location.href = '/admin/productcategory';
+                  }else{
+                    console.log("Category added");
+                    window.location.href = '/admin/productcategory'
+
+                  }
+                }
+              })
+              
+             }
+
+              </script>
        
          <%- include ('../admin/layouts/footer.ejs')-%>

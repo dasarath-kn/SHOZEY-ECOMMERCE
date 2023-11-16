@@ -10,6 +10,7 @@ const category = require('../models/categoryModel');
 const { orderplaced } = require('./CheckoutController');
 const { wallet } = require('./profileController');
 const Wallet = require('../models/walletModel');
+const Categoryoffer=require('../models/categoryofferModel');
 
 let nameResend
 let email2
@@ -55,8 +56,8 @@ const home = async (req, res) => {
         const id = req.session.userId;
         const data = await product.find()
         const cartdata = await cart.find({ userid: id }).populate("items.productid")
-
-        res.render("home", { data, user: req.session.name, cartdata, id })
+        const Categoryofferdata = await Categoryoffer.find()
+        res.render("home", { data, user: req.session.name, cartdata, id,Categoryofferdata })
 
 
     }

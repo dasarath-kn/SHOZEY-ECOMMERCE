@@ -19,6 +19,7 @@
                       <th> Category</th>
                       <th>Quantity</th>
                       <th>Price</th>
+                      <th> discountamount</th>
                     </tr>
 
                     <% data.forEach((item)=>{ %>
@@ -34,6 +35,9 @@
                         </td>
                         <td>
                           <%= item.price %>
+                        </td>
+                        <td>
+                          <%= item.discountamount %>
                         </td>
                         <td>
                           <p><a href="/admin/delete/product?id=<%= item._id %>" class="badge badge-danger"

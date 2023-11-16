@@ -28,6 +28,15 @@ const product=  mongoose.Schema({
     status:{
         type:Number,
         default:0
+    },
+    discountamount:{
+        type:Number
+       
+
+    },
+    Offerpercentage:{
+        type:Number
+        
     }
 
    

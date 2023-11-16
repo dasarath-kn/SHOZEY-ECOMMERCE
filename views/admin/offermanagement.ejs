@@ -9,48 +9,48 @@
           <div class="card" id="reload">
             <div class="card-body">
               <h4 class="card-title">Offer</h4>
-              <a href="" class="btn btn-primary">Add </a>
+              <a href="addoffer" class="btn btn-primary">Add </a>
 
               <div class="table-responsive">
                 <table class="table">
                   <thead>
                     <tr>
                       <th>No.</th>
-                      <th>Category Name</th>
+                      <th> Category Name</th>
                       <!-- <th> Coupon Code</th> -->
-                      <th>Discount Amount</th>
-                      <th>Activation Date</th>
+                      <th>Starting Date</th>
                       <th>Expiry Date</th>
-                      <th>Criteria Amount</th>
+                      <th>Offer percentage</th>
+                     
                       <!-- <th>User limit</th> -->
                     </tr>
-
+                    <% let count =1 %>
+                    <% for(let i=0;i<categoryofferdata.length;i++){%>
                         <tr>
                           <td>
-                            
+                            <%= count++%>
+                          </td>
+                          <td>
+                           <%= categoryofferdata[i].categoryname%>
                           </td>
                           <td>
                            
-                          </td>
-                          <td>
-                           
+                            <%= categoryofferdata[i].startingdate.toLocaleDateString('en-US', { year:
+                              'numeric', month: 'short', day: '2-digit'
+                              }).replace(/\//g, '-') %>
                           </td>
                           <td>
                           
-                          </td>
-                          <td>
-                           
-                          </td>
-                          <td>
-                           
-                          </td>
-                          <td>
-                          
-                          </td>
-                          <td>
-                         
-                          </td>
+                            <%= categoryofferdata[i].expirydate.toLocaleDateString('en-US', { year:
+                              'numeric', month: 'short', day: '2-digit'
+                              }).replace(/\//g, '-') %>
 
+                          </td>
+                         
+                          <td>
+                            <%= categoryofferdata[i].Offerpercentage%>%
+
+                          </td>
                           <td>
                             <p><button class="badge badge-danger"
                                 onclick="deleteoffer('')">Delete</button></p>
@@ -60,18 +60,19 @@
                                 class="btn btn-primary">Edit</a></p>
                           </td>
                           <td>
-                           
-                              <p><button type="button" class="badge badge-danger"
-                                  onclick="blockandunblock(1,'')">Unlist</button></p>
-                             
-                                <p><button type="button" class="badge badge-success"
-                                    onclick="blockandunblock(0,'')">List</button></p>
-                              
-
-
-                          </td>
+                            <% if(categoryofferdata[i].status ==0){%>
+                               <p><button type="button" class="badge badge-danger"
+                                   onclick="blockandunblock(1,'')">Unlist</button></p>
+                                   <%}
+                                 
+                                 else{%>  <p><button type="button" class="badge badge-success"
+                                     onclick="blockandunblock(0,'')">List</button></p>
+                               
+                                     <%}  %>
+ 
+                           </td>
                         </tr>
-                      
+                        <%}%>
 
 
 

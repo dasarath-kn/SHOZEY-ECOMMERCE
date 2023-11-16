@@ -24,7 +24,9 @@
                       <div class="form-group">
                           <label for="exampleSelectGender">Category</label>
                           <select class="form-control" id="exampleSelectGender" name="category" required>
-                              <option value="<%= item.category %>"><%= item.category %></option>
+                            <% for(let i=0;i<categorydata.length;i++){%>
+                                <option value="<%=categorydata[i].productcategory %>"><%= categorydata[i].productcategory %></option>
+                                <%}%> 
                           </select>
                       </div>
                       <div class="form-group">

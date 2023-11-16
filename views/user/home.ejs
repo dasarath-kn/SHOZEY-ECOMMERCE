@@ -262,8 +262,16 @@
 
                             <% data.forEach(function(item) { %>
                                 <% if (item.status==0) { %>
+                                    
                                     <div class="product product-3 text-center">
                                         <figure class="product-media">
+                                            <% if (item.discountamount) { %>
+                                                
+                                                <span class="product-label label-new"><%= item.Offerpercentage %>% off</span>
+                                               
+                                            <% } else { %>
+                                                
+                                            <% } %>
                                             <a href="/productdetails?id=<%= item._id %>">
                                                 <img src="/productimages/<%= item.image[0] %>" alt="Product image"
                                                     class="product-image">
@@ -284,7 +292,13 @@
                                                     <%= item.productname %>
                                                 </a></h3>
                                             <div class="product-price">
-                                                <span class="new-price">Rs.<%= item.price %></span>
+                                                <% if (item.discountamount) { %>
+                                                    <span class="new-price">Rs.<%= item.discountamount %></span>
+                                                    <span class="original-price"><s>Rs.<%= item.price %></s></span>
+                                                <% } else { %>
+                                                    <span class="new-price">Rs.<%= item.price %></span>
+                                                <% } %>
+                                                
                                             </div>
                                         </div>
                                         <div class="product-footer">
@@ -2598,9 +2612,9 @@
                             timer: 1500
                         });
                         console.log("sucess");
-                    }else if(response.res==false){
+                    } else if (response.res == false) {
                         Swal.fire(" Item already exist in wishlist");
-                    } 
+                    }
                     else {
                         Swal.fire({
                             title: 'Login required',

@@ -59,7 +59,6 @@ router.get('/block/category',adminController.blockcategory);
 router.get('/orders',adminController.orders)
 router.post('/cartstatus',adminController.cartstatus)
 router.get('/orderdetails',adminController.orderdetails);
-
 //=================================== DASHBOARD =====================================//
 
 router.get('/dashboard',adminController.dashboard)
@@ -82,6 +81,9 @@ router.delete('/deletecoupon',adminController.deletecoupon)
 //=================================== Offer management =====================================//
 
 router.get('/offermanagement',adminController.offermanagement)
+router.get('/addoffer',adminController.addoffer);
+router.post('/offerdata',adminController.categoryofferdata);
+
 
 //=================================== LOG-OUT =====================================//
 

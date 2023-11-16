@@ -3,6 +3,7 @@ const category = require('../models/categoryModel');
 const product = require('../models/productModel');
 const order = require('../models/orderModel');
 const coupon = require("../models/couponModel");
+const Categoryoffer =require('../models/categoryofferModel')
 // const { render } = require('ejs');
 const sharp = require('sharp');
 const { render } = require('../router/userRouter');
@@ -115,8 +116,9 @@ const editproduct = async (req, res) => {
         const editid = req.query.id
         const item = await product.findOne({ _id: editid })
         // console.log(items);
+        const categorydata = await category.find()
 
-        res.render('editproduct', { item });
+        res.render('editproduct', { item ,categorydata});
 
     }
     catch (error) {
@@ -188,20 +190,21 @@ const addcategory = async (req, res) => {
 //=================================== ADDING CATEGORY TO THE PRODUCT CATEGORY  =====================================//
 const adddata = async (req, res) => {
     try {
-        const re = req.body.name;
-        const cat = await category.findOne({ productcategory: re });
+        const categoryname = req.body.category;
+        console.log(categoryname);
+        const cat = await category.findOne({ productcategory:{$regex:new RegExp(categoryname, 'i')} });
+        console.log(cat);
         if (cat) {
-
-            console.log("Category already exists");
-            res.redirect('/admin/productcategory');
+            // res.redirect('/admin/productcategory');
+            res.json({result:false})
         } else {
             const data = new category({
-                productcategory: req.body.name,
+                productcategory: categoryname,
                 status: 0
             });
 
             await data.save();
-            res.redirect('/admin/productcategory');
+            res.json({result:true});
         }
     } catch (error) {
         console.log(error.message);
@@ -577,14 +580,56 @@ const logout = async (req, res) => {
 
 const offermanagement = async(req,res)=>{
     try {
-        console.log("sduhhjkfsd");
-       res.render('offermanagement')
+        const categoryofferdata = await Categoryoffer.find();
+        console.log(categoryofferdata);
+       res.render('offermanagement',{categoryofferdata})
         
     } catch (error) {
         console.log(error.message);
     }
 }
 
+const addoffer = async(req,res)=>{
+    try {
+        const categorydata = await category.find()
+        res.render('addoffer',{categorydata});
+    } catch (error) {
+     console.log(error.message);   
+    }
+} 
+
+const categoryofferdata = async(req,res)=>{
+    try {
+        const categoryname =req.body.categoryname;
+        const startdate = req.body.startingdate;
+        const enddate = req.body.expirydate;
+        const offerpercentage = req.body.offerpercentage;
+         console.log(categoryname,startdate,enddate,offerpercentage);
+        const categorydata = new Categoryoffer({
+            categoryname:categoryname,
+            startingdate:startdate,
+            expirydate:enddate,
+            Offerpercentage:offerpercentage
+        })
+        const value = await  categorydata.save();
+        const productcategorycount = await product.find({category:categoryname})
+        
+        for(let i=0 ;i<productcategorycount.length;i++){
+            const reducedamount = (productcategorycount[i].price*offerpercentage)/100;
+        //    const discountamount = productcategorycount[i].price-reducedamount;
+            const productid =  productcategorycount[i]._id
+           console.log(productid);
+             await product.updateOne({_id:productid},{$set:{discountamount:productcategorycount[i].price-reducedamount,Offerpercentage:offerpercentage}},{upsert:true})
+            
+          
+          
+        }
+     res.redirect('/admin/offermanagement');
+
+    } catch (error) {
+        console.log(error.message);
+    }
+} 
 
 module.exports = {
     adminlogin,
@@ -617,5 +662,7 @@ module.exports = {
     editedcoupondata,
     blockunblockcoupon,
     deletecoupon,
-    offermanagement
+    offermanagement,
+    addoffer,
+    categoryofferdata
 }
