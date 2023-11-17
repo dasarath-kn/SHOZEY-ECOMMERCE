@@ -4,7 +4,8 @@ const router = express();
 const adminController = require('../controllers/adminController');
 const auth = require('../middleware/adminAuth');
 const multer = require('multer');
-const path=require('path')
+const path=require('path');
+const { admin } = require('../controllers/userController');
 
 // const p=require('../public/productimages')
 const storage = multer.diskStorage({
@@ -83,7 +84,15 @@ router.delete('/deletecoupon',adminController.deletecoupon)
 router.get('/offermanagement',adminController.offermanagement)
 router.get('/addoffer',adminController.addoffer);
 router.post('/offerdata',adminController.categoryofferdata);
-
+router.get('/editoffer',adminController.editoffer);
+router.post('/block-unblockoffer',adminController.blockunblockoffer);
+router.delete('/deleteoffer',adminController.deleteoffer);
+router.get('/productoffer',adminController.productoffer);
+router.get('/addproductoffer',adminController.addproductoffer)
+router.post('/productofferdata',adminController.productofferdata)
+router.delete('/deleteproductoffer',adminController.deleteproductoffer)
+router.post('/block-unblockproductoffer',adminController.blockunblockproductoffer)
+router.get('/editproductoffer',adminController.editproductoffer)
 
 //=================================== LOG-OUT =====================================//
 

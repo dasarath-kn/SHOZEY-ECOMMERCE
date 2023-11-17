@@ -262,25 +262,49 @@
 
                             <% data.forEach(function(item) { %>
                                 <% if (item.status==0) { %>
-                                    
+
                                     <div class="product product-3 text-center">
                                         <figure class="product-media">
+
                                             <% if (item.discountamount) { %>
-                                                
-                                                <span class="product-label label-new"><%= item.Offerpercentage %>% off</span>
-                                               
+                                                <% if (item.offername == "categoryoffer") { %>
+                                                    <% for (let i = 0; i < Categoryofferdata.length; i++) { %>
+                                                        <% if (Categoryofferdata[i].categoryname == item.category) { %>
+                                                            <% if (Categoryofferdata[i].status == 0 && Categoryofferdata[i].expirydate >= Date.now()) { %>
+                                                                <span class="product-label label-new">
+                                                                    <%= Categoryofferdata[i].Offerpercentage %>% off
+                                                                </span>
+                                                            <% } %>
+                                                        <% } %>
+                                                    <% } %>
+                                                <% } else { %>
+                                                    <% for(let i=0;i<Productofferdata.length;i++){%>
+                                                        <% if(Productofferdata[i].productname == item.productname){%>
+                                                           <%if(Productofferdata[i].status==0 && Productofferdata[i].startingdate<= Date.now() && Productofferdata[i].expirydate >= Date.now() ){%>
+                                                            <span class="product-label label-new">
+                                                                <%= Productofferdata[i].Offerpercentage %>%
+                                                            </span>
+                                                            <%}%>
+                                                            <%} %>
+                                                        
+                                                        <%}%>
+                                                    
+                                                <% } %>
                                             <% } else { %>
-                                                
+                                                <span class="product-label label-new">
+                                                   
+                                                </span>
                                             <% } %>
-                                            <a href="/productdetails?id=<%= item._id %>">
-                                                <img src="/productimages/<%= item.image[0] %>" alt="Product image"
-                                                    class="product-image">
-                                            </a>
-                                            <div class="product-action-vertical">
-                                                <a onclick="wishlist('<%= item._id %>')"
-                                                    class="btn-product-icon btn-wishlist btn-expandable"><span>add to
-                                                        wishlist</span></a>
-                                            </div>
+                                                              <a href="/productdetails?id=<%= item._id %>">
+                                                            <img src="/productimages/<%= item.image[0] %>"
+                                                                alt="Product image" class="product-image">
+                                                        </a>
+                                                        <div class="product-action-vertical">
+                                                            <a onclick="wishlist('<%= item._id %>')"
+                                                                class="btn-product-icon btn-wishlist btn-expandable"><span>add
+                                                                    to
+                                                                    wishlist</span></a>
+                                                        </div>
                                         </figure>
                                         <div class="product-body">
                                             <div class="product-cat">
@@ -293,12 +317,28 @@
                                                 </a></h3>
                                             <div class="product-price">
                                                 <% if (item.discountamount) { %>
-                                                    <span class="new-price">Rs.<%= item.discountamount %></span>
-                                                    <span class="original-price"><s>Rs.<%= item.price %></s></span>
-                                                <% } else { %>
-                                                    <span class="new-price">Rs.<%= item.price %></span>
-                                                <% } %>
-                                                
+                                                    <% if(item.offername=="categoryoffer"){%>
+                                                        
+                                                        <% for (let i = 0; i < Categoryofferdata.length; i++){%>
+                                                            <%if(Categoryofferdata[i].status==0){%>
+                                                                <span class="new-price">Rs.<%= item.discountamount %></span>
+                                                                <span class="original-price"><s>Rs.<%= item.price %></s></span>
+                                                                <%}else{%>
+                                                                    <span class="original-price"><s>Rs.<%= item.price %></s></span>
+
+                                                                    <%} %>
+                                                            <%}%>
+                                                        
+                                                        <%}
+                                                        else{%>
+                                                            <% %>
+                                                            <span class="new-price">Rs.<%= item.discountamount %></span>
+                                                            <span class="original-price"><s>Rs.<%= item.price %></s></span>
+                                                            <%}%>
+                                                    <% } else { %>
+                                                        <span class="new-price">Rs.<%= item.price %></span>
+                                                        <% } %>
+
                                             </div>
                                         </div>
                                         <div class="product-footer">

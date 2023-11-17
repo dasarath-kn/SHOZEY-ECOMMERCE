@@ -3,7 +3,8 @@ const category = require('../models/categoryModel');
 const product = require('../models/productModel');
 const order = require('../models/orderModel');
 const coupon = require("../models/couponModel");
-const Categoryoffer =require('../models/categoryofferModel')
+const Categoryoffer = require('../models/categoryofferModel')
+const Productoffer = require('../models/productofferModel');
 // const { render } = require('ejs');
 const sharp = require('sharp');
 const { render } = require('../router/userRouter');
@@ -118,7 +119,7 @@ const editproduct = async (req, res) => {
         // console.log(items);
         const categorydata = await category.find()
 
-        res.render('editproduct', { item ,categorydata});
+        res.render('editproduct', { item, categorydata });
 
     }
     catch (error) {
@@ -192,11 +193,11 @@ const adddata = async (req, res) => {
     try {
         const categoryname = req.body.category;
         console.log(categoryname);
-        const cat = await category.findOne({ productcategory:{$regex:new RegExp(categoryname, 'i')} });
+        const cat = await category.findOne({ productcategory: { $regex: new RegExp(categoryname, 'i') } });
         console.log(cat);
         if (cat) {
             // res.redirect('/admin/productcategory');
-            res.json({result:false})
+            res.json({ result: false })
         } else {
             const data = new category({
                 productcategory: categoryname,
@@ -204,7 +205,7 @@ const adddata = async (req, res) => {
             });
 
             await data.save();
-            res.json({result:true});
+            res.json({ result: true });
         }
     } catch (error) {
         console.log(error.message);
@@ -354,8 +355,8 @@ const orderdetails = async (req, res) => {
     try {
         const id = req.query.id;
         console.log(id);
-        const orderdata = await order.find({_id:id}).populate("items.productid");
-        
+        const orderdata = await order.find({ _id: id }).populate("items.productid");
+
         //  const cartdata = await cart.findOne({userid:id,"items.productid":productid});
         console.log(orderdata);
         res.render('orderdetails', { orderdata, id });
@@ -534,30 +535,30 @@ const editedcoupondata = async (req, res) => {
     }
 }
 
-const blockunblockcoupon = async(req,res)=>{
+const blockunblockcoupon = async (req, res) => {
     try {
-        const id=req.body.id
+        const id = req.body.id
         const couponid = req.body.couponid
-        console.log(couponid,id);
-        if(id==1){
-            await coupon.updateOne({_id:couponid},{$set:{status:1}});
-            res.json({result:true})
-        }else{
-            await coupon.updateOne({_id:couponid},{$set:{status:0}})
-            res.json({result:true})
+        console.log(couponid, id);
+        if (id == 1) {
+            await coupon.updateOne({ _id: couponid }, { $set: { status: 1 } });
+            res.json({ result: true })
+        } else {
+            await coupon.updateOne({ _id: couponid }, { $set: { status: 0 } })
+            res.json({ result: true })
         }
     } catch (error) {
         console.log(error.message);
-        
+
     }
 }
 
-const deletecoupon = async(req,res)=>{
+const deletecoupon = async (req, res) => {
     try {
         const id = req.body.id
         console.log(id);
-        await coupon.deleteOne({_id:id})
-        res.json({result:true})
+        await coupon.deleteOne({ _id: id })
+        res.json({ result: true })
 
     } catch (error) {
         console.log(error.message);
@@ -578,58 +579,246 @@ const logout = async (req, res) => {
 }
 
 
-const offermanagement = async(req,res)=>{
+const offermanagement = async (req, res) => {
     try {
         const categoryofferdata = await Categoryoffer.find();
+        const categorydata = await category.find()
         console.log(categoryofferdata);
-       res.render('offermanagement',{categoryofferdata})
-        
+        res.render('offermanagement', { categoryofferdata, categorydata })
+
     } catch (error) {
         console.log(error.message);
     }
 }
 
-const addoffer = async(req,res)=>{
+const addoffer = async (req, res) => {
     try {
         const categorydata = await category.find()
-        res.render('addoffer',{categorydata});
+        res.render('addoffer', { categorydata });
     } catch (error) {
-     console.log(error.message);   
+        console.log(error.message);
     }
-} 
+}
 
-const categoryofferdata = async(req,res)=>{
+const categoryofferdata = async (req, res) => {
     try {
-        const categoryname =req.body.categoryname;
+        console.log("ghfhgfjgjg");
+        const categoryname = req.body.categoryname;
         const startdate = req.body.startingdate;
         const enddate = req.body.expirydate;
         const offerpercentage = req.body.offerpercentage;
-         console.log(categoryname,startdate,enddate,offerpercentage);
-        const categorydata = new Categoryoffer({
-            categoryname:categoryname,
-            startingdate:startdate,
-            expirydate:enddate,
-            Offerpercentage:offerpercentage
-        })
-        const value = await  categorydata.save();
-        const productcategorycount = await product.find({category:categoryname})
-        
-        for(let i=0 ;i<productcategorycount.length;i++){
-            const reducedamount = (productcategorycount[i].price*offerpercentage)/100;
-        //    const discountamount = productcategorycount[i].price-reducedamount;
-            const productid =  productcategorycount[i]._id
-           console.log(productid);
-             await product.updateOne({_id:productid},{$set:{discountamount:productcategorycount[i].price-reducedamount,Offerpercentage:offerpercentage}},{upsert:true})
-            
-          
-          
+
+        // console.log(categoryname, startdate, enddate, offerpercentage);
+        const checkcategoryoffer = await Categoryoffer.findOne({ categoryname: categoryname })
+        if (checkcategoryoffer) {
+            res.json({ result: true });
         }
-     res.redirect('/admin/offermanagement');
+        else {
+            const categorydata = new Categoryoffer({
+                categoryname: categoryname,
+                startingdate: startdate,
+                expirydate: enddate,
+                Offerpercentage: offerpercentage
+            })
+            const value = await categorydata.save();
+            const productcategorycount = await product.find({ category: categoryname })
+
+            for (let i = 0; i < productcategorycount.length; i++) {
+                const reducedamount = (productcategorycount[i].price * offerpercentage) / 100;
+                const discountamount = productcategorycount[i].price - reducedamount;
+                const productid = productcategorycount[i]._id
+                if (productcategorycount[i].discountamount > 0) {
+                    if (discountamount < productcategorycount[i].discountamount) {
+                        await product.updateOne({ _id: productid }, { $set: { discountamount: discountamount, Offerpercentage: offerpercentage, offername: "categoryoffer" } }, { upsert: true })
+                     
+
+                    } else {
+                        console.log("error");
+                        
+
+                    }
+                } else {
+                    await product.updateOne({ _id: productid }, { $set: { discountamount: discountamount, Offerpercentage: offerpercentage, offername: "categoryoffer" } }, { upsert: true })
+                  
+                }
+
+
+            }
+            return res.json({ result:false});
+
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const editoffer = async (req, res) => {
+    try {
+        const categorydata = await category.find();
+        res.render('editoffer', { categorydata })
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const blockunblockoffer = async (req, res) => {
+    try {
+        const id = req.body.id;
+        const offerid = req.body.offerid;
+        if (id == 1) {
+            await Categoryoffer.updateOne({ _id: offerid }, { $set: { status: 1 } })
+            res.json({ result: true })
+
+        } else {
+            await Categoryoffer.updateOne({ _id: offerid }, { $set: { status: 0 } })
+            res.json({ result: true })
+
+        }
+
 
     } catch (error) {
         console.log(error.message);
     }
-} 
+}
+
+const deleteoffer = async (req, res) => {
+    try {
+        const id = req.body.id
+        const categorys = await Categoryoffer.find({ _id: id })
+        
+       const productdata = await product.find({category:categorys[0].categoryname})    
+       console.log(productdata);
+        for(let i=0;i<productdata.length;i++){
+            if(productdata[i].offername =="categoryoffer"){
+                await product.updateOne({_id:productdata[i]},{$set:{offername:'',discountamount:0,Offerpercentage:0}})
+
+            }else{
+                
+            }
+        }
+        await Categoryoffer.deleteOne({_id:id});
+        res.json({ result: true });
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const productoffer = async (req, res) => {
+    try {
+        const productofferdata = await Productoffer.find()
+        res.render('productoffer', { productofferdata })
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const addproductoffer = async (req, res) => {
+    try {
+        const productdata = await product.find()
+        res.render('addproductoffer', { productdata })
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const productofferdata = async (req, res) => {
+    try {
+        const productname = req.body.productname;
+        const startdate = req.body.startingdate;
+        const enddate = req.body.endingdate;
+        const offerpercentage = req.body.offerpercentage;
+
+        const checkproductoffer = await Productoffer.findOne({ productname: { $regex: new RegExp(productname, 'i') } });
+
+        if (checkproductoffer) {
+            return res.json({ result: true });
+        } else {
+            const categorydata = new Productoffer({
+                productname: productname,
+                startingdate: startdate,
+                expirydate: enddate,
+                Offerpercentage: offerpercentage
+            });
+
+            const value = await categorydata.save();
+            const productdata = await product.findOne({ productname: productname });
+
+            if (productdata.discountamount > 0) {
+                const amount = productdata.price * offerpercentage / 100;
+                const reducedamount = productdata.price - amount;
+
+                if (reducedamount < productdata.discountamount) {
+                    await product.updateOne(
+                        { productname: productname },
+                        { $set: { discountamount: reducedamount, Offerpercentage: offerpercentage, offername: "Productoffer" } },
+                        { upsert: true }
+                    );
+                } else {
+                }
+            } else {
+                const amount = productdata.price * offerpercentage / 100;
+                const reducedamount = productdata.price - amount;
+                await product.updateOne(
+                    { productname: productname },
+                    { $set: { discountamount: reducedamount, Offerpercentage: offerpercentage, offername: "Productoffer" } },
+                    { upsert: true }
+                );
+            }
+            return res.json({ result: false });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+const deleteproductoffer = async(req,res)=>{
+
+    try {
+        const id = req.body.id;
+        const productoffer = await Productoffer.findOne({_id:id})
+        const productname = await product.findOne({productname:productoffer.productname});
+        if(productname.offername == 'Productoffer'){
+            await product.updateOne({productname:productoffer.productname},{$set:{offername:'',discountamount:0,Offerpercentage:0}})
+            await productoffer.deleteOne({_id:id});
+            res.json({result:true})
+        }else{
+            await productoffer.deleteOne({_id:id});
+            res.json({result:true})
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+ const blockunblockproductoffer = async(req,res)=>{
+        try {
+            const id = req.body.id
+            const offerid =req.body.offerid
+            if(id==1){
+                await Productoffer.updateOne({_id:offerid},{$set:{status:1}})
+                res.json({result:true})
+            }else{
+                await Productoffer.updateOne({_id:offerid},{$set:{status:0}})
+                res.json({result:true})
+
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
+ }
+
+ const editproductoffer = async(req,res)=>{
+    try {
+        const productofferdata = await Productoffer.find() 
+        const productdata = await product.find()
+        res.render('editproductoffer',{productofferdata,productdata})
+    } catch (error) {
+        console.log(error.message);
+    }
+ }
 
 module.exports = {
     adminlogin,
@@ -664,5 +853,14 @@ module.exports = {
     deletecoupon,
     offermanagement,
     addoffer,
-    categoryofferdata
+    categoryofferdata,
+    editoffer,
+    blockunblockoffer,
+    deleteoffer,
+    productoffer,
+    addproductoffer,
+    productofferdata,
+    deleteproductoffer,
+    blockunblockproductoffer,
+    editproductoffer
 }

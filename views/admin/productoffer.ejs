@@ -1,0 +1,162 @@
+<%- include ('../admin/layouts/header.ejs')-%>
+    <div class="main-panel">
+        <div class="content-wrapper">
+
+            <div class="row">
+                <div class="col-lg-12  grid-margin stretch-card">
+                    <div class="card" id="reload">
+                        <div class="card-body">
+                            <h4 class="card-title">Product Offer</h4>
+                            <a href="/admin/addproductoffer" class="btn btn-primary">Add </a>
+
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>No.</th>
+                                            <th> Category Name</th>
+                                            <!-- <th> Coupon Code</th> -->
+                                            <th>Starting Date</th>
+                                            <th>Expiry Date</th>
+                                            <th>Offer percentage</th>
+
+                                            <!-- <th>User limit</th> -->
+                                        </tr>
+                                        <% let count=1 %>
+                                            <% for(let i=0;i<productofferdata.length;i++){%>
+                                                <tr>
+                                                    <td>
+                                                        <%= count++%>
+                                                    </td>
+                                                    <td>
+                                                        <%= productofferdata[i].productname %>
+                                                    </td>
+                                                    <td>
+                                                   
+                                                        <%= productofferdata[i].startingdate.toLocaleDateString('en-US', { year:
+                                                            'numeric', month: 'short', day: '2-digit'
+                                                            }).replace(/\//g, '-') %>
+                                                    </td>
+                                                    <td>
+                                                       
+                                                        <%= productofferdata[i].expirydate.toLocaleDateString('en-US', { year:
+                                                            'numeric', month: 'short', day: '2-digit'
+                                                            }).replace(/\//g, '-') %>
+                              
+                                                    </td>
+
+                                                    <td>
+                                                        <%= productofferdata[i].Offerpercentage %>% 
+
+                                                    </td>
+                                                    <td>
+                                                        <p><button class="badge badge-danger"
+                                                                onclick="deleteoffer('<%= productofferdata[i]._id %>')">Delete</button></p>
+                                                    </td>
+                                                    <td>
+                                                        <p>
+                                                            <a href="/admin/editproductoffer"><button
+                                                                    class="btn btn-primary">Edit</button></a>
+
+                                                    </td>
+                                                    <td>
+                                                        <% if(productofferdata[i].status==0){%>
+                                                            <p><button type="button" class="badge badge-danger"
+                                                                    onclick="blockandunblock(1,'<%= productofferdata[i]._id %>')">Unlist</button></p>
+                                                            <%}
+                                                                else{%>
+                                                                    <p><button type="button" class="badge badge-success"
+                                                                            onclick="blockandunblock(0,'<%= productofferdata[i]._id %>')">List</button></p>
+                                                                    <%}
+
+
+                                                                %>
+                                                    </td>
+                                                </tr>
+                                                <%}%>
+
+
+
+                                    </thead>
+                                    <tbody>
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                <script>
+
+
+                    function blockandunblock(id, offerid) {
+                        Swal.fire({
+                            title: "Are you sure?",
+                            text: "You want to change the status",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Yes"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    method: 'post',
+                                    url: '/admin/block-unblockproductoffer',
+                                    data: JSON.stringify({ id: id, offerid: offerid }),
+                                    contentType: 'application/json',
+                                    success: function (response) {
+                                        if (response.result == true) {
+                                            $('#reload').load('/admin/productoffer #reload')
+                                        } else {
+                                            console.log("Error");
+                                        }
+                                    }
+                                }); Swal.fire({
+                                    title: "Status",
+                                    text: "Status changed.",
+                                    icon: "success"
+                                });
+                            }
+                        });
+                    }
+
+                    function deleteoffer(id) {
+                        Swal.fire({
+                            title: "Are you sure?",
+                            text: "You won't be able to revert this!",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Yes, delete it!"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    method: 'delete',
+                                    url: '/admin/deleteproductoffer',
+                                    data: JSON.stringify({ id: id }),
+                                    contentType: 'application/json',
+                                    success: function (response) {
+                                        if (response.result == true) {
+                                            $('#reload').load('/admin/productoffer #reload')
+                                            // window.location.href ="/admin/deleteproductoffer"
+                                        } else {
+                                            console.log("error");
+                                        }
+                                    }
+                                }); Swal.fire({
+                                    title: "Deleted!",
+                                    text: "Your file has been deleted.",
+                                    icon: "success"
+                                });
+                            }
+                        });
+                    }
+                </script>
+
+
+                <%- include ('../admin/layouts/footer.ejs')-%>

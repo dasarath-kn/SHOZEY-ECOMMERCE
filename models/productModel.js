@@ -37,6 +37,9 @@ const product=  mongoose.Schema({
     Offerpercentage:{
         type:Number
         
+    },
+    offername:{
+        type:String
     }
 
    

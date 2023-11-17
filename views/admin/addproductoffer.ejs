@@ -8,11 +8,11 @@
                 <!-- <p class="card-description"> Basic form elements </p> -->
                 <form class="forms-sample" action="" method="" >
                     <div class="form-group">
-                        <label for="exampleInputName1">Category Name</label>
-                        <select name="categoryname" id="categoryname" class="form-control" required>
-                            <% for (let i = 0; i < categorydata.length; i++) { %>
-                                <option value="<%= categorydata[i].productcategory %>"><%= categorydata[i].productcategory %></option>
-                            <% } %>
+                        <label for="exampleInputName1">Product Name</label>
+                        <select name="productname" id="productname" class="form-control" required>
+                           <% for(let i=0;i<productdata.length;i++){%>
+                                <option value="<%= productdata[i].productname%>"><%= productdata[i].productname%></option>
+                                <%}%>
                         </select>
                     </div>
                     
@@ -25,40 +25,40 @@
                     </div>
                     <div class="form-group">
                         <label for="avtivationDate">Expiry Date</label>
-                        <input type="date" class="form-control" id="expirydate"
+                        <input type="date" class="form-control" id="endingdate"
                         name="expirydate"  placeholder="activation date" style="color: white;" required>
                         <p style="color: red;" id="activationErr"></p>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword4">Offer percentage</label>
                         <input type="number" class="form-control" id="offerpercentage"
-                           name="offerpercentage" placeholder="Discount Amount" name="offerpercentage"  required>
+                           name="offerpercentage" placeholder="Discount Amount" name="offerpercentage" required>
                     </div>
                    
-                    <button type="button" onclick="addcategoryoffer()" class="btn btn-primary mr-2">Submit</button>
-                    <button class="btn btn-dark"><a href="/admin/offermanagement">Cancel</a></button>
+                    <button type="button" onclick="addproductoffer()" class="btn btn-primary mr-2">Submit</button>
+                    <button class="btn btn-dark"><a href="/admin/productoffer">Cancel</a></button>
                 </form>
             </div>
         </div>
     </div>
 <script>
-    function addcategoryoffer(){
-        const categoryname = document.getElementById('categoryname').value
+    function addproductoffer(){
+        const productname = document.getElementById('productname').value
         const startingdate = document.getElementById('startingdate').value
-        const expirydate = document.getElementById('expirydate').value
-         const offerpercentage = document.getElementById('offerpercentage').value
-         console.log(categoryname,startingdate,expirydate);
+        const endingdate = document.getElementById('endingdate').value
+        const offerpercentage = document.getElementById('offerpercentage').value
         $.ajax({
-            url:'/admin/offerdata',
+            url:'/admin/productofferdata',
             method:'post',
-            data:JSON.stringify({categoryname,startingdate,expirydate,offerpercentage}),
+            data:JSON.stringify({productname,startingdate,endingdate,offerpercentage}),
             contentType:'application/json',
             success:function(response){
-                if(response.result==true){
-                    alert('Categoryoffer already exist');
-                    window.location.href = "/admin/offermanagement"
+                if(response.result == true){
+                    alert('Productoffer already exist')
+                   window.location.href = '/admin/productoffer';
                 }else{
-                    window.location.href = "/admin/offermanagement"
+                    console.log("Error");
+                    window.location.href = '/admin/productoffer';
                 }
             }
         })

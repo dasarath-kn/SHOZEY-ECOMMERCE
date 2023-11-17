@@ -53,20 +53,21 @@
                           </td>
                           <td>
                             <p><button class="badge badge-danger"
-                                onclick="deleteoffer('')">Delete</button></p>
+                                onclick="deleteoffer('<%=categoryofferdata[i]._id %>')">Delete</button></p>
                           </td>
                           <td>
-                            <p><a href=""
-                                class="btn btn-primary">Edit</a></p>
+                            <p>
+                              <a href="/admin/editoffer"><button class="btn btn-primary">Edit</button></a> 
+                               
                           </td>
                           <td>
                             <% if(categoryofferdata[i].status ==0){%>
                                <p><button type="button" class="badge badge-danger"
-                                   onclick="blockandunblock(1,'')">Unlist</button></p>
+                                   onclick="blockandunblock(1,'<%=categoryofferdata[i]._id %>')">Unlist</button></p>
                                    <%}
                                  
                                  else{%>  <p><button type="button" class="badge badge-success"
-                                     onclick="blockandunblock(0,'')">List</button></p>
+                                     onclick="blockandunblock(0,'<%=categoryofferdata[i]._id %>')">List</button></p>
                                
                                      <%}  %>
  
@@ -86,11 +87,15 @@
             </div>
           </div>
         </div>
+
+
+       
+
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
 
 
-          function blockandunblock(id, couponid) {
+          function blockandunblock(id, offerid) {
             Swal.fire({
               title: "Are you sure?",
               text: "You want to change the status",
@@ -103,12 +108,12 @@
               if (result.isConfirmed) {
                 $.ajax({
                   method: 'post',
-                  url: '/admin/block-unblockcoupon',
-                  data: JSON.stringify({ id: id, couponid: couponid }),
+                  url: '/admin/block-unblockoffer',
+                  data: JSON.stringify({ id: id, offerid: offerid }),
                   contentType: 'application/json',
                   success: function (response) {
                     if (response.result == true) {
-                      $('#reload').load('/admin/coupon #reload')
+                      $('#reload').load('/admin/offermanagement #reload')
                     } else {
                       console.log("Error");
                     }
@@ -122,7 +127,7 @@
             });
           }
 
-          function deletecoupon(id) {
+          function deleteoffer(id) {
             Swal.fire({
               title: "Are you sure?",
               text: "You won't be able to revert this!",
@@ -135,12 +140,12 @@
               if (result.isConfirmed) {
                 $.ajax({
                   method: 'delete',
-                  url: '/admin/deletecoupon',
+                  url: '/admin/deleteoffer',
                   data: JSON.stringify({ id: id }),
                   contentType: 'application/json',
                   success: function (response) {
                     if (response.result == true) {
-                      $('#reload').load('/admin/coupon #reload')
+                      $('#reload').load('/admin/offermanagement #reload')
                     } else {
                       console.log("error");
                     }
