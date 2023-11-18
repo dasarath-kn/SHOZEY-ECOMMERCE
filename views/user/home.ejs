@@ -317,25 +317,37 @@
                                                 </a></h3>
                                             <div class="product-price">
                                                 <% if (item.discountamount) { %>
+                                                    
                                                     <% if(item.offername=="categoryoffer"){%>
-                                                        
                                                         <% for (let i = 0; i < Categoryofferdata.length; i++){%>
                                                             <%if(Categoryofferdata[i].status==0){%>
                                                                 <span class="new-price">Rs.<%= item.discountamount %></span>
                                                                 <span class="original-price"><s>Rs.<%= item.price %></s></span>
                                                                 <%}else{%>
-                                                                    <span class="original-price"><s>Rs.<%= item.price %></s></span>
+                                                                    <span class="original-price">Rs.<%= item.price %></span>
 
                                                                     <%} %>
                                                             <%}%>
                                                         
                                                         <%}
                                                         else{%>
-                                                            <% %>
-                                                            <span class="new-price">Rs.<%= item.discountamount %></span>
-                                                            <span class="original-price"><s>Rs.<%= item.price %></s></span>
+                                                            <% for(let j=0;j<Productofferdata.length;j++){%>
+                                                                <% if(Productofferdata[j].productname == item.productname){%>
+                                                                <% if(Productofferdata[j].status==0  && Productofferdata[j].startingdate<= Date.now() && Productofferdata[j].expirydate >= Date.now()){%>
+                                                                    <span class="new-price">Rs.<%= item.discountamount %></span>
+                                                                    <span class="original-price"><s>Rs.<%= item.price %></s></span>
+                                                                    
+                                                                    <%}
+                                                                    else{%>
+                                                                        <span class="original-price">Rs.<%= item.price %></span>
+ 
+                                                                        <%} %>
+                                                                     <%} %>   
+                                                            <%} %>
                                                             <%}%>
-                                                    <% } else { %>
+                                                    <% }
+                                                    
+                                                    else { %>
                                                         <span class="new-price">Rs.<%= item.price %></span>
                                                         <% } %>
 

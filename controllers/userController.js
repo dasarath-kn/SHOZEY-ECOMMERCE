@@ -10,7 +10,7 @@ const category = require('../models/categoryModel');
 const { orderplaced } = require('./CheckoutController');
 const { wallet } = require('./profileController');
 const Wallet = require('../models/walletModel');
-const Categoryoffer=require('../models/categoryofferModel');
+const Categoryoffer = require('../models/categoryofferModel');
 const Productoffer = require('../models/productofferModel');
 
 let nameResend
@@ -59,9 +59,9 @@ const home = async (req, res) => {
         const cartdata = await cart.find({ userid: id }).populate("items.productid")
         const Categoryofferdata = await Categoryoffer.find()
         const Productofferdata = await Productoffer.find()
-        
-       
-        res.render("home", { data, user: req.session.name, cartdata, id,Categoryofferdata,Productofferdata })
+
+
+        res.render("home", { data, user: req.session.name, cartdata, id, Categoryofferdata, Productofferdata })
 
 
     }
@@ -179,8 +179,8 @@ const insertdata = async (req, res) => {
             res.redirect('/signup');
         }
         else {
-         const referalcode = req.body.referalcode
-         console.log(referalcode);
+            const referalcode = req.body.referalcode
+            console.log(referalcode);
             const spassword = await securepassword(req.body.password)
             const userdata = new user({
                 firstname: req.body.firstname,
@@ -189,20 +189,20 @@ const insertdata = async (req, res) => {
                 phonenumber: req.body.phonenumber,
                 password: spassword,
                 status: 0,
-                refercode:generateRandomString(8)
+                refercode: generateRandomString(8)
 
             })
 
             const data = await userdata.save();
-            const userdatas = await user.findOne({email:req.body.email});
+            const userdatas = await user.findOne({ email: req.body.email });
 
             const walletdata = new Wallet({
-                userid:userdatas._id
+                userid: userdatas._id
             })
-           const walletitems = await walletdata.save();
+            const walletitems = await walletdata.save();
 
-            if(referalcode){
-                const id = await user.findOne({refercode:referalcode})
+            if (referalcode) {
+                const id = await user.findOne({ refercode: referalcode })
                 const value = await Wallet.updateOne(
                     { userid: id._id },
                     {
@@ -218,17 +218,18 @@ const insertdata = async (req, res) => {
                     }
                 );
 
-                const  userwallet = await Wallet.updateOne({userid:userdatas._id},{$inc:{balance:100},
+                const userwallet = await Wallet.updateOne({ userid: userdatas._id }, {
+                    $inc: { balance: 100 },
                     $push: {
                         items: {
                             date: Date.now(),
                             amount: 100,
                             type: 'Referal Reward',
-                            
+
                         }
                     }
                 })
-                
+
             }
 
             if (userdata) {
@@ -356,14 +357,36 @@ const otp = async (req, res) => {
 
 const shop = async (req, res) => {
     try {
-        const id = req.session.id
-
+        const sessionid = req.session.id
+        const id = req.query.id
         const productcategory = await category.find()
-        const productdata= await product.find()
-        const cartdata = await cart.find({ userid: id }).populate("items.productid")
+        const cartdata = await cart.find({ userid: sessionid }).populate("items.productid")
+        const productcount = await product.find().count();
+        var pagecount = Math.floor(productcount / 6);
+        if (productcount % 6 !== 0) {
+            pagecount += 1;
+          }
+        console.log(pagecount);
+        var i=1
+        if (id == 1) {
+            
+            const productdata = await product.find().skip(i*6).limit(6)
+            i++
+            console.log("count",i);
+                res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, productcategory ,pagecount})
+                
 
-        res.render('shop', { user: req.session.name, cartdata, productdata, id, productcategory })
+        }else if(id==-1) {
+            
+            const productdata = await product.find().limit(6)
 
+            res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, productcategory,pagecount })
+        }
+        else {
+            const productdata = await product.find().limit(6)
+
+            res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, productcategory,pagecount })
+        }
     } catch (error) {
         console.log(error.message);
     }
@@ -388,115 +411,115 @@ const search = async (req, res) => {
 
 }
 
-const pricesort = async(req,res)=>{
+const pricesort = async (req, res) => {
     try {
         const val = req.body.val
-        if(val==-1){
-            res.json({result:true})
-        }else if(val ==1){
-            res.json({result:false})
+        if (val == -1) {
+            res.json({ result: true })
+        } else if (val == 1) {
+            res.json({ result: false })
         }
-        
+
     } catch (error) {
-        
+
         console.log(error.message);
     }
 }
 
-const pricehightolow = async(req,res)=>{
+const pricehightolow = async (req, res) => {
     try {
         const id = req.session.id
 
         const productcategory = await category.find()
-        const productdata = await product.find().sort({price:-1})
+        const productdata = await product.find().sort({ price: -1 })
 
         const cartdata = await cart.find({ userid: id }).populate("items.productid")
 
         res.render('shop', { user: req.session.name, cartdata, productdata, id, productcategory })
 
-        
+
     } catch (error) {
         console.log(error.message);
     }
 }
 
-const pricelowtohigh = async(req,res)=>{
+const pricelowtohigh = async (req, res) => {
     try {
         const id = req.session.id
 
         const productcategory = await category.find()
-        const productdata = await product.find().sort({price:1})
+        const productdata = await product.find().sort({ price: 1 })
 
         const cartdata = await cart.find({ userid: id }).populate("items.productid")
 
         res.render('shop', { user: req.session.name, cartdata, productdata, id, productcategory })
 
-        
+
     } catch (error) {
         console.log(error.message);
-        
+
     }
 }
 
-const Menformalshoes = async(req,res)=>{
+const Menformalshoes = async (req, res) => {
     try {
-        
-        const id =req.session.id
-      
+
+        const id = req.session.id
+
         const productdata = await product.find({ category: "Men's Formal Shoes" });
         console.log(productdata);
         const productcategory = await category.find()
         const cartdata = await cart.find({ userid: id }).populate("items.productid")
         res.render('filter', { user: req.session.name, cartdata, productdata, id, productcategory })
-        
+
     } catch (error) {
         console.log(error.message);
     }
 }
 
-const Mencasualshoes =async(req,res)=>{
+const Mencasualshoes = async (req, res) => {
     try {
-        const id =req.session.id
-      
+        const id = req.session.id
+
         const productdata = await product.find({ category: "Men's Casual Shoes" });
         console.log(productdata);
         const productcategory = await category.find()
         const cartdata = await cart.find({ userid: id }).populate("items.productid")
         res.render('filter', { user: req.session.name, cartdata, productdata, id, productcategory })
-        
-        
+
+
     } catch (error) {
-       console.log(error.message); 
+        console.log(error.message);
     }
 }
 
-const Mensportsshoes = async(req,res)=>{
+const Mensportsshoes = async (req, res) => {
     try {
-        const id =req.session.id
-      
+        const id = req.session.id
+
         const productdata = await product.find({ category: "Men's Sport Shoes" });
         console.log(productdata);
         const productcategory = await category.find()
         const cartdata = await cart.find({ userid: id }).populate("items.productid")
         res.render('filter', { user: req.session.name, cartdata, productdata, id, productcategory })
-        
-        
+
+
     } catch (error) {
         console.log(error.message);
     }
 
 }
-const Womencasualshoes = async(req,res)=>{
+const Womencasualshoes = async (req, res) => {
     try {
-        const id =req.session.id
-      
+        const id = req.session.id
+
         const productdata = await product.find({ category: "Women's casual" });
         console.log(productdata);
         const productcategory = await category.find()
         const cartdata = await cart.find({ userid: id }).populate("items.productid")
         res.render('filter', { user: req.session.name, cartdata, productdata, id, productcategory })
-        
-        
+
+
     } catch (error) {
         console.log(error.message);
     }
@@ -504,30 +527,30 @@ const Womencasualshoes = async(req,res)=>{
 }
 
 
-const categorysort = async(req,res)=>{
+const categorysort = async (req, res) => {
 
     try {
         console.log("uiujhhjjh");
-        const id =req.session.id
-        const categorys =req.query.category
-        const categories =req.query.categories
+        const id = req.session.id
+        const categorys = req.query.category
+        const categories = req.query.categories
 
-         if(categorys){
-        const productdata = await product.find({ category: categorys }).sort({price:1});  
-      console.log(productdata);      
-        const productcategory = await category.find()
-        const cartdata = await cart.find({ userid: id }).populate("items.productid")
-        res.render('filter', { user: req.session.name, cartdata, productdata, id, productcategory })
-         }
-         else{
-            const productdata = await product.find({ category: categories }).sort({price:-1});  
-            console.log(productdata);      
-              const productcategory = await category.find()
-              const cartdata = await cart.find({ userid: id }).populate("items.productid")
-              res.render('filter', { user: req.session.name, cartdata, productdata, id, productcategory })
-         }
-        
-        
+        if (categorys) {
+            const productdata = await product.find({ category: categorys }).sort({ price: 1 });
+            console.log(productdata);
+            const productcategory = await category.find()
+            const cartdata = await cart.find({ userid: id }).populate("items.productid")
+            res.render('filter', { user: req.session.name, cartdata, productdata, id, productcategory })
+        }
+        else {
+            const productdata = await product.find({ category: categories }).sort({ price: -1 });
+            console.log(productdata);
+            const productcategory = await category.find()
+            const cartdata = await cart.find({ userid: id }).populate("items.productid")
+            res.render('filter', { user: req.session.name, cartdata, productdata, id, productcategory })
+        }
+
+
     } catch (error) {
         console.log(error.message);
     }
