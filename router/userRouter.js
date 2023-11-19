@@ -88,7 +88,7 @@ router.get('/Mcasualshoes',usercontroller.Mencasualshoes)
 router.get('/Msportshoes',usercontroller.Mensportsshoes)
  router.get('/Wcasualshoes',usercontroller.Womencasualshoes)
 router.get('/categorysort',usercontroller.categorysort)
-
+router.post('/sortproduct',usercontroller.sortproduct)
 
 
 //=================================== COUPON =====================================//

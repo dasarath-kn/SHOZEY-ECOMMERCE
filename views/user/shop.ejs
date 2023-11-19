@@ -222,7 +222,7 @@
                                                 
                                                 <% for(let i=0;i<productcategory.length;i++){%>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" onclick="filtercategory()" id="<%=productcategory[i]._id %>">
+                                                    <input class="form-check-input" name="category" type="checkbox" value="<%=productcategory[i]._id %>" onclick="filtercategory('<%=productcategory[i]._id %>')" id="<%=productcategory[i]._id %>">
                                                     <label class="form-check-label" for="<%=productcategory[i]._id %>">
                                                         <%= productcategory[i].productcategory  %>
                                                     </label>
@@ -343,16 +343,25 @@
         //     log
         // }
 
-      function  filtercategory(){
+      function  filtercategory(id){
         console.log("igljjllji");
-        const data = document.getElementsByClassName('orm-check-input').value
-        console.log(data);
+        $.ajax({
+            url:'/sortproduct',
+            method:'post',
+            data:JSON.stringify({id:id}),
+            contentType:'application/json',
+            success:function(response){
+                if(response.result == true){
+                    console.log("Success");
+                }
+            }
+        })
 
     }
 
 function filter(){
     console.log("ihhkh");
-    const checkboxes = document.querySelectorAll('.custom-control custom-checkbox').value;
+    const checkboxes = document.getElementsByName('category').value;
 console.log(checkboxes);
 
     

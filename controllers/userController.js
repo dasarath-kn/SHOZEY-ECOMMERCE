@@ -55,13 +55,14 @@ const securepassword = async (password) => {
 const home = async (req, res) => {
     try {
         const id = req.session.userId;
-        const data = await product.find()
+        const data = await product.find().limit(4)
+        const products = await product.find().skip(4)
         const cartdata = await cart.find({ userid: id }).populate("items.productid")
         const Categoryofferdata = await Categoryoffer.find()
         const Productofferdata = await Productoffer.find()
 
 
-        res.render("home", { data, user: req.session.name, cartdata, id, Categoryofferdata, Productofferdata })
+        res.render("home", { data, user: req.session.name, cartdata, id, Categoryofferdata, Productofferdata,products })
 
 
     }
@@ -556,6 +557,20 @@ const categorysort = async (req, res) => {
     }
 }
 
+const sortproduct= async(req,res)=>{
+    try {
+        const categoryid = req.body.id
+
+        const categoryname = await category.findOne({_id:categoryid})
+        const products = await product.find({category:categoryname.productcategory})
+        console.log(products)
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+
 // const errorpage = async (req,res) => {
 //     try{
 //       return res.status(404).render('404')
@@ -600,7 +615,8 @@ module.exports = {
     Mencasualshoes,
     Mensportsshoes,
     Womencasualshoes,
-    categorysort
+    categorysort,
+    sortproduct
     // errorpage
 }
 
