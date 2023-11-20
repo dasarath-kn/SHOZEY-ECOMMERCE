@@ -26,6 +26,7 @@ const cartRendering = async (req, res) => {
                 return x + y;
             });
         }
+        
 
         const cartdata = await cart.find({ userid: id }).populate("items.productid");
 
@@ -77,11 +78,16 @@ const cartAdding = async (req, res) => {
 
                 }
                 else {
-
+                    var productprice
+                    if(data.discountamount){
+                        productprice =data.discountamount
+                    }else{
+                        productprice =data.price
+                    }
                     const cartitems = {
                         productid: data._id,
                         count: 1,
-                        total: data.price
+                        total: productprice
                     }
 
                     await cart.findOneAndUpdate({ userid: id }, { $set: { userid: id }, $push: { items: cartitems } }, { upsert: true, new: true });

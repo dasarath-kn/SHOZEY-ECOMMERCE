@@ -213,6 +213,7 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right">
+                                <% if(cartdata) {%>
                                 <% cartdata.forEach((item)=>{%>
                                     <% item.items.forEach((element)=>{%>
                                         <div class="dropdown-cart-products">
@@ -246,6 +247,8 @@
                                         </div><!-- End .cart-product -->
                                         <%}) %>
                                             <% })%>
+                                            <%}else{%>
+                                                <%}%>
 
                                                 <div class="dropdown-cart-total">
                                                     <span>Total</span>
@@ -322,7 +325,8 @@
                                                                     </h3>
                                                                 </div>
                                                             </td>
-                                                            <td class="price-col">Rs.<%= element.productid.price %>
+                                                            
+                                                            <td class="price-col">Rs.<%= element.total %>
                                                             </td>
                                                             <td class="quantity-col">
                                                                 <div class="cart-product-quantity">
@@ -348,7 +352,7 @@
                                                                         </div>
                                                                     </div>
                                                             </td>
-                                                            <td class="total-col">Rs.<%= element.productid.price *
+                                                            <td class="total-col">Rs.<%= element.total *
                                                                     element.count %>
                                                             </td>
                                                             <td class="remove-col">

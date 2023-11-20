@@ -6,7 +6,7 @@
             <div class="card-body">
                 <h4 class="card-title"></h4>
                 <!-- <p class="card-description"> Basic form elements </p> -->
-                <form class="forms-sample" action="/admin/coupondata" method="post" >
+                <form class="forms-sample" onsubmit=" validateDates(event)" action="/admin/coupondata" method="post" >
                     <div class="form-group">
                         <label for="exampleInputName1">Coupon Name</label>
                         <input type="text" class="form-control" id="exampleInputName1" placeholder="Coupon Name "
@@ -24,13 +24,13 @@
                     </div>
                     <div class="form-group">
                         <label for="avtivationDate">Activation Date</label>
-                        <input type="date" class="form-control" id="activationErr" 
+                        <input type="date" class="form-control" id="dateInput1" 
                           name="activationdate"  placeholder="activation date" style="color: white;" required>
                         <p style="color: red;" id="activationErr"></p>
                     </div>
                     <div class="form-group">
                         <label for="avtivationDate">Expiry Date</label>
-                        <input type="date" class="form-control" id="activationErr"
+                        <input type="date" class="form-control" id="dateInput2"
                           name="expirydate"  placeholder="activation date" style="color: white;" required>
                         <p style="color: red;" id="activationErr"></p>
                     </div>
@@ -58,5 +58,20 @@
             </div>
         </div>
     </div>
+<script>
+       function validateDates(event) {
+    var startDate = document.getElementById('dateInput1').value;
+    var endDate = document.getElementById('dateInput2').value;
 
+   
+    if (endDate < startDate) {
+        alert('End date cannot be earlier than the start date. Please select a valid date range.');
+      //  Swal.fire("End date cannot be earlier than the start date. Please select a valid date range.");
+      event.preventDefault ()
+    }
+
+    
+    return true;
+  }
+</script>
     <%- include ('../admin/layouts/footer.ejs')-%>

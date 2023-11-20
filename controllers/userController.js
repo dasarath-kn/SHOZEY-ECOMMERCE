@@ -360,34 +360,56 @@ const shop = async (req, res) => {
     try {
         const sessionid = req.session.id
         const id = req.query.id
-        const productcategory = await category.find()
+        const categorydata = await category.find()
+        const lowtohigh = req.query.lowtohigh;
+        const hightolow = req.query.hightolow
+        console.log(hightolow);
+        var val=0
+        if(lowtohigh){
+            val=1
+        }else if(hightolow){
+            val=-1
+        }else{
+            val=0
+        }
         const cartdata = await cart.find({ userid: sessionid }).populate("items.productid")
         const productcount = await product.find().count();
+         const categorys = req.query.categorys
+         if(categorys){
+          
+                const productdata = await product.find({category:categorys}).sort({price:val})
+                console.log(productdata);
+            var products =0
+            res.render('shop', { user: req.session.name, cartdata, productdata,products, sessionid, categorydata ,pagecount,categorys})
+         }
+        else{
+            
         var pagecount = Math.floor(productcount / 6);
         if (productcount % 6 !== 0) {
             pagecount += 1;
           }
-        console.log(pagecount);
+        
         var i=1
         if (id == 1) {
             
-            const productdata = await product.find().skip(i*6).limit(6)
+            const productdata = await product.find().skip(i*6).limit(6).sort({price:val})
             i++
             console.log("count",i);
-                res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, productcategory ,pagecount})
+                res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata ,pagecount,categorys})
                 
 
         }else if(id==-1) {
             
-            const productdata = await product.find().limit(6)
+            const productdata = await product.find().limit(6).sort({price:val})
 
-            res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, productcategory,pagecount })
+            res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata,pagecount,categorys})
         }
         else {
-            const productdata = await product.find().limit(6)
+            const productdata = await product.find().limit(6).sort({price:val})
 
-            res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, productcategory,pagecount })
+            res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata,pagecount,categorys})
         }
+    }
     } catch (error) {
         console.log(error.message);
     }
@@ -400,11 +422,14 @@ const search = async (req, res) => {
         console.log("fsfsfsdfds");
         const data = req.body.product
         const id = req.session.userId
+        const sessionid = req.session.id
+        var pagecount =0
+        var productcategory=await category.find()
         const productdata = await product.find({ productname: { $regex: data, $options: 'i' } });
 
         const cartdata = await cart.find({ userid: id }).populate("items.productid")
 
-        res.render('shop', { user: req.session.name, productdata, cartdata, id })
+        res.render('shop', { user: req.session.name, productdata, cartdata, id,sessionid,pagecount,productcategory })
 
     } catch (error) {
         console.log(error.message);
@@ -427,105 +452,11 @@ const pricesort = async (req, res) => {
     }
 }
 
-const pricehightolow = async (req, res) => {
-    try {
-        const id = req.session.id
-
-        const productcategory = await category.find()
-        const productdata = await product.find().sort({ price: -1 })
-
-        const cartdata = await cart.find({ userid: id }).populate("items.productid")
-
-        res.render('shop', { user: req.session.name, cartdata, productdata, id, productcategory })
 
 
-    } catch (error) {
-        console.log(error.message);
-    }
-}
-
-const pricelowtohigh = async (req, res) => {
-    try {
-        const id = req.session.id
-
-        const productcategory = await category.find()
-        const productdata = await product.find().sort({ price: 1 })
-
-        const cartdata = await cart.find({ userid: id }).populate("items.productid")
-
-        res.render('shop', { user: req.session.name, cartdata, productdata, id, productcategory })
 
 
-    } catch (error) {
-        console.log(error.message);
 
-    }
-}
-
-const Menformalshoes = async (req, res) => {
-    try {
-
-        const id = req.session.id
-
-        const productdata = await product.find({ category: "Men's Formal Shoes" });
-        console.log(productdata);
-        const productcategory = await category.find()
-        const cartdata = await cart.find({ userid: id }).populate("items.productid")
-        res.render('filter', { user: req.session.name, cartdata, productdata, id, productcategory })
-
-    } catch (error) {
-        console.log(error.message);
-    }
-}
-
-const Mencasualshoes = async (req, res) => {
-    try {
-        const id = req.session.id
-
-        const productdata = await product.find({ category: "Men's Casual Shoes" });
-        console.log(productdata);
-        const productcategory = await category.find()
-        const cartdata = await cart.find({ userid: id }).populate("items.productid")
-        res.render('filter', { user: req.session.name, cartdata, productdata, id, productcategory })
-
-
-    } catch (error) {
-        console.log(error.message);
-    }
-}
-
-const Mensportsshoes = async (req, res) => {
-    try {
-        const id = req.session.id
-
-        const productdata = await product.find({ category: "Men's Sport Shoes" });
-        console.log(productdata);
-        const productcategory = await category.find()
-        const cartdata = await cart.find({ userid: id }).populate("items.productid")
-        res.render('filter', { user: req.session.name, cartdata, productdata, id, productcategory })
-
-
-    } catch (error) {
-        console.log(error.message);
-    }
-
-}
-const Womencasualshoes = async (req, res) => {
-    try {
-        const id = req.session.id
-
-        const productdata = await product.find({ category: "Women's casual" });
-        console.log(productdata);
-        const productcategory = await category.find()
-        const cartdata = await cart.find({ userid: id }).populate("items.productid")
-        res.render('filter', { user: req.session.name, cartdata, productdata, id, productcategory })
-
-
-    } catch (error) {
-        console.log(error.message);
-    }
-
-}
 
 
 const categorysort = async (req, res) => {
@@ -608,13 +539,7 @@ module.exports = {
     resendOTP,
     shop,
     search,
-    pricehightolow,
     pricesort,
-    pricelowtohigh,
-    Menformalshoes,
-    Mencasualshoes,
-    Mensportsshoes,
-    Womencasualshoes,
     categorysort,
     sortproduct
     // errorpage

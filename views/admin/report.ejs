@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Sales Report</title>
+    <style>
+        /* Define your CSS styles here */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Sales Report</h1>
+    <table class="table">
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th> Orderid</th>
+            <th>Products-Qty</th>
+            <th>Date</th>
+            <th>Customer</th>
+            <th>TotalAmount</th>
+          </tr>
+
+
+          <tr>
+            <% let count=1%>
+              <% for(let i=0 ;i<orderdata.length; i++){%>
+                <% let item=orderdata[i].items %>
+                  <% let address=orderdata[i].deliveryDetails %>
+                    <% for(let j=0;j<item.length;j++) {%>
+                      <% let product=item[j].productid %>
+                        <td>
+                          <%= count++%>
+                        </td>
+                        <td>
+                          <%= orderdata[i]._id %>
+                        </td>
+                        <td>
+                          <%= item[j].count%>
+                        </td>
+                        <td>
+                          <%= orderdata[i].purchaseDate.toLocaleDateString('en-US', { year: 'numeric' ,
+                            month: 'short' , day: '2-digit' }).replace(/\//g, '-' ) %>
+                        </td>
+                        <td>
+                          <%= address.name %>
+                        </td>
+                        <td>
+                          <%= item[j].total %>
+                        </td>
+
+
+          </tr>
+          <%}%>
+            <%} %>
+
+
+
+        </thead>
+        <tbody>
+
+
+        </tbody>
+      </table>
+</body>
+
+</html>

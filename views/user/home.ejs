@@ -271,28 +271,27 @@
                                                     <% for (let i = 0; i < Categoryofferdata.length; i++) { %>
                                                         <% if (Categoryofferdata[i].categoryname == item.category) { %>
                                                             <% if (Categoryofferdata[i].status == 0 && Categoryofferdata[i].expirydate >= Date.now()) { %>
-                                                                <span class="product-label label-new">
-                                                                    <%= Categoryofferdata[i].Offerpercentage %>% off
-                                                                </span>
-                                                            <% } %>
+                                                                
+                                                                <span class="product-label label-primary">Sale</span>
+                                                                <span class="product-label label-sale"> <%= Categoryofferdata[i].Offerpercentage %>% off</span>
+                                                            <% }else{%><%} %>
                                                         <% } %>
                                                     <% } %>
                                                 <% } else { %>
                                                     <% for(let i=0;i<Productofferdata.length;i++){%>
                                                         <% if(Productofferdata[i].productname == item.productname){%>
                                                            <%if(Productofferdata[i].status==0 && Productofferdata[i].startingdate<= Date.now() && Productofferdata[i].expirydate >= Date.now() ){%>
-                                                            <span class="product-label label-new">
-                                                                <%= Productofferdata[i].Offerpercentage %>%
-                                                            </span>
-                                                            <%}%>
+                    
+                                                            <span class="product-label label-primary">Sale</span>
+                                                            <span class="product-label label-sale"><%= Productofferdata[i].Offerpercentage %>% off</span>
+                                                            <%} else{%><%}%>
                                                             <%} %>
                                                         
                                                         <%}%>
                                                     
                                                 <% } %>
                                             <% } else { %>
-                                                <span class="product-label label-new">
-                                                   
+                                                  
                                                 </span>
                                             <% } %>
                                                               <a href="/productdetails?id=<%= item._id %>">
@@ -319,15 +318,12 @@
                                                 <% if (item.discountamount) { %>
                                                     
                                                     <% if(item.offername=="categoryoffer"){%>
-                                                        <% for (let i = 0; i < Categoryofferdata.length; i++){%>
-                                                            <%if(Categoryofferdata[i].status==0){%>
+
                                                                 <span class="new-price">Rs.<%= item.discountamount %></span>
                                                                 <span class="original-price"><s>Rs.<%= item.price %></s></span>
-                                                                <%}else{%>
-                                                                    <span class="original-price">Rs.<%= item.price %></span>
-
-                                                                    <%} %>
-                                                            <%}%>
+                                                              
+                                                                   
+                                                            
                                                         
                                                         <%}
                                                         else{%>

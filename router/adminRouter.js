@@ -1,6 +1,7 @@
 
 const express = require('express');
 const router = express();
+const session = require('express-session')
 const adminController = require('../controllers/adminController');
 const auth = require('../middleware/adminAuth');
 const multer = require('multer');
@@ -23,12 +24,18 @@ const upload = multer({ storage: storage });
 router.set('view engine', 'ejs');
 router.set('views','./views/admin');
 
+router.use(session({
+  secret:process.env.SESSIONSECRETKEY,
+  resave:false,
+  saveUninitialized:true
+
+}));
 
 
 //=================================== LOG-IN =====================================//
 
 router.get('/',auth.checkadminisLogout,adminController.adminlogin);
-router.post('/login',auth.checkadminisLogout,adminController.admin);
+router.post('/login',adminController.admin);
 
 //=================================== USER-MANAGEMENT =====================================//
 
@@ -62,12 +69,13 @@ router.post('/cartstatus',adminController.cartstatus)
 router.get('/orderdetails',adminController.orderdetails);
 //=================================== DASHBOARD =====================================//
 
-router.get('/dashboard',adminController.dashboard)
+router.get('/dashboard',auth.checkadminisLogin,adminController.dashboard)
 
 //=================================== SALESREPORT =====================================//
 
 router.get('/salesreport',adminController.salesreport)
 router.post('/salessort',adminController.salessort)
+router.get('/downloadreport',adminController.downloadreport)
 
 //=================================== COUPON =====================================//
 

@@ -6,27 +6,35 @@
               <div class="card-body">
                 <h4 class="card-title">Add Product</h4>
                 <!-- <p class="card-description"> Basic form elements </p> -->
-                <form class="forms-sample" action="/admin/productadd?id=_id" method="post" enctype="multipart/form-data"  >
+                <form class="forms-sample" action="/admin/productadd?id=_id" method="post" enctype="multipart/form-data" id="productForm"  >
                   <div class="form-group">
                     <label for="exampleInputName1">Product Name</label>
                     <input type="text" class="form-control" id="exampleInputName1" placeholder="Product Name " name="product" required>
+                    <span id="nameError" style="color: red;"></span>
+
                   </div>
                   <div class="form-group">
                     <label for="exampleInputEmail3">Quantity</label>
-                    <input type="text" class="form-control" id="exampleInputEmail3" placeholder="Quantity" name="quantity" required>
+                    <input type="text" class="form-control" id="exampleInputQuantity" placeholder="Quantity" name="quantity" required>
+                    <span id="quantityError" style="color: red;"></span>
+
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputPassword4">Price</label>
+                    <label for="exampleInputPrice">Price</label>
                     <input type="number" class="form-control" id="exampleInputPassword4" placeholder="Price" name="price" required>
+                    <span id="priceError" style="color: red;"></span>
+
                   </div>
                   <div class="form-group">
                     <label for="exampleSelectGender">Category</label>
-                    <select class="form-control" id="exampleSelectGender" name="category" required>
+                    <select class="form-control" id="categorySelect" name="category" required>
                       <% data.forEach((item) => { %>
                         <% if (item.status == 0) { %>
                           <option value="<%= item.productcategory %>">
                             <%= item.productcategory %>
                           </option>
+                          <span id="categoryError" style="color: red;"></span>
+
                         <% } %>
                       <% }); %>
                     </select>
@@ -35,6 +43,8 @@
                   <div class="form-group">
                     <label for="exampleTextarea1">Description</label>
                     <textarea class="form-control" id="exampleTextarea1" rows="4" name="description" required></textarea>
+                    <span id="desError" style="color: red;"></span>
+
                   </div>
                   <!-- <div class="form-group">
                     <label>File upload</label>
@@ -49,6 +59,8 @@
                    <div class="form-group">
                     <label for="images">Upload Images</label>
                     <input type="file" class="form-control-file" id="images" name="image"   multiple >
+                    <span id="image1Error" style="color: red;"></span>
+
                   </div> 
                   
                   
@@ -58,5 +70,71 @@
               </div>
             </div>
           </div>
-       
+       <script>
+        $(document).ready(function () {
+    $('#productForm').on('submit', function (event) {
+      var isValid = true;
+
+      // Validate Name field
+      var name = $('#exampleInputName1').val().trim();
+      if (name.length === 0) {
+        $('#nameError').text('Name is required').show();
+        isValid = false;
+      } else {
+        $('#nameError').hide();
+      }
+
+      var quantity = $('#exampleInputQuantity').val().trim();
+      if (parseInt(quantity) < 0) {
+        $('#quantityError').text('Quantity should be a non-negative number').show();
+        isValid = false;
+      } else if (quantity === ''  ){
+        $('#quantityError').text('provide quanitity').show();
+      }else{
+        $('#quantityError').hide();
+      }
+
+      var price = $('#exampleInputPrice').val().trim();
+      if (price.length === 0) {
+        $('#priceError').text('Name is required').show();
+        isValid = false;
+      }else if(price <1){
+        $('#priceError').text('price must be greater than 0').show();
+      isValid = false;
+      } else {
+        $('#priceError').hide();
+      }
+
+      var selectedCategory = $('#categorySelect').val();
+      if (!selectedCategory || selectedCategory === '') {
+        $('#categoryError').text('Please select a category').show();
+        isValid = false;
+      } else {
+        $('#categoryError').hide();
+      }
+      var selectedSubCategory = $('#subcategorySelect').val();
+      if (!selectedSubCategory || selectedSubCategory === '') {
+        $('#subcategoryError').text('Please select a Subcategory').show();
+        isValid = false;
+      } else {
+        $('#subcategoryError').hide();
+      }
+
+      var description = $('#exampleTextarea1').val().trim();
+      if (description.length === 0) {
+        $('#desError').text('Description is required').show();
+        isValid = false;
+      } else {
+        $('#desError').hide();
+      }
+
+     
+
+      if (!isValid) {
+        event.preventDefault(); 
+      }
+    });
+  });
+
+       </script>
          <%- include ('../admin/layouts/footer.ejs')-%>

@@ -29,7 +29,7 @@
           <div class="card" style="overflow: auto; max-height: 500px;">
             <div class="card-body">
               <h4 class="card-title"> SHOZEY Sales Report</h4>
-              <button id="download" class="btn btn-primary">Report Download</button>
+           <a href="/admin/downloadreport"> <button id="download" class="btn btn-primary">Report Download</button></a>   
               <div class="table-responsive" id="table">
                 <table class="table">
                   <thead>
@@ -92,7 +92,7 @@
         </div>
         <div class="container "
           style="max-width: 450px; margin: 0 auto; padding: 0; background-color: #000000; border: 0; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); text-align: right;">
-          <form action="/admin/salessort" method="post">
+          <form  onsubmit="return validateDates(event) "  action="/admin/salessort" method="post">
             <div style="display: inline-block;">
               <input type="date" name="datestart" id="dateInput1"
                 style="width: 100%; padding: 3px; border: 1px solid #ccc; border-radius: 0; height: auto;">
@@ -101,9 +101,9 @@
               <input type="date" name="dateend" id="dateInput2"
                 style="width: 100%; padding: 3px; border: 1px solid #ccc; border-radius: 5px; height: auto;">
             </div>
-            <button type="submit  " id="sortButton"
+            <button type="submit "  id="sortButton"
               style="background-color: #007BFF; color: #fff; border: none; border-radius: 5px; padding: 8px 15px; cursor: pointer;">
-              Sort
+              Filter
             </button>
             <ul id="dateList" style="list-style: none; padding: 0;"></ul>
           </form>
@@ -112,11 +112,21 @@
 
         
         <script>
-          const print = document.getElementById('download')
-          print.addEventListener('click', () => {
-            window.print();
-          })
-          
+         
+         function validateDates(event) {
+    var startDate = document.getElementById('dateInput1').value;
+    var endDate = document.getElementById('dateInput2').value;
+
+   
+    if (endDate < startDate) {
+       alert('End date cannot be earlier than the start date. Please select a valid date range.');
+      // Swal.fire("End date cannot be earlier than the start date. Please select a valid date range.");
+      event.preventDefault ()
+    }
+
+    
+    return true;
+  }
           
           var areaData = {
             labels: ["week7", "week6", "week5", "week4", "week3", "week2", "week1",],

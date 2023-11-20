@@ -5,18 +5,21 @@ const order = require('../models/orderModel');
 const coupon = require("../models/couponModel");
 const Categoryoffer = require('../models/categoryofferModel')
 const Productoffer = require('../models/productofferModel');
+let pdf = require("html-pdf");
+const ejs = require("ejs");
+const path = require("path");
 // const { render } = require('ejs');
 const sharp = require('sharp');
 const { render } = require('../router/userRouter');
 const data = {
-    email: "admin@gmail.com",
-    password: "12345"
+    email: process.env.ADMINEMAIL,
+    password: process.env.ADMINPASSWORD
 }
 
 //=================================== ADMIN LOGINPAGE =====================================//
 const adminlogin = async (req, res) => {
     try {
-
+        
         res.render('adminlogin');
     }
     catch (error) {
@@ -30,8 +33,8 @@ const adminlogin = async (req, res) => {
 const admin = async (req, res) => {
     try {
         if (req.body.email == data.email && req.body.password == data.password) {
-            req.session.adminId = data._id;
-            res.redirect('/admin/usermanagement');
+            req.session.adminId = data.email;
+            res.redirect('/admin/dashboard');
         }
         else if (req.body.email != data.email && req.body.password != data.password) {
             res.render('adminlogin', { error: "Invalid email & password" })
@@ -454,6 +457,47 @@ const salessort = async (req, res) => {
     }
 }
 
+const downloadreport = async (req, res) => {
+    try {
+        const orderdata = await order.find();
+        console.log("dijdfgokfgjoisoi");
+        ejs.renderFile(
+            path.join(__dirname, "../views/admin/", "report.ejs"),
+            {
+                orderdata,
+            },
+            (err, data) => {
+                if (err) {
+                    res.send(err);
+                } else {
+                    let options = {
+                        height: "11.25in",
+                        width: "8.5in",
+                        header: {
+                            height: "20mm",
+                        },
+                        footer: {
+                            height: "20mm",
+                        },
+                    };
+                    pdf.create(data, options).toFile("report.pdf", function (err, data) {
+                        if (err) {
+                            res.send(err);
+                        } else {
+                            const pdfpath = path.join(__dirname, "../report.pdf");
+                            res.sendFile(pdfpath);
+                        }
+                    });
+                }
+            }
+        );
+
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 //=================================== COUPON =====================================//
 
 const couponmanagement = async (req, res) => {
@@ -630,21 +674,21 @@ const categoryofferdata = async (req, res) => {
                 if (productcategorycount[i].discountamount > 0) {
                     if (discountamount < productcategorycount[i].discountamount) {
                         await product.updateOne({ _id: productid }, { $set: { discountamount: discountamount, Offerpercentage: offerpercentage, offername: "categoryoffer" } }, { upsert: true })
-                     
+
 
                     } else {
                         console.log("error");
-                        
+
 
                     }
                 } else {
                     await product.updateOne({ _id: productid }, { $set: { discountamount: discountamount, Offerpercentage: offerpercentage, offername: "categoryoffer" } }, { upsert: true })
-                  
+
                 }
 
 
             }
-            return res.json({ result:false});
+            return res.json({ result: false });
 
         }
     } catch (error) {
@@ -685,18 +729,18 @@ const deleteoffer = async (req, res) => {
     try {
         const id = req.body.id
         const categorys = await Categoryoffer.find({ _id: id })
-        
-       const productdata = await product.find({category:categorys[0].categoryname})    
-       console.log(productdata);
-        for(let i=0;i<productdata.length;i++){
-            if(productdata[i].offername =="categoryoffer"){
-                await product.updateOne({_id:productdata[i]},{$set:{offername:'',discountamount:0,Offerpercentage:0}})
 
-            }else{
-                
+        const productdata = await product.find({ category: categorys[0].categoryname })
+        console.log(productdata);
+        for (let i = 0; i < productdata.length; i++) {
+            if (productdata[i].offername == "categoryoffer") {
+                await product.updateOne({ _id: productdata[i] }, { $set: { offername: '', discountamount: 0, Offerpercentage: 0 } })
+
+            } else {
+
             }
         }
-        await Categoryoffer.deleteOne({_id:id});
+        await Categoryoffer.deleteOne({ _id: id });
         res.json({ result: true });
 
     } catch (error) {
@@ -774,51 +818,51 @@ const productofferdata = async (req, res) => {
     }
 };
 
-const deleteproductoffer = async(req,res)=>{
+const deleteproductoffer = async (req, res) => {
 
     try {
         const id = req.body.id;
-        const productoffer = await Productoffer.findOne({_id:id})
-        const productname = await product.findOne({productname:productoffer.productname});
-        if(productname.offername == 'Productoffer'){
-            await product.updateOne({productname:productoffer.productname},{$set:{offername:'',discountamount:0,Offerpercentage:0}})
-            await productoffer.deleteOne({_id:id});
-            res.json({result:true})
-        }else{
-            await productoffer.deleteOne({_id:id});
-            res.json({result:true})
+        const productoffer = await Productoffer.findOne({ _id: id })
+        const productname = await product.findOne({ productname: productoffer.productname });
+        if (productname.offername == 'Productoffer') {
+            await product.updateOne({ productname: productoffer.productname }, { $set: { offername: '', discountamount: 0, Offerpercentage: 0 } })
+            await productoffer.deleteOne({ _id: id });
+            res.json({ result: true })
+        } else {
+            await productoffer.deleteOne({ _id: id });
+            res.json({ result: true })
         }
     } catch (error) {
         console.log(error.message);
     }
 }
 
- const blockunblockproductoffer = async(req,res)=>{
-        try {
-            const id = req.body.id
-            const offerid =req.body.offerid
-            if(id==1){
-                await Productoffer.updateOne({_id:offerid},{$set:{status:1}})
-                res.json({result:true})
-            }else{
-                await Productoffer.updateOne({_id:offerid},{$set:{status:0}})
-                res.json({result:true})
-
-            }
-        } catch (error) {
-            console.log(error.message);
-        }
- }
-
- const editproductoffer = async(req,res)=>{
+const blockunblockproductoffer = async (req, res) => {
     try {
-        const productofferdata = await Productoffer.find() 
-        const productdata = await product.find()
-        res.render('editproductoffer',{productofferdata,productdata})
+        const id = req.body.id
+        const offerid = req.body.offerid
+        if (id == 1) {
+            await Productoffer.updateOne({ _id: offerid }, { $set: { status: 1 } })
+            res.json({ result: true })
+        } else {
+            await Productoffer.updateOne({ _id: offerid }, { $set: { status: 0 } })
+            res.json({ result: true })
+
+        }
     } catch (error) {
         console.log(error.message);
     }
- }
+}
+
+const editproductoffer = async (req, res) => {
+    try {
+        const productofferdata = await Productoffer.find()
+        const productdata = await product.find()
+        res.render('editproductoffer', { productofferdata, productdata })
+    } catch (error) {
+        console.log(error.message);
+    }
+}
 
 module.exports = {
     adminlogin,
@@ -844,6 +888,7 @@ module.exports = {
     dashboard,
     salesreport,
     salessort,
+    downloadreport,
     couponmanagement,
     addcoupon,
     coupondata,

@@ -26,11 +26,11 @@ const checkadminisLogout = async (req, res, next) => {
       next()
     }
     else {
-      res.redirect('/admin/usermanagement');
+      res.redirect('/admin/dashboard');
     }
   }
   catch (error) {
-    rs
+   
     console.log(error);
   }
 }
