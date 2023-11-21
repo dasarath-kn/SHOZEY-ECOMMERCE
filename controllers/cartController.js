@@ -79,8 +79,13 @@ const cartAdding = async (req, res) => {
                 }
                 else {
                     var productprice
+                    
                     if(data.discountamount){
-                        productprice =data.discountamount
+                        if(data.offerstatus==0){
+                            productprice =data.discountamount
+                        }else{
+                            productprice =data.price
+                        }
                     }else{
                         productprice =data.price
                     }

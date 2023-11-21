@@ -39,10 +39,7 @@
 									<a class="nav-link" id="tab-address-link" data-toggle="tab" href="#tab-address"
 										role="tab" aria-controls="tab-address" aria-selected="false">Adresses</a>
 								</li>
-								<li class="nav-item">
-									<a class="nav-link" id="tab-account-link" data-toggle="tab" href="#tab-account"
-										role="tab" aria-controls="tab-account" aria-selected="false">Account Details</a>
-								</li>
+								<!-- Z -->
 								<li class="nav-item">
 									<a class="nav-link" href="/logout">Sign Out</a>
 								</li>
@@ -170,13 +167,23 @@
 														  </button>
 														</div>
 														<div class="modal-body">
-															<form action="" method="">
+															<form action="/newPassword" method="post">
+																<div class="form-group row">
+																	<div class="col-sm-9">
+																		<h5>Email :</h5>
+																		<input type="text" class="form-control"
+																			id="Email" name="Email" value=""
+																			placeholder="Email" required>
+																		<span id="EmailError" style="color: red;"></span>
+	
+																	</div>
+																</div>
 																<div class="form-group row">
 																	<div class="col-sm-9">
 																		<h5>Current password :</h5>
-																		<input type="text" class="form-control"
-																			id="firstname" name="firstname" value=""
-																			placeholder="" required>
+																		<input type="password" class="form-control"
+																			id="CurrentPassword" name="CurrentPassword" value=""
+																			placeholder="CurrentPassword" required>
 																		<span id="nameError" style="color: red;"></span>
 	
 																	</div>
@@ -185,10 +192,10 @@
 																<div class="form-group row">
 																	<div class="col-sm-9">
 																		<h5>New password:</h5>
-																		<input type="text" class="form-control" id="lastname"
-																			name="lastname" value=""
-																			placeholder="" required>
-																		<span id="lastnameError"
+																		<input type="password" class="form-control" id="NewPassword"
+																			name="NewPassword" value=""
+																			placeholder="NewPassword" required>
+																		<span id="NewPassword"
 																			style="color: red;"></span>
 	
 	
@@ -199,21 +206,23 @@
 																<div class="form-group row">
 																	<div class="col-sm-9">
 																		<h5>Confirm new password</h5>
-																		<input type="text" class="form-control" id="Email"
-																			name="Email" placeholder="" value=""
+																		<input type="password" class="form-control" id="ConfirmNewPassword"
+																			name="ConfirmNewPassword" placeholder="ConfirmNewPassword" value=""
 																			required>
-																		<span id="addressError" style="color: red;"></span>
+																		<span id="ConfirmNewPassword" style="color: red;"></span>
 	
 																	</div>
 																</div>		
+															
 																<div class="form-group row">
 																	<!-- Additional fields if needed -->
 																</div>
 																<div class="form-group">
-																	<button onclick="editprofile()" type="button"
+																	<button onclick="return confirm('Are you sure? Do you want to Change your password')" type="submit"
 																		class=" btn btn-primary rounded submit px-3">Submit</button>
 																</div>
 															</form>
+															
 	
 														</div>
 														
@@ -474,20 +483,20 @@
 									</div><!-- End .row -->
 								</div><!-- .End .tab-pane -->
 
-								<div class="tab-pane fade" id="tab-account" role="tabpanel"
+								<!-- <div class="tab-pane fade" id="tab-account" role="tabpanel"
 									aria-labelledby="tab-account-link">
 									<form action="/newPassword" method="post">
 										<div class="row">
 											<div class="col-sm-6">
 												<label>First Name *</label>
 												<input type="text" class="form-control" required>
-											</div><!-- End .col-sm-6 -->
+											</div>
 
 											<div class="col-sm-6">
 												<label>Last Name *</label>
 												<input type="text" class="form-control" required>
-											</div><!-- End .col-sm-6 -->
-										</div><!-- End .row -->
+											</div>
+										</div>
 
 										<label>Display Name *</label>
 										<input type="text" class="form-control" required>
@@ -515,7 +524,7 @@
 											<i class="icon-long-arrow-right"></i>
 										</button>
 									</form>
-								</div><!-- .End .tab-pane -->
+								</div>.End .tab-pane -->
 							</div>
 						</div><!-- End .col-lg-9 -->
 					</div><!-- End .row -->

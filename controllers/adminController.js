@@ -669,7 +669,7 @@ const categoryofferdata = async (req, res) => {
 
             for (let i = 0; i < productcategorycount.length; i++) {
                 const reducedamount = (productcategorycount[i].price * offerpercentage) / 100;
-                const discountamount = productcategorycount[i].price - reducedamount;
+                const discountamount =Math.round( productcategorycount[i].price - reducedamount);
                 const productid = productcategorycount[i]._id
                 if (productcategorycount[i].discountamount > 0) {
                     if (discountamount < productcategorycount[i].discountamount) {
@@ -711,10 +711,13 @@ const blockunblockoffer = async (req, res) => {
         const offerid = req.body.offerid;
         if (id == 1) {
             await Categoryoffer.updateOne({ _id: offerid }, { $set: { status: 1 } })
+            const products = await product.updateOne({offername:'categoryoffer'},{$set:{offerstatus:1}},{upsert:true})
             res.json({ result: true })
 
         } else {
             await Categoryoffer.updateOne({ _id: offerid }, { $set: { status: 0 } })
+            const products = await product.updateOne({offername:'categoryoffer'},{$set:{offerstatus:0}},{upsert:true})
+
             res.json({ result: true })
 
         }
@@ -791,7 +794,7 @@ const productofferdata = async (req, res) => {
 
             if (productdata.discountamount > 0) {
                 const amount = productdata.price * offerpercentage / 100;
-                const reducedamount = productdata.price - amount;
+                const reducedamount = Math.round(productdata.price - amount);
 
                 if (reducedamount < productdata.discountamount) {
                     await product.updateOne(
@@ -803,7 +806,7 @@ const productofferdata = async (req, res) => {
                 }
             } else {
                 const amount = productdata.price * offerpercentage / 100;
-                const reducedamount = productdata.price - amount;
+                const reducedamount = Math.round(productdata.price - amount);
                 await product.updateOne(
                     { productname: productname },
                     { $set: { discountamount: reducedamount, Offerpercentage: offerpercentage, offername: "Productoffer" } },
@@ -841,11 +844,16 @@ const blockunblockproductoffer = async (req, res) => {
     try {
         const id = req.body.id
         const offerid = req.body.offerid
+        const productoffer = await Productoffer.findOne({_id:offerid});
         if (id == 1) {
             await Productoffer.updateOne({ _id: offerid }, { $set: { status: 1 } })
+            const products = await product.updateOne({offername:'Productoffer'},{$set:{offerstatus:1}},{upsert:true});
+            
             res.json({ result: true })
         } else {
             await Productoffer.updateOne({ _id: offerid }, { $set: { status: 0 } })
+            const products = await product.updateOne({offername:'Productoffer'},{$set:{offerstatus:0}},{upsert:true});
+
             res.json({ result: true })
 
         }

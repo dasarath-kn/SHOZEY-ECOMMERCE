@@ -90,7 +90,23 @@
                                 <div class="col-6 col-md-4 col-lg-4">
                                     <div class="product product-7 text-center">
                                         <figure class="product-media">
-                                            <span class="product-label label-new">New</span>
+                                            <% if(productdata[i].offername =="categoryoffer"){%>
+                                                <% if(productdata[i].offerstatus==0){%>
+                                                    <span class="product-label label-primary">Sale</span>
+                                                    <span class="product-label label-sale"> <%= productdata[i].Offerpercentage %>% off</span>
+                                                    <%}else{%>
+                                                        <%}%>
+                                                <%}else if(productdata[i].offername =="Productoffer"){%>
+                                                    <% if(productdata[i].offerstatus==0){%>
+                                                        
+                                                        <span class="product-label label-primary">Sale</span>
+                                                        <span class="product-label label-sale"> <%= productdata[i].Offerpercentage %>% off</span>
+                                                        <%}
+                                                        else{%>
+                                                            
+                                                            <%}%>
+                                                    <%}else{%>
+                                                        <%}%>
                                             <a href="product.html">
                                                 <img src="/productimages/<%= productdata[i].image[0]%>" alt="Product image"
                                                     class="product-image">
@@ -126,7 +142,24 @@
                                             <h3 class="product-title"><a href="/productdetails?id=<%= productdata[i]._id %>"><%= productdata[i].productname%>
                                                     skirt</a></h3><!-- End .product-title -->
                                             <div class="product-price">
-                                                Rs.<%= productdata[i].price%>
+                                                <% if (productdata[i].offername == "categoryoffer") { %>
+                                                    <% if (productdata[i].offerstatus == 0) { %>
+                                                        <span class="new-price">Rs.<%= productdata[i].discountamount %></span>
+                                                        <span class="original-price"><s>Rs.<%= productdata[i].price %></s></span>
+                                                    <% } else { %>
+                                                        <span class="original-price">Rs.<%= productdata[i].price %></span>
+                                                    <% } %>
+                                                <% } else if (productdata[i].offername == "Productoffer") { %>
+                                                    <% if (productdata[i].offerstatus == 0) { %>
+                                                        <span class="new-price">Rs.<%= productdata[i].discountamount %></span>
+                                                        <span class="original-price"><s>Rs.<%= productdata[i].price %></s></span>
+                                                    <% } else { %>
+                                                        <span class="original-price">Rs.<%= productdata[i].price %></span>
+                                                    <% } %>
+                                                <% } else { %>
+                                                <% } %>
+                                                
+                                                
                                             </div><!-- End .product-price -->
                                             <div class="ratings-container">
                                                 <div class="ratings">

@@ -40,6 +40,10 @@ const product=  mongoose.Schema({
     },
     offername:{
         type:String
+    },
+    offerstatus:{
+        type:Number,
+        default:0
     }
 
    

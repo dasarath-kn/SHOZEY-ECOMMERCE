@@ -1,5 +1,6 @@
 <%- include('../user/layout/header.ejs') -%>
 
+
     <main class="main">
         <div class="container">
             <div class="intro-slider-container slider-container-ratio mb-2">
@@ -12,7 +13,7 @@
                                     srcset="assets/images/demos/demo-10/slider/slide-1-480w.jpg">
                                 <img src="assets/images/demos/demo-10/slider/slide-1.jpg" alt="Image Desc">
                             </picture>
-                        </figure><!-- End .slide-image -->
+                        </figure>
 
                         <div class="intro-content">
                             <h3 class="intro-subtitle">Deals and Promotions</h3><!-- End .h3 intro-subtitle -->
@@ -318,9 +319,14 @@
                                                 <% if (item.discountamount) { %>
                                                     
                                                     <% if(item.offername=="categoryoffer"){%>
-
+                                                            <% if(item.offerstatus==0){%>
                                                                 <span class="new-price">Rs.<%= item.discountamount %></span>
                                                                 <span class="original-price"><s>Rs.<%= item.price %></s></span>
+                                                                
+                                                                <%}else{%>
+                                                                    <span class="original-price">Rs.<%= item.price %></span>
+
+                                                                    <%}%>
                                                               
                                                                    
                                                             
@@ -926,18 +932,21 @@
                                 <div class="product product-3 text-center">
                                     <figure class="product-media">
                                         <% if(products[i].offername=="categoryoffer") {%>
-                                            <% for(let i=0;i<Categoryofferdata.length;i++){%>
-                                                <% if(Categoryofferdata[i].status==0){%>
+                                           
+                                                <% if(products[i].offerstatus==0){%>
                                                     <span class="product-label label-primary">Sale</span>
-                                                    <span class="product-label label-sale"><%= Categoryofferdata[i].Offerpercentage %>% off</span>
-                                                    <%}else{%><%}%>
-                                                <%}%>
+                                                    <span class="product-label label-sale"><%= products[i].Offerpercentage %>% off</span>
+                                                    <%}else{%>
+                                                        <%}%>
+                                              
                                           
                                             <%}else if(products[i].offername =="Productoffer"){%>
-                                            <% for(let i=0 ;i<Productofferdata.length;i++){%>
-                                                <span class="product-label label-primary">Sale</span>
-                                                    <span class="product-label label-sale"><%= Productofferdata[i].Offerpercentage %>% off</span>
-                                                <%}%>
+                                                <% if(products[i].offerstatus==0){%>
+                                                    <span class="product-label label-primary">Sale</span>
+                                                        <span class="product-label label-sale"><%= products[i].Offerpercentage %>% off</span>
+
+                                                    <%}
+                                                    else{%><%}%>
                                                 <%}
                                             else{%>
                                                 <%}%>
@@ -967,12 +976,22 @@
                                         </h3><!-- End .product-title -->
                                         <div class="product-price">
                                             <% if(products[i].offername =="categoryoffer"){%>
-                                                
-                                                <span class="new-price">Rs.<%= products[i].discountamount %></span>
-                                                <span class="old-price">Rs.<%= products[i].price%></span>
-                                                <%}else if(products[i].price =="Productoffer"){%>
+                                                <% if(products[i].offerstatus==0){%>
                                                     <span class="new-price">Rs.<%= products[i].discountamount %></span>
                                                     <span class="old-price">Rs.<%= products[i].price%></span>
+                                                    <%}
+                                                    else{%>
+                                                        <span class="new-price">Rs.<%= products[i].price%></span>
+
+                                                        <%}%>
+                                                <%}else if(products[i].offername =="Productoffer"){%>
+                                                    <% if(products[i].offerstatus==0){%>
+                                                    <span class="new-price">Rs.<%= products[i].discountamount %></span>
+                                                    <span class="old-price">Rs.<%= products[i].price%></span>
+                                                    <%}else{%>
+                                                        <span class="new-price">Rs.<%= products[i].price%></span>
+
+                                                        <%}%>
                                                     <%}
                                                     else{%>
                                                         <span class="new-price">Rs.<%= products[i].price%></span>
@@ -1181,6 +1200,30 @@
         </div><!-- End .blog-posts -->
     </main><!-- End .main -->
     <script>
+// var slideIndex = 0;
+
+
+// function slideshow() {
+//     var i;
+//     var slides = document.getElementsByClassName('intro-slide');
+    
+//     for (i = 0; i < slides.length; i++) {
+//         slides[i].style.display = 'none';
+//     }
+
+//     slideIndex++;
+//     if (slideIndex > slides.length) {
+//         slideIndex = 1;
+//     }
+
+//     slides[slideIndex - 1].style.display = 'block';
+
+//     setTimeout(slideshow, 1000); 
+// }
+// slideshow();
+
+
+
         function toAddCart(id) {
             console.log("add to cart function started");
             $.ajax({
@@ -1285,4 +1328,4 @@
         }
     </script>
 
-    <%- include('../user/layout/footer.ejs')-%>
+    <%- include('../user/layout/footers.ejs')-%>

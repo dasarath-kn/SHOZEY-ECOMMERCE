@@ -140,7 +140,7 @@ const validation = async (req, res) => {
             }
 
         } else if (check != req.body.password) {
-            res.render('signin', { message: "Invalid password and Email", user: req.session.name, cartdata })
+            res.render('signin', { message: "Invalid Email and password", user: req.session.name, cartdata })
         }
         else {
             res.render('signin', { message: "Invalid mail", user: req.session.name, cartdata });
@@ -160,7 +160,7 @@ const sign = async (req, res) => {
     try {
         const id = req.session.userId
         const cartdata = await cart.find({ userid: id }).populate("items.productid")
-        res.render('signup', { user: req.session.name, cartdata });
+        res.render('signup', { user: req.session.name, cartdata ,message:" "});
     }
     catch (error) {
         console.log(error.message);
@@ -174,10 +174,14 @@ const insertdata = async (req, res) => {
     try {
         const referalcode = req.body.referalcode
         const emaildata = req.body.email;
+        const id = req.session.userId;
+
         const item = await user.findOne({ email: emaildata });
+        const cartdata = await cart.find({ userid: id }).populate("items.productid")
+
         if (item) {
             console.log("Already exist");
-            res.redirect('/signup');
+            res.render('signup',{ user: req.session.name, cartdata,message:"User already exist"});
         }
         else {
             const referalcode = req.body.referalcode
@@ -308,7 +312,6 @@ const verifymail = async (req, res) => {
         // console.log("user enterd otp"+req.body.otp);
 
         if (req.body.otp == otpsend) {
-            console.log("helloooooooooooooooooooooooo");
             const id = req.query.id
             console.log(id);
             const updateinfo = await user.updateOne({ _id: req.query.id }, { $set: { is_verified: 1 } });
@@ -363,7 +366,9 @@ const shop = async (req, res) => {
         const categorydata = await category.find()
         const lowtohigh = req.query.lowtohigh;
         const hightolow = req.query.hightolow
-        console.log(hightolow);
+        const Categoryofferdata = await Categoryoffer.find()
+        const Productofferdata = await Productoffer.find()
+
         var val=0
         if(lowtohigh){
             val=1
@@ -380,7 +385,7 @@ const shop = async (req, res) => {
                 const productdata = await product.find({category:categorys}).sort({price:val})
                 console.log(productdata);
             var products =0
-            res.render('shop', { user: req.session.name, cartdata, productdata,products, sessionid, categorydata ,pagecount,categorys})
+            res.render('shop', { user: req.session.name, cartdata, productdata,products, sessionid, categorydata ,pagecount,categorys,Categoryofferdata,Productofferdata})
          }
         else{
             
@@ -395,19 +400,19 @@ const shop = async (req, res) => {
             const productdata = await product.find().skip(i*6).limit(6).sort({price:val})
             i++
             console.log("count",i);
-                res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata ,pagecount,categorys})
+                res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata ,pagecount,categorys,Categoryofferdata,Productofferdata})
                 
 
         }else if(id==-1) {
             
             const productdata = await product.find().limit(6).sort({price:val})
 
-            res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata,pagecount,categorys})
+            res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata,pagecount,categorys,Categoryofferdata,Productofferdata})
         }
         else {
             const productdata = await product.find().limit(6).sort({price:val})
 
-            res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata,pagecount,categorys})
+            res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata,pagecount,categorys,Categoryofferdata,Productofferdata})
         }
     }
     } catch (error) {

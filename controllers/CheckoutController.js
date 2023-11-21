@@ -229,7 +229,7 @@ const cancelorder = async (req, res) => {
           );
           const productdata = await product.updateOne({_id:productid},{$inc:{quantity:count}});
           console.log(data);
-        res.json({result:true})
+            res.json({result:true})
         }else{
             console.log("Status is not changed ");
         }
