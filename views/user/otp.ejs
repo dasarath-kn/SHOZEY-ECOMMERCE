@@ -1,112 +1,237 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OTP Verification</title>
-    <!-- Add Bootstrap CSS link here -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            background-color: #f0f0f0;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            max-width: 500px; /* Increased container width */
-        }
-        .card {
-            border: none;
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3); /* Increased box shadow */
-            border-radius: 20px; /* Increased border radius */
-        }
-        .card-header {
-            background-color: rgb(243, 243, 243);
-            color: #fff;
-            text-align: center;
-            border-radius: 20px 20px 0 0; /* Adjusted border radius */
-            padding: 15px; /* Increased padding */
-        }
-        .form-group {
-            margin-bottom: 30px; /* Increased margin */
-        }
-        .form-control {
-            border: 2px solid #2c3e50;
-            border-radius: 10px; /* Increased border radius */
-            font-size: 18px; /* Increased font size */
-            padding: 10px; /* Increased padding */
-        }
-        label {
-            font-weight: bold;
-            font-size: 18px; /* Increased font size */
-        }
-        .btn-primary {
-            background-color: #e3b04b;
-            border: none;
-            border-radius: 10px; /* Increased border radius */
-            font-size: 20px; /* Increased font size */
-            padding: 15px 20px; /* Increased padding */
-        }
-        .btn-primary:hover {
-            background-color: rgb(193, 193, 193);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OTP Verification</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff; /* Black background color */
+      color: #fff; /* Text color */
+      display: flex;
+      justify-content: center;
+      /*align-items: center;*/
+      height: 100vh;
+      margin: 0;
+    }
+
+    .otp-container {
+      background-color: #fff; /* White background */
+      padding: 30px;
+      text-align: center;
+      animation: fadeIn 0.5s ease-in-out;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      height: 400px;
+      margin-bottom: 10px;
+      margin-top: 10px;
+    }
+    .login-container{
+      background-color: #fff; /* White background */
+      padding: 20px;
+      text-align: center;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      height: 50px;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    h2 {
+      color: #000; /* Heading color */
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 16px;
+      color: #777; /* Subtext color */
+      margin-bottom: 30px;
+    }
+
+    .otp-field {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .otp-input {
+      width: 40px; /* Adjust width as needed */
+      height: 40px; /* Adjust height as needed */
+      font-size: 24px;
+      text-align: center;
+      margin: 0 5px; /* Adjust margin as needed */
+      border: 2px solid #000; /* Black border */
+      border-radius: 5px;
+      color: #000; /* Black text color */
+      outline: none;
+
+    }
+
+    .otp-input:focus {
+      border-color: #333; /* Darker border on focus */
+    }
+
+
+    .submit-btn {
+      background-color:#e3b04b; /* Black button background color */
+      color: #fff; /* Button text color */
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      cursor: pointer;
+      width: 200px;
+      transition: background-color 0.3s ease-in-out;
+    }
+    /*.alert {*/
+    /*  padding: 10px;*/
+    /*  !*border: 1px solid #f00; !* Red border for alerts *!*!*/
+    /*}*/
+
+    .alert.alert-danger {
+      /*background-color: #f8d7da; !* Red background color for danger alerts *!*/
+      border-color: #f5c6cb; /* Red border color for danger alerts */
+      color: #ff0018; /* Text color for danger alerts */
+    }
+
+    .submit-btn:hover {
+      background-color: #333; /* Button background color on hover */
+    }
+    /* Custom input styles */
+    .custom-input {
+      width: 200px; /* Adjust the width as needed */
+      height: 30px; /* Adjust the height as needed */
+      font-size: 18px; /* Adjust the font size as needed */
+    }
+
+
+    .timer {
+      font-size: 18px;
+      color: #000; /* Timer text color */
+    }
+    .timer{
+      margin-top: 30px;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="card">
-            <div class="card-header">
-                <h2 style="color: black;">OTP Verification</h2> <!-- Increased header font size -->
-            </div>
-            <div class="card-body">
-                <form action="/verifymail?id=<%= userid %>" method="post">
-                    <div class="form-group">
-                        <label for="otp">Enter OTP</label>
-                        <input type="text" class="form-control" id="otp" placeholder="Enter OTP" name="otp" required>
-                        <span id="otpError" style="color: red;"></span>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block">Verify OTP</button>
-                </form>
-                
-                <form action="/resendotp?id=<%= userid %>" >
-                    <button type="submit" class="btn btn-light btn-block">Resend OTP</button>
-                </form>
-            </div>
-        </div>
+<div class="main-div " style="display: flex;flex-direction: column;justify-content: center;">
+
+
+<div class="otp-container ">
+  <img src="assets/images/Shozey.png" width="150" height="100">
+  <h2>Just one more step</h2>
+  <% if(message){%>
+    <span id="er2" style="color: rgb(241, 7, 7); text-align: center"><%= message %></span>
+    <%}
+    else{%><%}%>
+  <p>Please enter the 6-digit code sent to your Email.</p>
+
+  <form id="otpForm" action="/verifymail?id=<%= userid %>" method="post" >
+   
+    <div class="otp-field form-outline form-white mb-4">
+      <input type="text" maxlength="6" class="form-control custom-input" name="otp" placeholder="Enter your otp" required/>
     </div>
+    <button class="submit-btn" >
+      Confirm
+    </button>
+  </form>
+  <br>
+  <form action="/resendotp?val=<%= userid %>" id="resend" method="post" style="display: none;">
+    <button class="submit-btn" id="resendBtn">
+      Resend OTP
+    </button>
+</form>
+<div class="timer"><span id="countdown"></span>
+</div>
+</div>
+<div class="login-container  " style="color:#000000">
+<h5>
+  Have an account?<a href="/signin">Log in</a>
+</h5>
+</div>
+</div>
 
-    <script>
-     const otp =   document.getElementById('otp');
-     otp.addEventListener("input",otpvalid)
-     function otpvalid () {
-        const otpdata = document.getElementById('otp').value;
-        const otpformat = "<%= otpnumber %>"
 
-        if(otpdata.trim()===""){
-            document.getElementById("otpError").innerHTML = "Enter the otp"
-            otp.setCustomValidity("Enter the otp");
+<script>
+let timerInterval; // Declare a variable to hold the timer interval
+
+// Function to start the timer
+function startTimer(duration, display) {
+  let timer = duration, minutes, seconds;
+  timerInterval = setInterval(function () {
+    minutes = parseInt(timer / 60, 10);
+    seconds = parseInt(timer % 60, 10);
+
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+    display.textContent = minutes + ":" + seconds;
+
+    if (--timer < 0) {
+      timer = duration;
+      display.textContent = "00:00"; // Display 00:00 when the timer expires
+      clearInterval(timerInterval); // Stop the timer
+      resend.style.display = "block"; // Show the resend button
+    }
+  }, 1000);
+}
+
+// Set the timer duration (in seconds)
+const timerDuration = 60;
+
+// Start the timer when the page loads
+window.onload = function () {
+  const display = document.querySelector("#countdown");
+  startTimer(timerDuration, display);
+};
+</script>
+<!-- <script>
+document.querySelector("form").addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  let formData = new FormData(this);
+  let xhr = new XMLHttpRequest();
+
+  xhr.open("POST", "/registration/otpRegistrationValidation", true);
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+      if (xhr.status === 200) {
+        // Handle successful response
+        // For instance, display a success message or redirect the user
+        let response = JSON.parse(xhr.responseText);
+        if (response.message === "success") {
+          // Display success message or redirect the user
+          window.location.href = "/main/login?registration=success";
         }
-        else{
-            if(!otpdata.match(otpformat)){
-                document.getElementById("otpError").innerHTML = "Invalid otp entered "
-                otp.setCustomValidity("Invalid otp entered");
-            }
-            else{
-                document.getElementById('otpError').innerHTML = " "
-                otp.setCustomValidity("");
+      } else {
+        // Handle error response
+        // For instance, display an error message
+        let response = JSON.parse(xhr.responseText);
+        if (response.message === "Incorrect OTP. Please try again.") {
+          // Display error message
+          let errorDiv = document.querySelector(".alert-danger");
+          errorDiv.textContent = response.message;
+          errorDiv.style.display = "block";
         }
-        
-     }
-    }8
+      }
+    }
+  };
 
-     
-        </script>
-    <!-- Add Bootstrap JS and jQuery scripts here -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+  xhr.send(formData); // Send the form data via AJAX
+});
+</script> -->
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+

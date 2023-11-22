@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification</title>
+    <!-- Add Bootstrap CSS link here -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            max-width: 500px; /* Increased container width */
+        }
+        .card {
+            border: none;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3); /* Increased box shadow */
+            border-radius: 20px; /* Increased border radius */
+        }
+        .card-header {
+            background-color: rgb(243, 243, 243);
+            color: #fff;
+            text-align: center;
+            border-radius: 20px 20px 0 0; /* Adjusted border radius */
+            padding: 15px; /* Increased padding */
+        }
+        .form-group {
+            margin-bottom: 30px; /* Increased margin */
+        }
+        .form-control {
+            border: 2px solid #2c3e50;
+            border-radius: 10px; /* Increased border radius */
+            font-size: 18px; /* Increased font size */
+            padding: 10px; /* Increased padding */
+        }
+        label {
+            font-weight: bold;
+            font-size: 18px; /* Increased font size */
+        }
+        .btn-primary {
+            background-color: #e3b04b;
+            border: none;
+            border-radius: 10px; /* Increased border radius */
+            font-size: 20px; /* Increased font size */
+            padding: 15px 20px; /* Increased padding */
+        }
+        .btn-primary:hover {
+            background-color: rgb(193, 193, 193);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2 style="color: black;">OTP Verification</h2> <!-- Increased header font size -->
+            </div>
+            <div class="card-body">
+                <form action="/verifymail?id=<%= userid %>" method="post">
+                    <div class="form-group">
+                        <label for="otp">Enter OTP</label>
+                        <input type="text" class="form-control" id="otp" placeholder="Enter OTP" name="otp" required>
+                        <span id="otpError" style="color: red;"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Verify OTP</button>
+                </form>
+                
+                <form action="/resendotp?id=<%= userid %>" >
+                    <button type="submit" class="btn btn-light btn-block">Resend OTP</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+     const otp =   document.getElementById('otp');
+     otp.addEventListener("input",otpvalid)
+     function otpvalid () {
+        const otpdata = document.getElementById('otp').value;
+        const otpformat = "<%= otpnumber %>"
+
+        if(otpdata.trim()===""){
+            document.getElementById("otpError").innerHTML = "Enter the otp"
+            otp.setCustomValidity("Enter the otp");
+        }
+        else{
+            if(!otpdata.match(otpformat)){
+                document.getElementById("otpError").innerHTML = "Invalid otp entered "
+                otp.setCustomValidity("Invalid otp entered");
+            }
+            else{
+                document.getElementById('otpError').innerHTML = " "
+                otp.setCustomValidity("");
+        }
+        
+     }
+    }8
+
+     
+        </script>
+    <!-- Add Bootstrap JS and jQuery scripts here -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

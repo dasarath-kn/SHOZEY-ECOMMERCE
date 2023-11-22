@@ -87,6 +87,102 @@ const register = async (req, res) => {
 
 }
 
+const forgetpassword = async(req,res)=>{
+    try {
+        const id = req.session.userId;
+        const cartdata = await cart.find({ userid: id }).populate("items.productid")
+
+
+        res.render('forgetpassword',{ message: "", user: req.session.name, cartdata })
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+const forgetpasswordcheck =async(req,res)=>{
+    try {
+        const email = req.body.email
+        const userdata = await user.findOne({email:email});
+        const id = req.session.userId;
+        const cartdata = await cart.find({ userid: id }).populate("items.productid")
+
+        if(userdata){
+            const name = userdata.name
+            const _id = userdata._id
+            sendVerifyMail(name, req.body.email);
+            const otpnumber = items.otp
+            res.render('forgetpasswordotp', { message:" ",userid: _id, otpnumber })
+
+        
+        }
+        else{
+            res.render('forgetpassword',{message:"Email not found",user:req.session.name,cartdata})  
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const forgetpasswordotpVerify = async(req,res)=>{
+    try {
+        console.log("hfgfhyfh");
+        const id = req.query.id
+        const otp = req.body.otp
+        if(otp ==otpsend){
+           
+            const _id = req.session.userId;
+            const cartdata = await cart.find({ userid: _id }).populate("items.productid")
+            res.render('newpassword',{ message: "", user: req.session.name, cartdata,id })
+        }else{
+            res.render('forgetpasswordotp',{ userid: _id,message:"Wrong otp" });
+        }
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+
+
+
+
+
+const newpasswordpage = async(req,res)=>{
+    try {
+        const _id = req.session.userId;
+        console.log(_id);
+        const cartdata = await cart.find({ userid: _id }).populate("items.productid")
+        res.render('newpassword',{message:"Password is not match", user: req.session.name, cartdata,_id})
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const newpassword = async(req,res)=>{
+    try {
+        console.log("vhjghjghghjhj");
+        const id =req.query.id
+        const password =req.body.password;
+        const confirmpassword = req.body.confirmpassword
+        console.log(password,confirmpassword,id);
+        if(password == confirmpassword){
+            const newpassword = await securepassword(confirmpassword);
+            console.log(newpassword);
+           const updatepassword= await user.updateOne({_id:id},{$set:{password:newpassword}});
+         
+          res.redirect('/signin');
+        }else{
+            const _id = req.session.userId;
+            const cartdata = await cart.find({ userid: _id }).populate("items.productid")
+           
+             res.render('newpassword',{ message: "Password is not match", user: req.session.name, cartdata,id })
+        }
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 //=================================== PRODUCT DETAILS =====================================//
 
 const productdetails = async (req, res) => {
@@ -128,9 +224,8 @@ const validation = async (req, res) => {
                     const _id = username._id
                     sendVerifyMail(name, req.body.email);
                     const otpnumber = items.otp
-                    res.render('otp', { userid: _id, otpnumber })
+                    res.render('otp', { userid: _id, otpnumber,message:"" })
 
-                    res.redirect('/cart')
                 }
                 else {
 
@@ -242,7 +337,8 @@ const insertdata = async (req, res) => {
                 email2 = req.body.email
                 firstname = req.body.firstname
                 const otpnumber = items.otp
-                res.render('otp', { userid: data._id, otpnumber })
+               
+                res.render('otp', { userid: data._id, otpnumber,userid: userdatas._id,message:"" })
 
             } else {
                 res.redirect('/signup');
@@ -310,16 +406,17 @@ const verifymail = async (req, res) => {
     try {
         // console.log("curent otp"+otpsend);
         // console.log("user enterd otp"+req.body.otp);
-
-        if (req.body.otp == otpsend) {
-            const id = req.query.id
-            console.log(id);
-            const updateinfo = await user.updateOne({ _id: req.query.id }, { $set: { is_verified: 1 } });
+        console.log("gjgsgxgsjx");
+        const id = req.query.id
+        console.log(id);
+        const otp =req.body.otp
+        if ( otp== otpsend) {
+            const updateinfo = await user.updateOne({ _id: id }, { $set: { is_verified: 1 } });
 
             console.log(updateinfo);
             res.redirect('/signin')
         } else {
-            console.log("Not verified");
+            res.render('otp',{ userid: id,message:"Wrong otp" });
         }
     }
 
@@ -332,10 +429,12 @@ const verifymail = async (req, res) => {
 //=================================== RESEND OTP =====================================//
 const resendOTP = async (req, res) => {
     try {
+        const id = req.query.val
+        console.log(id);
         otpsend = await Math.floor(10000 + Math.random() * 90000);
         console.log(otpsend)
         sendVerifyMail(nameResend, email2);
-        res.render('otp', { userid: data._id });
+        res.render('otp', {message:"Your new otp has been sented to your registered mail" ,userid:id });
 
     }
 
@@ -467,7 +566,7 @@ const pricesort = async (req, res) => {
 const categorysort = async (req, res) => {
 
     try {
-        console.log("uiujhhjjh");
+       
         const id = req.session.id
         const categorys = req.query.category
         const categories = req.query.categories
@@ -533,6 +632,11 @@ const logout = async (req, res) => {
 module.exports = {
     register,
     insertdata,
+    forgetpassword,
+    forgetpasswordcheck,
+    forgetpasswordotpVerify,
+    newpasswordpage,
+    newpassword,
     otp,
     verifymail,
     home,

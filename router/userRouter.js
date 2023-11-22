@@ -28,13 +28,20 @@ router.get('/home', auth.is_Login, usercontroller.home)
 
 router.post('/login',auth.is_Logout, usercontroller.validation);
 router.get('/signin',auth.is_Logout,usercontroller.register);
+router.get('/forgetpassword',usercontroller.forgetpassword);
+router.post('/forgetpasswordcheck',usercontroller.forgetpasswordcheck);
+router.post('/forgetpasswordotpVerify',usercontroller.forgetpasswordotpVerify);
+// router.post('/resendotpforpassword',usercontroller.resendotpforpassword);
+router.post('/newpassword',usercontroller.newpassword);
+router.get('/newpasswordpage',usercontroller.newpasswordpage);
+
 
 //=================================== SIGN-UP =====================================//
 
-router.post  ('/show', auth.is_Logout,usercontroller.insertdata);
+router.post  ('/show',usercontroller.insertdata);
 router.get('/signup', auth.is_Logout,usercontroller.sign);
 router.post('/verifymail', auth.is_Logout, usercontroller.verifymail);
-router.get('/resendotp',usercontroller.resendOTP);
+router.post('/resendotp',usercontroller.resendOTP);
 
 //=================================== PRODUCT-DETAILS =====================================//
 
