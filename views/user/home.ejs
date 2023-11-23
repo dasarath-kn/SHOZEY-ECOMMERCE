@@ -260,7 +260,7 @@
                                     }
                                 }
                             }'>
-
+                            <% if(data){%>
                             <% data.forEach(function(item) { %>
                                 <% if (item.status==0) { %>
 
@@ -384,6 +384,8 @@
                                     </div>
                                     <% } %>
                                         <% }); %>
+
+                                        <%} else{%><%}%>
 
 
 
@@ -927,6 +929,7 @@
                     aria-labelledby="top-all-link">
                     <div class="products just-action-icons-sm">
                         <div class="row">
+                            <% if(products){%>
                             <% for(let i=0;i< products.length;i++){%>
                             <div class="col-6 col-md-4 col-lg-3 col-xl-5col">
                                 <div class="product product-3 text-center">
@@ -951,7 +954,7 @@
                                             else{%>
                                                 <%}%>
                                         <a href="product.html">
-                                            <img src="/productimages/<%= products[i].image[0]%>"
+                                            <img src="/sharpedimages/<%= products[i].image[0]%>"
                                                 alt="Product image" class="product-image">
                                         </a>
 
@@ -1034,6 +1037,8 @@
                                 </div><!-- End .product -->
                             </div><!-- End .col-6 col-md-4 col-lg-3 -->
                             <%}%>
+                            <%} 
+                            else{%><%}%>
 
                             
 

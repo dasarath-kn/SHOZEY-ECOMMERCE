@@ -57,7 +57,7 @@ const admin = async (req, res) => {
 const usermanagement = async (req, res) => {
     try {
         const data = await user.find();
-        res.redirect('/admin/dashboard');
+        res.render('usermanagement',{data});
     }
     catch (error) {
         console.log(error.message);
@@ -266,6 +266,7 @@ const addproduct = async (req, res) => {
 //=================================== ADDiING NEW PRODUCT =====================================//
 const newproduct = async (req, res) => {
     try {
+        console.log("jflfjnsdljsdflfl");
         const data = new product({
             productname: req.body.product,
             quantity: req.body.quantity,
@@ -280,7 +281,7 @@ const newproduct = async (req, res) => {
         const item = await data.save();
         for (let i = 0; i < req.files.length; i++) {
             await sharp("public/productimages/" + req.files[i].filename).resize(800, 800).toFile("public/sharpedimages/" + req.files[i].filename);
-        }
+        };
 
         console.log(item);
         if (item) {
@@ -377,26 +378,62 @@ const dashboard = async (req, res) => {
         const customer = await user.find().count();
         const ordercount = await order.find().count();
         const cancelledorders = await order.find({ status: 'cancelled' }).count();
+        if(!orders){
+            console.log("ttttttttttttttttttttt");
         const orderdata = await order.aggregate([{ $match: { status: "delivered" } },
         { $group: { _id: null, total: { $sum: '$totalAmount' } } }])
-        const data = orderdata[0].total
+        
+        if(orderdata[0].total){
+            const data = orderdata[0].total
+        }else{        const data = 0
+        }
         const cod = await order.aggregate([{ $match: { status: 'delivered', paymentMethod: 'Cash on delivery' } }, { $group: { _id: null, total: { $sum: '$totalAmount' } } }])
+        if(cod[0].total){
         const codtotal = cod[0].total
+        }
+        else{
+            const data = 0
 
+        }
         const totalcodorder = await order.aggregate([{ $match: { status: 'delivered' } }, { $group: { _id: null, total: { $sum: 1 } } }])
-        const value = totalcodorder[0].total
+       if(totalcodorder[0].total){
+        const value = totalcodorder[0].total}
+        else{
+            const value = 0
+        }
 
         const totalstock = await product.aggregate([{ $group: { _id: null, total: { $sum: "$quantity" } } }])
-        const stock = totalstock[0].total
+        if(totalstock[0].total){
+        const stock = totalstock[0].total}
+        else{
+            const stock = 0  
+        }
 
         const codtotalcount = await order.aggregate([{ $match: { status: 'delivered', paymentMethod: 'Cash on delivery' } }, { $group: { _id: null, total: { $sum: 1 } } }])
-        const codcount = codtotalcount[0].total
+        if(codtotalcount[0].total){
+        const codcount = codtotalcount[0].total}
+        else{
+            const codcount = 0
+        }
+
 
         const onlinetotalcount = await order.aggregate([{ $match: { paymentMethod: 'Online Payment', status: 'delivered' } }, { $group: { _id: null, total: { $sum: 1 } } }])
-        const onlinecount = onlinetotalcount[0].total
+       if(onlinetotalcount[0].total){
+        const onlinecount = onlinetotalcount[0].total}
+        else{
+            const onlinecount = 0 
+        }
 
         const online = await order.aggregate([{ $match: { status: 'delivered', paymentMethod: 'Online Payment' } }, { $group: { _id: null, total: { $sum: '$totalAmount' } } }])
-        const onlinetotal = online[0].total
+       if(online[0].total){
+        const onlinetotal = online[0].total}
+        else{
+            const onlinetotal = 0
+        }}
+        else{
+            console.log("khfkhfkfhkfhkfhskh");
+        }
+        
 
         res.render('dashboard', {
             orders,
@@ -411,9 +448,13 @@ const dashboard = async (req, res) => {
             ordercount,
             cancelledorders
         })
-    } catch (error) {
-        console.log(error.message);
+    
+   
+         
     }
+    catch (error) {
+       console.log(error.message);
+   }
 }
 
 //=================================== SALESREPORT =====================================//

@@ -28,14 +28,13 @@ const cartRendering = async (req, res) => {
         }
         
 
+        
         const cartdata = await cart.find({ userid: id }).populate("items.productid");
-
-        if (data) {
+            
+        
             res.render('cart', { user: req.session.name, cartdata, data, id, totalsum, express, standard, coupondata });
-        } else {
-            res.render('cart', { user: req.session.name, data, id, totalsum, express, standard, coupondata });
-
-        }
+    
+        
     }
     catch (error) {
         console.log(error.message);

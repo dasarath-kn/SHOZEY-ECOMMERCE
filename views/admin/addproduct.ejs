@@ -1,5 +1,32 @@
 <%- include ('../admin/layouts/header.ejs')-%>
   
+<style>
+  .imageContainer {
+    display: inline-block;
+    position: relative;
+    margin-right: 10px;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+  }
+
+  .overlay button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+</style>
         <!-- partial -->
         <div class="col-12 mt-5 grid-margin stretch-card">
             <div class="card">
@@ -58,11 +85,12 @@
                   </div> -->
                    <div class="form-group">
                     <label for="images">Upload Images</label>
-                    <input type="file" class="form-control-file" id="images" name="image"   multiple >
+                    <input type="file" class="form-control-file" id="images" name="image" multiple onchange="previewImages(this)">
                     <span id="image1Error" style="color: red;"></span>
 
                   </div> 
-                  
+                  <div id="imagePreviewContainer"></div>
+
                   
                   <button type="submit" class="btn btn-primary mr-2" value="Upload Images">Submit</button>
                   <button class="btn btn-dark"  ><a href="/admin">Cancel</a></button>
@@ -70,71 +98,51 @@
               </div>
             </div>
           </div>
-       <script>
-        $(document).ready(function () {
-    $('#productForm').on('submit', function (event) {
-      var isValid = true;
+      
 
-      // Validate Name field
-      var name = $('#exampleInputName1').val().trim();
-      if (name.length === 0) {
-        $('#nameError').text('Name is required').show();
-        isValid = false;
-      } else {
-        $('#nameError').hide();
-      }
+<script>
+  function previewImages(input) {
+    var previewContainer = document.getElementById('imagePreviewContainer');
+    previewContainer.innerHTML = ''; // Clear previous previews
 
-      var quantity = $('#exampleInputQuantity').val().trim();
-      if (parseInt(quantity) < 0) {
-        $('#quantityError').text('Quantity should be a non-negative number').show();
-        isValid = false;
-      } else if (quantity === ''  ){
-        $('#quantityError').text('provide quanitity').show();
-      }else{
-        $('#quantityError').hide();
-      }
+    var files = input.files;
+    for (var i = 0; i < files.length; i++) {
+      var reader = new FileReader();
 
-      var price = $('#exampleInputPrice').val().trim();
-      if (price.length === 0) {
-        $('#priceError').text('Name is required').show();
-        isValid = false;
-      }else if(price <1){
-        $('#priceError').text('price must be greater than 0').show();
-      isValid = false;
-      } else {
-        $('#priceError').hide();
-      }
+      reader.onload = function (e) {
+        var imgContainer = document.createElement('div');
+        imgContainer.classList.add('imageContainer');
 
-      var selectedCategory = $('#categorySelect').val();
-      if (!selectedCategory || selectedCategory === '') {
-        $('#categoryError').text('Please select a category').show();
-        isValid = false;
-      } else {
-        $('#categoryError').hide();
-      }
-      var selectedSubCategory = $('#subcategorySelect').val();
-      if (!selectedSubCategory || selectedSubCategory === '') {
-        $('#subcategoryError').text('Please select a Subcategory').show();
-        isValid = false;
-      } else {
-        $('#subcategoryError').hide();
-      }
+        var img = document.createElement('img');
+        img.src = e.target.result;
+        img.style.maxWidth = '100px'; // Set a maximum width for the preview image
 
-      var description = $('#exampleTextarea1').val().trim();
-      if (description.length === 0) {
-        $('#desError').text('Description is required').show();
-        isValid = false;
-      } else {
-        $('#desError').hide();
-      }
+        var overlay = document.createElement('div');
+        overlay.classList.add('overlay');
+        overlay.addEventListener('mouseover', function () {
+          overlay.style.opacity = 1; // Show overlay on mouseover
+        });
+        overlay.addEventListener('mouseout', function () {
+          overlay.style.opacity = 0; // Hide overlay on mouseout
+        });
 
-     
+        var removeButton = document.createElement('button');
+        removeButton.innerHTML = 'Remove';
+        removeButton.addEventListener('click', function () {
+          imgContainer.parentNode.removeChild(imgContainer); // Remove the preview when the remove button is clicked
+        });
 
-      if (!isValid) {
-        event.preventDefault(); 
-      }
-    });
-  });
+        overlay.appendChild(removeButton);
+        imgContainer.appendChild(img);
+        imgContainer.appendChild(overlay);
 
-       </script>
+        previewContainer.appendChild(imgContainer);
+      };
+
+      reader.readAsDataURL(files[i]);
+    }
+  }
+</script>
+
+
          <%- include ('../admin/layouts/footer.ejs')-%>

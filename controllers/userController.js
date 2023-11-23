@@ -142,7 +142,22 @@ const forgetpasswordotpVerify = async(req,res)=>{
     }
 }
 
+const resendotpforpassword =async(req,res)=>{
+    try {
+        const id = req.query.val
+        console.log(id);
+        const userdata = await user.findOne({_id:id})
+        otpsend = await Math.floor(10000 + Math.random() * 90000);
+        console.log(otpsend)
+        sendVerifyMail(userdata.firstname, userdata.email);
+        res.render('forgetpasswordotp', {message:"Your new otp has been sented to your registered mail" ,userid:id });
 
+
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
 
 
 
@@ -433,8 +448,9 @@ const resendOTP = async (req, res) => {
         console.log(id);
         otpsend = await Math.floor(10000 + Math.random() * 90000);
         console.log(otpsend)
-        sendVerifyMail(nameResend, email2);
-        res.render('otp', {message:"Your new otp has been sented to your registered mail" ,userid:id });
+        const userdata = await user.findOne({_id:id})
+         sendVerifyMail(userdata.firstname, userdata.email);
+         res.render('otp', {message:"Your new otp has been sented to your registered mail" ,userid:id });
 
     }
 
@@ -638,6 +654,7 @@ module.exports = {
     newpasswordpage,
     newpassword,
     otp,
+    resendotpforpassword,
     verifymail,
     home,
     validation,

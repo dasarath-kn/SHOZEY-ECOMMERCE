@@ -31,7 +31,7 @@ router.get('/signin',auth.is_Logout,usercontroller.register);
 router.get('/forgetpassword',usercontroller.forgetpassword);
 router.post('/forgetpasswordcheck',usercontroller.forgetpasswordcheck);
 router.post('/forgetpasswordotpVerify',usercontroller.forgetpasswordotpVerify);
-// router.post('/resendotpforpassword',usercontroller.resendotpforpassword);
+ router.post('/resendotpforpassword',usercontroller.resendotpforpassword);
 router.post('/newpassword',usercontroller.newpassword);
 router.get('/newpasswordpage',usercontroller.newpasswordpage);
 

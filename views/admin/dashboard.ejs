@@ -16,7 +16,12 @@
               <div class="row">
                 <div class="col-8 col-sm-12 col-xl-8 my-auto">
                   <div class="d-flex d-sm-block d-md-flex align-items-center">
-                    <h2 id="totalRevenue" class="mb-0" >Rs. <%= Math.round(data*0.6) %></h2>
+                    <% if(data){%>
+                      <h2 id="totalRevenue" class="mb-0" >Rs. <%= Math.round(data*0.6) %></h2>
+
+                      <%}else{%>
+                        <h2 id="totalRevenue" class="mb-0" >Rs.0</h2>
+                        <%}%>
                     <p id="revenueChange" class="text-success ml-2 mb-0 font-weight-medium">+3.5%</p>
                     <i class="fa-solid fa-money-bill-trend-up" style="color: #fff700;"></i>
                   </div>
@@ -36,7 +41,12 @@
               <div class="row">
                 <div class="col-8 col-sm-12 col-xl-8 my-auto">
                   <div class="d-flex d-sm-block d-md-flex align-items-center">
+                    <% if(value){%>
                     <h2 class="mb-0" id="sales" > <%= value %> </h2>
+                    <%} else{%>
+                      <h2 class="mb-0" id="sales" > 0 </h2>
+
+                      <%}%>
                     <p class="text-success ml-2 mb-0 font-weight-medium">+8.3%</p>
 
                   </div>
@@ -56,7 +66,10 @@
               <div class="row">
                 <div class="col-8 col-sm-12 col-xl-8 my-auto">
                   <div class="d-flex d-sm-block d-md-flex align-items-center">
+                    <% if(stock){%>
                     <h2 class="mb-0" ><%= stock %> </h2>
+                    <%} else{%>
+                      <h2 class="mb-0" >0 </h2><%}%>
 <!--                      <p class="text-danger ml-2 mb-0 font-weight-medium">-2.1% </p>-->
                   </div>
                   <h6 class="text-muted font-weight-normal">2.27% Since last month</h6>
@@ -81,7 +94,12 @@
                       <p class="text-muted mb-0">07 Jan 2019, 09:12AM</p>
                     </div>
                     <div class="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
+                      <% if(onlinetotal){%>
                       <h6 class="font-weight-bold mb-0">Rs. <%= onlinetotal%> </h6>
+                      <%} else{%>
+                        <h6 class="font-weight-bold mb-0">Rs. 0</h6>
+
+                        <%}%>
                     </div>
                   </div>
                   <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
@@ -90,7 +108,11 @@
                       <p class="text-muted mb-0">07 Jan 2019, 09:12AM</p>
                     </div>
                     <div class="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
+                      <% if(codtotal){%>
                       <h6 class="font-weight-bold mb-0">Rs. <%= codtotal %></h6>
+                      <%} else{%>
+                        <h6 class="font-weight-bold mb-0">Rs. 0</h6>
+                        <%}%>
                     </div>
                   </div>
                 </div>
@@ -118,18 +140,25 @@
                       <div th:each="order : ${latestOrders}" class="preview-item border-bottom">
                         <div class="preview-thumbnail">
                           <div class="preview-icon bg-primary">
-                            <img src="/productimages/<%=data.image[0] %>" alt="Product Image" />
+                            <% if(data){%>
+                              <img src="/productimages/<%=data.image[0] %>" alt="Product Image" />
+                              <%} else{%><%}%>
+                           
                           </div>
                         </div>
                         <div class="preview-item-content d-sm-flex flex-grow">
                           <div class="flex-grow">
+                            <% if(data){%>
                             <h6 class="preview-subject mt-2 " ><%= data.productname %></h6>
+                            <%} else{%><%}%>
                           </div>
                           <div class="flex-grow">
                             <h6 class="preview-subject text-muted mt-2" ></h6>
                           </div>
                           <div>
+                            <% if(data){%>
                             <h6 class="preview-subject text-muted mt-2 mr-5" ><%= data.total %></h6>
+                            <%} else{%><%}%>
                           </div>
                           <div class="mr-auto text-sm-right pt-2 pt-sm-0 mt-2" >
                             <p class="text-muted" ><%= orders[i].purchaseDate.toLocaleDateString('en-US', { year:
@@ -158,7 +187,11 @@
               <div class="row">
                 <div class="col-8 col-sm-12 col-xl-8 my-auto">
                   <div class="d-flex d-sm-block d-md-flex align-items-center">
-                    <h2 class="mb-0" th:text="${customer}"><%= customer%></h2>
+                   <% if(customer){%>
+                    <h2 class="mb-0" ><%= customer%></h2>
+                    <%} else{%>
+                      <h2 class="mb-0" >0</h2><%}%>
+                   
                     <p class="text-success ml-2 mb-0 font-weight-medium">+3.5%</p>
                   </div>
                   <h6 class="text-muted font-weight-normal">11.38% Since last month</h6>
@@ -177,7 +210,9 @@
               <div class="row">
                 <div class="col-8 col-sm-12 col-xl-8 my-auto">
                   <div class="d-flex d-sm-block d-md-flex align-items-center">
+                    <% if(ordercount){%>
                     <h2 class="mb-0" ><%= ordercount%></h2>
+                    <%} else{%>  <h2 class="mb-0" >0</h2><%}%>
                     <p class="text-success ml-2 mb-0 font-weight-medium">+8.3%</p>
                   </div>
                   <h6 class="text-muted font-weight-normal"> 9.61% Since last month</h6>
@@ -196,7 +231,11 @@
               <div class="row">
                 <div class="col-8 col-sm-12 col-xl-8 my-auto">
                   <div class="d-flex d-sm-block d-md-flex align-items-center">
+                    <% if(cancelledorders){%>
                     <h2 class="mb-0"><%= cancelledorders%></h2>
+                    <%} else{%>
+                      <h2 class="mb-0">0</h2>
+                      <%}%>
                     <p class="text-danger ml-2 mb-0 font-weight-medium">-2.1% </p>
                   </div>
                   <h6 class="text-muted font-weight-normal">2.27% Since last month</h6>

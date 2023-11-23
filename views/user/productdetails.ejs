@@ -41,21 +41,13 @@
                                         </figure><!-- End .product-main-image -->
 
                                         <div id="product-zoom-gallery" class="product-image-gallery">
-                                            <a class="product-gallery-item active" href="#" data-image="/productimages/<%= item.image[0] %>" data-zoom-image="/productimages/<%= item.image[0] %>">
-                                                <img src="/productimages/<%= item.image[0] %>" alt="product side">
+                                            <% for(let i=0;i<item.image.length;i++){%>
+                                            <a class="product-gallery-item active" href="#" data-image="/productimages/<%= item.image[i] %>" data-zoom-image="/productimages/<%= item.image[i] %>">
+                                                <img src="/productimages/<%= item.image[i] %>" alt="product side">
                                             </a>
+                                            <%}%>
+                                            
 
-                                            <a class="product-gallery-item" href="#" data-image="/productimages/<%= item.image[1] %>" data-zoom-image="/productimages/<%= item.image[1] %>">
-                                                <img src="/productimages/<%= item.image[1] %>" alt="product cross">
-                                            </a>
-
-                                            <a class="product-gallery-item" href="#" data-image="/productimages/<%= item.image[2] %>" data-zoom-image="/productimages/<%= item.image[2] %>">
-                                                <img src="/productimages/<%= item.image[2] %>" alt="product with model">
-                                            </a>
-
-                                            <a class="product-gallery-item" href="#" data-image="/productimages/<%= item.image[3] %>" data-zoom-image="/productimages/<%= item.image[3] %>">
-                                                <img src="/productimages/<%= item.image[3] %>" alt="product back">
-                                            </a>
                                         </div><!-- End .product-image-gallery -->
                                     </div><!-- End .product-gallery -->
                                 </div><!-- End .col-md-6 -->
