@@ -450,6 +450,7 @@
         $(document).ready(function () {
           
             $('#myForm').submit(function (event) {
+              
                 const amount = document.getElementById('couponamount').innerText
                 const val = amount.split('.')
                 const totalamount = val[1]
@@ -468,6 +469,7 @@
                     success: function (response) {
                         console.log(response)
                         if (response.success == true) {
+                            console.log("jhgguyjgjg");
                             window.location.href = '/orderplaced'
                         } else if (response.online == true) {
                             console.log("wallet");
@@ -549,6 +551,7 @@
                 },
                 success: (response) => {
                     if (response.placed == true) {
+                       
                         window.location.href = '/orderplaced'
                     } else {
                         swal.fire({

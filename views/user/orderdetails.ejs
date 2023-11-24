@@ -161,7 +161,7 @@
                         contentType: 'application/json',
                         success: function (response) {
                             if (response.result == true) {
-                                 $('#reloadw').load('/orderdetails #reloadw');
+                                window.location.reload()
                                 Swal.fire({
                                     title: "Cancelled!",
                                     text: "Your order has been cancelled.",
@@ -215,4 +215,5 @@
   } 
 
     </script>
+
  

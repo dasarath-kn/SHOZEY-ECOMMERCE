@@ -417,29 +417,34 @@
                                     }
                                 }
                             }'>
+                            
+                            <% if(womencategory){%>
+                                <% for(let i=0;i<womencategory.length;i++){%>
                             <div class="product product-3 text-center">
                                 <figure class="product-media">
+                                    <% if(womencategory[i].quantity<=0){%>
                                     <span class="product-label label-primary">Out Of Stock</span>
-                                    <a href="product.html">
-                                        <img src="assets/images/demos/demo-10/products/product-4.jpg"
+                                    <%}else{%><%}%>
+                                    <a href="/productdetails?id=<%= womencategory[i]._id %>">
+                                        <img src="/productimages/<%= womencategory[i].image[0] %>"
                                             alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to
+                                        <a onclick="wishlist('<%= womencategory[i]._id %>')" class="btn-product-icon btn-wishlist btn-expandable"><span>add to
                                                 wishlist</span></a>
                                     </div><!-- End .product-action-vertical -->
                                 </figure><!-- End .product-media -->
 
                                 <div class="product-body">
                                     <div class="product-cat">
-                                        <a href="#">Women’s</a>,
-                                        <a href="#">Sneakers</a>
+                                       ,
+                                        <a href="/productdetails?id=<%= womencategory[i]._id %>"><%= womencategory[i].category %></a>
                                     </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">Nike Air Max Motion LW Racer</a>
+                                    <h3 class="product-title"><a href="/productdetails?id=<%= womencategory[i]._id %>"><%= womencategory[i].productname %></a>
                                     </h3><!-- End .product-title -->
                                     <div class="product-price">
-                                        <span class="out-price">$54.99</span>
+                                        <span class="out-price">Rs.<%= womencategory[i].price %></span>
                                     </div><!-- End .product-price -->
                                 </div><!-- End .product-body -->
 
@@ -452,199 +457,23 @@
                                     </div><!-- End .rating-container -->
 
                                     <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview"><span>quick
+                                        <% if (id) { %>
+                                            <p onclick="toAddCart('<%= womencategory[i]._id %>')"
+                                                class="btn-product btn-cart"><span>add to cart</span></p>
+                                            <% } else { %>
+                                                <p class="carts"><span>add to cart</span></p>
+                                                <% } %>                                
+                                                        <a href="popup/quickView.html" class="btn-product btn-quickview"><span>quick
                                                 view</span></a>
                                     </div><!-- End .product-action -->
                                 </div><!-- End .product-footer -->
                             </div><!-- End .product -->
+                            <%} %>
+                            <%} else{%><%}%>
 
-                            <div class="product product-3 text-center">
-                                <figure class="product-media">
-                                    <span class="product-label label-primary">New</span>
-                                    <a href="product.html">
-                                        <img src="assets/images/demos/demo-10/products/product-3.jpg"
-                                            alt="Product image" class="product-image">
-                                        <img src="assets/images/demos/demo-10/products/product-3-2.jpg"
-                                            alt="Product image" class="product-image-hover">
-                                    </a>
+                          
+                          
 
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to
-                                                wishlist</span></a>
-                                    </div><!-- End .product-action-vertical -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Women’s</a>,
-                                        <a href="#">Sandals</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">Eric Michael Joan</a></h3>
-                                    <!-- End .product-title -->
-                                    <div class="product-price">
-                                        $35.99
-                                    </div><!-- End .product-price -->
-                                </div><!-- End .product-body -->
-
-                                <div class="product-footer">
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 40%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 2 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-
-                                    <div class="product-nav product-nav-dots">
-                                        <a href="#" class="active" style="background: #666666;"><span
-                                                class="sr-only">Color name</span></a>
-                                        <a href="#" style="background: #b58853;"><span class="sr-only">Color
-                                                name</span></a>
-                                    </div><!-- End .product-nav -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview"><span>quick
-                                                view</span></a>
-                                    </div><!-- End .product-action -->
-                                </div><!-- End .product-footer -->
-                            </div><!-- End .product -->
-
-                            <div class="product product-3 text-center">
-                                <figure class="product-media">
-                                    <span class="product-label label-primary">Sale</span>
-                                    <span class="product-label label-sale">40% off</span>
-                                    <a href="product.html">
-                                        <img src="assets/images/demos/demo-10/products/product-5.jpg"
-                                            alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to
-                                                wishlist</span></a>
-                                    </div><!-- End .product-action-vertical -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Men’s</a>,
-                                        <a href="#">Sneakers</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">ASICS Tiger Gel-Lyte MT</a></h3>
-                                    <!-- End .product-title -->
-                                    <div class="product-price">
-                                        <span class="new-price">Now $77.99</span>
-                                        <span class="old-price">$130.00</span>
-                                    </div><!-- End .product-price -->
-                                </div><!-- End .product-body -->
-
-                                <div class="product-footer">
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 0%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 0 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview"><span>quick
-                                                view</span></a>
-                                    </div><!-- End .product-action -->
-                                </div><!-- End .product-footer -->
-                            </div><!-- End .product -->
-
-                            <div class="product product-3 text-center">
-                                <figure class="product-media">
-                                    <span class="product-label label-primary">Sale</span>
-                                    <span class="product-label label-sale">30% off</span>
-                                    <a href="product.html">
-                                        <img src="assets/images/demos/demo-10/products/product-1.jpg"
-                                            alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to
-                                                wishlist</span></a>
-                                    </div><!-- End .product-action-vertical -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Men’s</a>,
-                                        <a href="#">Boots</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">The North Face Back-To-Berkeley
-                                            Remtlz Mesh</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        <span class="new-price">Now $50.00</span>
-                                        <span class="old-price">$84.00</span>
-                                    </div><!-- End .product-price -->
-                                </div><!-- End .product-body -->
-
-                                <div class="product-footer">
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 60%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 4 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-
-                                    <div class="product-nav product-nav-dots">
-                                        <a href="#" class="active" style="background: #5f554b;"><span
-                                                class="sr-only">Color name</span></a>
-                                        <a href="#" style="background: #806f55;"><span class="sr-only">Color
-                                                name</span></a>
-                                    </div><!-- End .product-nav -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview"><span>quick
-                                                view</span></a>
-                                    </div><!-- End .product-action -->
-                                </div><!-- End .product-footer -->
-                            </div><!-- End .product -->
-
-                            <div class="product product-3 text-center">
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <img src="assets/images/demos/demo-10/products/product-2.jpg"
-                                            alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to
-                                                wishlist</span></a>
-                                    </div><!-- End .product-action-vertical -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Men’s</a>,
-                                        <a href="#">Sneakers</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">Nike Air Zoom Wildhorse 4</a></h3>
-                                    <!-- End .product-title -->
-                                    <div class="product-price">
-                                        $77.99
-                                    </div><!-- End .product-price -->
-                                </div><!-- End .product-body -->
-
-                                <div class="product-footer">
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 0%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 0 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview"><span>quick
-                                                view</span></a>
-                                    </div><!-- End .product-action -->
-                                </div><!-- End .product-footer -->
-                            </div><!-- End .product -->
                         </div><!-- End .owl-carousel -->
                     </div><!-- .End .tab-pane -->
                     <div class="tab-pane tab-pane-shadow p-0 fade" id="new-men-tab" role="tabpanel"
@@ -673,165 +502,36 @@
                                     }
                                 }
                             }'>
+                           
+
+
+                            <% if(mencategory){%>
+                                <% for(let i=0;i<mencategory.length;i++){%>
                             <div class="product product-3 text-center">
                                 <figure class="product-media">
-                                    <span class="product-label label-primary">Sale</span>
-                                    <span class="product-label label-sale">40% off</span>
-                                    <a href="product.html">
-                                        <img src="assets/images/demos/demo-10/products/product-5.jpg"
-                                            alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to
-                                                wishlist</span></a>
-                                    </div><!-- End .product-action-vertical -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Men’s</a>,
-                                        <a href="#">Sneakers</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">ASICS Tiger Gel-Lyte MT</a></h3>
-                                    <!-- End .product-title -->
-                                    <div class="product-price">
-                                        <span class="new-price">Now $77.99</span>
-                                        <span class="old-price">$130.00</span>
-                                    </div><!-- End .product-price -->
-                                </div><!-- End .product-body -->
-
-                                <div class="product-footer">
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 0%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 0 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview"><span>quick
-                                                view</span></a>
-                                    </div><!-- End .product-action -->
-                                </div><!-- End .product-footer -->
-                            </div><!-- End .product -->
-
-                            <div class="product product-3 text-center">
-                                <figure class="product-media">
-                                    <span class="product-label label-primary">New</span>
-                                    <a href="product.html">
-                                        <img src="assets/images/demos/demo-10/products/product-3.jpg"
-                                            alt="Product image" class="product-image">
-                                        <img src="assets/images/demos/demo-10/products/product-3-2.jpg"
-                                            alt="Product image" class="product-image-hover">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to
-                                                wishlist</span></a>
-                                    </div><!-- End .product-action-vertical -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Women’s</a>,
-                                        <a href="#">Sandals</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">Eric Michael Joan</a></h3>
-                                    <!-- End .product-title -->
-                                    <div class="product-price">
-                                        $35.99
-                                    </div><!-- End .product-price -->
-                                </div><!-- End .product-body -->
-
-                                <div class="product-footer">
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 40%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 2 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-
-                                    <div class="product-nav product-nav-dots">
-                                        <a href="#" class="active" style="background: #666666;"><span
-                                                class="sr-only">Color name</span></a>
-                                        <a href="#" style="background: #b58853;"><span class="sr-only">Color
-                                                name</span></a>
-                                    </div><!-- End .product-nav -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview"><span>quick
-                                                view</span></a>
-                                    </div><!-- End .product-action -->
-                                </div><!-- End .product-footer -->
-                            </div><!-- End .product -->
-
-                            <div class="product product-3 text-center">
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <img src="assets/images/demos/demo-10/products/product-2.jpg"
-                                            alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to
-                                                wishlist</span></a>
-                                    </div><!-- End .product-action-vertical -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Men’s</a>,
-                                        <a href="#">Sneakers</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">Nike Air Zoom Wildhorse 4</a></h3>
-                                    <!-- End .product-title -->
-                                    <div class="product-price">
-                                        $77.99
-                                    </div><!-- End .product-price -->
-                                </div><!-- End .product-body -->
-
-                                <div class="product-footer">
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 0%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 0 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview"><span>quick
-                                                view</span></a>
-                                    </div><!-- End .product-action -->
-                                </div><!-- End .product-footer -->
-                            </div><!-- End .product -->
-
-                            <div class="product product-3 text-center">
-                                <figure class="product-media">
+                                    <% if(mencategory[i].quantity<=0){%>
                                     <span class="product-label label-primary">Out Of Stock</span>
-                                    <a href="product.html">
-                                        <img src="assets/images/demos/demo-10/products/product-4.jpg"
+                                    <%}else{%><%}%>
+                                    <a href="/productdetails?id=<%= mencategory[i]._id %>">
+                                        <img src="/productimages/<%= mencategory[i].image[0] %>"
                                             alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to
+                                        <a onclick="wishlist('<%= mencategory[i]._id %>')" class="btn-product-icon btn-wishlist btn-expandable"><span>add to
                                                 wishlist</span></a>
                                     </div><!-- End .product-action-vertical -->
                                 </figure><!-- End .product-media -->
 
                                 <div class="product-body">
                                     <div class="product-cat">
-                                        <a href="#">Women’s</a>,
-                                        <a href="#">Sneakers</a>
+                                       ,
+                                        <a href="/productdetails?id=<%= mencategory[i]._id %>"><%= mencategory[i].category %></a>
                                     </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">Nike Air Max Motion LW Racer</a>
+                                    <h3 class="product-title"><a href="/productdetails?id=<%= mencategory[i]._id %>"><%= mencategory[i].productname %></a>
                                     </h3><!-- End .product-title -->
                                     <div class="product-price">
-                                        <span class="out-price">$54.99</span>
+                                        <span class="out-price">Rs.<%= mencategory[i].price %></span>
                                     </div><!-- End .product-price -->
                                 </div><!-- End .product-body -->
 
@@ -844,12 +544,19 @@
                                     </div><!-- End .rating-container -->
 
                                     <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview"><span>quick
+                                        <% if (id) { %>
+                                            <p onclick="toAddCart('<%= mencategory[i]._id %>')"
+                                                class="btn-product btn-cart"><span>add to cart</span></p>
+                                            <% } else { %>
+                                                <p class="carts"><span>add to cart</span></p>
+                                                <% } %>                                
+                                                        <a href="popup/quickView.html" class="btn-product btn-quickview"><span>quick
                                                 view</span></a>
                                     </div><!-- End .product-action -->
                                 </div><!-- End .product-footer -->
                             </div><!-- End .product -->
+                            <%} %>
+                            <%} else{%><%}%>
                         </div><!-- End .owl-carousel -->
                     </div><!-- .End .tab-pane -->
                 </div><!-- End .tab-content -->
@@ -1056,153 +763,8 @@
 
         <div class="mb-5"></div><!-- End .mb5 -->
 
-        <div class="container">
-            <div class="cta cta-horizontal cta-horizontal-box bg-image mb-4 mb-lg-6"
-                style="background-image: url(assets/images/demos/demo-10/bg-1.jpg);">
-                <div class="row flex-column flex-lg-row align-items-lg-center">
-                    <div class="col">
-                        <h3 class="cta-title text-primary">New Deals! Start Daily at 12pm e.t.</h3>
-                        <!-- End .cta-title -->
-                        <p class="cta-desc">Get <em class="font-weight-medium">FREE SHIPPING* & 5% rewards</em> on every
-                            order with Molla Theme rewards program</p><!-- End .cta-desc -->
-                    </div><!-- End .col -->
-
-                    <div class="col-auto">
-                        <a href="#" class="btn btn-white-primary btn-round"><span>Add to Cart for $50.00/yr</span><i
-                                class="icon-long-arrow-right"></i></a>
-                    </div><!-- End .col-auto -->
-                </div><!-- End .row -->
-            </div><!-- End .cta-horizontal -->
-        </div><!-- End .container -->
-
-        <div class="blog-posts">
-            <div class="container">
-                <h2 class="title-lg text-center mb-4">From Our Blog</h2><!-- End .title-lg text-center -->
-
-                <div class="owl-carousel owl-simple mb-4" data-toggle="owl" data-owl-options='{
-                        "nav": false, 
-                        "dots": true,
-                        "items": 3,
-                        "margin": 20,
-                        "loop": false,
-                        "responsive": {
-                            "0": {
-                                "items":1
-                            },
-                            "520": {
-                                "items":2
-                            },
-                            "768": {
-                                "items":3
-                            },
-                            "992": {
-                                "items":4
-                            }
-                        }
-                    }'>
-                    <article class="entry">
-                        <figure class="entry-media">
-                            <a href="single.html">
-                                <img src="assets/images/demos/demo-10/blog/post-1.jpg" alt="image desc">
-                            </a>
-                        </figure><!-- End .entry-media -->
-
-                        <div class="entry-body text-center">
-                            <div class="entry-meta">
-                                <a href="#">Nov 22, 2018</a>, 0 Comments
-                            </div><!-- End .entry-meta -->
-
-                            <h3 class="entry-title">
-                                <a href="single.html">Sed adipiscing ornare.</a>
-                            </h3><!-- End .entry-title -->
-
-                            <div class="entry-content">
-                                <p>Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel,
-                                    dapibus id, mattis vel, nisi. </p>
-                                <a href="single.html" class="read-more">READ MORE</a>
-                            </div><!-- End .entry-content -->
-                        </div><!-- End .entry-body -->
-                    </article><!-- End .entry -->
-
-                    <article class="entry">
-                        <figure class="entry-media">
-                            <a href="single.html">
-                                <img src="assets/images/demos/demo-10/blog/post-2.jpg" alt="image desc">
-                            </a>
-                        </figure><!-- End .entry-media -->
-
-                        <div class="entry-body text-center">
-                            <div class="entry-meta">
-                                <a href="#">Dec 12, 2018</a>, 0 Comments
-                            </div><!-- End .entry-meta -->
-
-                            <h3 class="entry-title">
-                                <a href="single.html">Fusce lacinia arcuet nulla.</a>
-                            </h3><!-- End .entry-title -->
-
-                            <div class="entry-content">
-                                <p>Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget
-                                    blandit nunc tortor eu nibh. </p>
-                                <a href="single.html" class="read-more">READ MORE</a>
-                            </div><!-- End .entry-content -->
-                        </div><!-- End .entry-body -->
-                    </article><!-- End .entry -->
-
-                    <article class="entry">
-                        <figure class="entry-media">
-                            <a href="single.html">
-                                <img src="assets/images/demos/demo-10/blog/post-3.jpg" alt="image desc">
-                            </a>
-                        </figure><!-- End .entry-media -->
-
-                        <div class="entry-body text-center">
-                            <div class="entry-meta">
-                                <a href="#">Dec 19, 2018</a>, 2 Comments
-                            </div><!-- End .entry-meta -->
-
-                            <h3 class="entry-title">
-                                <a href="single.html">Aliquam erat volutpat.</a>
-                            </h3><!-- End .entry-title -->
-
-                            <div class="entry-content">
-                                <p>Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis
-                                    vel, nisi. </p>
-                                <a href="single.html" class="read-more">READ MORE</a>
-                            </div><!-- End .entry-content -->
-                        </div><!-- End .entry-body -->
-                    </article><!-- End .entry -->
-
-                    <article class="entry">
-                        <figure class="entry-media">
-                            <a href="single.html">
-                                <img src="assets/images/demos/demo-10/blog/post-4.jpg" alt="image desc">
-                            </a>
-                        </figure><!-- End .entry-media -->
-
-                        <div class="entry-body text-center">
-                            <div class="entry-meta">
-                                <a href="#">Dec 19, 2018</a>, 2 Comments
-                            </div><!-- End .entry-meta -->
-
-                            <h3 class="entry-title">
-                                <a href="single.html">Quisque a lectus.</a>
-                            </h3><!-- End .entry-title -->
-
-                            <div class="entry-content">
-                                <p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus
-                                    libero eu augue. </p>
-                                <a href="single.html" class="read-more">READ MORE</a>
-                            </div><!-- End .entry-content -->
-                        </div><!-- End .entry-body -->
-                    </article><!-- End .entry -->
-                </div><!-- End .owl-carousel -->
-
-                <div class="more-container text-center mt-1">
-                    <a href="blog.html" class="btn btn-outline-lightgray btn-more btn-round"><span>View more
-                            articles</span><i class="icon-long-arrow-right"></i></a>
-                </div><!-- End .more-container -->
-            </div><!-- End .container -->
-        </div><!-- End .blog-posts -->
+        
+       
     </main><!-- End .main -->
     <script>
 // var slideIndex = 0;

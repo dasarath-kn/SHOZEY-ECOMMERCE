@@ -245,7 +245,7 @@ const wishlistview = async(req,res)=>{
             const wishlistdata = await wishlist.find({userid:req.session.userId}).populate("productid");
             
            
-       res.render('wishlist',{wishlistdata,user:req.session.name,data,cartdata})
+       res.render('wishlist',{wishlistdata,user:req.session.name,data,cartdata,id})
         }
     } catch (error) {
        console.log(error.message); 

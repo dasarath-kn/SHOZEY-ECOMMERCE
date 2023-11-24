@@ -101,7 +101,7 @@
                                                 <div class="product-details-quantity">
                                                     <input type="number" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
                                                 </div><!-- End .product-details-quantity -->
-                                                <% if(userid){%>
+                                                <% if(id){%>
                                                 <a onclick="toAddCart('<%= item._id %>')"   class="btn-product btn-cart"><span>add to cart</span></a>
                                                 <%} else{%>
                                                 <a  id="carts" class="btn-product btn-cart"><span>add to cart</span></a>

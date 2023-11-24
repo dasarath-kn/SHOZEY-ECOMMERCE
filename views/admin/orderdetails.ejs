@@ -1,13 +1,14 @@
 <%- include('../admin/layouts/header.ejs') %>
-    <main class="main mt-5">
+<div class="main-panel">
+<main class="main mt-5">
         <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
             <div class="container">
                 <h1 class="page-title">Order Details</h1>
             </div><!-- End .container -->
         </div><!-- End .page-header -->
-        <div class="container" >
-            <div class="col-md-12"  >
-                <table class="table table-cart table-mobile" id="reload">
+        <div class="container"  >
+            <div class="col-md-12"  id="reload" >
+                <table class="table table-cart table-mobile">
                     <thead>
                         <tr>
                             <th>Products</th>
@@ -20,7 +21,7 @@
                             <th>Cancel Order</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody  id="reload">
 
                         <% let product=orderdata[0].items %>
                             <% for(let j=0; j<product.length; j++){%>
@@ -64,8 +65,8 @@
                                                      else if(status == 'delivered') { %>
                                                       <span style="color: rgb(9, 255, 0);">Delivered</span> <%} 
                                                     else { %>
-                                                    <select name="status" id="" class="form-control" onclick="updatestatus('<%= orderdata[0]._id%>','<%= productdata._id %>',this.value)" required>
-                                                      <option value="" disabled selected><%= status %></option>
+                                                    <select name="status" id="" class="form-control" onchange="updatestatus('<%= orderdata[0]._id%>','<%= productdata._id %>',this.value)" required>
+                                                      <option value="<%= status %>" disabled selected><%= status %></option>
                                                       <option value="shipped">shipped</option>
                                                       <option value="out for delivery">out for delivery</option>
                                                       <option value="delivered">delivered</option>
@@ -124,6 +125,8 @@
             </div>
         </div>
     </main><!-- End .main -->
+   
+</div>
 
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -138,8 +141,8 @@ function updatestatus (id,product,data) {
         contentType: 'application/json',
         success: function (response) {
             if(response.result === true){
-               $('#reload').load('/admin/cartstatus #reload'); 
-              // window.location.href = '/admin/orderdetails';
+            //   window.location.href = '/admin/orderdetails';
+            window.location.reload()
 
             }else{
                 Swal.fire({

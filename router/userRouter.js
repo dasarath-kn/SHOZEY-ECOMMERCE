@@ -98,10 +98,10 @@ router.post('/coupondata',couponcontroller.coupondata);
 router.delete('/deletecoupon',couponcontroller.deletecoupon)
 
 //=================================== LOGOUT =====================================//
-
 router.get('/logout', auth.is_Login, usercontroller.logout);
 
 //=================================== MODULE--EXPORTS =====================================//
+// router.get('*',usercontroller.errorpage)
 
 module.exports = router;
    

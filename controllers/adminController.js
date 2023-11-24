@@ -121,8 +121,10 @@ const editproduct = async (req, res) => {
         const item = await product.findOne({ _id: editid })
         // console.log(items);
         const categorydata = await category.find()
+        const image= item.image
+        console.log(image);
 
-        res.render('editproduct', { item, categorydata });
+        res.render('editproduct', { item, categorydata,image });
 
     }
     catch (error) {
@@ -134,18 +136,47 @@ const editproduct = async (req, res) => {
 const editingproduct = async (req, res) => {
     try {
         const editid = req.query.id;
+        // const images = req.files.map((file) => file.filename);
+        // console.log(images);
+        for (let i = 0; i < req.files.length; i++) {
+            await sharp("public/productimages/" + req.files[i].filename).resize(800, 800).toFile("public/sharpedimages/" + req.files[i].filename);
+        };
         console.log(editid);
-        await product.updateOne({ _id: editid }, {
-            $set: {
+        await product.updateOne(
+            { _id: editid },
+            {
+              $set: {
                 productname: req.body.product,
                 quantity: req.body.quantity,
                 price: req.body.price,
                 category: req.body.category,
-                description: req.body.description
+                description: req.body.description,
+              },
+              $push: {
+                image: { $each: req.files.map((file) => file.filename) }
+              },
             }
-        })
+          );
+          
+        
         res.redirect('/admin/productmanagement');
 
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const deleteproductimage = async(req,res)=>{
+    try {
+        const productid = req.body.productid
+        const imageid= req.body.imageid
+        const productimage = await product.updateOne({_id:productid},{$pull:{image:imageid}}) 
+        if(productimage ){
+        res.json({result:true})}
+        else{
+            res.json({result:false}) 
+        }
+        console.log(productimage);       
     } catch (error) {
         console.log(error.message);
     }
@@ -267,6 +298,13 @@ const addproduct = async (req, res) => {
 const newproduct = async (req, res) => {
     try {
         console.log("jflfjnsdljsdflfl");
+        const productname = req.body.product
+        const productdata = await product.findOne({ productname: { $regex: new RegExp(productname, 'i') } });
+     
+        if(productdata){
+            console.log('product already exist');
+        }else{
+
         const data = new product({
             productname: req.body.product,
             quantity: req.body.quantity,
@@ -289,7 +327,7 @@ const newproduct = async (req, res) => {
         }
         else {
             console.log("Failed upload");
-        }
+        }}
 
     }
     catch (error) {
@@ -375,64 +413,49 @@ const orderdetails = async (req, res) => {
 const dashboard = async (req, res) => {
     try {
         const orders = await order.find().sort({ purchaseDate: -1 }).populate("items.productid");
-        const customer = await user.find().count();
-        const ordercount = await order.find().count();
-        const cancelledorders = await order.find({ status: 'cancelled' }).count();
-        if(!orders){
-            console.log("ttttttttttttttttttttt");
+        console.log(orders);
+        if(orders.length!=0){
+            const customer = await user.find().count();
+            const ordercount = await order.find().count();
+            const cancelledorders = await order.find({ status: 'cancelled' }).count();
+          
         const orderdata = await order.aggregate([{ $match: { status: "delivered" } },
         { $group: { _id: null, total: { $sum: '$totalAmount' } } }])
         
-        if(orderdata[0].total){
+        
             const data = orderdata[0].total
-        }else{        const data = 0
-        }
+      
         const cod = await order.aggregate([{ $match: { status: 'delivered', paymentMethod: 'Cash on delivery' } }, { $group: { _id: null, total: { $sum: '$totalAmount' } } }])
-        if(cod[0].total){
+       
         const codtotal = cod[0].total
-        }
-        else{
-            const data = 0
-
-        }
+    
+        
+       
         const totalcodorder = await order.aggregate([{ $match: { status: 'delivered' } }, { $group: { _id: null, total: { $sum: 1 } } }])
-       if(totalcodorder[0].total){
-        const value = totalcodorder[0].total}
-        else{
-            const value = 0
-        }
+    
+        const value = totalcodorder[0].total
+        
 
         const totalstock = await product.aggregate([{ $group: { _id: null, total: { $sum: "$quantity" } } }])
-        if(totalstock[0].total){
-        const stock = totalstock[0].total}
-        else{
-            const stock = 0  
-        }
+       
+        const stock = totalstock[0].total
+      
 
         const codtotalcount = await order.aggregate([{ $match: { status: 'delivered', paymentMethod: 'Cash on delivery' } }, { $group: { _id: null, total: { $sum: 1 } } }])
-        if(codtotalcount[0].total){
-        const codcount = codtotalcount[0].total}
-        else{
-            const codcount = 0
-        }
+        
+        const codcount = codtotalcount[0].total
+       
 
 
         const onlinetotalcount = await order.aggregate([{ $match: { paymentMethod: 'Online Payment', status: 'delivered' } }, { $group: { _id: null, total: { $sum: 1 } } }])
-       if(onlinetotalcount[0].total){
-        const onlinecount = onlinetotalcount[0].total}
-        else{
-            const onlinecount = 0 
-        }
+       
+        const onlinecount = onlinetotalcount[0].total
+        
 
         const online = await order.aggregate([{ $match: { status: 'delivered', paymentMethod: 'Online Payment' } }, { $group: { _id: null, total: { $sum: '$totalAmount' } } }])
-       if(online[0].total){
-        const onlinetotal = online[0].total}
-        else{
-            const onlinetotal = 0
-        }}
-        else{
-            console.log("khfkhfkfhkfhkfhskh");
-        }
+      
+        const onlinetotal = online[0].total
+      
         
 
         res.render('dashboard', {
@@ -448,7 +471,23 @@ const dashboard = async (req, res) => {
             ordercount,
             cancelledorders
         })
-    
+    }
+    else{
+        res.render('dashboard', {
+            orders,
+            data:0,
+            value:0,
+            stock:0,
+            codcount:0,
+            onlinecount:0,
+            codtotal:0,
+            onlinetotal:0,
+            customer:0,
+            ordercount:0,
+            cancelledorders:0
+        })
+    }
+        
    
          
     }
@@ -956,5 +995,6 @@ module.exports = {
     productofferdata,
     deleteproductoffer,
     blockunblockproductoffer,
-    editproductoffer
+    editproductoffer,
+    deleteproductimage
 }

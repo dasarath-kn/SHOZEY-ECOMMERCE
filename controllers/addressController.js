@@ -66,11 +66,12 @@ const addingAddress = async (req, res) => {
 
 const editaddress = async (req, res) => {
     try {
-        const id = req.query.id;
-        const data = await address.findOne({ _id: id })
+        const _id = req.query.id;
+        const id = req.session.userId
+        const data = await address.findOne({ _id: _id })
         const cartdata = await cart.find().populate("items.productid")
 
-        res.render('editaddress', { data, user: req.session.name, cartdata });
+        res.render('editaddress', { data, user: req.session.name, cartdata,id });
     } catch (error) {
         console.log(error.message);
 

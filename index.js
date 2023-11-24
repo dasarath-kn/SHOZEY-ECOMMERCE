@@ -23,7 +23,9 @@ app.set('views','./views');
 
 app.use('/', loginRouter);
  app.use('/admin',adminRouter);
-
+app.use(async(req,res)=>{
+    res.render(__dirname+'/views/user/404.ejs')
+})
 app.listen(3000, () => {
     console.log("Server running on port 3000");
 });

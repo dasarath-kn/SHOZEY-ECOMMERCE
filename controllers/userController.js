@@ -57,12 +57,15 @@ const home = async (req, res) => {
         const id = req.session.userId;
         const data = await product.find().limit(4)
         const products = await product.find().skip(4)
+        const mencategory = await product.find({ category: { $regex: /Men's/i } });
+        const womencategory = await product.find({category:{ $regex:/Women's/i}});
+       
         const cartdata = await cart.find({ userid: id }).populate("items.productid")
         const Categoryofferdata = await Categoryoffer.find()
         const Productofferdata = await Productoffer.find()
 
 
-        res.render("home", { data, user: req.session.name, cartdata, id, Categoryofferdata, Productofferdata,products })
+        res.render("home", { data, user: req.session.name, cartdata, id, Categoryofferdata, Productofferdata,products,mencategory,womencategory })
 
 
     }
@@ -79,7 +82,7 @@ const register = async (req, res) => {
         const cartdata = await cart.find({ userid: id }).populate("items.productid")
 
 
-        res.render('signin', { message: "", user: req.session.name, cartdata });
+        res.render('signin', { message: "", user: req.session.name, cartdata,id });
     }
     catch (error) {
         console.log(error.message);
@@ -93,7 +96,7 @@ const forgetpassword = async(req,res)=>{
         const cartdata = await cart.find({ userid: id }).populate("items.productid")
 
 
-        res.render('forgetpassword',{ message: "", user: req.session.name, cartdata })
+        res.render('forgetpassword',{ message: "", user: req.session.name, cartdata,id })
         
     } catch (error) {
         console.log(error.message);
@@ -111,7 +114,7 @@ const forgetpasswordcheck =async(req,res)=>{
             const _id = userdata._id
             sendVerifyMail(name, req.body.email);
             const otpnumber = items.otp
-            res.render('forgetpasswordotp', { message:" ",userid: _id, otpnumber })
+            res.render('forgetpasswordotp', { message:" ",userid: _id, otpnumber ,id})
 
         
         }
@@ -164,10 +167,10 @@ const resendotpforpassword =async(req,res)=>{
 
 const newpasswordpage = async(req,res)=>{
     try {
-        const _id = req.session.userId;
-        console.log(_id);
+        const id = req.session.userId;
+     
         const cartdata = await cart.find({ userid: _id }).populate("items.productid")
-        res.render('newpassword',{message:"Password is not match", user: req.session.name, cartdata,_id})
+        res.render('newpassword',{message:"Password is not match", user: req.session.name, cartdata,id})
     } catch (error) {
         console.log(error.message);
     }
@@ -202,12 +205,12 @@ const newpassword = async(req,res)=>{
 
 const productdetails = async (req, res) => {
     try {
-        const id = req.query.id
-        const userid = req.session.userId
-        const data = await product.find({ _id: id });
+        const _id = req.query.id
+        const id = req.session.userId
+        const data = await product.find({ _id: _id });
         const sessionid = req.session.userId;
         const cartdata = await cart.find({ userid: sessionid }).populate("items.productid")
-        res.render('productdetails', { data, user: req.session.name, cartdata, userid });
+        res.render('productdetails', { data, user: req.session.name, cartdata, id });
     }
     catch (error) {
         console.log(error.message);
@@ -270,7 +273,7 @@ const sign = async (req, res) => {
     try {
         const id = req.session.userId
         const cartdata = await cart.find({ userid: id }).populate("items.productid")
-        res.render('signup', { user: req.session.name, cartdata ,message:" "});
+        res.render('signup', { user: req.session.name, cartdata ,message:" ",id});
     }
     catch (error) {
         console.log(error.message);
@@ -477,7 +480,8 @@ const otp = async (req, res) => {
 const shop = async (req, res) => {
     try {
         const sessionid = req.session.id
-        const id = req.query.id
+        const _id = req.query.id
+        const id = req.session.userId
         const categorydata = await category.find()
         const lowtohigh = req.query.lowtohigh;
         const hightolow = req.query.hightolow
@@ -500,7 +504,7 @@ const shop = async (req, res) => {
                 const productdata = await product.find({category:categorys}).sort({price:val})
                 console.log(productdata);
             var products =0
-            res.render('shop', { user: req.session.name, cartdata, productdata,products, sessionid, categorydata ,pagecount,categorys,Categoryofferdata,Productofferdata})
+            res.render('shop', { user: req.session.name, cartdata, productdata,products, sessionid, categorydata ,pagecount,categorys,Categoryofferdata,Productofferdata,id})
          }
         else{
             
@@ -510,24 +514,24 @@ const shop = async (req, res) => {
           }
         
         var i=1
-        if (id == 1) {
+        if (_id == 1) {
             
             const productdata = await product.find().skip(i*6).limit(6).sort({price:val})
             i++
             console.log("count",i);
-                res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata ,pagecount,categorys,Categoryofferdata,Productofferdata})
+                res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata ,pagecount,categorys,Categoryofferdata,Productofferdata,id})
                 
 
-        }else if(id==-1) {
+        }else if(_id==-1) {
             
             const productdata = await product.find().limit(6).sort({price:val})
 
-            res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata,pagecount,categorys,Categoryofferdata,Productofferdata})
+            res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata,pagecount,categorys,Categoryofferdata,Productofferdata,id})
         }
         else {
             const productdata = await product.find().limit(6).sort({price:val})
 
-            res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata,pagecount,categorys,Categoryofferdata,Productofferdata})
+            res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata,pagecount,categorys,Categoryofferdata,Productofferdata,id})
         }
     }
     } catch (error) {
@@ -634,7 +638,7 @@ const sortproduct= async(req,res)=>{
 
 const logout = async (req, res) => {
     try {
-        req.session.userId = false
+        req.session.userId = null
         res.redirect('/');
 
 
@@ -667,7 +671,7 @@ module.exports = {
     search,
     pricesort,
     categorysort,
-    sortproduct
-    // errorpage
+    sortproduct,
+    //  errorpage
 }
 

@@ -83,22 +83,66 @@
                       </span>
                     </div>
                   </div> -->
-                   <div class="form-group">
+                  <div class="form-group">
                     <label for="images">Upload Images</label>
-                    <input type="file" class="form-control-file" id="images" name="image" multiple onchange="previewImages(this)">
+                    <input type="file" accept="image/*" class="form-control-file" id="images" name="image" multiple onchange="validateAndPreviewImages(this)">
                     <span id="image1Error" style="color: red;"></span>
-
-                  </div> 
-                  <div id="imagePreviewContainer"></div>
-
+                </div>
+                <div id="imagePreviewContainer"></div>
                   
                   <button type="submit" class="btn btn-primary mr-2" value="Upload Images">Submit</button>
-                  <button class="btn btn-dark"  ><a href="/admin">Cancel</a></button>
+                  <button class="btn btn-dark"  ><a href="/admin/productmanagement">Cancel</a></button>
                 </form>
               </div>
             </div>
           </div>
       
+          <script>
+            function validateAndPreviewImages(input) {
+                var previewContainer = document.getElementById('imagePreviewContainer');
+                var errorSpan = document.getElementById('image1Error');
+            
+                // Get the selected files
+                var files = input.files;
+            
+                // Define the maximum allowed images
+                var maxImages = 4;
+            
+                // Check if the number of selected images exceeds the limit
+                if (files.length > maxImages) {
+                    // Clear the file input
+                    input.value = '';
+            
+                    // Display an error message
+                    errorSpan.textContent = 'Please upload a maximum of ' + maxImages + ' images.';
+                    errorSpan.style.display = 'block';
+            
+                    // Clear the image preview container
+                    previewContainer.innerHTML = '';
+                } else {
+                    // Hide any previous error messages
+                    errorSpan.style.display = 'none';
+            
+                    // Check if there are already 4 images
+                    if (previewContainer.childElementCount === maxImages) {
+                        // Display a message to delete existing images
+                        errorSpan.textContent = 'Delete existing images before uploading new ones.';
+                        errorSpan.style.display = 'block';
+            
+                        // Clear the file input
+                        input.value = '';
+            
+                        // Clear the image preview container
+                        previewContainer.innerHTML = '';
+                    } else {
+                        // Proceed with previewing the images
+                        previewImages(input);
+                    }
+                }
+            }
+            
+            // The rest of your previewImages function goes here
+            </script>
 
 <script>
   function previewImages(input) {
@@ -115,7 +159,7 @@
 
         var img = document.createElement('img');
         img.src = e.target.result;
-        img.style.maxWidth = '100px'; // Set a maximum width for the preview image
+        img.style.maxWidth = '300px'; // Set a maximum width for the preview image
 
         var overlay = document.createElement('div');
         overlay.classList.add('overlay');

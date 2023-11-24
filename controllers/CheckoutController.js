@@ -71,7 +71,7 @@ const ProceedtoCheckout = async (req, res) => {
             });
         }
         const cartdata = await cart.find({ userid: id }).populate("items.productid")
-        res.render('checkout', { user: req.session.name, data, cartdata, useraddress, totalsum, coupondata });
+        res.render('checkout', { user: req.session.name, data, cartdata, useraddress, totalsum, coupondata,id });
 
     } catch (error) {
         console.log(error.message);
@@ -136,6 +136,8 @@ const ProceedOrder = async (req, res) => {
                 discountamount: totalAmount
             })
             const orderdata = await datas.save();
+            const orderid =orderdata._id 
+            console.log(orderid[0]+"dgfgddgdgfdgd");
             if (payment == "Cash on delivery") {
                 let data = cartData.items
 
@@ -148,10 +150,7 @@ const ProceedOrder = async (req, res) => {
                 }
                 console.log("sdfewssdgdf");
                 await cart.deleteOne({ userid: id })
-                return res.json({ success: true }
-
-
-                )
+                return res.json({ success: true,orderid } )
             } else if (payment == "Wallet") {
                 return res.json({ online: true })
 
@@ -164,7 +163,7 @@ const ProceedOrder = async (req, res) => {
 
                 instance.orders.create(options, function (err, order) {
 
-                    return res.json({ order });
+                    return res.json({ order,orderid });
                 });
 
             }
@@ -186,14 +185,16 @@ const ProceedOrder = async (req, res) => {
 const orderdetails = async (req, res) => {
 
     try {
-        const id = req.query.id;
+        const _id = req.query.id;
+        const id =req.session.userId
+        console.log(req.query);
         const data = await product.find()
-        const cartdata = await cart.find({ userid: id }).populate("items.productid")
-        const orderdata = await order.find({ _id: id }).populate("items.productid")
+        const cartdata = await cart.find({ userid: _id }).populate("items.productid")
+        const orderdata = await order.find({ _id: _id }).populate("items.productid")
 
         console.log(orderdata);
 
-        res.render('orderdetails', { orderdata, data, cartdata, user: req.session.name })
+        res.render('orderdetails', { orderdata, data, cartdata, user: req.session.name,id })
 
     } catch (error) {
         console.log(error.message);
@@ -249,7 +250,8 @@ const cancelorder = async (req, res) => {
 
 const orderplaced = async (req, res) => {
     try {
-        res.render('orderplaced')
+        const orderid = req.query.id
+        res.render('orderplaced',{orderid})
 
     } catch (error) {
         console.log(error.message);

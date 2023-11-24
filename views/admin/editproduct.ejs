@@ -1,45 +1,160 @@
 <%- include ('../admin/layouts/header.ejs')-%>
   
-        <!-- partial -->
-        <div class="col-12 mt-5 grid-margin stretch-card">
-            <div class="card">
-              <div class="card-body">
+<div class="col-12 mt-5 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+
+            <% if(item) { %>
+            <!-- Your form for each item goes here -->
+            <form class="forms-sample" action="/admin/editingproduct?id=<%= item._id %>" method="post" enctype="multipart/form-data">
+                <!-- Form fields for this product -->
+                <div class="form-group">
+                    <label for="exampleInputName1">Product Name</label>
+                    <input type="text" class="form-control" value="<%= item.productname %>" id="exampleInputName1"
+                        placeholder="Product Name" name="product" required>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail3">Quantity</label>
+                    <input type="text" class="form-control" value="<%= item.quantity %>" id="exampleInputEmail3"
+                        placeholder="Quantity" name="quantity" required>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword4">Price</label>
+                    <input type="number" class="form-control" value="<%= item.price %>" id="exampleInputPassword4"
+                        placeholder="Price" name="price" required>
+                </div>
+                <div class="form-group">
+                    <label for="exampleSelectGender">Category</label>
+                    <select class="form-control" id="exampleSelectGender" name="category" required>
+                        <% for(let i=0; i<categorydata.length; i++){ %>
+                        <option value="<%= categorydata[i].productcategory %>"><%= categorydata[i].productcategory %>
+                        </option>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="exampleTextarea1">Description</label>
+                    <textarea class="form-control" id="exampleTextarea1" rows="4" name="description"
+                        required><%= item.description %></textarea>
+                </div>
+
+                <!-- Display existing images -->
+                <div id="existingImagePreview">
+                    <p>Existing Images:</p>
+                    <div id="existingImages" class="d-flex flex-nowrap overflow-auto">
+                        <% for(let i=0; i<image.length; i++){ %>
+                        <div class="existing-image-container d-inline-block mr-2">
+                            <img src="/productimages/<%=image[i] %>" alt="Existing Image" style="max-width: 200px;">
+                            <!-- <button type="button" onclick="updateImage('<%= item._id %>', '<%= image[i] %>')" class="btn btn-sm btn-secondary">Update</button> -->
+                            <button type="button" onclick="deleteImage('<%= item._id %>', '<%= image[i] %>')" class="btn btn-sm btn-danger">Delete</button>
+                        </div>
+                        <% } %>
+                    </div>
+                </div>
                 
-                 <%  if(item){%>
-                  <!-- Your form for each item goes here -->
-                  <form class="forms-sample" action="/admin/editingproduct?id=<%= item._id %>" method="post">
-                      <!-- Form fields for this product -->
-                      <div class="form-group">
-                          <label for="exampleInputName1">Product Name</label>
-                          <input type="text" class="form-control" value="<%= item.productname %>" id="exampleInputName1" placeholder="Product Name" name="product" required>
-                      </div>
-                      <div class="form-group">
-                          <label for="exampleInputEmail3">Quantity</label>
-                          <input type="text" class="form-control" value="<%= item.quantity %>" id="exampleInputEmail3" placeholder="Quantity" name="quantity" required>
-                      </div>
-                      <div class="form-group">
-                          <label for="exampleInputPassword4">Price</label>
-                          <input type="number" class="form-control" value="<%= item.price %>" id="exampleInputPassword4" placeholder="Price" name="price" required>
-                      </div>
-                      <div class="form-group">
-                          <label for="exampleSelectGender">Category</label>
-                          <select class="form-control" id="exampleSelectGender" name="category" required>
-                            <% for(let i=0;i<categorydata.length;i++){%>
-                                <option value="<%=categorydata[i].productcategory %>"><%= categorydata[i].productcategory %></option>
-                                <%}%> 
-                          </select>
-                      </div>
-                      <div class="form-group">
-                          <label for="exampleTextarea1">Description</label>
-                          <textarea class="form-control" id="exampleTextarea1" rows="4" name="description" required><%= item.description %></textarea>
-                      </div>
-                      <button type="submit" class="btn btn-primary mr-2" >Submit</button>
-                      <button class="btn btn-dark"><a href="/admin/productmanagement">Cancel</a></button>
-                  </form>
-                  <%} %>
-              
-              </div>
-            </div>
-          </div>
+                
+                <!-- Upload new images -->
+                <div class="form-group">
+                    <label for="images">Upload Images</label>
+                    <input type="file" accept="image/*" class="form-control-file" id="images" name="image" multiple onchange="validateAndPreviewImages(this)">
+                    <span id="image1Error" style="color: red;"></span>
+                </div>
+                <div id="imagePreviewContainer"></div>
+                <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                <button class="btn btn-dark"><a href="/admin/productmanagement">Cancel</a></button>
+            </form>
+            <% } %>
+
+        </div>
+    </div>
+</div>
+
+    
+<script>
+    // Function to handle new image uploads
+    function previewImages(input) {
+        var previewContainer = document.getElementById('imagePreviewContainer');
+        previewContainer.innerHTML = ''; // Clear previous previews
+
+        var files = input.files;
+        for (var i = 0; i < files.length; i++) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                var img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.maxWidth = '300px'; // Set a maximum width for the preview image
+
+                previewContainer.appendChild(img);
+            };
+
+            reader.readAsDataURL(files[i]);
+        }
+    }
+</script>
+
+<script>
+    function deleteImage(productid,imageid){
+        console.log(productid,"pppp",imageid);
+        $.ajax({
+            method:'delete',
+        url:'/admin/deleteproductimage',
+        data:JSON.stringify({productid:productid,imageid:imageid}),
+        contentType:'application/json',
+        success:function(response){
+            if(response.result==true){
+                // $('#existingImagePreview').load('/admin/edit/product #existingImagePreview');
+                window.location.reload()
+
+               
+            }else{
+                console.log('Error');
+            }
+        }
+        })
+
+    }
+    
+    function updateImage(productid,imageid){
+        console.log(productid,imageid);
+
+    }
+</script>
+
+<script>
+  function validateAndPreviewImages(input) {
+      var previewContainer = document.getElementById('imagePreviewContainer');
+      var errorSpan = document.getElementById('image1Error');
+      
+      // Get the selected files
+      var files = input.files;
+  
+      // Define the maximum allowed images
+      var maxImages = 4;
+  
+      // Check if the number of selected images exceeds the limit
+      if (files.length > maxImages) {
+          // Clear the file input
+          input.value = '';
+  
+          // Display an error message
+          errorSpan.textContent = 'Please upload a maximum of ' + maxImages + ' images.';
+          errorSpan.style.display = 'block';
+  
+          // Clear the image preview container
+          previewContainer.innerHTML = '';
+      } else {
+          // Hide any previous error messages
+          errorSpan.style.display = 'none';
+  
+          // Proceed with previewing the images
+          previewImages(input);
+      }
+  }
+  
+  // The rest of your previewImages function goes here
+  </script>
+
+
        
          <%- include ('../admin/layouts/footer.ejs')-%>

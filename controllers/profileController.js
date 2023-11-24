@@ -10,15 +10,16 @@ const Wallet = require('../models/walletModel');
 
 const profile = async (req, res) => {
     try {
+        const id = req.session.userId
         const users = await user.findOne({_id:req.session.userId});
         console.log(users);
         const userdata = await address.find({ userId: req.session.userId });
         const cartdata = await cart.find().populate("items.productid")
-        const id = req.query.id;
+        const _id = req.query.id;
         const data = userdata
         const orderdata = await order.find({ user_Id: req.session.userId }).sort({ purchaseDate: -1 })
        
-        res.render('profile', { data, user: req.session.name, cartdata, orderdata,users })
+        res.render('profile', { data, user: req.session.name, cartdata, orderdata,users,id })
 
     } catch (error) {
         console.log(error.message);
@@ -108,11 +109,12 @@ const editprofile = async(req,res)=>{
 const wallet = async(req,res)=>{
     try {
 
-            const id = req.session.id
+            const _id = req.session.id
+            const id = req.session.userId
             const walletdata = await Wallet.findOne({userid:req.session.userId}); 
-        const cartdata = await cart.find({ userid: id }).populate("items.productid")
+        const cartdata = await cart.find({ userid: _id }).populate("items.productid")
 
-        res.render('wallet',{user:req.session.name,cartdata,walletdata})
+        res.render('wallet',{user:req.session.name,cartdata,walletdata,id})
         
     } catch (error) {
         console.log(error.message);

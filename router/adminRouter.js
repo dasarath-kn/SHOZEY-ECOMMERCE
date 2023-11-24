@@ -7,18 +7,7 @@ const auth = require('../middleware/adminAuth');
 const multer = require('../middleware/multer');
 const path=require('path');
 const { admin } = require('../controllers/userController');
-// // const p=require('../public/productimages')
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, path.join(__dirname, "../public/productimages"));
-//   },
-//   filename: function (req, file, cb) {
-//     // cb(null, Date.now() + '-' + file.originalname);
-//     cb(null,file.fieldname + "-" + Date.now() + path.extname(file.originalname))
-//   },
-// });
 
-// const upload = multer({ storage: storage });
 
 router.set('view engine', 'ejs');
 router.set('views','./views/admin');
@@ -49,7 +38,8 @@ router.get('/addproduct',adminController.addproduct);
 router.get('/delete/product',adminController.deleteproduct);
 router.get('/edit/product',adminController.editproduct);
 router.get('/list/product',adminController.listproduct);
-router.post('/editingproduct',adminController.editingproduct)
+router.post('/editingproduct',multer.upload.array('image', 4),adminController.editingproduct);
+router.delete('/deleteproductimage',adminController.deleteproductimage)
 
 //=================================== CATEGORY-MANAGEMENT =====================================//
 
