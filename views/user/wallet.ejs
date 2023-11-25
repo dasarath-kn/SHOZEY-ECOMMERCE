@@ -18,7 +18,10 @@
         <div class="page-content">
             <div class="container">
                 
-                <div class="container" style="background-color: rgb(247, 234, 211); height: 100px; display: flex; align-items: center; justify-content: center;">
+                <div style="width: 100px; height: 50px;"> <!-- Adjust width and height as needed -->
+                    <button type="submit" class="form-control btn btn-primary rounded submit px-3" >Add Money</button>
+                  </div>
+                                  <div class="container" style="background-color: rgb(247, 234, 211); height: 100px; display: flex; align-items: center; justify-content: center;">
                     <h1>Rs.<%= walletdata.balance %></h1>
                 </div>
                 
@@ -86,4 +89,4 @@
 
 
     </script>
-    <%- include('../user/layout/footer.ejs') -%>
+    <%- include('../user/layout/footers.ejs') -%>

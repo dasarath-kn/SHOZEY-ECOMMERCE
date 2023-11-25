@@ -69,7 +69,7 @@
 
                     <div class="header-right">
                         <nav class="main-nav">
-                            <ul class="menu sf-arrows">
+                            <ul class="menu sf-arrows   ">
                                 <li class="megamenu-container active">
                                     <a href="/" class="">Home</a>
 
@@ -101,7 +101,7 @@
                                 <% } else { %>
 
                                     <li>
-                                        <a href="#" class="sf-with-ul">Profile</a>
+                                        <a href="#" class="sf-with-ul"><%= user%></a>
                                         <ul>
                                            
                                             <li><a href="/logout">Logout</a></li>
@@ -131,7 +131,10 @@
                                 </div><!-- End .header-search-wrapper -->
                             </form>
                         </div><!-- End .header-search -->
-
+                       
+                        <a style="margin-top: 10px;"  href="/wishlist" class="wishlist-link">
+                            <i class="icon-heart-o"></i>
+                           
                         <div class="dropdown cart-dropdown" id="downCart">
                             <a href="/cart" class="dropdown-toggle" role="button" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false" data-display="static">
@@ -149,19 +152,20 @@
                                                     <div class="product-cart-details">
                                                         <h4 class="product-title">
                                                             <a href="product.html">
-                                                                
+                                                                <%= element.productid.productname %>
                                                             </a>
                                                         </h4>
 
                                                         <span class="cart-product-info">
                                                             <span class="cart-product-qty"></span>
-                                                            
+                                                            <%= element.count %> x Rs.<%= element.productid.price *
+                                                            element.count %>
                                                         </span>
                                                     </div><!-- End .product-cart-details -->
 
                                                     <figure class="product-image-container">
                                                         <a href="" class="product-image">
-                                                            <img src=""
+                                                            <img src="/productimages/<%= element.productid.image[0] %>"
                                                                 alt="product">
                                                         </a>
                                                     </figure>
@@ -212,9 +216,9 @@
                                                                 <div class="dropdown-cart-action">
                                                                     <a href="/cart" class="btn btn-primary">View
                                                                         Cart</a>
-                                                                    <a href="ProceedtoCheckout"
+                                                                    <!-- <a href="ProceedtoCheckout"
                                                                         class="btn btn-outline-primary-2"><span>Checkout</span><i
-                                                                            class="icon-long-arrow-right"></i></a>
+                                                                            class="icon-long-arrow-right"></i></a> -->
                                                                 </div><!-- End .dropdown-cart-total -->
                                                         </div><!-- End .dropdown-menu -->
                             </div><!-- End .cart-dropdown -->

@@ -28,10 +28,10 @@
                         </tr>
                     </thead>
 
+                    <% if(wishlistdata.length!=0){%>
+                    <% let product=wishlistdata[0].productid %>
+                        <% for(let i=0; i < product.length; i++) { %>
                     <tbody >
-
-                        <% let product=wishlistdata[0].productid %>
-                            <% for(let i=0; i < product.length; i++) { %>
                                
                                 <tr id="wishlist-data" >
                                     <td class="product-col">
@@ -60,38 +60,32 @@
                                             <td class="stock-col"><span class="in-stock">In stock</span></td>
                                             <%}%>
                                                
-                                            <td class="stock-col"><a href="/productdetails?id=<%= product[i]._id%>">Details</a></td>
+                                            <td class="stock-col"> <% if(id){%>
+                                                
+                                                <a onclick="toAddCart('<%= product[i]._id %>')"   class="btn-product btn-cart"><span>add to cart</span></a>
+                                                <%} else{%>
+                                                <a  id="carts" class="btn-product btn-cart"><span>add to cart</span></a>
+                                                
+                                                <%} %></td>
 
                                                 <td onclick="deletewishlist('<%= product[i]._id%>')" class="remove-col"><button
                                                         class="btn-remove"><i class="icon-close"></i></button></td>
                                 </tr>
                                </div>
-                                <% } %>
-
-
-                    </tbody>
+                               
+                               
+                            </tbody>
+                            <% } %>
+                            <%} else{%>
+                                <h1>sjhfdsjkfhhk</h1><%}%>
                 </table><!-- End .table table-wishlist -->
-                <div class="wishlist-share">
-                    <div class="social-icons social-icons-sm mb-2">
-                        <label class="social-label">Share on:</label>
-                        <a href="#" class="social-icon" title="Facebook" target="_blank"><i
-                                class="icon-facebook-f"></i></a>
-                        <a href="#" class="social-icon" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
-                        <a href="#" class="social-icon" title="Instagram" target="_blank"><i
-                                class="icon-instagram"></i></a>
-                        <a href="#" class="social-icon" title="Youtube" target="_blank"><i class="icon-youtube"></i></a>
-                        <a href="#" class="social-icon" title="Pinterest" target="_blank"><i
-                                class="icon-pinterest"></i></a>
-                    </div><!-- End .soial-icons -->
-                </div><!-- End .wishlist-share -->
+              
             </div><!-- End .container -->
         </div><!-- End .page-content -->
     </main><!-- End .main -->
-
-    <%- include('../user/layout/footer.ejs') -%>
-
-        <script>
-            function deletewishlist(id) {
+    
+    <script>
+        function deletewishlist(id) {
                 Swal.fire({
                     title: "Are you sure?",
                     text: "You won't be able to revert this!",
@@ -118,9 +112,56 @@
                         
                     }
                         }
-
+        
                     })
                 }
                 });
             }
+            
+            function toAddCart(id){
+                console.log("add to cart function started"+id);
+                $.ajax({
+                    method:"post",
+                url:"/addToCart",
+                data:JSON.stringify({id:id}),
+                contentType:'application/json',
+                success:function(response){
+                    if(response.result === true){
+                    $('#cart').load('/ #cart');    
+                    Swal.fire({
+                        title:'success',
+                        text:'product added to cart',
+                        icon:'success',
+                        confirmButtonText:'OK'
+                    });
+                    
+                }else if(response.count==true){
+                    
+                    $('#downCart').load('/ #downCart');
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Product count increased",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });         
+                    
+                }
+                else{
+                    Swal.fire({
+                        title:'Failed',
+                        text:'product is out of stock',
+                        icon:'failed',
+                        confirmButtonText:'OK'
+                    });
+                }
+            },
+                error:function(error){
+                    console.error(error);
+                }
+                
+            });
+        }
         </script>
+        <%- include('../user/layout/footers.ejs') -%>
+        

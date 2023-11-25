@@ -421,41 +421,64 @@ const dashboard = async (req, res) => {
           
         const orderdata = await order.aggregate([{ $match: { status: "delivered" } },
         { $group: { _id: null, total: { $sum: '$totalAmount' } } }])
-        
-        
-            const data = orderdata[0].total
-      
+      var data
+          if(orderdata!=0){
+             data = orderdata[0].total
+        }else{
+             data=0
+            
+          }
+       var codtotal
         const cod = await order.aggregate([{ $match: { status: 'delivered', paymentMethod: 'Cash on delivery' } }, { $group: { _id: null, total: { $sum: '$totalAmount' } } }])
-       
-        const codtotal = cod[0].total
+        if(cod!=0){
+         codtotal = cod[0].total
+        }else{
+             codtotal =0 
+        }
     
         
-       
+       var value
         const totalcodorder = await order.aggregate([{ $match: { status: 'delivered' } }, { $group: { _id: null, total: { $sum: 1 } } }])
-    
-        const value = totalcodorder[0].total
-        
+     if(totalcodorder !=0){
+        value = totalcodorder[0].total
+     }else{
+         value=0
+     }
 
+        
+        var stock
         const totalstock = await product.aggregate([{ $group: { _id: null, total: { $sum: "$quantity" } } }])
-       
-        const stock = totalstock[0].total
+        if(totalstock!=0){
+        stock = totalstock[0].total
+        }else{
+            stock=0
+        }
       
-
+        var codcount
         const codtotalcount = await order.aggregate([{ $match: { status: 'delivered', paymentMethod: 'Cash on delivery' } }, { $group: { _id: null, total: { $sum: 1 } } }])
-        
-        const codcount = codtotalcount[0].total
+        if(codtotalcount!=0){
+         codcount = codtotalcount[0].total
        
+        }else{
+             codcount =0
+        }
 
-
+        var onlinecount
         const onlinetotalcount = await order.aggregate([{ $match: { paymentMethod: 'Online Payment', status: 'delivered' } }, { $group: { _id: null, total: { $sum: 1 } } }])
-       
-        const onlinecount = onlinetotalcount[0].total
+        if(onlinetotalcount!=0){
+         onlinecount = onlinetotalcount[0].total
+        }
+        else{
+             onlinecount =0
+        }
         
-
+        var onlinetotal
         const online = await order.aggregate([{ $match: { status: 'delivered', paymentMethod: 'Online Payment' } }, { $group: { _id: null, total: { $sum: '$totalAmount' } } }])
-      
-        const onlinetotal = online[0].total
-      
+          if(online!=0){
+         onlinetotal = online[0].total
+          }else{
+             onlinetotal =0
+          }
         
 
         res.render('dashboard', {
@@ -489,6 +512,7 @@ const dashboard = async (req, res) => {
     }
         
    
+    
          
     }
     catch (error) {
@@ -952,6 +976,29 @@ const editproductoffer = async (req, res) => {
     }
 }
 
+
+const banner = async(req,res)=>{
+    try {
+
+        res.render('bannermanagement')
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const addbanner = async(req,res)=>{
+    try {
+
+        console.log("bbbbbbbb");
+        res.render('addbanner');
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+
 module.exports = {
     adminlogin,
     admin,
@@ -996,5 +1043,7 @@ module.exports = {
     deleteproductoffer,
     blockunblockproductoffer,
     editproductoffer,
-    deleteproductimage
+    deleteproductimage,
+    banner,
+    addbanner
 }

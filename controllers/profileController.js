@@ -111,8 +111,12 @@ const wallet = async(req,res)=>{
 
             const _id = req.session.id
             const id = req.session.userId
-            const walletdata = await Wallet.findOne({userid:req.session.userId}); 
-        const cartdata = await cart.find({ userid: _id }).populate("items.productid")
+            const walletdata = await Wallet.findOne({ userid: req.session.userId });
+
+            if (walletdata) {
+              walletdata.items.sort((a, b) => b.date - a.date);
+            }       
+             const cartdata = await cart.find({ userid: _id }).populate("items.productid")
 
         res.render('wallet',{user:req.session.name,cartdata,walletdata,id})
         

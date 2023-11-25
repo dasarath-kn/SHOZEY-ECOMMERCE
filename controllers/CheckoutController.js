@@ -210,13 +210,71 @@ const cancelorder = async (req, res) => {
         console.log("uhshufdhj");
         const id = req.body.id;
         const count = req.body.count
+        const amount=req.body.amount
         console.log(id);
          const val = await order.findOne({_id:id})
           const productid =req.body.productid ;
-        // const ordercount= await order.findOne({_id:id},{'items.productid':productid})
-        // console.log(ordercount);
+        //   const oders= await order.findOne({_id:id,'items'})
+        const ordercount= await order.findOne({_id:id,'items.productid':productid})
+        const paymentMethod =ordercount.paymentMethod
         if(id){
-        // await order.findByIdAndUpdate(id, { status: "cancelled" })
+       if(paymentMethod =='Online Payment'){
+        const data=  await order.updateOne(
+            {
+              _id:id,
+              'items.productid': productid,
+            },
+            {
+              $set: {
+                'items.$.status': "cancelled",
+              },
+            }
+          );
+          const productdata = await product.updateOne({_id:productid},{$inc:{quantity:count}});
+          const wallet = await Wallet.updateOne(  { userid:req.session.userId },
+            {
+                $inc: { balance:amount  },
+                $push: {
+                    items: {
+                        date: Date.now(),
+                        amount:amount ,
+                        type: 'Return'
+                        
+                    }
+                }
+            })
+
+            res.json({result:true})
+
+       }else if(paymentMethod =='wallet'){
+        const data=  await order.updateOne(
+            {
+              _id:id,
+              'items.productid': productid,
+            },
+            {
+              $set: {
+                'items.$.status': "cancelled",
+              },
+            }
+          );
+          const productdata = await product.updateOne({_id:productid},{$inc:{quantity:count}});
+          console.log(data);
+          const wallet = await Wallet.updateOne(  { userid:req.session.userId },
+            {
+                $inc: { balance:amount  },
+                $push: {
+                    items: {
+                        date: Date.now(),
+                        amount:amount ,
+                        type: 'Return'
+                        
+                    }
+                }
+            })
+
+            res.json({result:true})
+       }else{
       const data=  await order.updateOne(
             {
               _id:id,
@@ -230,15 +288,11 @@ const cancelorder = async (req, res) => {
           );
           const productdata = await product.updateOne({_id:productid},{$inc:{quantity:count}});
           console.log(data);
-            res.json({result:true})
+            res.json({result:true})}
         }else{
             console.log("Status is not changed ");
         }
-       
-
-        
-
-
+               
        
 
     } catch (error) {
@@ -330,6 +384,7 @@ const returnorder = async(req,res)=>{
                     }
                 }
             })
+            console.log(wallet+"fhgjfjgfsjgfsdhjkgsduyj");
         const productdata = await product.updateOne({_id:productid},{$inc:{quantity:count}});
         await order.updateOne({ _id: orderid, "items.productid": productid }, { $set: { 'items.$.status': "returned" } })
 

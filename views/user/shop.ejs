@@ -22,7 +22,7 @@
                         <div class="toolbox">
                             <div class="toolbox-left">
                                 <div class="toolbox-info">
-                                    Showing <span>9 of 56</span> Products
+                                    <!-- Showing <span>9 of 56</span> Products -->
                                 </div><!-- End .toolbox-info -->
                             </div><!-- End .toolbox-left -->
 
@@ -237,7 +237,7 @@
                         <div class="sidebar sidebar-shop">
                             <div class="widget widget-clean">
                                 <label>Filters:</label>
-                                <a href="#" class="sidebar-filter-clear">Clean All</a>
+                                <!-- <a href="#" class="sidebar-filter-clear">Clean All</a> -->
                             </div>
 
                            
@@ -313,8 +313,10 @@
                                                     Price high to low
                                                 </label>
                                               </div>
-                                              <button type="submit" class="form-control btn btn-primary rounded submit px-3">Filter</button>
-
+                                              <button type="submit" id="proceed-to-checkout" 
+                                             
+                                              class="btn btn-outline-primary-2 btn-order btn-block">Filter
+                                          </button>
                                             </form>
                                            
                                             
@@ -452,4 +454,4 @@ function lowtohigh(id){
 
 
     </script>
-    <%- include('../user/layout/footer.ejs') -%>
+    <%- include('../user/layout/footers.ejs') -%>

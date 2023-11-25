@@ -27,12 +27,12 @@ router.post('/login',adminController.admin);
 
 //=================================== USER-MANAGEMENT =====================================//
 
-router.get('/usermanagement',adminController.usermanagement);
+router.get('/usermanagement',auth.checkadminisLogin,adminController.usermanagement);
 router.get('/admin/block-user',adminController.blockuser);
 
 //=================================== PRODUCT-MANAGEMENT =====================================//
 
-router.get('/productmanagement',adminController.productmanagement);
+router.get('/productmanagement',auth.checkadminisLogin,adminController.productmanagement);
 router.post('/productadd',multer.upload.array('image', 4),adminController.newproduct);
 router.get('/addproduct',adminController.addproduct);
 router.get('/delete/product',adminController.deleteproduct);
@@ -43,7 +43,7 @@ router.delete('/deleteproductimage',adminController.deleteproductimage)
 
 //=================================== CATEGORY-MANAGEMENT =====================================//
 
-router.get('/productcategory',adminController.productcategory);
+router.get('/productcategory',auth.checkadminisLogin,adminController.productcategory);
 router.get('/addcategory',adminController.addcategory);
 router.post('/category',adminController.adddata);
 router.get('/delete/category',adminController.deletecategory);
@@ -53,7 +53,7 @@ router.get('/block/category',adminController.blockcategory);
 
 //=================================== ORDERS =====================================//
 
-router.get('/orders',adminController.orders)
+router.get('/orders',auth.checkadminisLogin,adminController.orders)
 router.post('/cartstatus',adminController.cartstatus)
 router.get('/orderdetails',adminController.orderdetails);
 //=================================== DASHBOARD =====================================//
@@ -62,13 +62,13 @@ router.get('/dashboard',auth.checkadminisLogin,adminController.dashboard)
 
 //=================================== SALESREPORT =====================================//
 
-router.get('/salesreport',adminController.salesreport)
+router.get('/salesreport',auth.checkadminisLogin,adminController.salesreport)
 router.post('/salessort',adminController.salessort)
 router.get('/downloadreport',adminController.downloadreport)
 
 //=================================== COUPON =====================================//
 
-router.get('/coupon',adminController.couponmanagement);
+router.get('/coupon',auth.checkadminisLogin,adminController.couponmanagement);
 router.get('/addcoupon',adminController.addcoupon);
 router.post('/coupondata',adminController.coupondata)
 router.get('/editingcoupon',adminController.editingcoupon);
@@ -78,26 +78,27 @@ router.delete('/deletecoupon',adminController.deletecoupon)
 
 //=================================== Offer management =====================================//
 
-router.get('/offermanagement',adminController.offermanagement)
+router.get('/offermanagement',auth.checkadminisLogin,adminController.offermanagement)
 router.get('/addoffer',adminController.addoffer);
 router.post('/offerdata',adminController.categoryofferdata);
 router.get('/editoffer',adminController.editoffer);
 router.post('/block-unblockoffer',adminController.blockunblockoffer);
 router.delete('/deleteoffer',adminController.deleteoffer);
 router.get('/productoffer',adminController.productoffer);
-router.get('/addproductoffer',adminController.addproductoffer)
+router.get('/addproductoffer',auth.checkadminisLogin,adminController.addproductoffer)
 router.post('/productofferdata',adminController.productofferdata)
 router.delete('/deleteproductoffer',adminController.deleteproductoffer)
 router.post('/block-unblockproductoffer',adminController.blockunblockproductoffer)
 router.get('/editproductoffer',adminController.editproductoffer)
 
+//=================================== Banner-Management =====================================//
+
+router.get('/banner',adminController.banner)
+router.get('/addbanner',adminController.addbanner)
+router.post('/bannerdata',adminController.addbanner);
+
 //=================================== LOG-OUT =====================================//
-
-
-
 router.get('/logout',auth.checkadminisLogin,adminController.logout);
-
-
 
 //=================================== MODULE--EXPORTS =====================================//
 

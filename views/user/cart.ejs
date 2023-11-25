@@ -62,8 +62,7 @@
                                             <a href="#" class="sf-with-ul">Profile</a>
                                             <ul>
                                                 <li><a href="/signin">Login</a></li>
-                                                <li><a href="/profile">Profile</a></li>
-                                                <li><a href="/cart">Cart</a></li>
+                                               
                                             </ul>
                                         </li>
                                     <% } else { %>
@@ -72,10 +71,10 @@
                                                 <%= user %>
                                             </a>
                                             <ul>
-                                                <li><a href="/signin">Login</a></li>
+                                                
                                                 <li><a href="/logout">Logout</a></li>
                                                 <li><a href="/profile">Profile</a></li>
-                                                <li><a href="/cart">Cart</a></li>
+                                                
                                             </ul>
                                         </li>
                                     <% } %>
@@ -213,7 +212,7 @@
                                                                     </figure>
 
                                                                     <h3 class="product-title">
-                                                                        <a href="/productdetails?id=<%= item._id %>">
+                                                                        <a href="/productdetails?id=<%= element.productid._id %>">
                                                                             <%= element.productid.productname %>
                                                                         </a>
                                                                     </h3>

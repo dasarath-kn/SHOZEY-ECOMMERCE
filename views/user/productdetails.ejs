@@ -56,31 +56,31 @@
                                     <div class="product-details product-details-sidebar">
                                         <h1 class="product-title"><%= item.productname %></h1><!-- End .product-title -->
 
-                                        <div class="ratings-container">
+                                        <!-- <div class="ratings-container">
                                             <div class="ratings">
-                                                <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                            </div><!-- End .ratings -->
+                                                <div class="ratings-val" style="width: 80%;"></div>
+                                            </div>
                                             <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews )</a>
-                                        </div><!-- End .rating-container -->
+                                        </div> -->
 
                                         <div class="product-price">
                                             Rs.<%= item.price %>
                                         </div><!-- End .product-price -->
 
-                                        <div class="product-content">
+                                     <div class="product-content">
                                             <p>Sed egestas, ante et vulputate volutpat, eros semper est, vitae luctus metus libero eu augue.</p>
-                                        </div><!-- End .product-content -->
-
+                                        </div>
+<!-- 
                                         <div class="details-filter-row details-row-size">
-                                            <label>Color:</label>
+                                            <label>Color:</label> -->
 
-                                            <div class="product-nav product-nav-dots">
+                                            <!-- <div class="product-nav product-nav-dots">
                                                 <a href="#" class="active" style="background: #333333;"><span class="sr-only">Color name</span></a>
                                                 <a href="#" style="background: #efe7db;"><span class="sr-only">Color name</span></a>
-                                            </div><!-- End .product-nav -->
-                                        </div><!-- End .details-filter-row -->
+                                            </div>
+                                        </div> -->
 
-                                        <div class="details-filter-row details-row-size">
+                                        <!-- <div class="details-filter-row details-row-size">
                                             <label for="size">Size:</label>
                                             <div class="select-custom">
                                                 <select name="size" id="size" class="form-control">
@@ -90,17 +90,17 @@
                                                     <option value="l">Large</option>
                                                     <option value="xl">Extra Large</option>
                                                 </select>
-                                            </div><!-- End .select-custom -->
+                                            </div>
 
                                             <a href="#" class="size-guide"><i class="icon-th-list"></i>size guide</a>
-                                        </div><!-- End .details-filter-row -->
+                                        </div> -->
 
                                         <div class="product-details-action">
                                             <div class="details-action-col">
-                                                <label for="qty">Qty:</label>
-                                                <div class="product-details-quantity">
+                                                <!-- <label for="qty">Qty:</label> -->
+                                                <!-- <div class="product-details-quantity">
                                                     <input type="number" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
-                                                </div><!-- End .product-details-quantity -->
+                                                </div> -->
                                                 <% if(id){%>
                                                 <a onclick="toAddCart('<%= item._id %>')"   class="btn-product btn-cart"><span>add to cart</span></a>
                                                 <%} else{%>
@@ -110,18 +110,18 @@
                                             </div><!-- End .details-action-col -->
 
                                             <div class="details-action-wrapper">
-                                                <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
-                                                <a href="#" class="btn-product btn-compare" title="Compare"><span>Add to Compare</span></a>
+                                                <a onclick="wishlist('<%= item._id %>')" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
+                                                <!-- <a href="#" class="btn-product btn-compare" title="Compare"><span>Add to Compare</span></a> -->
                                             </div><!-- End .details-action-wrapper -->
                                         </div><!-- End .product-details-action -->
 
-                                        <div class="product-details-footer details-footer-col">
+                                        <!-- <div class="product-details-footer details-footer-col">
                                             <div class="product-cat">
                                                 <span>Category:</span>
                                                 <a href="#">Women</a>,
                                                 <a href="#">Dresses</a>,
                                                 <a href="#">Yellow</a>
-                                            </div><!-- End .product-cat -->
+                                            </div>
 
                                             <div class="social-icons social-icons-sm">
                                                 <span class="social-label">Share:</span>
@@ -130,7 +130,7 @@
                                                 <a href="#" class="social-icon" title="Instagram" target="_blank"><i class="icon-instagram"></i></a>
                                                 <a href="#" class="social-icon" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a>
                                             </div>
-                                        </div><!-- End .product-details-footer -->
+                                        </div> -->
                                     </div><!-- End .product-details -->
                                 </div><!-- End .col-md-6 -->
                             </div><!-- End .row -->
@@ -326,5 +326,42 @@ function loginrequired(){
 
 }
 
+function wishlist(id) {
+            console.log("hshfjfl");
+
+            $.ajax({
+                method: "post",
+                url: "/addtowishlist",
+                data: JSON.stringify({ id: id }),
+                contentType: 'application/json',
+                success: function (response) {
+                    if (response.result == true) {
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "Sucessfully added to wishlist",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        console.log("sucess");
+                    } else if (response.res == false) {
+                        Swal.fire(" Item already exist in wishlist");
+                    }
+                    else {
+                        Swal.fire({
+                            title: 'Login required',
+                            text: 'Please login',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = '/signin';
+                            }
+                        });
+                    }
+                }
+            })
+        }
+
     </script>
-    <%- include('../user/layout/footer.ejs')-%>
+    <%- include('../user/layout/footers.ejs')-%>

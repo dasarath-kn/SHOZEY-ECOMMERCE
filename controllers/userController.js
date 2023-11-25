@@ -119,7 +119,7 @@ const forgetpasswordcheck =async(req,res)=>{
         
         }
         else{
-            res.render('forgetpassword',{message:"Email not found",user:req.session.name,cartdata})  
+            res.render('forgetpassword',{message:"Email not found",user:req.session.name,cartdata,id})  
         }
     } catch (error) {
         console.log(error.message);
@@ -134,10 +134,10 @@ const forgetpasswordotpVerify = async(req,res)=>{
         if(otp ==otpsend){
            
             const _id = req.session.userId;
-            const cartdata = await cart.find({ userid: _id }).populate("items.productid")
+            const cartdata = await cart.find({ userid: id }).populate("items.productid")
             res.render('newpassword',{ message: "", user: req.session.name, cartdata,id })
         }else{
-            res.render('forgetpasswordotp',{ userid: _id,message:"Wrong otp" });
+            res.render('forgetpasswordotp',{ userid: id,message:"Wrong otp" });
         }
         
     } catch (error) {
@@ -481,6 +481,7 @@ const shop = async (req, res) => {
     try {
         const sessionid = req.session.id
         const _id = req.query.id
+        console.log(_id);
         const id = req.session.userId
         const categorydata = await category.find()
         const lowtohigh = req.query.lowtohigh;
@@ -527,6 +528,16 @@ const shop = async (req, res) => {
             const productdata = await product.find().limit(6).sort({price:val})
 
             res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata,pagecount,categorys,Categoryofferdata,Productofferdata,id})
+        }else if(_id =='Women'){
+            const productdata = await product.find({category:{$regex:/Women's/i}}).limit(6).sort({price:val})
+ 
+            res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata,pagecount,categorys,Categoryofferdata,Productofferdata,id})
+
+        }else if(_id =='Men'){
+            const productdata = await product.find({category:{$regex:/Men's/i}}).limit(6).sort({price:val})
+ 
+            res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata,pagecount,categorys,Categoryofferdata,Productofferdata,id})
+
         }
         else {
             const productdata = await product.find().limit(6).sort({price:val})
@@ -626,14 +637,7 @@ const sortproduct= async(req,res)=>{
 }
 
 
-// const errorpage = async (req,res) => {
-//     try{
-//       return res.status(404).render('404')
-//     }
-//     catch(error){
-//         console.log(error.message);
-//     }
-// }
+
 //=================================== LOG-OUT =====================================//
 
 const logout = async (req, res) => {
@@ -672,6 +676,6 @@ module.exports = {
     pricesort,
     categorysort,
     sortproduct,
-    //  errorpage
+    
 }
 

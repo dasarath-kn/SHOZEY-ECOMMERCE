@@ -101,7 +101,6 @@ router.delete('/deletecoupon',couponcontroller.deletecoupon)
 router.get('/logout', auth.is_Login, usercontroller.logout);
 
 //=================================== MODULE--EXPORTS =====================================//
-// router.get('*',usercontroller.errorpage)
 
 module.exports = router;
    

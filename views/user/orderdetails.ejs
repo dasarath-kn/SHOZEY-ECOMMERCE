@@ -81,7 +81,7 @@
                                                          else{%>
                                                             <td class="price-col" id="statusbuttons">
                                                                 <button class="btn btn-primary btn-block"
-                                                                    onclick="cancelorder('<%= id %>','<%=productdata._id%>','<%= product[j].count%>')">CancelOrder</button>
+                                                                    onclick="cancelorder('<%= id %>','<%=productdata._id%>','<%= product[j].count%>','<%= product[j].count *productdata.price %>')">CancelOrder</button>
                                                             </td>
                                                             <%} %>
 
@@ -142,7 +142,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        function cancelorder(id, productdata,count) {
+        function cancelorder(id, productdata,count,amount) {
             console.log(productdata);
             Swal.fire({
                 title: "Are you sure?",
@@ -157,7 +157,7 @@
                     $.ajax({
                         method: "post",
                         url: "/cancelorder",
-                        data: JSON.stringify({ id: id, productid: productdata,count:count }),
+                        data: JSON.stringify({ id: id, productid: productdata,count:count,amount:amount }),
                         contentType: 'application/json',
                         success: function (response) {
                             if (response.result == true) {
@@ -190,6 +190,7 @@
         success:function(response){
             if(response.result==true){
                 console.log('success');
+               
                 const Toast = Swal.mixin({
                             toast: true,
                             position: "top-end",
@@ -206,9 +207,9 @@
                             icon: "success",
                             title: "Product Returned"
                         });
-                        $('#status').load('/oderdetails #status')
-                        $('#statusbuttons').load('/orderdetails #statusbuttons')
-                        // window.location.href = '/orderdetails';
+                        window.location.reload();
+                        
+                       
             }
         }
     })
