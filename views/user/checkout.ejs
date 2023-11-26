@@ -139,15 +139,19 @@
                                                 <div class="form-group row">
                                                   <div class="col-sm-9">
                                                     <h5>Name:</h5>
-                                                    <input type="text" class="form-control" id="username"  name="name" placeholder="Your name.." required>
-                                                  </div>
+                                                    <input type="text" class="form-control" id="user-Name"  name="name" placeholder="Your name.." required>
+                                                    <span id="name-Error" style="color: red;"></span>
+
+                                                </div>
                                                 </div>
                                         
                                                 <div class="form-group row">
                                                   <div class="col-sm-9">
                                                     <h5>Phone Number:</h5>
                                                     <input type="text" class="form-control" id="mobile" name="phonenumber" placeholder="Your phone number.." required>
-                                        
+                                                    <span id="phonenumberError"
+																		style="color: red;"></span>
+
                                                   </div>
                                                 </div>
                                         
@@ -156,14 +160,17 @@
                                                   <div class="col-sm-9">
                                                     <h5>Address:</h5>
                                                     <input type="text" class="form-control" id="address"  name="address" placeholder="Your address.." required>
-                                                  </div>
+                                                    <span id="address-Error" style="color: red;"></span>
+
+                                                </div>
                                                 </div>
                                         
                                                 <div class="form-group row">
                                                   <div class="col-sm-9">
                                                     <h5>City:</h5>
                                                     <input type="text" class="form-control" id="city"  name="city" placeholder="Your city.." required>
-                                        
+                                                    <span id="cityError" style="color: red;"></span>
+
                                                   </div>
                                                 </div>
                                         
@@ -171,21 +178,27 @@
                                                   <div class="col-sm-9">
                                                     <h5>State:</h5>
                                                     <input type="text" class="form-control" id="state"  name="state" placeholder="Your state.." required>
-                                                  </div>
+                                                    <span id="stateError" style="color: red;"></span>
+ 
+                                                </div>
                                                 </div>
                                         
                                                 <div class="form-group row">
                                                   <div class="col-sm-9">
                                                     <h5>Country:</h5>
                                                     <input type="text" class="form-control" id="country"  name="country" placeholder="Your country.." required>
-                                                  </div>
+                                                    <span id="countryError" style="color: red;"></span>
+ 
+                                                </div>
                                                 </div>
                                         
                                                 <div class="form-group row">
                                                   <div class="col-sm-9">
                                                     <h5>Pin Code:</h5>
                                                     <input type="text" class="form-control" id="pinCode"  name="pincode" placeholder="Your pin code.." required>
-                                                  </div>
+                                                    <span id="pincodeError" style="color: red;"></span>
+  
+                                                </div>
                                                 </div>
                                         
                                                 <div class="form-group row">
@@ -566,154 +579,154 @@
             });
         }
 
-		const phonenumber = document.getElementById('mobile');
-		phonenumber.addEventListener('input',validphonenumber);
-		function validphonenumber(){
-			const phone=document.getElementById('mobile').value;
-			const phonenumberpattern =/\b\d{10}\b/
-
-;
-			if(phone.trim()==""){
+		///////////Address
+        const phonenumber = document.getElementById('mobile');
+		phonenumber.addEventListener('input', validphonenumber);
+		function validphonenumber() {
+			const phone = document.getElementById('mobile').value;
+			const phonenumberpattern = /\b\d{10}\b/;
+			if (phone.trim() == "") {
 				document.getElementById("phonenumberError").innerHTML = "Please enter a valid phonenumber"
 				phonenumber.setCustomValidity(" Enter a valid phonenumber");
 			}
-			if(!phone.match(phonenumberpattern)){
-				document.getElementById('phonenumberError').innerHTML="Phonenumber must contain 10 digits";
+			if (!phone.match(phonenumberpattern)) {
+				document.getElementById('phonenumberError').innerHTML = "Phonenumber must contain 10 digits";
 				phonenumber.setCustomValidity("Phonenumber must contain 10 digits");
-			}else{
-				document.getElementById('phonenumberError').innerHTML="";
+			} else {
+				document.getElementById('phonenumberError').innerHTML = "";
 				phonenumber.setCustomValidity("");
 			}
 		}
 
 
-		const firstname = document.getElementById("username");
-firstname.addEventListener('input', validname);
+		const username = document.getElementById("user-Name");
+		username.addEventListener('input', validusername);
 
-function validname() {
-    const name = document.getElementById("username").value;
+		function validusername() {
+			const name = document.getElementById("user-Name").value;
+			const namepattern = /^[A-Za-z0-9]{5,15}$/;
 
-    if (name.trim() === "") {
-        document.getElementById('nameError').innerHTML = " Enter a name";
-		firstname.setCustomValidity("Enter a name");
-    } else {
-        const namepattern = /^[A-Za-z0-9]{5,15}$/;
-;
-        if (!name.match(namepattern)) {
-            document.getElementById('nameError').innerHTML = "Name must be alphanumeric and between 5-15 characters";
-            firstname.setCustomValidity("Enter a name");
-        } else {
-            document.getElementById('nameError').innerHTML = "";
-            firstname.setCustomValidity("");
-        }
-    }
-}
+			if (name.trim() === "") {
+				document.getElementById('name-Error').innerHTML = " Enter a name";
+				username.setCustomValidity("Enter a name");
+			} else {
+				
+				if (!name.match(namepattern)) {
+					document.getElementById('name-Error').innerHTML = "Name must be alphanumeric and between 5-15 characters";
+					username.setCustomValidity("Enter a name");
+				} else {
+					document.getElementById('name-Error').innerHTML = "";
+					username.setCustomValidity("");
+				}
+			}
+		}
 
-const address = document.getElementById("address");
-address.addEventListener('input', validaddress);
+		const address = document.getElementById("address");
+		address.addEventListener('input', validaddress);
 
-function validaddress() {
-    const name = document.getElementById("address").value;
+		function validaddress() {
+			const name = document.getElementById("address").value;
 
-    if (name.trim() === "") {
-        document.getElementById('addressError').innerHTML = " Enter your address";
-		firstname.setCustomValidity("Enter a address");
-    } else {
-        const namepattern = /^[a-zA-Z0-9\s\.,#-]+$/;
-;
-        if (!name.match(namepattern)) {
-            document.getElementById('addressError').innerHTML = " Enter a address ";
-            firstname.setCustomValidity("Enter a address");
-        } else {
-            document.getElementById('addressError').innerHTML = "";
-            firstname.setCustomValidity("");
-        }
-    }
-}
+			if (name.trim() === "") {
+				document.getElementById('address-Error').innerHTML = " Enter your address";
+				firstname.setCustomValidity("Enter a address");
+			} else {
+				const namepattern = /^(.*[a-zA-Z]){2,}/;
+				;
+				if (!name.match(namepattern)) {
+					document.getElementById('address-Error').innerHTML = " Enter a address ";
+					firstname.setCustomValidity("Enter a address");
+				} else {
+					document.getElementById('address-Error').innerHTML = "";
+					firstname.setCustomValidity("");
+				}
+			}
+		}
 
-const city = document.getElementById("city");
-city.addEventListener('input', validcity);
+		const city = document.getElementById("city");
+		city.addEventListener('input', validcity);
 
-function validcity() {
-    const citys = document.getElementById("city").value;
+		function validcity() {
+			const citys = document.getElementById("city").value;
 
-    if (citys.trim() === "") {
-        document.getElementById('cityError').innerHTML = "Enter your city";
-        city.setCustomValidity("Enter a city");
-    } else {
-        const citypattern = /^(.*[a-zA-Z]){2,}/;
-        if (!citys.match(citypattern)) {
-            document.getElementById('cityError').innerHTML = "Enter a city ";
-            city.setCustomValidity("Enter a city");
-        } else {
-            document.getElementById('cityError').innerHTML = "";
-            city.setCustomValidity("");
-        }
-    }
-}
+			if (citys.trim() === "") {
+				document.getElementById('cityError').innerHTML = "Enter your city";
+				city.setCustomValidity("Enter a city");
+			} else {
+				const citypattern = /^(.*[a-zA-Z]){2,}/;
+				if (!citys.match(citypattern)) {
+					document.getElementById('cityError').innerHTML = "Enter a city ";
+					city.setCustomValidity("Enter a city");
+				} else {
+					document.getElementById('cityError').innerHTML = "";
+					city.setCustomValidity("");
+				}
+			}
+		}
 
-const state = document.getElementById("state");
-state.addEventListener('input', validstate);
+		const state = document.getElementById("state");
+		state.addEventListener('input', validstate);
 
-function validstate() {
-    const states = document.getElementById("state").value;
+		function validstate() {
+			const states = document.getElementById("state").value;
 
-    if (states.trim() === "") {
-        document.getElementById('stateError').innerHTML = "Enter your state";
-        state.setCustomValidity("Enter a state");
-    } else {
-        const statepattern = /^(.*[a-zA-Z]){2,}/;
-        if (!states.match(statepattern)) {
-            document.getElementById('stateError').innerHTML = "Enter a state ";
-            state.setCustomValidity("Enter a state");
-        } else {
-            document.getElementById('stateError').innerHTML = "";
-            state.setCustomValidity("");
-        }
-    }
-}
+			if (states.trim() === "") {
+				document.getElementById('stateError').innerHTML = "Enter your state";
+				state.setCustomValidity("Enter a state");
+			} else {
+				const statepattern = /^(.*[a-zA-Z]){2,}/;
+				if (!states.match(statepattern)) {
+					document.getElementById('stateError').innerHTML = "Enter a state ";
+					state.setCustomValidity("Enter a state");
+				} else {
+					document.getElementById('stateError').innerHTML = "";
+					state.setCustomValidity("");
+				}
+			}
+		}
 
-const country = document.getElementById("country");
-country.addEventListener('input', validcountry);
+		const country = document.getElementById("country");
+		country.addEventListener('input', validcountry);
 
-function validcountry() {
-    const countries = document.getElementById("country").value;
+		function validcountry() {
+			const countries = document.getElementById("country").value;
 
-    if (countries.trim() === "") {
-        document.getElementById('countryError').innerHTML = "Enter your country";
-        countries.setCustomValidity("Enter a country");
-    } else {
-        const statepattern = /^(.*[a-zA-Z]){2,}/;
-        if (!countries.match(statepattern)) {
-            document.getElementById('countryError').innerHTML = "Enter a country";
-            countries.setCustomValidity("Enter a country");
-        } else {
-            document.getElementById('countryError').innerHTML = "";
-            countries.setCustomValidity("");
-        }
-    }
-}
+			if (countries.trim() === "") {
+				document.getElementById('countryError').innerHTML = "Enter your country";
+				countries.setCustomValidity("Enter a country");
+			} else {
+				const statepattern = /^(.*[a-zA-Z]){2,}/;
+				if (!countries.match(statepattern)) {
+					document.getElementById('countryError').innerHTML = "Enter a country";
+					countries.setCustomValidity("Enter a country");
+				} else {
+					document.getElementById('countryError').innerHTML = "";
+					countries.setCustomValidity("");
+				}
+			}
+		}
 
-const pincode = document.getElementById("pinCode");
-pincode.addEventListener('input', validpincode);
+		const pincode = document.getElementById("pinCode");
+		pincode.addEventListener('input', validpincode);
 
-function validpincode() {
-    const pinCode = document.getElementById("pinCode").value;
+		function validpincode() {
+			const pinCode = document.getElementById("pinCode").value;
 
-    if (pinCode.trim() === "") {
-        document.getElementById('pincodeError').innerHTML = "Enter your pincode";
-        pincode.setCustomValidity("Please enter a pincode");
-    } else {
-        const pincodepattern = /^[0-9]+$/;
-        if (!pinCode.match(pincodepattern)) {
-            document.getElementById('pincodeError').innerHTML = "Enter a valid pincode";
-            pincode.setCustomValidity("Invalid pincode format");
-        } else {
-            document.getElementById('pincodeError').innerHTML = "";
-            pincode.setCustomValidity("");
-        }
-    }
-}
+			if (pinCode.trim() === "") {
+				document.getElementById('pincodeError').innerHTML = "Enter your pincode";
+				pincode.setCustomValidity("Please enter a pincode");
+			} else {
+				const pincodepattern = /^[0-9]+$/;
+				if (!pinCode.match(pincodepattern)) {
+					document.getElementById('pincodeError').innerHTML = "Enter a valid pincode";
+					pincode.setCustomValidity("Invalid pincode format");
+				} else {
+					document.getElementById('pincodeError').innerHTML = "";
+					pincode.setCustomValidity("");
+				}
+			}
+		}
+
     </script>
         <%- include('../user/layout/footers.ejs') -%>
 

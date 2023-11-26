@@ -1,30 +1,88 @@
 <%- include ('../admin/layouts/header.ejs')-%>
+<style>
+  .image-container {
+      position: relative;
+      margin: 5px;
+  }
+
+  .delete-button {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      display: none;
+  }
+</style>
 
 <div class="col-12 mt-5 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
         <h4 class="card-title">Add Banner</h4>
         <!-- <p class="card-description"> Basic form elements </p> -->
-        <form class="forms-sample" action="/admin/bannerdata" method="post" enctype="multipart/form-data" id="productForm"  >
-         
+        <form class="forms-sample" action="/admin/bannerdata" method="post" enctype="multipart/form-data" id="productForm">
           <div class="form-group">
             <label for="exampleTextarea1">Banner name</label>
             <textarea class="form-control" id="exampleTextarea1" rows="4" name="bannername" required></textarea>
             <span id="bannernameError" style="color: red;"></span>
-
           </div>
-         
           <div class="form-group">
             <label for="images">Upload Images</label>
             <input type="file" accept="image/*" class="form-control-file" id="images" name="image" multiple onchange="validateAndPreviewImages(this)">
             <span id="image1Error" style="color: red;"></span>
         </div>
+        
         <div id="imagePreviewContainer"></div>
-          
           <button type="submit" class="btn btn-primary mr-2" value="Upload Images">Submit</button>
-          <button class="btn btn-dark"  ><a href="/admin/bannermanagement">Cancel</a></button>
+          <button class="btn btn-dark"><a href="/admin/banner">Cancel</a></button>
         </form>
+        
       </div>
     </div>
   </div>
+
   <%- include ('../admin/layouts/footer.ejs')-%>
+
+  <script>
+    function validateAndPreviewImages(input) {
+        if (window.FileReader) {
+            var container = document.getElementById('imagePreviewContainer');
+            container.innerHTML = ''; // Clear previous previews
+
+            for (var i = 0; i < input.files.length; i++) {
+                var file = input.files[i];
+
+                if (file && file.type.match('image.*')) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        var imgContainer = document.createElement('div');
+                        imgContainer.className = 'image-container';
+
+                        var img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.className = 'preview-image';
+                        img.style.width = '150px'; // Set the width of the preview image
+                        img.style.height = '150px'; // Set the height of the preview image
+
+                        var removeButton = document.createElement('button');
+                        removeButton.innerHTML = 'Remove';
+                        removeButton.className = 'remove-button';
+                        removeButton.onclick = function () {
+                            imgContainer.remove();
+                        };
+
+                        imgContainer.appendChild(img);
+                        imgContainer.appendChild(removeButton);
+                        container.appendChild(imgContainer);
+                    };
+
+                    reader.readAsDataURL(file);
+                } else {
+                    document.getElementById('image1Error').innerHTML = 'Please select valid image files.';
+                }
+            }
+        } else {
+            alert('Your browser does not support the FileReader API.');
+        }
+    }
+</script>
+

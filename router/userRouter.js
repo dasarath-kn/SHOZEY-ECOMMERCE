@@ -72,7 +72,7 @@ router.post('/returnorder',checkoutcontroller.returnorder)
 //=================================== PROFILE =====================================//
 
 router.get('/profile',profileController.profile);
-router.post('/newPassword',profileController.resetPassword);
+router.post('/resetpassword',profileController.resetPassword);
 router.put('/editprofile',profileController.editprofile);
 router.get('/wallet',profileController.wallet);
 //=================================== USER-ADDRESS =====================================//

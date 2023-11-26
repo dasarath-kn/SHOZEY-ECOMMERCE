@@ -5,6 +5,7 @@ const order = require('../models/orderModel');
 const coupon = require("../models/couponModel");
 const Categoryoffer = require('../models/categoryofferModel')
 const Productoffer = require('../models/productofferModel');
+const banner = require('../models/bannerModel')
 let pdf = require("html-pdf");
 const ejs = require("ejs");
 const path = require("path");
@@ -977,10 +978,10 @@ const editproductoffer = async (req, res) => {
 }
 
 
-const banner = async(req,res)=>{
+const bannermanagement = async(req,res)=>{
     try {
-
-        res.render('bannermanagement')
+        const bannerdata= await banner.find()
+        res.render('bannermanagement',{bannerdata});
         
     } catch (error) {
         console.log(error.message);
@@ -998,6 +999,51 @@ const addbanner = async(req,res)=>{
     }
 }
 
+const bannerdata = async(req,res)=>{
+    try {
+        const bannername = req.body.bannername
+        const file =req.file
+       const bannerdata = new banner({
+        bannername:bannername,
+        bannerimage:file.filename
+
+       })
+       await bannerdata.save()
+       res.redirect('/admin/banner');
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const blockunblockbanner = async (req,res)=>{
+    try {
+        const id = req.body.id
+        const bannerid = req.body.bannerid
+        console.log(bannerid, id);
+        if (id == 1) {
+            await banner.updateOne({ _id: bannerid }, { $set: { status: 1 } });
+            res.json({ result: true })
+        } else {
+            await banner.updateOne({ _id: bannerid }, { $set: { status: 0 } })
+            res.json({ result: true })
+        }
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const deletebanner = async(req,res)=>{
+    try {
+        const id = req.body.id
+        const bannerdata = await banner.deleteOne({_id:id})
+        res.json({result:true})
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
 
 module.exports = {
     adminlogin,
@@ -1044,6 +1090,9 @@ module.exports = {
     blockunblockproductoffer,
     editproductoffer,
     deleteproductimage,
-    banner,
-    addbanner
+    bannermanagement,
+    addbanner,
+    bannerdata,
+    blockunblockbanner,
+    deletebanner
 }

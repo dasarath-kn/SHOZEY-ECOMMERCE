@@ -164,14 +164,14 @@
 														  </button>
 														</div>
 														<div class="modal-body">
-															<form action="/newPassword" method="post">
+															<form action="/resetpassword" method="post">
 																<div class="form-group row">
 																	<div class="col-sm-9">
 																		<h5>Email :</h5>
 																		<input type="text" class="form-control"
-																			id="Email" name="Email" value=""
+																			id="E-mail" name="Email" value=""
 																			placeholder="Email" required>
-																		<span id="EmailError" style="color: red;"></span>
+																		<span id="Email-Error" style="color: red;"></span>
 	
 																	</div>
 																</div>
@@ -181,7 +181,7 @@
 																		<input type="password" class="form-control"
 																			id="CurrentPassword" name="CurrentPassword" value=""
 																			placeholder="CurrentPassword" required>
-																		<span id="nameError" style="color: red;"></span>
+																		<span id="CurrentPassword-Error" style="color: red;"></span>
 	
 																	</div>
 																</div>
@@ -192,7 +192,7 @@
 																		<input type="password" class="form-control" id="NewPassword"
 																			name="NewPassword" value=""
 																			placeholder="NewPassword" required>
-																		<span id="NewPassword"
+																		<span id="NewPasswordError"
 																			style="color: red;"></span>
 	
 	
@@ -206,7 +206,7 @@
 																		<input type="password" class="form-control" id="ConfirmNewPassword"
 																			name="ConfirmNewPassword" placeholder="ConfirmNewPassword" value=""
 																			required>
-																		<span id="ConfirmNewPassword" style="color: red;"></span>
+																		<span id="ConfirmNewPasswordError" style="color: red;"></span>
 	
 																	</div>
 																</div>		
@@ -215,7 +215,7 @@
 																	<!-- Additional fields if needed -->
 																</div>
 																<div class="form-group">
-																	<button onclick="return confirm('Are you sure? Do you want to Change your password')" type="submit"
+																	<button  type="submit"
 																		class=" btn btn-primary rounded submit px-3">Submit</button>
 																</div>
 															</form>
@@ -338,9 +338,9 @@
 																<div class="col-sm-9">
 																	<h5>Name:</h5>
 																	<input type="text" class="form-control"
-																		id="userName" name="name"
+																		id="user-Name" name="name"
 																		placeholder="Your name.." required>
-																	<span id="nameError" style="color: red;"></span>
+																	<span id="name-Error" style="color: red;"></span>
 
 																</div>
 															</div>
@@ -365,7 +365,7 @@
 																	<input type="text" class="form-control" id="address"
 																		name="address" placeholder="Your address.."
 																		required>
-																	<span id="addressError" style="color: red;"></span>
+																	<span id="address-Error" style="color: red;"></span>
 
 																</div>
 															</div>
@@ -640,8 +640,97 @@
 				}
 			})
 		}
+////////////////////////// Change-password//////////////////
+		const Email = document.getElementById("E-mail");
+	
+	Email.addEventListener("input", validateEmail);
+	function validateEmail(event) {
+		event.preventDefault();
+		const mail = document.getElementById("E-mail").value;
+		const emailPattern = '<%=email%>';
+		if(mail.trim()=== ""){
+			document.getElementById('Email-Error').innerHTML = "Enter your Email "
+			Email.setCustomValidity("Enter your Email");
+			
+		}
+		else{
+		if (!mail.match(emailPattern)) {
+			document.getElementById("Email-Error").innerHTML = " Email is incorrect";
+			Email.setCustomValidity(" Email is incorrect");
+			
+		} else {
+			document.getElementById("Email-Error").innerHTML = "";
+			Email.setCustomValidity("");
+		}
+	}
+	}
 
 
+
+
+	const CurrentPassword = document.getElementById("CurrentPassword");
+	
+	CurrentPassword.addEventListener("input", validateCurrentpassword);
+	function validateCurrentpassword(event) {
+		event.preventDefault();
+		const CurrentPass = document.getElementById("CurrentPassword").value;
+		// const CurrentPassPattern = '' ;
+		if(CurrentPass.trim()=== ""){
+			document.getElementById('CurrentPassword-Error').innerHTML = "Enter your currentpassword "
+			CurrentPassword.setCustomValidity("Enter your currentpassword");
+			
+		}
+		else{
+		
+			document.getElementById("CurrentPassword-Error").innerHTML = "";
+			CurrentPassword.setCustomValidity("");
+		
+		}
+	}
+
+
+	const password =document.getElementById("NewPassword");
+
+		password.addEventListener('input',validpassword);
+		function validpassword(){
+			const pass= document.getElementById("NewPassword").value;
+			const passwordpattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/
+
+
+				if(pass.trim()=== ""){
+					document.getElementById('NewPasswordError').innerHTML = "Please enter a password"
+					password.setCustomValidity("Please enter a password");
+				}
+				else{
+			if(!pass.match(passwordpattern)){
+				document.getElementById('NewPasswordError').innerHTML ="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters";
+				password.setCustomValidity("Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters");
+			}else{
+				document.getElementById('NewPasswordError').innerHTML =" "
+				password.setCustomValidity("");
+			}
+		}
+
+		}
+
+		const confirmpassword = document.getElementById('ConfirmNewPassword');
+confirmpassword.addEventListener('input',validconfirm);
+ function validconfirm(){
+	const password = document.getElementById("NewPassword").value
+	const confirmpass= document.getElementById("ConfirmNewPassword").value
+	if(!confirmpass.match(password)){
+		document.getElementById('ConfirmNewPasswordError').innerHTML ="Not matching with Newpassword";
+		confirmpassword.setCustomValidity("Not matching with Newpassword");
+	}else{
+		document.getElementById('ConfirmNewPasswordError').innerHTML =" "
+		confirmpassword.setCustomValidity("");
+
+	}
+
+ }
+
+
+////////////////////
 		document.addEventListener('DOMContentLoaded', function () {
 			const emailInput = document.querySelector('input[name="Email"]');
 			const emailErrorMessage = document.getElementById('email-error-message');
@@ -667,14 +756,12 @@
 			});
 		});
 
-
+/////////////////////Address
 		const phonenumber = document.getElementById('mobile');
 		phonenumber.addEventListener('input', validphonenumber);
 		function validphonenumber() {
 			const phone = document.getElementById('mobile').value;
-			const phonenumberpattern = /\b\d{10}\b/
-
-				;
+			const phonenumberpattern = /\b\d{10}\b/;
 			if (phone.trim() == "") {
 				document.getElementById("phonenumberError").innerHTML = "Please enter a valid phonenumber"
 				phonenumber.setCustomValidity(" Enter a valid phonenumber");
@@ -689,24 +776,24 @@
 		}
 
 
-		const firstname = document.getElementById("userName");
-		firstname.addEventListener('input', validname);
+		const username = document.getElementById("user-Name");
+		username.addEventListener('input', validusername);
 
-		function validname() {
-			const name = document.getElementById("userName").value;
+		function validusername() {
+			const name = document.getElementById("user-Name").value;
+			const namepattern = /^[A-Za-z0-9]{5,15}$/;
 
 			if (name.trim() === "") {
-				document.getElementById('nameError').innerHTML = " Enter a name";
-				firstname.setCustomValidity("Enter a name");
+				document.getElementById('name-Error').innerHTML = " Enter a name";
+				username.setCustomValidity("Enter a name");
 			} else {
-				const namepattern = /^[A-Za-z0-9]{5,15}$/;
-				;
+				
 				if (!name.match(namepattern)) {
-					document.getElementById('nameError').innerHTML = "Name must be alphanumeric and between 5-15 characters";
-					firstname.setCustomValidity("Enter a name");
+					document.getElementById('name-Error').innerHTML = "Name must be alphanumeric and between 5-15 characters";
+					username.setCustomValidity("Enter a name");
 				} else {
-					document.getElementById('nameError').innerHTML = "";
-					firstname.setCustomValidity("");
+					document.getElementById('name-Error').innerHTML = "";
+					username.setCustomValidity("");
 				}
 			}
 		}
@@ -718,16 +805,16 @@
 			const name = document.getElementById("address").value;
 
 			if (name.trim() === "") {
-				document.getElementById('addressError').innerHTML = " Enter your address";
+				document.getElementById('address-Error').innerHTML = " Enter your address";
 				firstname.setCustomValidity("Enter a address");
 			} else {
 				const namepattern = /^[a-zA-Z0-9\s\.,#-]+$/;
 				;
 				if (!name.match(namepattern)) {
-					document.getElementById('addressError').innerHTML = " Enter a address ";
+					document.getElementById('address-Error').innerHTML = " Enter a address ";
 					firstname.setCustomValidity("Enter a address");
 				} else {
-					document.getElementById('addressError').innerHTML = "";
+					document.getElementById('address-Error').innerHTML = "";
 					firstname.setCustomValidity("");
 				}
 			}
@@ -816,7 +903,7 @@
 				}
 			}
 		}
-
+/////////////////////////////////
 
 
 	</script>

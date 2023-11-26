@@ -7,6 +7,10 @@ const bannerdata = new mongoose.Schema({
     bannerimage:{
         type:Array,
         required:true
+    },
+    status:{
+        type:Number,
+        default:0
     }
 })
 

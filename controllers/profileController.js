@@ -6,7 +6,7 @@ const order = require('../models/orderModel');
 const Wallet = require('../models/walletModel');
 
 
-//=================================== DASH-BOARD =====================================//
+//=================================== Profile =====================================//
 
 const profile = async (req, res) => {
     try {
@@ -17,9 +17,11 @@ const profile = async (req, res) => {
         const cartdata = await cart.find().populate("items.productid")
         const _id = req.query.id;
         const data = userdata
+        
         const orderdata = await order.find({ user_Id: req.session.userId }).sort({ purchaseDate: -1 })
-       
-        res.render('profile', { data, user: req.session.name, cartdata, orderdata,users,id })
+        const currentPassword =users.password
+        const email =users.email
+        res.render('profile', { data, user: req.session.name, cartdata, orderdata,users,id,currentPassword,email })
 
     } catch (error) {
         console.log(error.message);
@@ -42,6 +44,8 @@ const securepassword = async (password) => {
 
 const resetPassword = async (req, res) => {
     try {
+        console.log("dkfdh");
+        const id= req.session.userId
         const CurrentPassword = req.body.CurrentPassword;
         const NewPassword = req.body.NewPassword;
         const ConfirmNewPassword = req.body.ConfirmNewPassword;
@@ -57,7 +61,7 @@ const resetPassword = async (req, res) => {
                 const hashedNewPassword = await bcrypt.hash(NewPassword, 10);
                 await user.updateOne({ email: Email }, { $set: { password: hashedNewPassword } });
                 const cartdata = await cart.find().populate("items.productid")
-                res.render('signin', { user: req.session.name, cartdata })
+                res.render('signin', { user: req.session.name, cartdata,id })
             }
             else {
                 console.log("notsame");

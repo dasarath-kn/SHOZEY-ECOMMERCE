@@ -8,7 +8,7 @@
         <div class="col-lg-12  grid-margin stretch-card">
           <div class="card" id="reload">
             <div class="card-body">
-              <h4 class="card-title"> Category Offer</h4>
+              <h4 class="card-title"> Banner Management </h4>
               <a href="addbanner" class="btn btn-primary">Add </a>
 
               <div class="table-responsive">
@@ -21,51 +21,44 @@
                       
                       <!-- <th>User limit</th> -->
                     </tr>
+
                             <% var count=1 %>
+                            <% for(let i=0;i<bannerdata.length;i++){%>
                         <tr>
                             <td>
                               <%= count ++%>
 
                         </td>
                           <td>
-
+                            <%= bannerdata[i].bannername %>
                         </td>
-                          <td>
-                           
-                           
-                          </td>
-                          <td>
-                          
-                           
-
-                          </td>
+                        
+                        
+                        
                          
                           <td>
-                           
+                            <p><button class="badge badge-danger"
+                                onclick="deleteoffer('<%=bannerdata[i]._id %>')">Delete</button></p>
                           </td>
                           <td>
-                            <p><button class="badge badge-danger"
-                                onclick="deleteoffer('<%= %>')">Delete</button></p>
-                          </td>
-                          <!-- <td>
                             <p>
                               <a href="/admin/editoffer"><button class="btn btn-primary">Edit</button></a> 
                                
-                          </td> -->
+                          </td>
                           <td>
-                            
+                            <% if(bannerdata[i].status==0){%>
                                <p><button type="button" class="badge badge-danger"
-                                   onclick="blockandunblock(1,'<%= %>')">Unlist</button></p>
+                                   onclick="blockandunblock(1,'<%= bannerdata[i]._id %>')">Unlist</button></p>
                                   
-                                 
+                                   <%}else{%>
                                   <p><button type="button" class="badge badge-success"
-                                     onclick="blockandunblock(0,'<% %>')">List</button></p>
+                                     onclick="blockandunblock(0,'<%= bannerdata[i]._id %>')">List</button></p>
                                
-                                  
+                                     <%}%>
  
                            </td>
                         </tr>
-                      
+                        <%}%>
 
 
 
@@ -87,7 +80,7 @@
         <script>
 
 
-          function blockandunblock(id, offerid) {
+          function blockandunblock(id, bannerid) {
             Swal.fire({
               title: "Are you sure?",
               text: "You want to change the status",
@@ -95,17 +88,17 @@
               showCancelButton: true,
               confirmButtonColor: "#3085d6",
               cancelButtonColor: "#d33",
-              confirmButtonText: "Yes, delete it!"
+              confirmButtonText: "Yes"
             }).then((result) => {
               if (result.isConfirmed) {
                 $.ajax({
                   method: 'post',
-                  url: '/admin/block-unblockoffer',
-                  data: JSON.stringify({ id: id, offerid: offerid }),
+                  url: '/admin/block-unblockbanner',
+                  data: JSON.stringify({ id: id, bannerid: bannerid }),
                   contentType: 'application/json',
                   success: function (response) {
                     if (response.result == true) {
-                      $('#reload').load('/admin/offermanagement #reload')
+                      $('#reload').load('/admin/banner #reload')
                     } else {
                       console.log("Error");
                     }
@@ -132,12 +125,12 @@
               if (result.isConfirmed) {
                 $.ajax({
                   method: 'delete',
-                  url: '/admin/deleteoffer',
+                  url: '/admin/deletebanner',
                   data: JSON.stringify({ id: id }),
                   contentType: 'application/json',
                   success: function (response) {
                     if (response.result == true) {
-                      $('#reload').load('/admin/offermanagement #reload')
+                      $('#reload').load('/admin/banner #reload')
                     } else {
                       console.log("error");
                     }

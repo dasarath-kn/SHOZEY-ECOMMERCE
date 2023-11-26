@@ -109,7 +109,7 @@ const forgetpasswordcheck =async(req,res)=>{
         const id = req.session.userId;
         const cartdata = await cart.find({ userid: id }).populate("items.productid")
 
-        if(userdata){
+        if(userdata.status!=1){
             const name = userdata.name
             const _id = userdata._id
             sendVerifyMail(name, req.body.email);
@@ -128,7 +128,6 @@ const forgetpasswordcheck =async(req,res)=>{
 
 const forgetpasswordotpVerify = async(req,res)=>{
     try {
-        console.log("hfgfhyfh");
         const id = req.query.id
         const otp = req.body.otp
         if(otp ==otpsend){
@@ -137,7 +136,7 @@ const forgetpasswordotpVerify = async(req,res)=>{
             const cartdata = await cart.find({ userid: id }).populate("items.productid")
             res.render('newpassword',{ message: "", user: req.session.name, cartdata,id })
         }else{
-            res.render('forgetpasswordotp',{ userid: id,message:"Wrong otp" });
+            res.render('forgetpasswordotp',{ userid: id,message:"Incorrect otp" });
         }
         
     } catch (error) {
@@ -178,7 +177,6 @@ const newpasswordpage = async(req,res)=>{
 
 const newpassword = async(req,res)=>{
     try {
-        console.log("vhjghjghghjhj");
         const id =req.query.id
         const password =req.body.password;
         const confirmpassword = req.body.confirmpassword
@@ -223,6 +221,7 @@ const validation = async (req, res) => {
         const check = await user.findOne({ email: req.body.email });
 
         console.log(check);
+        const id =req.session.userId
         const sessionid = req.session.userId;
         const cartdata = await cart.find({ userid: sessionid }).populate("items.productid")
         if (check) {
@@ -235,7 +234,6 @@ const validation = async (req, res) => {
                     res.redirect('/home');
                 }
                 else if (check.is_verified == 0 && check.status == 0) {
-                    console.log("hfghjhj");
                     const id = req.body.email
                     const username = await user.findOne({ email: id })
                     const name = username.name
@@ -245,18 +243,22 @@ const validation = async (req, res) => {
                     res.render('otp', { userid: _id, otpnumber,message:"" })
 
                 }
+
                 else {
 
-                    res.render('signin', { message: "Please verify your mail", user: req.session.name, cartdata });
+                    res.render('signin', { message: "Your account has been blocked please contact the admin", user: req.session.name, cartdata,id });
                 }
+
+            }else{
+                res.render('signin', { message: "Incorrect password", user: req.session.name, cartdata,id })
 
             }
 
         } else if (check != req.body.password) {
-            res.render('signin', { message: "Invalid Email and password", user: req.session.name, cartdata })
+            res.render('signin', { message: "Invalid Email and password", user: req.session.name, cartdata,id })
         }
         else {
-            res.render('signin', { message: "Invalid mail", user: req.session.name, cartdata });
+            res.render('signin', { message: "Invalid mail", user: req.session.name, cartdata,id });
 
         }
 
@@ -424,7 +426,6 @@ const verifymail = async (req, res) => {
     try {
         // console.log("curent otp"+otpsend);
         // console.log("user enterd otp"+req.body.otp);
-        console.log("gjgsgxgsjx");
         const id = req.query.id
         console.log(id);
         const otp =req.body.otp
@@ -434,7 +435,7 @@ const verifymail = async (req, res) => {
             console.log(updateinfo);
             res.redirect('/signin')
         } else {
-            res.render('otp',{ userid: id,message:"Wrong otp" });
+            res.render('otp',{ userid: id,message:"Incorrect otp" });
         }
     }
 
