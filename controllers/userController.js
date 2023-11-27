@@ -12,6 +12,7 @@ const { wallet } = require('./profileController');
 const Wallet = require('../models/walletModel');
 const Categoryoffer = require('../models/categoryofferModel');
 const Productoffer = require('../models/productofferModel');
+const banner =require('../models/bannerModel')
 
 let nameResend
 let email2
@@ -59,13 +60,15 @@ const home = async (req, res) => {
         const products = await product.find().skip(4)
         const mencategory = await product.find({ category: { $regex: /Men's/i } });
         const womencategory = await product.find({category:{ $regex:/Women's/i}});
+        const bannerdata =await banner.find()
+        console.log(bannerdata);
        
         const cartdata = await cart.find({ userid: id }).populate("items.productid")
         const Categoryofferdata = await Categoryoffer.find()
         const Productofferdata = await Productoffer.find()
 
 
-        res.render("home", { data, user: req.session.name, cartdata, id, Categoryofferdata, Productofferdata,products,mencategory,womencategory })
+        res.render("home", { data, user: req.session.name, cartdata, id, Categoryofferdata, Productofferdata,products,mencategory,womencategory,bannerdata })
 
 
     }

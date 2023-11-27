@@ -564,8 +564,16 @@ const salessort = async (req, res) => {
 
 const downloadreport = async (req, res) => {
     try {
-        const orderdata = await order.find();
-        console.log("dijdfgokfgjoisoi");
+       const startdate =req.body.activationdate;
+       const expirydate=req.body.expirydate
+       console.log(startdate);
+       console.log(expirydate);
+       const isoDate1 = new Date(startdate)
+       const isoDate2 = new Date(expirydate);
+       const orderdata = await order.find({ purchaseDate: { $gte: isoDate1, $lte: isoDate2 } })
+
+
+      
         ejs.renderFile(
             path.join(__dirname, "../views/admin/", "report.ejs"),
             {
@@ -590,7 +598,7 @@ const downloadreport = async (req, res) => {
                             res.send(err);
                         } else {
                             const pdfpath = path.join(__dirname, "../report.pdf");
-                            res.sendFile(pdfpath);
+                            res.download(pdfpath);
                         }
                     });
                 }

@@ -18,15 +18,41 @@
         <div class="page-content">
             <div class="container">
                 
-                <div style="width: 100px; height: 50px;"> <!-- Adjust width and height as needed -->
-                    <button type="submit" class="form-control btn btn-primary rounded submit px-3" >Add Money</button>
-                  </div>
+                <div style="width: 100px; height: 50px;" > <!-- Adjust width and height as needed -->
+                    <button type="submit" class="form-control btn btn-primary rounded submit px-3" data-toggle="modal" data-target="#exampleModal" >Add Money</button>
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <form >
+                                    <label for="exampleInputEmail3">Amount</label>
+                                    <input type="number" class="form-control" id="amount" placeholder="Coupon Code"
+                                        name="amount" required>
+                                        <p style="color: red;" id="priceError"></p>
+            
+                                        <input type="hidden" id="walletid" value="<%= walletdata._id %>">
+                                </div>
+                                <button type="button"  onclick="addmoney()" id="submitButton" class="btn btn-primary mr-2">Submit</button>
+                            </form>
+                            </div>
+                           
+                          </div>
+                        </div>
+                      </div>
+                </div>
                                   <div class="container" style="background-color: rgb(247, 234, 211); height: 100px; display: flex; align-items: center; justify-content: center;">
                     <h1>Rs.<%= walletdata.balance %></h1>
                 </div>
                 
                         
-                        <div class="table-responsive">
+                        <div class="table-responsive" style="overflow: auto; max-height: 600px;">
                             <table class="table">
                                 <thead>
                                     <tr><b>
@@ -84,8 +110,104 @@
         </div><!-- End .page-content -->
     </main><!-- End .main -->
     <script>
+         const amount = document.getElementById("amount");
+		amount.addEventListener('input', validamount);
 
-     
+    function validamount() {
+			const walletamount = document.getElementById("amount").value;
+
+			if (walletamount.trim() === "") {
+				document.getElementById('priceError').innerHTML = "Enter amount";
+				amount.setCustomValidity("Enter amount");
+			} else {
+				const walletamountpattern = /^[+]?\d*\.?\d+$/;
+				if (!walletamount.match(walletamountpattern)) {
+					document.getElementById('priceError').innerHTML = "Amount should contain only  postive values  ";
+					amount.setCustomValidity("Amount should contain only  postive values");
+				} else {
+					document.getElementById('priceError').innerHTML = "";
+					amount.setCustomValidity("");
+				}
+			}
+		}
+
+     function addmoney(){
+        const walletid = document.getElementById('walletid').value
+        console.log(walletid);
+        const amount =document.getElementById('amount').value;
+     console.log(amount )
+     $.ajax({
+        method:'post',
+        url:'/addwalletamount',
+        data:JSON.stringify({walletid,amount}),
+        contentType:'application/json',
+        success:function(response){
+            if(response){
+                razorpayPayment(response.order)
+  
+            }
+        }
+     })
+    }
+
+    function razorpayPayment(order) {
+            console.log(order);
+            var options = {
+                "key": "rzp_test_spjMMzxxQd5jRn",
+                "amount": order.amount,
+                "currency": "INR",
+                "name": "Shozey",
+                "description": "Test Transaction",
+                "image": "assets/images/Shozey.png",
+                "order_id": order.id,
+                handler: function (response) {
+                    verifyPayment(response, order);
+                },
+                "prefill": {
+                    "name": "Shozey",
+                    "email": "shozey@gmail.com",
+                    "contact": "9000090000"
+                },
+                "notes": {
+                    "address": "Shozey "
+                },
+                "theme": {
+                    "color": "#cc9967"
+                }
+            };
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
+        }
+
+        
+        function verifyPayment(payment, order) {
+            const amount = document.getElementById("amount").value;
+            console.log(amount);
+            $.ajax({
+                url: "/verify-walletpayment",
+                method: "post",
+                data: {
+                    payment: payment,
+                    amount: amount,
+                    order: order,
+                },
+                success: (response) => {
+                    if (response.placed == true) {
+                       
+                        window.location.href = '/wallet'
+                    } else {
+                        swal.fire({
+                            positon: "center",
+                            icon: "error",
+                            title: "Payment failed",
+                            showConfirmButton: false,
+                            timer: 1500,
+                        });
+                    }
+                },
+            });
+        }
+
 
 
     </script>

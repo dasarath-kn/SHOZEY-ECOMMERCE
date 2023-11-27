@@ -96,6 +96,8 @@ router.post('/sortproduct',usercontroller.sortproduct)
 
 router.post('/coupondata',couponcontroller.coupondata);
 router.delete('/deletecoupon',couponcontroller.deletecoupon)
+router.post('/addwalletamount',checkoutcontroller.addwalletamount)
+router.post('/verify-walletpayment',checkoutcontroller.verifywalletpayment)
 
 //=================================== LOGOUT =====================================//
 router.get('/logout', auth.is_Login, usercontroller.logout);

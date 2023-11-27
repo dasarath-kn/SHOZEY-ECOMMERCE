@@ -180,6 +180,60 @@ const ProceedOrder = async (req, res) => {
 
 }
 
+
+const addwalletamount = async(req,res)=>{
+    try {
+        const amount =req.body.amount
+        const walletid=req.body.walletid
+        console.log(amount,walletid);
+        const options = {
+            amount: amount * 100,
+            currency: "INR",
+            receipt: "" + walletid,
+        }
+
+        instance.orders.create(options, function (err, order) {
+
+            return res.json({ order,walletid });
+        });
+
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const verifywalletpayment =async(req,res)=>{
+    try {
+        const user_id = req.session.userId
+        const paymentData = req.body
+        const amount =req.body.amount
+       
+        const hmac = crypto.createHmac("sha256", process.env.ROZORPAYSECRETKEY);
+        hmac.update(paymentData.payment.razorpay_order_id + "|" + paymentData.payment.razorpay_payment_id);
+        const hmacValue = hmac.digest("hex");
+
+        if (hmacValue == paymentData.payment.razorpay_signature) {
+            const walletdata = await Wallet.updateOne(  { userid:req.session.userId },
+                {
+                    $inc: { balance:amount  },
+                    $push: {
+                        items: {
+                            date: Date.now(),
+                            amount:amount ,
+                            type: 'Deposit'
+                            
+                        }
+                    }
+                })     
+            
+                res.json({ placed: true }) }
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+
 //=================================== Order details =====================================//
 
 const orderdetails = async (req, res) => {
@@ -404,5 +458,7 @@ module.exports = {
     orderplaced,
     verifypayment,
     checkoutdata,
-    returnorder
+    returnorder,
+    addwalletamount,
+    verifywalletpayment
 }

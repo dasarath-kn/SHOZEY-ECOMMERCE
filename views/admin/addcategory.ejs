@@ -1,7 +1,7 @@
 <%- include ('../admin/layouts/header.ejs')-%>
 
         <!-- partial -->
-        <div class="row">
+      
             <div class="col-md-12 mt-5 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
@@ -11,13 +11,17 @@
                     <div class="form-group">
                       <label for="exampleInputUsername1">Category Name</label>
                       <input type="text" class="form-control" id="category" placeholder="Categoryname" name="name">
+                      <span id="categoryError" style="color: red;"></span>
+
                     </div>
                     <button type="button" class="btn btn-primary mr-2" onclick="addcategory()">Submit</button>
                     
                   </form>
                 </div>
               </div>
-            </div>
+           
+
+              
            
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -44,6 +48,29 @@
               })
               
              }
+
+
+             const category = document.getElementById("category");
+		category.addEventListener('input', validcategory);
+
+  function validcategory() {
+			const categoryvalue = document.getElementById("category").value;
+
+			if (categoryvalue.trim() === "") {
+				document.getElementById('categoryError').innerHTML = "Enter Product category";
+				description.setCustomValidity("Enter Product category");
+			} else {
+				const categorypattern = /^(.*[a-zA-Z]){5,}/;
+				if (!categoryvalue.match(categorypattern )) {
+					document.getElementById('categoryError').innerHTML = "Category should contain minimum 5 letters ";
+					category.setCustomValidity("Category should contain minimum 5 letters");
+				} else {
+					document.getElementById('categoryError').innerHTML = "";
+					category.setCustomValidity("");
+				}
+			}
+		}
+
 
               </script>
        

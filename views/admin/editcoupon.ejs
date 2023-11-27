@@ -6,50 +6,63 @@
             <div class="card-body">
                 <h4 class="card-title"></h4>
                 <!-- <p class="card-description"> Basic form elements </p> -->
-                <form class="forms-sample" action="/admin/editedcoupondata?id=<%= coupondata._id %>" method="post" >
+                <form class="forms-sample"  onsubmit=" validateDates(event)" action="/admin/editedcoupondata?id=<%= coupondata._id %>" method="post" >
                     <div class="form-group">
                         <label for="exampleInputName1">Coupon Name</label>
-                        <input type="text" value="<%= coupondata.couponname %>" class="form-control" id="exampleInputName1" placeholder="Coupon Name "
+                        <input type="text" value="<%= coupondata.couponname %>" class="form-control" id="couponname" placeholder="Coupon Name "
                             name="couponname" required>
+                            <p style="color: red;" id="couponnameError"></p>
+
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail3">Coupon Code</label>
-                        <input type="text"  value="<%= coupondata.couponcode %>" class="form-control" id="exampleInputEmail3" placeholder="Coupon Code"
+                        <input type="text"  value="<%= coupondata.couponcode %>" class="form-control" id="couponcode" placeholder="Coupon Code"
                             name="couponcode" required>
+                            <p style="color: red;" id="couponcodeError"></p>
+
+
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword4">Discount Amount</label>
-                        <input type="number" class="form-control" id="exampleInputPassword4"
+                        <input type="number" class="form-control" id="discountamount"
                            name="discountamount" value="<%= coupondata.discountamount %>" placeholder="Discount Amount" name="price" required>
-                    </div>
+                           <p style="color: red;" id="discountamountError"></p>
+
+                        </div>
                     <div class="form-group">
                         <label for="avtivationDate">Activation Date</label>
-                        <input type="date" class="form-control" id="activationErr" value="<%= coupondata.activationdate %>"
-                          name="activationdate"  placeholder="activation date" style="color: white;" required>
+                        <input type="date" class="form-control" id="dateInput1" value="<%= coupondata.activationdate %>"
+                          name="activationdate"  placeholder="activation date" style="color: white;" onchange="validateActivationDate(this)" required>
                         <p style="color: red;" id="activationErr"></p>
                     </div>
                     <div class="form-group">
                         <label for="avtivationDate">Expiry Date</label>
-                        <input type="date" class="form-control" id="activationErr" value="<%= coupondata.expirydate %>"
+                        <input type="date" class="form-control" id="dateInput2" value="<%= coupondata.expirydate %>"
                           name="expirydate"  placeholder="activation date" style="color: white;" required>
                         <p style="color: red;" id="activationErr"></p>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword4">Criteria Amount</label>
-                        <input type="number" class="form-control" id="exampleInputPassword4" value="<%= coupondata.criteriaamount %>"
+                        <input type="number" class="form-control" id="criteriaamount" value="<%= coupondata.criteriaamount %>"
                             placeholder="Criteria Amount" name="criteriaamount" required>
+                            <p style="color: red;" id="criteriaamountError"></p>
+
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword4">Users limit</label>
-                        <input type="number" class="form-control" id="exampleInputPassword4" placeholder="Users limit" value="<%= coupondata.userslimit %>"
+                        <input type="number" class="form-control" id="userlimit" placeholder="Users limit" value="<%= coupondata.userslimit %>"
                             name="userslimit" required >
+                            <p style="color: red;" id="userlimitError"></p>
+
                     </div>
 
                     <div class="form-group">
                         <label for="exampleTextarea1">Description</label>
                         <textarea class="form-control" id="exampleTextarea1" rows="4" placeholder="Description"  
                             name="description" required><%= coupondata.description %></textarea>
-                    </div>
+                            <p style="color: red;" id="descriptionError"></p>
+
+                        </div>
 
 
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
@@ -58,5 +71,170 @@
             </div>
         </div>
     </div>
+
+    <script>
+         function validateActivationDate(input) {
+        var selectedDate = new Date(input.value);
+        var currentDate = new Date();
+
+        // Check if the selected date is before the current date
+        if (selectedDate < currentDate) {
+            document.getElementById('activationErr').innerText = 'Please select a date equal to or after the current date.';
+            input.setCustomValidity('Please select a date equal to or after the current date.');
+        } else {
+            document.getElementById('activationErr').innerText = '';
+            input.setCustomValidity('');
+        }
+    }
+
+function validateDates(event) {
+    var startDate = document.getElementById('dateInput1').value;
+    var endDate = document.getElementById('dateInput2').value;
+
+   
+    if (endDate < startDate) {
+        alert('End date cannot be earlier than the start date. Please select a valid date range.');
+      //  Swal.fire("End date cannot be earlier than the start date. Please select a valid date range.");
+      event.preventDefault ()
+    }
+
+    
+    return true;
+  }
+
+
+        const couponname = document.getElementById("couponname");
+couponname.addEventListener('input', validcouponname);
+
+  function validcouponname() {
+			const name = document.getElementById("couponname").value;
+
+			if (name.trim() === "") {
+				document.getElementById('couponnameError').innerHTML = "Enter Coupon name";
+				couponname.setCustomValidity("Enter Coupon name");
+			} else {
+				const couponnamepattern = /^(.*[a-zA-Z]){5,}/;
+				if (!name.match(couponnamepattern )) {
+					document.getElementById('couponnameError').innerHTML = "Coupon name should contain minimum 5 letters ";
+					couponname.setCustomValidity("Coupon name should contain minimum 5 letters");
+				} else {
+					document.getElementById('couponnameError').innerHTML = "";
+					couponname.setCustomValidity("");
+				}
+			}
+		}
+
+
+        const couponcode = document.getElementById("couponcode");
+		couponcode.addEventListener('input', validcouponcode);
+
+  function validcouponcode() {
+			const name = document.getElementById("couponcode").value;
+
+			if (name.trim() === "") {
+				document.getElementById('countryError').innerHTML = "Enter Coupon code";
+				couponcode.setCustomValidity("Enter Coupon code");
+			} else {
+				const couponcodepattern = /^(.*[a-zA-Z]){5,}(.*\d){2,}/;
+;
+				if (!name.match(couponcodepattern )) {
+					document.getElementById('couponcodeError').innerHTML = "Coupon code should contain minimum 5 letters and 2numbers ";
+					couponcode.setCustomValidity("Product name should contain minimum 5 letters and 2 numbers");
+				} else {
+					document.getElementById('couponcodeError').innerHTML = "";
+					couponcode.setCustomValidity("");
+				}
+			}
+		}
+
+        const discountamount = document.getElementById("discountamount");
+		discountamount.addEventListener('input', validcouponamount);
+
+    function validcouponamount() {
+			const amounts = document.getElementById("discountamount").value;
+
+			if (amounts.trim() === "") {
+				document.getElementById('discountamountError').innerHTML = "Enter Coupon amount";
+				discountamount.setCustomValidity("Enter Coupon amount");
+			} else {
+				const couponamountpattern = /^[+]?\d*\.?\d+$/;
+				if (!amounts.match(couponamountpattern)) {
+					document.getElementById('discountamountError').innerHTML = "Coupon amount should contain only  postive values  ";
+					discountamount.setCustomValidity("Coupon amount should contain only  postive values");
+				} else {
+					document.getElementById('discountamountError').innerHTML = "";
+					discountamount.setCustomValidity("");
+				}
+			}
+		}
+
+        
+        const criteriaamount = document.getElementById("criteriaamount");
+		criteriaamount.addEventListener('input', validcouponamount);
+
+    function validcouponamount() {
+			const amount = document.getElementById("criteriaamount").value;
+
+			if (amount.trim() === "") {
+				document.getElementById('criteriaamountError').innerHTML = "Enter Criteria amount";
+				criteriaamount.setCustomValidity("Enter Criteria amount");
+			} else {
+				const criteriaamountpattern = /^[+]?\d*\.?\d+$/;
+				if (!amount.match(criteriaamountpattern)) {
+					document.getElementById('criteriaamountError').innerHTML = "Criteria amount should contain only  postive values  ";
+					criteriaamount.setCustomValidity("Criteria amount should contain only  postive values");
+				} else {
+					document.getElementById('criteriaamountError').innerHTML = "";
+					criteriaamount.setCustomValidity("");
+				}
+			}
+		}
+
+
+        const userlimit = document.getElementById("userlimit");
+		userlimit.addEventListener('input', validuserlimit);
+
+    function validuserlimit() {
+			const limit = document.getElementById("userlimit").value;
+            const userlimitpattern = /^[+]?\d*\.?\d+$/;
+
+			if (limit.trim() === "") {
+				document.getElementById('userlimitError').innerHTML = "Enter User limit";
+                userlimit.setCustomValidity("Enter User limit");
+            }else{
+                if (!limit.match(userlimitpattern)) {
+					document.getElementById('userlimitError').innerHTML = "User limit should contain only  postive values  ";
+					userlimit.setCustomValidity("User limit should contain only  postive values");
+				} else {
+					document.getElementById('userlimitError').innerHTML = "";
+					userlimit.setCustomValidity("");
+				}
+			}
+		}
+
+
+        const description = document.getElementById("exampleTextarea1");
+		description.addEventListener('input', validdescription);
+
+  function validdescription() {
+			const descriptionvalue = document.getElementById("exampleTextarea1").value;
+
+			if (descriptionvalue.trim() === "") {
+				document.getElementById('descriptionError').innerHTML = "Enter Product description";
+				description.setCustomValidity("Enter Product description");
+			} else {
+				const descriptionpattern = /^(.*[a-zA-Z]){10,}/;
+				if (!descriptionvalue.match(descriptionpattern )) {
+					document.getElementById('descriptionError').innerHTML = "Description should contain minimum 10 letters ";
+					description.setCustomValidity("Description should contain minimum 10 letters");
+				} else {
+					document.getElementById('descriptionError').innerHTML = "";
+					description.setCustomValidity("");
+				}
+			}
+		}
+
+
+    </script>
 
     <%- include ('../admin/layouts/footer.ejs')-%>

@@ -33,7 +33,7 @@
                                     <div class="product-gallery">
                                         <figure class="product-main-image">
                                             <span class="product-label label-top">Top</span>
-                                            <img id="product-zoom" src="/productimages/<%= item.image[0] %>" data-zoom-image="/productimages/<%= item.image[0] %>" alt="product image">
+                                            <img id="product-zoom" src="/sharpedimages/<%= item.image[0] %>" data-zoom-image="/sharpedimages/<%= item.image[0] %>" alt="product image">
 
                                             <a href="#" id="btn-product-gallery" class="btn-product-gallery">
                                                 <i class="icon-arrows"></i>
@@ -42,8 +42,8 @@
 
                                         <div id="product-zoom-gallery" class="product-image-gallery">
                                             <% for(let i=0;i<item.image.length;i++){%>
-                                            <a class="product-gallery-item active" href="#" data-image="/productimages/<%= item.image[i] %>" data-zoom-image="/productimages/<%= item.image[i] %>">
-                                                <img src="/productimages/<%= item.image[i] %>" alt="product side">
+                                            <a class="product-gallery-item active" href="#" data-image="/sharpedimages/<%= item.image[i] %>" data-zoom-image="/sharpedimages/<%= item.image[i] %>">
+                                                <img src="/sharpedimages/<%= item.image[i] %>" alt="product side">
                                             </a>
                                             <%}%>
                                             

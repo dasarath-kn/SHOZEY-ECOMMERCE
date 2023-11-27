@@ -20,35 +20,74 @@
                     <div class="form-group">
                         <label for="avtivationDate">Starting Date</label>
                         <input type="date" class="form-control" id="startingdate" 
-                        name="startingdate"  placeholder="activation date" style="color: white;" required>
-                        <p style="color: red;" ></p>
+                        name="startingdate"  placeholder="activation date" style="color: white;"   onchange="validateActivationDate(this)" required>
+                        <p style="color: red;" id="activationErr" ></p>
                     </div>
                     <div class="form-group">
                         <label for="avtivationDate">Expiry Date</label>
                         <input type="date" class="form-control" id="expirydate"
-                        name="expirydate"  placeholder="activation date" style="color: white;" required>
-                        <p style="color: red;" ></p>
+                        name="expirydate"  placeholder="activation date" style="color: white;"  onchange="validateDates(this)" required>
+                        <p style="color: red;" id="expiryErr" ></p>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword4">Offer percentage</label>
                         <input type="number" class="form-control" id="offerpercentage"
                            name="offerpercentage" placeholder="Discount Amount" name="offerpercentage"  required>
-                    </div>
+                           <p style="color: red;" id="discountamountError"></p>
+
+                        </div>
                    
-                    <button type="button"  onclick="addcategoryoffer()" class="btn btn-primary mr-2">Submit</button>
+                    <button type="button" id="submitButton" onclick="addcategoryoffer()" class="btn btn-primary mr-2">Submit</button>
                     <button class="btn btn-dark"><a href="/admin/offermanagement">Cancel</a></button>
                 </form>
             </div>
         </div>
     </div>
 <script>
+
+    //   function validateActivationDate(input) {
+    //     var selectedDate = new Date(input.value);
+    //     var currentDate = new Date();
+
+    //     // Check if the selected date is before the current date
+      
+    //      if (selectedDate < currentDate) {
+    //         document.getElementById('activationErr').innerText = 'Please select a date equal to or after the current date.';
+    //         document.getElementById('submitButton').disabled = true;
+    //     }
+       
+       
+    //      else {
+    //         document.getElementById('activationErr').innerText = '';
+    //         document.getElementById('submitButton').disabled = false;
+    //     }
+    // }
+
+function validateDates(input) {
+    var startDate = document.getElementById('startingdate').value;
+    var endDate = document.getElementById('expirydate').value;
+
+   
+    if (endDate < startDate) {
+        document.getElementById('expiryErr').innerText = 'End date cannot be earlier than the start date. Please select a valid date range.';
+            document.getElementById('submitButton').disabled = true;
+    }else{
+        document.getElementById('expiryErr').innerText = '';
+            document.getElementById('submitButton').disabled = false;
+    }
+
+    
+   
+  }
+
     function addcategoryoffer(){
+       
         const categoryname = document.getElementById('categoryname').value
         const startingdate = document.getElementById('startingdate').value
         const expirydate = document.getElementById('expirydate').value
          const offerpercentage = document.getElementById('offerpercentage').value
          console.log(categoryname,startingdate,expirydate);
-        $.ajax({
+         $.ajax({
             url:'/admin/offerdata',
             method:'post',
             data:JSON.stringify({categoryname,startingdate,expirydate,offerpercentage}),
@@ -64,6 +103,26 @@
         })
     }
 
+    const discountamount = document.getElementById("offerpercentage");
+		discountamount.addEventListener('input', validofferpercentage);
+
+    function validofferpercentage() {
+			const amounts = document.getElementById("offerpercentage").value;
+
+			if (amounts.trim() === "") {
+				document.getElementById('discountamountError').innerHTML = "Enter offer amount";
+				discountamount.setCustomValidity("Enter offer amount");
+			} else {
+				const couponamountpattern = /^[+]?\d*\.?\d+$/;
+				if (!amounts.match(couponamountpattern)) {
+					document.getElementById('discountamountError').innerHTML = "Offer amount should contain only  postive values  ";
+					discountamount.setCustomValidity("Offer amount should contain only  postive values");
+				} else {
+					document.getElementById('discountamountError').innerHTML = "";
+					discountamount.setCustomValidity("");
+				}
+			}
+		}
 
 
 </script>

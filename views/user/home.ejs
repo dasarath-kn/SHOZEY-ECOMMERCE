@@ -6,20 +6,22 @@
             <div class="intro-slider-container slider-container-ratio mb-2">
                 <div class="intro-slider owl-carousel owl-simple owl-light owl-nav-inside" data-toggle="owl"
                     data-owl-options='{"nav": false}'>
-                    <div class="intro-slide">
+                    <% for(let i=0;i<bannerdata.length;i++){%>
+                    <% if(bannerdata[i].status==0){%>
+                        <div class="intro-slide">
                         <figure class="slide-image">
                             <picture>
                                 <source media="(max-width: 480px)"
-                                    srcset="assets/images/demos/demo-10/slider/slide-1-480w.jpg">
-                                <img src="assets/images/demos/demo-10/slider/slide-1.jpg" alt="Image Desc">
+                                    srcset="/bannerimages/bannerdata[i].bannerimage[0]">
+                                <img src="/bannerimages/<%=bannerdata[i].bannerimage[0]%>" alt="Image Desc">
                             </picture>
                         </figure>
 
                         <div class="intro-content">
-                            <h3 class="intro-subtitle">Deals and Promotions</h3><!-- End .h3 intro-subtitle -->
-                            <h1 class="intro-title text-white">Sneakers & Athletic Shoes</h1><!-- End .intro-title -->
+                            <!-- <h3 class="intro-subtitle">Deals and Promotions</h3>
+                            <h1 class="intro-title text-white">Sneakers & Athletic Shoes</h1>
 
-                            <div class="intro-price text-white">from $9.99</div><!-- End .intro-price -->
+                            <div class="intro-price text-white">from $9.99</div>End .intro-price -->
 
                             <a href="category.html" class="btn btn-white-primary btn-round">
                                 <span>SHOP NOW</span>
@@ -27,7 +29,8 @@
                             </a>
                         </div><!-- End .intro-content -->
                     </div><!-- End .intro-slide -->
-
+                    <%}else{%><%}%>
+                    <%}%>
                     <div class="intro-slide">
                         <figure class="slide-image">
                             <picture>
@@ -77,83 +80,7 @@
             </div><!-- End .intro-slider-container -->
         </div><!-- End .container -->
 
-        <div class="banner-group">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="banner banner-overlay">
-                                    <a href="#">
-                                        <img src="assets/images/demos/demo-10/banners/banner-1.jpg" alt="Banner">
-                                    </a>
-
-                                    <div class="banner-content banner-content-right">
-                                        <h4 class="banner-subtitle"><a href="#">New Arrivals</a></h4>
-                                        <!-- End .banner-subtitle -->
-                                        <h3 class="banner-title text-white"><a href="#">Sneakers & <br>Athletic
-                                                Shoes</a></h3><!-- End .banner-title -->
-                                        <a href="#" class="btn btn-outline-white banner-link btn-round">Discover Now</a>
-                                    </div><!-- End .banner-content -->
-                                </div><!-- End .banner -->
-                            </div><!-- End .col-sm-6 -->
-
-                            <div class="col-sm-6">
-                                <div class="banner banner-overlay banner-overlay-light">
-                                    <a href="#">
-                                        <img src="assets/images/demos/demo-10/banners/banner-2.jpg" alt="Banner">
-                                    </a>
-
-                                    <div class="banner-content">
-                                        <h4 class="banner-subtitle bright-black"><a href="#">Clearance</a></h4>
-                                        <!-- End .banner-subtitle -->
-                                        <h3 class="banner-title"><a href="#">Sandals</a></h3><!-- End .banner-title -->
-                                        <div class="banner-text"><a href="#">up to 70% off</a></div>
-                                        <!-- End .banner-text -->
-                                        <a href="#" class="btn btn-outline-gray banner-link btn-round">Shop Now</a>
-                                    </div><!-- End .banner-content -->
-                                </div><!-- End .banner -->
-                            </div><!-- End .col-sm-6 -->
-                        </div><!-- End .row -->
-
-                        <div class="banner banner-large banner-overlay d-none d-sm-block">
-                            <a href="#">
-                                <img src="assets/images/demos/demo-10/banners/banner-3.jpg" alt="Banner">
-                            </a>
-
-                            <div class="banner-content">
-                                <h4 class="banner-subtitle text-white"><a href="#">On Sale</a></h4>
-                                <!-- End .banner-subtitle -->
-                                <h3 class="banner-title text-white"><a href="#">Slip-On Loafers</a></h3>
-                                <!-- End .banner-title -->
-                                <div class="banner-text text-white"><a href="#">up to 30% off</a></div>
-                                <!-- End .banner-text -->
-                                <a href="#" class="btn btn-outline-white banner-link btn-round">Shop Now</a>
-                            </div><!-- End .banner-content -->
-                        </div><!-- End .banner -->
-                    </div><!-- End .col-lg-8 -->
-
-                    <div class="col-lg-4 d-sm-none d-lg-block">
-                        <div class="banner banner-middle banner-overlay">
-                            <a href="#">
-                                <img src="assets/images/demos/demo-10/banners/banner-4.jpg" alt="Banner">
-                            </a>
-
-                            <div class="banner-content banner-content-bottom">
-                                <h4 class="banner-subtitle text-white"><a href="#">On Sale</a></h4>
-                                <!-- End .banner-subtitle -->
-                                <h3 class="banner-title text-white"><a href="#">Amazing <br>Lace Up Boots</a></h3>
-                                <!-- End .banner-title -->
-                                <div class="banner-text text-white"><a href="#">from $39.00</a></div>
-                                <!-- End .banner-text -->
-                                <a href="#" class="btn btn-outline-white banner-link btn-round">Discover Now</a>
-                            </div><!-- End .banner-content -->
-                        </div><!-- End .banner -->
-                    </div><!-- End .col-lg-4 -->
-                </div><!-- End .row -->
-            </div><!-- End .container -->
-        </div><!-- End .banner-group -->
-
+  
         <div class="icon-boxes-container icon-boxes-separator bg-transparent">
             <div class="container">
                 <div class="row">
@@ -296,7 +223,7 @@
                                                 </span>
                                             <% } %>
                                                               <a href="/productdetails?id=<%= item._id %>">
-                                                            <img src="/productimages/<%= item.image[0] %>"
+                                                            <img src="/sharpedimages/<%= item.image[0] %>"
                                                                 alt="Product image" class="product-image">
                                                         </a>
                                                         <div class="product-action-vertical">
@@ -373,7 +300,7 @@
                                                     <p onclick="toAddCart('<%= item._id %>')"
                                                         class="btn-product btn-cart"><span>add to cart</span></p>
                                                     <% } else { %>
-                                                        <p class="carts"><span>add to cart</span></p>
+                                                        <p id="carts" class="btn-product btn-carts"><span>add to cart</span></p>
                                                         <% } %>
 
                                                             <!-- <a href="popup/quickView.html"
@@ -426,7 +353,7 @@
                                     <span class="product-label label-primary">Out Of Stock</span>
                                     <%}else{%><%}%>
                                     <a href="/productdetails?id=<%= womencategory[i]._id %>">
-                                        <img src="/productimages/<%= womencategory[i].image[0] %>"
+                                        <img src="/sharpedimages/<%= womencategory[i].image[0] %>"
                                             alt="Product image" class="product-image">
                                     </a>
 
@@ -461,7 +388,7 @@
                                             <p onclick="toAddCart('<%= womencategory[i]._id %>')"
                                                 class="btn-product btn-cart"><span>add to cart</span></p>
                                             <% } else { %>
-                                                <p class="carts"><span>add to cart</span></p>
+                                                <p id="carts" class="btn-product btn-carts"><span>add to cart</span></p>
                                                 <% } %>                                
                                                         <!-- <a href="popup/quickView.html" class="btn-product btn-quickview"><span>quick
                                                 view</span></a> -->
@@ -513,7 +440,7 @@
                                     <span class="product-label label-primary">Out Of Stock</span>
                                     <%}else{%><%}%>
                                     <a href="/productdetails?id=<%= mencategory[i]._id %>">
-                                        <img src="/productimages/<%= mencategory[i].image[0] %>"
+                                        <img src="/sharpedimages/<%= mencategory[i].image[0] %>"
                                             alt="Product image" class="product-image">
                                     </a>
 
@@ -548,7 +475,7 @@
                                             <p onclick="toAddCart('<%= mencategory[i]._id %>')"
                                                 class="btn-product btn-cart"><span>add to cart</span></p>
                                             <% } else { %>
-                                                <p class="carts"><span>add to cart</span></p>
+                                                <p id="carts" class="btn-product btn-carts"><span>add to cart</span></p>
                                                 <% } %>                                
                                                         <a href="popup/quickView.html" class="btn-product btn-quickview"><span>quick
                                                 view</span></a>
@@ -824,10 +751,10 @@
             });
         }
 
-        const carts = document.querySelectorAll('.carts');
-        carts.forEach(cart => {
-            cart.addEventListener("click", loginrequired);
-        });
+        const carts = document.getElementById('carts');
+       
+            carts.addEventListener("click", loginrequired);
+    
 
         function loginrequired() {
             Swal.fire({

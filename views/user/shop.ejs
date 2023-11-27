@@ -108,26 +108,24 @@
                                                     <%}else{%>
                                                         <%}%>
                                             <a href="product.html">
-                                                <img src="/productimages/<%= productdata[i].image[0]%>" alt="Product image"
+                                                <img src="/sharpedimages/<%= productdata[i].image[0]%>" alt="Product image"
                                                     class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
-                                                <a href="#"
+                                                <a onclick="wishlist('<%= productdata[i]._id %>')"
                                                     class="btn-product-icon btn-wishlist btn-expandable"><span>add to
                                                         wishlist</span></a>
-                                                <a href="popup/quickView.html" class="btn-product-icon btn-quickview"
-                                                    title="Quick view"><span>Quick view</span></a>
-                                                <a href="#" class="btn-product-icon btn-compare"
-                                                    title="Compare"><span>Compare</span></a>
+                                               
+                                               
                                             </div><!-- End .product-action-vertical -->
 
                                             <div class="product-action">
-                                                <% if (sessionid){%>
+                                                <% if (id){%>
                                                     <a href="#" onclick="toAddCart('<%= productdata[i]._id %>')" class="btn-product btn-cart"><span>add to cart</span></a>  
                                                     <%}
                                                     else{%>
-                                                        <a href="#" class="carts"><span> cart</span></a>  
+                                                        <p id="carts" class="btn-product btn-cart"><span>add to cart</span></p>  
 
                                                         <%}
                                                     %>
@@ -163,26 +161,19 @@
                                                 
                                                 
                                             </div><!-- End .product-price -->
-                                            <div class="ratings-container">
-                                                <div class="ratings">
-                                                    <div class="ratings-val" style="width: 20%;"></div>
-                                                    <!-- End .ratings-val -->
-                                                </div><!-- End .ratings -->
-                                                <span class="ratings-text">( 2 Reviews )</span>
-                                            </div><!-- End .rating-container -->
-
+                                           
                                             <div class="product-nav product-nav-thumbs">
                                                 <a href="#" class="active">
-                                                    <img src="/productimages/<%= productdata[i].image[1]%>"
+                                                    <img src="/sharpedimages/<%= productdata[i].image[1]%>"
                                                         alt="product desc">
                                                 </a>
                                                 <a href="#">
-                                                    <img src="/productimages/<%= productdata[i].image[2]%>"
+                                                    <img src="/sharpedimages/<%= productdata[i].image[2]%>"
                                                         alt="product desc">
                                                 </a>
 
                                                 <a href="#">
-                                                    <img src="/productimages/<%= productdata[i].image[3]%>"
+                                                    <img src="/sharpedimages/<%= productdata[i].image[3]%>"
                                                         alt="product desc">
                                                 </a>
                                             </div><!-- End .product-nav -->
@@ -340,7 +331,7 @@
     </main><!-- End .main -->
     <script>
 
-        function toAddCart(id) {
+function toAddCart(id) {
             console.log("add to cart function started");
             $.ajax({
                 method: "post",
@@ -352,14 +343,26 @@
                         $('#downCart').load('/ #downCart');
                         Swal.fire({
                             title: 'success',
-                            text: 'product added to cart',
+                            text: 'Product added to cart',
                             icon: 'success',
                             confirmButtonText: 'OK'
                         });
 
-                    } else {
+                    } else if (response.count == true) {
+
+                        $('#downCart').load('/ #downCart');
                         Swal.fire({
-                            title: 'error',
+                            position: "top-end",
+                            icon: "success",
+                            title: "Product count increased",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+
+                    }
+                    else {
+                        Swal.fire({
+                            title: 'Failed',
                             text: 'product is out of stock',
                             icon: 'failed',
                             confirmButtonText: 'OK'
@@ -373,25 +376,26 @@
             });
         }
 
-        const carts = document.querySelectorAll('.carts');
-        for(let i=0 ; i<productdata.length; i++){
-            productdata[i].addEventListener("click", loginrequired);
-        }
 
-        function loginrequired() {
-            Swal.fire({
-                title: 'Login required',
-                text: 'Please login',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            }).then((result) => {
-                if (result.isConfirmed) {
+        const carts = document.getElementById('carts');
+       
+       carts.addEventListener("click", loginrequired);
 
-                    window.location.href = '/signin';
-                }
-            });
 
-        }
+   function loginrequired() {
+       Swal.fire({
+           title: 'Login required',
+           text: 'Please login',
+           icon: 'error',
+           confirmButtonText: 'OK'
+       }).then((result) => {
+           if (result.isConfirmed) {
+
+               window.location.href = '/signin';
+           }
+       });
+
+   }
 
       
 
@@ -452,6 +456,42 @@ function lowtohigh(id){
 //     })
 // }
 
+function wishlist(id) {
+            console.log("hshfjfl");
+
+            $.ajax({
+                method: "post",
+                url: "/addtowishlist",
+                data: JSON.stringify({ id: id }),
+                contentType: 'application/json',
+                success: function (response) {
+                    if (response.result == true) {
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "Sucessfully added to wishlist",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        console.log("sucess");
+                    } else if (response.res == false) {
+                        Swal.fire(" Item already exist in wishlist");
+                    }
+                    else {
+                        Swal.fire({
+                            title: 'Login required',
+                            text: 'Please login',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = '/signin';
+                            }
+                        });
+                    }
+                }
+            })
+        }
 
     </script>
     <%- include('../user/layout/footers.ejs') -%>

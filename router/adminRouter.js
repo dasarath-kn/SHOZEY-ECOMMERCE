@@ -64,7 +64,7 @@ router.get('/dashboard',auth.checkadminisLogin,adminController.dashboard)
 
 router.get('/salesreport',auth.checkadminisLogin,adminController.salesreport)
 router.post('/salessort',adminController.salessort)
-router.get('/downloadreport',adminController.downloadreport)
+router.post('/downloadreport',adminController.downloadreport)
 
 //=================================== COUPON =====================================//
 

@@ -37,7 +37,7 @@
                   <div class="form-group">
                     <label for="exampleInputName1">Product Name</label>
                     <input type="text" class="form-control" id="exampleInputName1" placeholder="Product Name " name="product" required>
-                    <span id="nameError" style="color: red;"></span>
+                    <span id="productnameError" style="color: red;"></span>
 
                   </div>
                   <div class="form-group">
@@ -48,7 +48,7 @@
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPrice">Price</label>
-                    <input type="number" class="form-control" id="exampleInputPassword4" placeholder="Price" name="price" required>
+                    <input type="number" class="form-control" id="exampleInputPrice" placeholder="Price" name="price" required>
                     <span id="priceError" style="color: red;"></span>
 
                   </div>
@@ -70,7 +70,7 @@
                   <div class="form-group">
                     <label for="exampleTextarea1">Description</label>
                     <textarea class="form-control" id="exampleTextarea1" rows="4" name="description" required></textarea>
-                    <span id="desError" style="color: red;"></span>
+                    <span id="descriptionError" style="color: red;"></span>
 
                   </div>
                   <!-- <div class="form-group">
@@ -85,7 +85,7 @@
                   </div> -->
                   <div class="form-group">
                     <label for="images">Upload Images</label>
-                    <input type="file" accept="image/*" class="form-control-file" id="images" name="image" multiple onchange="validateAndPreviewImages(this)">
+                    <input type="file" accept="image/*" class="form-control-file" id="images" name="image" multiple onchange="validateAndPreviewImages(this)" required>
                     <span id="image1Error" style="color: red;"></span>
                 </div>
                 <div id="imagePreviewContainer"></div>
@@ -187,6 +187,94 @@
     }
   }
 </script>
+<script>
+  //////////
+  const productname = document.getElementById("exampleInputName1");
+		productname.addEventListener('input', validproductname);
 
+  function validproductname() {
+			const name = document.getElementById("exampleInputName1").value;
+
+			if (name.trim() === "") {
+				document.getElementById('countryError').innerHTML = "Enter Product name";
+				productname.setCustomValidity("Enter product name");
+			} else {
+				const productnamepattern = /^(.*[a-zA-Z]){5,}/;
+				if (!name.match(productnamepattern )) {
+					document.getElementById('productnameError').innerHTML = "Product name should contain minimum 5 letters ";
+					productname.setCustomValidity("Product name should contain minimum 5 letters");
+				} else {
+					document.getElementById('productnameError').innerHTML = "";
+					productname.setCustomValidity("");
+				}
+			}
+		}
+
+    const quantity = document.getElementById("exampleInputQuantity");
+		quantity.addEventListener('input', validproductquantity);
+
+    function validproductquantity() {
+			const productquantity = document.getElementById("exampleInputQuantity").value;
+
+			if (productquantity.trim() === "") {
+				document.getElementById('quantityError').innerHTML = "Enter Product quantity";
+				quantity.setCustomValidity("Enter product quantity");
+			} else {
+				const productquantitypattern = /^[+]?\d*\.?\d+$/;
+				if (!productquantity.match(productquantitypattern)) {
+					document.getElementById('quantityError').innerHTML = "Quantity should contain only  postive values  ";
+					quantity.setCustomValidity("Quantity should contain only  postive values");
+				} else {
+					document.getElementById('quantityError').innerHTML = "";
+					quantity.setCustomValidity("");
+				}
+			}
+		}
+
+    const price = document.getElementById("exampleInputPrice");
+		price.addEventListener('input', validproductprice);
+
+    function validproductprice() {
+			const productprice = document.getElementById("exampleInputPrice").value;
+
+			if (productprice.trim() === "") {
+				document.getElementById('priceError').innerHTML = "Enter Product price";
+				price.setCustomValidity("Enter product price");
+			} else {
+				const productpricepattern = /^[+]?\d*\.?\d+$/;
+				if (!productprice.match(productpricepattern)) {
+					document.getElementById('priceError').innerHTML = "Price should contain only  postive values  ";
+					price.setCustomValidity("Price should contain only  postive values");
+				} else {
+					document.getElementById('priceError').innerHTML = "";
+					price.setCustomValidity("");
+				}
+			}
+		}
+
+    const description = document.getElementById("exampleTextarea1");
+		description.addEventListener('input', validdescription);
+
+  function validdescription() {
+			const descriptionvalue = document.getElementById("exampleTextarea1").value;
+
+			if (descriptionvalue.trim() === "") {
+				document.getElementById('descriptionError').innerHTML = "Enter Product description";
+				description.setCustomValidity("Enter Product description");
+			} else {
+				const descriptionpattern = /^(.*[a-zA-Z]){10,}/;
+				if (!descriptionvalue.match(descriptionpattern )) {
+					document.getElementById('descriptionError').innerHTML = "Description should contain minimum 10 letters ";
+					description.setCustomValidity("Description should contain minimum 10 letters");
+				} else {
+					document.getElementById('descriptionError').innerHTML = "";
+					description.setCustomValidity("");
+				}
+			}
+		}
+
+
+
+</script>
 
          <%- include ('../admin/layouts/footer.ejs')-%>
