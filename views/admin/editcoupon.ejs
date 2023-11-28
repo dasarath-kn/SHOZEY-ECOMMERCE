@@ -73,19 +73,19 @@
     </div>
 
     <script>
-         function validateActivationDate(input) {
-        var selectedDate = new Date(input.value);
-        var currentDate = new Date();
+    //      function validateActivationDate(input) {
+    //     var selectedDate = new Date(input.value);
+    //     var currentDate = new Date();
 
-        // Check if the selected date is before the current date
-        if (selectedDate < currentDate) {
-            document.getElementById('activationErr').innerText = 'Please select a date equal to or after the current date.';
-            input.setCustomValidity('Please select a date equal to or after the current date.');
-        } else {
-            document.getElementById('activationErr').innerText = '';
-            input.setCustomValidity('');
-        }
-    }
+    //     // Check if the selected date is before the current date
+    //     if (selectedDate < currentDate) {
+    //         document.getElementById('activationErr').innerText = 'Please select a date equal to or after the current date.';
+    //         input.setCustomValidity('Please select a date equal to or after the current date.');
+    //     } else {
+    //         document.getElementById('activationErr').innerText = '';
+    //         input.setCustomValidity('');
+    //     }
+    // }
 
 function validateDates(event) {
     var startDate = document.getElementById('dateInput1').value;

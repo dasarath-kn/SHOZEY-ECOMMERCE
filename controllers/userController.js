@@ -58,18 +58,21 @@ const home = async (req, res) => {
         const id = req.session.userId;
         const data = await product.find().limit(4)
         const products = await product.find().skip(4)
-        const mencategory = await product.find({ category: { $regex: /Men's/i } });
-        const womencategory = await product.find({category:{ $regex:/Women's/i}});
+        const mencategory = await product.find({ category: { $regex: /^M/i } });
+        const womencategory = await product.find({category:{ $regex:/^W/i}});
         const bannerdata =await banner.find()
-        console.log(bannerdata);
-       
+        // console.log(mencate);
+       if(id){
         const cartdata = await cart.find({ userid: id }).populate("items.productid")
         const Categoryofferdata = await Categoryoffer.find()
         const Productofferdata = await Productoffer.find()
 
 
         res.render("home", { data, user: req.session.name, cartdata, id, Categoryofferdata, Productofferdata,products,mencategory,womencategory,bannerdata })
-
+       }
+       else{
+        res.redirect('/signin')
+       }
 
     }
     catch (error) {
@@ -111,7 +114,7 @@ const forgetpasswordcheck =async(req,res)=>{
         const userdata = await user.findOne({email:email});
         const id = req.session.userId;
         const cartdata = await cart.find({ userid: id }).populate("items.productid")
-
+  if(userdata){
         if(userdata.status!=1){
             const name = userdata.name
             const _id = userdata._id
@@ -123,6 +126,10 @@ const forgetpasswordcheck =async(req,res)=>{
         }
         else{
             res.render('forgetpassword',{message:"Email not found",user:req.session.name,cartdata,id})  
+        }}
+        else{
+            res.render('forgetpassword',{message:"Email not found",user:req.session.name,cartdata,id})  
+
         }
     } catch (error) {
         console.log(error.message);
@@ -532,13 +539,13 @@ const shop = async (req, res) => {
             const productdata = await product.find().limit(6).sort({price:val})
 
             res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata,pagecount,categorys,Categoryofferdata,Productofferdata,id})
-        }else if(_id =='Women'){
-            const productdata = await product.find({category:{$regex:/Women's/i}}).limit(6).sort({price:val})
+        }else if(_id =='W'){
+            const productdata = await product.find({category:{$regex:/^W/i}}).limit(6).sort({price:val})
  
             res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata,pagecount,categorys,Categoryofferdata,Productofferdata,id})
 
-        }else if(_id =='Men'){
-            const productdata = await product.find({category:{$regex:/Men's/i}}).limit(6).sort({price:val})
+        }else if(_id =='M'){
+            const productdata = await product.find({category:{$regex:/^M/i}}).limit(6).sort({price:val})
  
             res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata,pagecount,categorys,Categoryofferdata,Productofferdata,id})
 

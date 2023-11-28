@@ -19,7 +19,7 @@
                       <th> Category</th>
                       <th>Quantity</th>
                       <th>Price</th>
-                      <th> discountamount</th>
+                      <!-- <th> discountamount</th> -->
                     </tr>
 
                     <% data.forEach((item)=>{ %>
@@ -36,9 +36,9 @@
                         <td>
                           <%= item.price %>
                         </td>
-                        <td>
+                        <!-- <td>
                           <%= item.discountamount %>
-                        </td>
+                        </td> -->
                         <td>
                           <p><a href="/admin/delete/product?id=<%= item._id %>" class="badge badge-danger"
                               onclick="return confirm('Are you sure? Do you want to Delete')">Delete</a></p>

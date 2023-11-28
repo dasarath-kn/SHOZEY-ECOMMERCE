@@ -69,6 +69,7 @@ router.post('/cancelorder',checkoutcontroller.cancelorder)
 router.get('/orderplaced',checkoutcontroller.orderplaced);
 router.post('/verify-payment',checkoutcontroller.verifypayment);
 router.post('/returnorder',checkoutcontroller.returnorder)
+router.get('/downloadinvoice',checkoutcontroller.downloadinvoice)
 //=================================== PROFILE =====================================//
 
 router.get('/profile',profileController.profile);

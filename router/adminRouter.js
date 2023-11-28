@@ -93,7 +93,7 @@ router.get('/editproductoffer',adminController.editproductoffer)
 
 //=================================== Banner-Management =====================================//
 
-router.get('/banner',adminController.bannermanagement)
+router.get('/banner',auth.checkadminisLogin,adminController.bannermanagement)
 router.get('/addbanner',adminController.addbanner)
 router.post('/bannerdata',multer.uploadbanner.single('image'),adminController.bannerdata);
 router.post('/block-unblockbanner',adminController.blockunblockbanner);

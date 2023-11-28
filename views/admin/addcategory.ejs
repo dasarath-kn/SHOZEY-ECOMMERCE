@@ -14,7 +14,7 @@
                       <span id="categoryError" style="color: red;"></span>
 
                     </div>
-                    <button type="button" class="btn btn-primary mr-2" onclick="addcategory()">Submit</button>
+                    <button type="button" id="submitButton" class="btn btn-primary mr-2" onclick="addcategory()">Submit</button>
                     
                   </form>
                 </div>
@@ -60,13 +60,17 @@
 				document.getElementById('categoryError').innerHTML = "Enter Product category";
 				description.setCustomValidity("Enter Product category");
 			} else {
-				const categorypattern = /^(.*[a-zA-Z]){5,}/;
+				const categorypattern = /^[a-zA-Z]{5,10}$/;
 				if (!categoryvalue.match(categorypattern )) {
-					document.getElementById('categoryError').innerHTML = "Category should contain minimum 5 letters ";
-					category.setCustomValidity("Category should contain minimum 5 letters");
-				} else {
+					document.getElementById('categoryError').innerHTML = "Category should contain between 5-10 letters ";
+					category.setCustomValidity("Category should contain between 5-10 letters");
+          document.getElementById('submitButton').disabled = true;
+
+        } else {
 					document.getElementById('categoryError').innerHTML = "";
 					category.setCustomValidity("");
+          document.getElementById('submitButton').disabled = false;
+
 				}
 			}
 		}

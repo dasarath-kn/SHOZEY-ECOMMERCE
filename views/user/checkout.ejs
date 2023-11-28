@@ -115,7 +115,7 @@
                                 </div><!-- End .input-group -->
                             </form>
                         </div>
-
+<input type="hidden" id="orderid" value="<%= orderid%>">
                         <div class="add-new-address" style="margin-left: auto; margin-top: 2rem;">
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-primary" data-toggle="modal"
@@ -401,14 +401,16 @@
                         Swal.fire("User limit exceeded")
 
                     }else if(response.res ==false){
-                        Swal.fire("Invalid couponcode")
-
+                       
+                        Swal.fire("The coupon already redeemed");
 
                     }
 
                     else {
-                        Swal.fire("The coupon already redeemed");
+                        Swal.fire("Invalid couponcode")
+
                     }
+
                 }
 
 
@@ -483,12 +485,12 @@
                         console.log(response)
                         if (response.success == true) {
                             console.log("jhgguyjgjg");
-                            window.location.href = '/orderplaced'
+                            window.location.href = `/orderplaced?id=${response.orderid}`
                         } else if (response.online == true) {
                             console.log("wallet");
                         }
                         else {
-                            razorpayPayment(response.order)
+                            razorpayPayment(response.order,response.orderid)
 
                         }
                     },
@@ -521,8 +523,9 @@
         // })
         // }
 
-        function razorpayPayment(order) {
+        function razorpayPayment(order,orderid) {
             console.log(order);
+            console.log(orderid);
             var options = {
                 "key": "rzp_test_spjMMzxxQd5jRn",
                 "amount": order.amount,
@@ -532,7 +535,7 @@
                 "image": "assets/images/Shozey.png",
                 "order_id": order.id,
                 handler: function (response) {
-                    verifyPayment(response, order);
+                    verifyPayment(response, order,orderid);
                 },
                 "prefill": {
                     "name": "Shozey",
@@ -551,7 +554,7 @@
         }
 
 
-        function verifyPayment(payment, order) {
+        function verifyPayment(payment, order,orderid) {
             const amount2 = document.getElementById("total").value;
             console.log(amount2);
             $.ajax({
@@ -561,11 +564,12 @@
                     payment: payment,
                     amount2: amount2,
                     order: order,
+                    orderid:orderid
                 },
                 success: (response) => {
                     if (response.placed == true) {
                        
-                        window.location.href = '/orderplaced'
+                        window.location.href = `/orderplaced?id=${response.orderid}`
                     } else {
                         swal.fire({
                             positon: "center",

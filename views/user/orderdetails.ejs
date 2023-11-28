@@ -88,9 +88,10 @@
                                             </tr>
                                             <%}%>
 
-
-                    </tbody>
+                                        </tbody>
+                                        
                 </table>
+                
             </div>
             <div class="row">
                 <div class="col-md-6">
@@ -128,7 +129,18 @@
                 </div>
                 <div class="col-md-6">
                     <a href="/profile"><button class="btn btn-primary btn-block">Go Back</button></a>
+                
                 </div>
+                 <div class="col-md-6">
+                    <% if(orderdata[0].status=='delivered'){%>
+                        <a class="btn btn-primary btn-block"  href="/downloadinvoice?id=<%= orderdata[0]._id %>" >Download invoice</a></td>
+    
+                        <%}
+                        else{%>
+
+                            <%}%>
+                
+                </div> 
                 
 
             </div>
@@ -213,7 +225,19 @@
             }
         }
     })
+    
   } 
+
+// function downloadinvoice(id){
+
+//     S.ajax({
+//         method:'post',
+//         url:'/downloadinvoice',
+//         data:JSON.stringify({id:id}),
+//         contentType:'application/json',
+
+//     })
+// }
 
     </script>
 

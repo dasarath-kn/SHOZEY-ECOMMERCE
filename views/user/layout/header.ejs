@@ -151,7 +151,9 @@
                                                     <div class="product-cart-details">
                                                         <h4 class="product-title">
                                                             <a href="product.html">
-                                                                <%= element.productid.productname %>
+                                                                <% if(element.productid.productname){%>
+                                                                    <%= element.productid.productname %>
+                                                                    <%} else{%><%}%>
                                                             </a>
                                                         </h4>
 

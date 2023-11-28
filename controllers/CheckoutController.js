@@ -54,12 +54,15 @@ const checkoutdata = async (req, res) => {
 
 const ProceedtoCheckout = async (req, res) => {
     try {
+        console.log("fikhgfhjjkfjkuhfhffjhhjdshdjdhjfdjhjhd");
 
         const coupondata = await coupon.find()
         const useraddress = await address.find({ userId: req.session.userId });
         const id = req.session.userId;
         const data = await product.find()
         const total = await cart.findOne({ userid: id }).populate('items.total');
+        console.log(total);
+        if(total){
         const datatotal = total.items.map((item) => {
             return item.total * item.count;
         });
@@ -71,8 +74,13 @@ const ProceedtoCheckout = async (req, res) => {
             });
         }
         const cartdata = await cart.find({ userid: id }).populate("items.productid")
-        res.render('checkout', { user: req.session.name, data, cartdata, useraddress, totalsum, coupondata,id });
-
+        res.render('checkout', { user: req.session.name, data, cartdata, useraddress, totalsum, coupondata,id,orderid:0 });
+        }
+        else{
+            res.redirect('/')
+        }
+   
+    
     } catch (error) {
         console.log(error.message);
     }
@@ -81,6 +89,7 @@ const ProceedtoCheckout = async (req, res) => {
 const ProceedOrder = async (req, res) => {
     try {
         // const productdata = await product.findOne({_id:productid});
+        
         const id = req.session.userId
         const payment = req.body.payment
         const addressid = req.body.address
@@ -136,7 +145,8 @@ const ProceedOrder = async (req, res) => {
                 discountamount: totalAmount
             })
             const orderdata = await datas.save();
-            const orderid =orderdata._id 
+            const orderid =orderdata._id
+            console.log(orderid);
             console.log(orderid[0]+"dgfgddgdgfdgd");
             if (payment == "Cash on delivery") {
                 let data = cartData.items
@@ -152,11 +162,11 @@ const ProceedOrder = async (req, res) => {
                 await cart.deleteOne({ userid: id })
                 return res.json({ success: true,orderid } )
             } else if (payment == "Wallet") {
-                return res.json({ online: true })
+                return res.json({ online: true ,orderid})
 
             } else {
                 const options = {
-                    amount: totalsum * 100,
+                    amount: Total * 100,
                     currency: "INR",
                     receipt: "" + orderdata._id,
                 }
@@ -208,6 +218,7 @@ const verifywalletpayment =async(req,res)=>{
         const user_id = req.session.userId
         const paymentData = req.body
         const amount =req.body.amount
+      
        
         const hmac = crypto.createHmac("sha256", process.env.ROZORPAYSECRETKEY);
         hmac.update(paymentData.payment.razorpay_order_id + "|" + paymentData.payment.razorpay_payment_id);
@@ -359,6 +370,7 @@ const cancelorder = async (req, res) => {
 const orderplaced = async (req, res) => {
     try {
         const orderid = req.query.id
+        console.log(orderid);
         res.render('orderplaced',{orderid})
 
     } catch (error) {
@@ -372,6 +384,8 @@ const verifypayment = async (req, res) => {
         const paymentData = req.body
         const cartData = await cart.findOne({ userid: user_id })
         console.log(cartData);
+        const orderid=req.body.orderid
+        console.log(orderid+"gfhdfdjhfgj");
 
         const hmac = crypto.createHmac("sha256", process.env.ROZORPAYSECRETKEY);
         hmac.update(paymentData.payment.razorpay_order_id + "|" + paymentData.payment.razorpay_payment_id);
@@ -394,7 +408,7 @@ const verifypayment = async (req, res) => {
             );
 
             await cart.deleteOne({ userid: user_id })
-            res.json({ placed: true })
+            res.json({ placed: true ,orderid})
         }
 
 
@@ -450,6 +464,17 @@ const returnorder = async(req,res)=>{
 }
 
 
+ const downloadinvoice = async(req,res)=>{
+    try {
+        const id = req.query.id
+        const orderdata  = await order.find({_id:id})
+        res.render('invoice',{orderdata})
+    } catch (error) {
+        
+    }
+ }
+
+
 module.exports = {
     ProceedtoCheckout,
     ProceedOrder,
@@ -460,5 +485,6 @@ module.exports = {
     checkoutdata,
     returnorder,
     addwalletamount,
-    verifywalletpayment
+    verifywalletpayment,
+    downloadinvoice
 }
