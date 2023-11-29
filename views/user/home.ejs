@@ -195,6 +195,9 @@
 
                                     <div class="product product-3 text-center">
                                         <figure class="product-media">
+                                            <% if(item.quantity<=0){%>
+                                                <span class="product-label label-primary">Out Of Stock</span>
+                                                <%}else{%><%}%>
 
                                             <% if (item.discountamount) { %>
                                                 <% if (item.offername == "categoryoffer") { %>
@@ -302,7 +305,7 @@
                                                     <p onclick="toAddCart('<%= item._id %>')"
                                                         class="btn-product btn-cart"><span>add to cart</span></p>
                                                     <% } else { %>
-                                                        <p id="carts" class="btn-product btn-carts"><span>add to cart</span></p>
+                                                        <p id="carts" onclick="loginrequired()" class="btn-product btn-carts"><span>add to cart</span></p>
                                                         <% } %>
 
                                                             <!-- <a href="popup/quickView.html"
@@ -390,7 +393,7 @@
                                             <p onclick="toAddCart('<%= womencategory[i]._id %>')"
                                                 class="btn-product btn-cart"><span>add to cart</span></p>
                                             <% } else { %>
-                                                <p id="carts" class="btn-product btn-carts"><span>add to cart</span></p>
+                                                <p id="carts" onclick="loginrequired()" class="btn-product btn-carts"><span>add to cart</span></p>
                                                 <% } %>                                
                                                         <!-- <a href="popup/quickView.html" class="btn-product btn-quickview"><span>quick
                                                 view</span></a> -->
@@ -465,22 +468,15 @@
                                 </div><!-- End .product-body -->
 
                                 <div class="product-footer">
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 3 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-
+                                  
                                     <div class="product-action">
                                         <% if (id) { %>
                                             <p onclick="toAddCart('<%= mencategory[i]._id %>')"
                                                 class="btn-product btn-cart"><span>add to cart</span></p>
                                             <% } else { %>
-                                                <p id="carts" class="btn-product btn-carts"><span>add to cart</span></p>
+                                                <p id="carts" onclick="loginrequired()" class="btn-product btn-carts"><span>add to cart</span></p>
                                                 <% } %>                                
-                                                        <a href="popup/quickView.html" class="btn-product btn-quickview"><span>quick
-                                                view</span></a>
+                                                 
                                     </div><!-- End .product-action -->
                                 </div><!-- End .product-footer -->
                             </div><!-- End .product -->
@@ -558,6 +554,9 @@
                             <div class="col-6 col-md-4 col-lg-3 col-xl-5col">
                                 <div class="product product-3 text-center">
                                     <figure class="product-media">
+                                        <% if(products[i].quantity<=0){%>
+                                            <span class="product-label label-primary">Out Of Stock</span>
+                                            <%}else{%><%}%>
                                         <% if(products[i].offername=="categoryoffer") {%>
                                            
                                                 <% if(products[i].offerstatus==0){%>
@@ -651,11 +650,12 @@
                                                 <a onclick="toAddCart('<%= products[i]._id %>')" class="btn-product btn-cart" title="Add to cart"><span>add to
                                                     cart</span></a><%}
                                                     else{%>
+                                                        <a onclick="loginrequired()" class="btn-product btn-cart" title="Add to cart"><span>add to
+                                                            cart</span></a>
                                                         <%}%>
                                             <!-- <a onclick="toAddCart('<%= products[i]._id %>')" class="btn-product btn-cart" title="Add to cart"><span>add to
                                                     cart</span></a> -->
-                                            <a href="popup/quickView.html" class="btn-product btn-quickview"
-                                                title="Quick view"><span>quick view</span></a>
+                                         
                                         </div><!-- End .product-action -->
                                     </div><!-- End .product-footer -->
                                 </div><!-- End .product -->
@@ -752,10 +752,7 @@
             });
         }
 
-        const carts = document.getElementById('carts');
-       
-            carts.addEventListener("click", loginrequired);
-    
+
 
         function loginrequired() {
             Swal.fire({

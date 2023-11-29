@@ -29,18 +29,18 @@
           <div class="card" style="overflow: auto; max-height: 800px;">
             <div class="card-body">
               <h4 class="card-title"> SHOZEY Sales Report</h4>
-          <button id="download" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" >Report Download</button>   
+          <button id="download" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" >Pdf Download</button>   
            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                  <h5 class="modal-title" id="exampleModalLabel">Report</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 <div class="modal-body">
-                  <form action="/admin/downloadreport" method="post">
+                  <form action="/admin/downloadreport?id=1" method="post">
                   <div class="form-group">
                     <label for="avtivationDate">Activation Date</label>
                     <input type="date" class="form-control" id="dateInput1" 
@@ -53,13 +53,45 @@
                     name="expirydate"  placeholder="activation date" style="color: white;" onchange="validateDates(this)" required>
                   <p style="color: red;" id="activationErr"></p>
               </div>
-              <button type="submit" id="sortButton" class="btn btn-primary mr-2">Submit</button>
+              <button  id="sortButton" type="submit"  class="btn btn-primary mr-2">Submit</button>
             </form>
                 </div>
                
               </div>
             </div>
           </div>  
+          <button id="download" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong" >Excel Download</button>   
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Report</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/admin/downloadreport?id=0" method="post">
+          <div class="form-group">
+            <label for="avtivationDate">Activation Date</label>
+            <input type="date" class="form-control" id="startingdate" 
+              name="activationdate"  placeholder="activation date" style="color: white;"  required>
+            <p style="color: red;" id="expiryErrors"></p>
+        </div>
+        <div class="form-group">
+          <label for="avtivationDate">Expiry Date</label>
+          <input type="date" class="form-control" id="endingdate" 
+            name="expirydate"  placeholder="activation date" style="color: white;" onchange="ValidateDate(this)" required>
+          <p style="color: red;" id="activationErrors"></p>
+      </div>
+      <button  type="submit" id="Button" class="btn btn-primary mr-2">Submit</button>
+    </form>
+      </div>
+   
+    </div>
+  </div>
+</div>
            
            <div class="table-responsive" id="table">
                 <table class="table">
@@ -125,26 +157,55 @@
           style="max-width: 450px; margin: 0 auto; padding: 0; background-color: #000000; border: 0; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); text-align: right;">
           <form   action="/admin/salessort" method="post">
             <div style="display: inline-block;">
-              <input type="date" name="datestart" id="dateInput1"
+              <input type="date" name="datestart" id="start"
                 style="width: 100%; padding: 3px; border: 1px solid #ccc; border-radius: 0; height: auto;">
             </div>
             <div style="display: inline-block;">
-              <input type="date" name="dateend" id="dateInput2"
-                style="width: 100%; padding: 3px; border: 1px solid #ccc; border-radius: 5px; height: auto;" onchange="validateDates(this)">
-                <p style="color: red;" id="expiryErr"></p>
+              <input type="date" name="dateend" id="end"
+                style="width: 100%; padding: 3px; border: 1px solid #ccc; border-radius: 5px; height: auto;" onchange="validateDate(this)" required>
+        
 
               </div>
-            <button type="submit "  id="sortButton"
+            <button type="submit "  id="FilterButton"
               style="background-color: #007BFF; color: #fff; border: none; border-radius: 5px; padding: 8px 15px; cursor: pointer;">
               Filter
             </button>
             <ul id="dateList" style="list-style: none; padding: 0;"></ul>
           </form>
+          <p style="color: red;" id="expiryError"></p>
         </div>
 
 
         
         <script>
+
+
+// function downloadreport(id){
+//   let startdate=0;
+//   let enddate=0
+//   if(id==1){
+//     startdate =document.getElementById('dateInput1').value;
+//     enddate =document.getElementById('dateInput2').value;
+//   }else{
+//     startdate =document.getElementById('startingdate').value;
+//     enddate =document.getElementById('endingdate').value;
+//   }
+//   $.ajax({
+//     method:'post', 
+//     url:'/admin/downloadreport',
+//     data:JSON.stringify({startdate,enddate}),
+//     contentType:'application/json',
+//     success:function(response){
+//       if( response.result==false){
+//         Swal.fire("Re");
+
+//       }else{
+//         console.log("Data reached correctly");
+//       }
+//     }
+//   })
+// }
+
          
          function validateDates(input) {
     var startDate = document.getElementById('dateInput1').value;
@@ -157,6 +218,34 @@
     }else{
         document.getElementById('expiryErr').innerText = '';
             document.getElementById('sortButton').disabled = false;
+    }
+  }
+  function ValidateDate(input) {
+    var startDate = document.getElementById('startingdate').value;
+    var endDate = document.getElementById('endingdate').value;
+
+   
+    if (endDate < startDate) {
+        document.getElementById('expiryErrors').innerText = 'End date cannot be earlier than the start date. Please select a valid date range.';
+            document.getElementById('Button').disabled = true;
+    }else{
+        document.getElementById('expiryErrors').innerText = '';
+            document.getElementById('Button').disabled = false;
+    }
+  }
+
+
+  function validateDate(input) {
+    var startDate = document.getElementById('start').value;
+    var endDate = document.getElementById('end').value;
+
+   
+    if (endDate < startDate) {
+        document.getElementById('expiryError').innerText = 'End date cannot be earlier than the start date. Please select a valid date range.';
+            document.getElementById('FilterButton').disabled = true;
+    }else{
+        document.getElementById('expiryError').innerText = '';
+            document.getElementById('FilterButton').disabled = false;
     }
   }
           
@@ -212,38 +301,6 @@
             options: areaOptions
           }); F
           // }
-
-
-
-          
-
-
-
-
-
-
-          //         $(document).ready(() => {
-          //   $('#formdata').on('submit', (event) => {
-          //     event.preventDefault();
-          //     var formData = $(this).serialize();  // Use formData instead of formdata
-
-          //     $.ajax({
-          //       url: '/admin/salessort',
-          //       method: 'POST',  // Use POST instead of post
-          //       data: formData,
-          //       success: function(response) {
-          //         if (response === true) {  // Use response instead of result
-          //           $('#table').load('/admin/salessort #table');
-          //         } else {
-          //           console.log("Not found");
-          //         }
-          //       },
-          //       error: function() {  // Handle AJAX error
-          //         console.error("An error occurred.");
-          //       }
-          //     });
-          //   });
-          // });
 
           document.getElementById('formdata').addEventListener('submit', (e) => {
             e.preventDefault()

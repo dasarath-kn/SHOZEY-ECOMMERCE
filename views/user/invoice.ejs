@@ -159,24 +159,23 @@
                 <div class="row">
                   <div class="col-md-6">
                     <div class="text-muted mb-2">Client</div>
-                    <strong> <%= orderdata[0].address.firstName%> <%= orders.address.lastName%> </strong>
+                    <strong> <%= orderdata[0].deliveryDetails.name%> </strong>
                     <p class="fs-sm">
-                      <%= orders.address.address%>, <%= orders.address.city%>, <%= orders.address.state%>, <%= orders.address.pin%>.
+                      <%= orderdata[0].deliveryDetails.address%>, <%= orderdata[0].deliveryDetails.city%>, <%= orderdata[0].deliveryDetails.state %>, <%= orderdata[0].deliveryDetails.pincode%>.
                       <br />
-                      <a href="#!" class="text-purple"><%= orders.address.phone %></a>
-                      <a href="#!" class="text-purple"><%= orders.address.email %></a>
+                      <a href="#!" class="text-purple"><%= orderdata[0].deliveryDetails.phonenumber%></a>
                     </p>
                   </div>
                   <div class="col-md-6 text-md-end">
                     <div class="text-muted mb-2">Payment To</div>
-                    <strong> ResticLens </strong>
+                    <strong> Shozey </strong>
                     <p class="fs-sm">
                       123, Sunshine Lane,
                       Palm Grove City,
                       Bangalore 560001,
                       Karnataka, India.
                       <br />
-                      <a href="#!" class="text-purple">adilc0070@gmail.com </a>
+                      <a href="#!" class="text-purple">dasarathkn99@gmail.com </a>
                     </p>
                   </div>
                 </div>
@@ -205,28 +204,31 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <%orders.products.forEach(product => {%>
+                  <% var productdata =orderdata[0].items %>
                   <tr>
-                        <td class="px-0"><%= product.product_name %></td>
-                        <td class="text-end px-0"><%= product.quantity %></td>
-                        <td class="text-end px-0">$<%= product.productId.price %></td>
-                  </tr>
-                  <%});%>
+                    <% for(let i=0;i<productdata.length;i++){%>
+                        <td class="px-0"><%=productdata[i].productid.productname  %></td>
+                        <td class="text-end px-0"><%= productdata[i].count %></td>
+                        <td class="text-end px-0">$<%= productdata[i].count*productdata[i].total  %></td>
+                  <%} %>
+                      </tr>
+                 
                 </tbody>
               </table>
 
               <div class="mt-5">
                 <div class="d-flex justify-content-end">
                   <p class="text-muted me-3">Subtotal:</p>
-                  <span>₹ <%= orders.amount %></span>
+                  <span>₹ <%= orderdata[0].totalAmount %></span>
                 </div>
                 <div class="d-flex justify-content-end">
                   <p class="text-muted me-3">Discount:</p>
-                  <span>- ₹0.00</span>
+                  <span>- ₹<%= orderdata[0].discountamount%></span>
                 </div>
                 <div class="d-flex justify-content-end mt-3">
                   <h5 class="me-3">Total:</h5>
-                  <h5 class="text-success">₹ <%= orders.amount %></h5>
+                  <h5 class="text-success">₹ <%= orderdata[0].totalAmount %></h5>
+                  <span id="download" style="margin-left: 10px;" onclick="downloadpdf()"><i class="fa fa-download ml-3" aria-hidden="true"></i>                  </span>
                 </div>
               </div>
             </div>
@@ -249,8 +251,25 @@
   />
   <script>
     function pdf(){
+      document.getElementById('download').style.display='none';
+ setTimeout(() => {
+  
+   document.getElementById('download').style.display='block';
+ }, 1000);
       window.print();
+
+
     }
     pdf()
+
+    function downloadpdf(){
+      document.getElementById('download').style.display='none';
+      setTimeout(() => {
+  
+  document.getElementById('download').style.display='block';
+}, 1000);
+      window.print();
+
+    }
   </script>
 </html>

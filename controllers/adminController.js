@@ -7,6 +7,9 @@ const Categoryoffer = require('../models/categoryofferModel')
 const Productoffer = require('../models/productofferModel');
 const banner = require('../models/bannerModel')
 let pdf = require("html-pdf");
+const ExcelJS = require('exceljs');
+const fs = require('fs')
+
 const ejs = require("ejs");
 const path = require("path");
 // const { render } = require('ejs');
@@ -566,15 +569,16 @@ const downloadreport = async (req, res) => {
     try {
        const startdate =req.body.activationdate;
        const expirydate=req.body.expirydate
+       const id =req.query.id
        console.log(startdate);
        console.log(expirydate);
        const isoDate1 = new Date(startdate)
        const isoDate2 = new Date(expirydate);
+       if(id ==1){ 
        const orderdata = await order.find({ purchaseDate: { $gte: isoDate1, $lte: isoDate2 } })
-
-
-      
-        ejs.renderFile(
+        console.log(orderdata);
+          
+          ejs.renderFile(
             path.join(__dirname, "../views/admin/", "report.ejs"),
             {
                 orderdata,
@@ -603,7 +607,46 @@ const downloadreport = async (req, res) => {
                     });
                 }
             }
-        );
+        );}
+        else if(id==0){
+            
+
+            const orderdata = await order.find({ purchaseDate: { $gte: isoDate1, $lte: isoDate2 } }).populate('items.productid')
+
+            const workbook = new ExcelJS.Workbook();
+            const worksheet = workbook.addWorksheet('Sales Report');
+      
+            // Add data to the Excel worksheet (customize as needed)
+            worksheet.columns = [
+              { header: 'Order ID', key: 'orderId', width: 8 },
+              { header: 'Product Name', key: 'productName', width: 50 },
+              { header: 'Qty', key: 'qty', width: 5 },
+              { header: 'Date', key: 'date', width: 12 },
+              { header: 'Customer', key: 'customer', width: 15 },
+              { header: 'Total Amount', key: 'totalAmount', width: 12 },
+            ];
+            // Add rows from the reportData to the worksheet
+            orderdata.forEach((data) => {
+                
+              worksheet.addRow({
+                orderId: data._id,
+                productName: data.items.productid,
+                qty: data.items.count,
+                date: data.purchaseDate.toLocaleDateString('en-US', { year:
+                  'numeric', month: 'short', day: '2-digit' }).replace(/\//g,
+                  '-'),
+                customer: data.deliveryDetails.name,
+                totalAmount: data.totalAmount,
+              });
+            });
+      
+            res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            res.setHeader('Content-Disposition', `attachment; filename="Shozey"_sales_report.xlsx`);
+            const excelBuffer = await workbook.xlsx.writeBuffer();
+            res.end(excelBuffer);
+        }
+       
+        
 
 
     } catch (error) {

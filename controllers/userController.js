@@ -62,17 +62,15 @@ const home = async (req, res) => {
         const womencategory = await product.find({category:{ $regex:/^W/i}});
         const bannerdata =await banner.find()
         // console.log(mencate);
-       if(id){
+       
         const cartdata = await cart.find({ userid: id }).populate("items.productid")
         const Categoryofferdata = await Categoryoffer.find()
         const Productofferdata = await Productoffer.find()
 
 
         res.render("home", { data, user: req.session.name, cartdata, id, Categoryofferdata, Productofferdata,products,mencategory,womencategory,bannerdata })
-       }
-       else{
-        res.redirect('/signin')
-       }
+       
+       
 
     }
     catch (error) {

@@ -103,7 +103,7 @@ const ProceedOrder = async (req, res) => {
 
         const addressdata = await address.findOne({ _id: addressid })
 
-
+       
 
 
         const carts = await cart.findOne({ userid: id })
@@ -111,12 +111,12 @@ const ProceedOrder = async (req, res) => {
         const datatotal = total.items.map((item) => {
             return item.total * item.count;
         });
-        ///
+      
 
 
         const cartData = await cart.findOne({ userid: id })
         const cartitems = await cart.findOne({ userid: id }).populate("items.productid")
-        ///
+      
 
         let totalsum = 0;
         if (datatotal.length > 0) {
@@ -130,6 +130,10 @@ const ProceedOrder = async (req, res) => {
             else {
                 Total = totalsum
             }
+
+            if(addressid){
+                console.log("ererer");
+           
 
             const datas = new order({
                 user_Id: id,
@@ -147,8 +151,8 @@ const ProceedOrder = async (req, res) => {
             const orderdata = await datas.save();
             const orderid =orderdata._id
             console.log(orderid);
-            console.log(orderid[0]+"dgfgddgdgfdgd");
             if (payment == "Cash on delivery") {
+               
                 let data = cartData.items
 
                 for (let i = 0; i < data.length; i++) {
@@ -177,6 +181,10 @@ const ProceedOrder = async (req, res) => {
                 });
 
             }
+        }
+        else{
+            return res.json({address:false});
+        }
 
 
 
@@ -390,10 +398,10 @@ const verifypayment = async (req, res) => {
         const hmac = crypto.createHmac("sha256", process.env.ROZORPAYSECRETKEY);
         hmac.update(paymentData.payment.razorpay_order_id + "|" + paymentData.payment.razorpay_payment_id);
         const hmacValue = hmac.digest("hex");
-
+          const paymentid=paymentData.payment.razorpay_payment_id
         if (hmacValue == paymentData.payment.razorpay_signature) {
             let data = cartData.items
-
+                console.log("ttttttttttttt");
             for (let i = 0; i < data.length; i++) {
                 let products = data[i].productid
                 let count = data[i].count
@@ -402,13 +410,14 @@ const verifypayment = async (req, res) => {
                 await product.updateOne({ _id: products }, { $inc: { quantity: -count } })
             }
 
-            await order.findByIdAndUpdate(
-                { _id: paymentData.order.receipt },
-                { $set: { paymentStatus: "placed", paymentId: paymentData.payment.razorpay_payment_id } }
-            );
+            await order.updateOne(
+                { _id: orderid },
+                { $set: { paymentStatus: "placed", transationid: paymentid } });
 
             await cart.deleteOne({ userid: user_id })
             res.json({ placed: true ,orderid})
+        }else{
+         console.log("fgg");   
         }
 
 
@@ -467,7 +476,7 @@ const returnorder = async(req,res)=>{
  const downloadinvoice = async(req,res)=>{
     try {
         const id = req.query.id
-        const orderdata  = await order.find({_id:id})
+        const orderdata  = await order.find({_id:id}).populate('items.productid')
         res.render('invoice',{orderdata})
     } catch (error) {
         

@@ -486,7 +486,11 @@
                         if (response.success == true) {
                             console.log("jhgguyjgjg");
                             window.location.href = `/orderplaced?id=${response.orderid}`
-                        } else if (response.online == true) {
+                        }else if(response.address== false){
+                            Swal.fire("Create a shipping address to proceed.");
+
+                        }
+                         else if (response.online == true) {
                             console.log("wallet");
                         }
                         else {

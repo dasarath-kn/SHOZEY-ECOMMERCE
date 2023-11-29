@@ -63,6 +63,9 @@ const orderdetails = mongoose.Schema({
        discountamount:{
         type:Number
 
+       },
+       transationid:{
+        type:String
        }
 });
 
