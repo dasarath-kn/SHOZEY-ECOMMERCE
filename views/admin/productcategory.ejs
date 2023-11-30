@@ -58,6 +58,32 @@
                         </table>
                       </div>
                     </div>
+                    <nav aria-label="Page navigation example">
+                      <ul class="pagination justify-content-center">
+                        <% if(id=>categorypagecount){%>
+                          <li class="page-item "> 
+                            <a class="page-link" href="/admin/productcategory?id=<%= id-1%>">Previous</a>
+                          </li>
+                            <%}else{%>
+                              <li class="page-item disabled"> 
+                                <a class="page-link" href="/admin/productcategory?id=<%= id-1%>">Previous</a>
+                              </li>
+                              <%}%>
+                        <% for(let i=1;i<=categorypagecount;i++){%>
+                          <li class="page-item"><a class="page-link" href="/admin/productcategory?id=<%=i %>"><%= i %></a></li>
+                          <%}%>
+                       
+                          <% if(id<categorypagecount){%>
+                            <li class="page-item">
+                            <a class="page-link" href="/admin/productcategory?id=<%=parseInt(id)+1 %>">Next</a>
+                          </li>
+                            <%} else{%>
+                              <li class="page-item disabled">
+                                <a class="page-link" href="/admin/productcategory?id=<%=parseInt(id)+1 %>">Next</a>
+                              </li>
+                              <%}%>
+                      </ul>
+                    </nav>
                   </div>
                 </div>
        

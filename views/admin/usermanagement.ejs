@@ -1,4 +1,5 @@
 <%- include ('../admin/layouts/header.ejs')-%>
+
  
         <!-- partial -->
         <div class="main-panel">
@@ -15,6 +16,7 @@
                         <table class="table">
                           <thead>
                             <tr>
+                              <th>No.</th>
                               <th>Name</th>
                               <th>Email-id</th>
                               <th>Phonenumber</th>
@@ -23,8 +25,10 @@
                             </tr>
                           </thead>
                           <tbody>
+                            <% var count=1%>
                             <% data.forEach((item)=> { %>
                               <tr>
+                                <th><%= count++ %></th>
                                 <td><%= item.firstname %></td>
                                 <td><%= item.email %></td>
                                 <td><%= item.phonenumber %></td>
@@ -43,7 +47,48 @@
                         </table>
                       </div>
                     </div>
+                    <nav aria-label="Page navigation example">
+                      <ul class="pagination justify-content-center">
+                        <% if(id=>userpagecount){%>
+                          <li class="page-item "> 
+                            <a class="page-link" href="/admin/usermanagement?id=<%= id-1%>">Previous</a>
+                          </li>
+                            <%}else{%>
+                              <li class="page-item disabled"> 
+                                <a class="page-link" href="/admin/usermanagement?id=<%= id-1%>">Previous</a>
+                              </li>
+                              <%}%>
+                        <% for(let i=1;i<=userpagecount;i++){%>
+                          <li class="page-item"><a class="page-link" href="/admin/usermanagement?id=<%=i %>"><%= i %></a></li>
+                          <%}%>
+                       
+                          <% if(id<userpagecount){%>
+                            <li class="page-item">
+                            <a class="page-link" href="/admin/usermanagement?id=<%=parseInt(id)+1 %>">Next</a>
+                          </li>
+                            <%} else{%>
+                              <li class="page-item disabled">
+                                <a class="page-link" href="/admin/usermanagement?id=<%=parseInt(id)+1 %>">Next</a>
+                              </li>
+                              <%}%>
+                      </ul>
+                    </nav>
+                   
                   </div>
                 </div>
-       
+                
+                <script>
+
+// function pagination(id){
+//   $.ajax({
+//     method:'get',
+//     url:'/admin/usermanagement',
+//     data:({id}),
+//     success:
+
+//   })
+// }
+
+                </script>
+              
          <%- include ('../admin/layouts/footer.ejs')-%>

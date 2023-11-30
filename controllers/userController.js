@@ -497,6 +497,7 @@ const shop = async (req, res) => {
         const hightolow = req.query.hightolow
         const Categoryofferdata = await Categoryoffer.find()
         const Productofferdata = await Productoffer.find()
+        const value = req.query.val
 
         var val=0
         if(lowtohigh){
@@ -523,21 +524,21 @@ const shop = async (req, res) => {
             pagecount += 1;
           }
         
-        var i=1
-        if (_id == 1) {
-            
-            const productdata = await product.find().skip(i*6).limit(6).sort({price:val})
-            i++
-            console.log("count",i);
-                res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata ,pagecount,categorys,Categoryofferdata,Productofferdata,id})
-                
-
-        }else if(_id==-1) {
-            
-            const productdata = await product.find().limit(6).sort({price:val})
-
-            res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata,pagecount,categorys,Categoryofferdata,Productofferdata,id})
-        }else if(_id =='W'){
+   if(value){
+    const values = value-1
+    const productdata = await product.find().skip(6*values).limit(6).sort({price:val})
+    
+   
+        res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata ,pagecount,categorys,Categoryofferdata,Productofferdata,id,value})
+        
+   }else{
+    const productdata = await product.find().limit(6).sort({price:val})
+    
+        res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata ,pagecount,categorys,Categoryofferdata,Productofferdata,id,value})
+        
+   }
+          
+        if(_id =='W'){
             const productdata = await product.find({category:{$regex:/^W/i}}).limit(6).sort({price:val})
  
             res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata,pagecount,categorys,Categoryofferdata,Productofferdata,id})

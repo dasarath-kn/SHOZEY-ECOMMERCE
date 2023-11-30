@@ -60,8 +60,27 @@ const admin = async (req, res) => {
 
 const usermanagement = async (req, res) => {
     try {
-        const data = await user.find();
-        res.render('usermanagement',{data});
+        const id =req.query.id
+
+        const usercount = await user.find().count()
+        var userpagecount =Math.floor( usercount/8)
+        if (usercount % 8 !== 0) {
+            userpagecount += 1;
+        }
+    console.log(id);
+        if(id){
+         const val =id-1
+        const data = await user.find().limit(8).skip(8*val);
+       
+
+
+        res.render('usermanagement',{data,userpagecount,id});
+       }else{
+        const data = await user.find().limit(8);
+
+
+        res.render('usermanagement',{data,userpagecount,id:1});
+       }
     }
     catch (error) {
         console.log(error.message);
@@ -94,9 +113,22 @@ const blockuser = async (req, res) => {
 //=================================== PRODUCT MANAGEMENT =====================================//
 const productmanagement = async (req, res) => {
     try {
-        const data = await product.find();
+        const id =req.query.id
+      
+        const productcount = await product.find().count();
+        var productpagecount =Math.floor(productcount/8)
+        if(productcount %8!==0){
+            productpagecount +=1;
+        }
+        if(id){
+            const val =id-1
+            const data = await product.find().limit(8).skip(8*val);
+            res.render('productmanagement', { data,id,productpagecount })
 
-        res.render('productmanagement', { data })
+        }else{
+            const data = await product.find().limit(8);
+        res.render('productmanagement', { data,id:1,productpagecount })
+        }
     }
     catch (error) {
         console.log(error.message);
@@ -208,9 +240,24 @@ const listproduct = async (req, res) => {
 
 const productcategory = async (req, res) => {
     try {
-        const data = await category.find();
+        const id =req.query.id;
+        const pagecount = await category.find().count()
+        var categorypagecount = Math.floor(pagecount/8);
+        if(pagecount%8!==0){
+            categorypagecount +=1
+        }
+        if(id){
+            const val = id-1
+            const data = await category.find().limit(8).skip(8*val)
+            res.render('productcategory', { data,id,categorypagecount });
 
-        res.render('productcategory', { data });
+
+        }else{
+
+            const data = await category.find().limit(8);
+    
+            res.render('productcategory', { data,id:1,categorypagecount });
+        }
     }
     catch (error) {
         console.log(error.message);
@@ -343,7 +390,19 @@ const newproduct = async (req, res) => {
 const orders = async (req, res) => {
     try {
         const id = req.query.id;
-        const orderdata = await order.find().sort({ purchaseDate: -1 })
+        console.log(id);
+        const ordercount = await order.find().count()
+        var orderpagecount = Math.floor(ordercount/12)
+        if(ordercount % 12 !==0){
+            orderpagecount +=1;
+        }
+        if(id){
+            const val = id-1
+            const orderdata = await order.find().sort({ purchaseDate: -1 }).limit(12).skip(12*val)
+            res.render('orders', { orderdata,id,orderpagecount });
+ 
+        }else{
+        const orderdata = await order.find().sort({ purchaseDate: -1 }).limit(12)
         var count = 0
 
         for (let i = 0; i < orderdata.length; i++) {
@@ -372,7 +431,8 @@ const orders = async (req, res) => {
             }
         }
 
-        res.render('orders', { orderdata });
+        res.render('orders', { orderdata,id:1,orderpagecount });
+    }
 
     } catch (error) {
         console.log(error.message);
@@ -530,14 +590,30 @@ const salesreport = async (req, res) => {
     try {
         var data = []
         var k = 0
-        const orderdata = await order.find().populate('items.productid').sort({ purchaseDate: -1 })
+        const id =req.query.id
+        const count = await order.find().count()
+        var reportpagecount = Math.floor(count/12);
+        if(count/12!==0){
+            reportpagecount +=1
+        }
+        if(id){
+            const val =id-1
+            const week1 = await order.find({ status: "delivered" }).count()
+            console.log(week1);
+            const orderdata = await order.find().populate('items.productid').sort({ purchaseDate: -1 }).limit(12).skip(12*val)
+            res.render('salesreport', { orderdata, week1,id,reportpagecount })
+
+        }
+        else{
         // const orderproducts = await order.aggregate([{$project:{"items.productid":productname}}]).populate("items.productid")
         // console.log(orderproducts);
         const week1 = await order.find({ status: "delivered" }).count()
         console.log(week1);
+        const orderdata = await order.find().populate('items.productid').sort({ purchaseDate: -1 }).limit(12)
 
         console.log(data);
-        res.render('salesreport', { orderdata, week1 })
+        res.render('salesreport', { orderdata, week1,id:1,reportpagecount })
+        }
     } catch (error) {
         console.log(error.message);
     }

@@ -15,15 +15,20 @@
                 <table class="table">
                   <thead>
                     <tr>
+                      <th>No.</th>
                       <th>Product Name</th>
                       <th> Category</th>
                       <th>Quantity</th>
                       <th>Price</th>
                       <!-- <th> discountamount</th> -->
                     </tr>
-
+                    <% var count=1%>
                     <% data.forEach((item)=>{ %>
                       <tr>
+                        <td>
+
+                          <%= count++%>
+                        </td>
                         <td>
                           <%= item.productname %>
                         </td>
@@ -68,6 +73,32 @@
                 </table>
               </div>
             </div>
+            <nav aria-label="Page navigation example">
+              <ul class="pagination justify-content-center">
+                <% if(id=>productpagecount){%>
+                  <li class="page-item "> 
+                    <a class="page-link" href="/admin/productmanagement?id=<%= id-1%>">Previous</a>
+                  </li>
+                    <%}else{%>
+                      <li class="page-item disabled"> 
+                        <a class="page-link" href="/admin/productmanagement?id=<%= id-1%>">Previous</a>
+                      </li>
+                      <%}%>
+                <% for(let i=1;i<=productpagecount;i++){%>
+                  <li class="page-item"><a class="page-link" href="/admin/productmanagement?id=<%=i %>"><%= i %></a></li>
+                  <%}%>
+               
+                  <% if(id<productpagecount){%>
+                    <li class="page-item">
+                    <a class="page-link" href="/admin/productmanagement?id=<%=parseInt(id)+1 %>">Next</a>
+                  </li>
+                    <%} else{%>
+                      <li class="page-item disabled">
+                        <a class="page-link" href="/admin/productmanagement?id=<%=parseInt(id)+1 %>">Next</a>
+                      </li>
+                      <%}%>
+              </ul>
+            </nav>
           </div>
         </div>
 
