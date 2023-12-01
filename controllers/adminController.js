@@ -28,6 +28,7 @@ const adminlogin = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
+        res.render('500')
     }
 }
 
@@ -52,6 +53,7 @@ const admin = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
+        res.render('500')
     }
 }
 
@@ -84,6 +86,7 @@ const usermanagement = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -108,6 +111,7 @@ const blockuser = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 //=================================== PRODUCT MANAGEMENT =====================================//
@@ -132,6 +136,7 @@ const productmanagement = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 //=================================== DELETING PRODUCT =====================================//
@@ -147,6 +152,7 @@ const deleteproduct = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 //=================================== EDITING PRODUCT =====================================//
@@ -165,6 +171,7 @@ const editproduct = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
+        res.render('500');
 
     }
 }
@@ -199,6 +206,7 @@ const editingproduct = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -215,6 +223,7 @@ const deleteproductimage = async(req,res)=>{
         console.log(productimage);       
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 //=================================== LIST PRODUCT=====================================//
@@ -233,6 +242,7 @@ const listproduct = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 
 }
@@ -261,6 +271,7 @@ const productcategory = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -271,6 +282,7 @@ const addcategory = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 //=================================== ADDING CATEGORY TO THE PRODUCT CATEGORY  =====================================//
@@ -294,6 +306,7 @@ const adddata = async (req, res) => {
         }
     } catch (error) {
         console.log(error.message);
+        res.render('500');
 
     }
 }
@@ -309,6 +322,7 @@ const deletecategory = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 //=================================== BLOCK AND UNBLOCK CATEGORY =====================================//
@@ -329,6 +343,7 @@ const blockcategory = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -343,6 +358,7 @@ const addproduct = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 //=================================== ADDiING NEW PRODUCT =====================================//
@@ -383,6 +399,7 @@ const newproduct = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -436,6 +453,7 @@ const orders = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500');
 
     }
 
@@ -453,6 +471,7 @@ const cartstatus = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 //=================================== ORDERS  DETAILS =====================================//
@@ -468,6 +487,7 @@ const orderdetails = async (req, res) => {
         res.render('orderdetails', { orderdata, id });
     } catch (error) {
         console.log(error.message);
+        res.render('500');
 
     }
 }
@@ -581,6 +601,7 @@ const dashboard = async (req, res) => {
     }
     catch (error) {
        console.log(error.message);
+       res.render('500');
    }
 }
 
@@ -591,6 +612,7 @@ const salesreport = async (req, res) => {
         var data = []
         var k = 0
         const id =req.query.id
+     
         const count = await order.find().count()
         var reportpagecount = Math.floor(count/12);
         if(count/12!==0){
@@ -600,7 +622,8 @@ const salesreport = async (req, res) => {
             const val =id-1
             const week1 = await order.find({ status: "delivered" }).count()
             console.log(week1);
-            const orderdata = await order.find().populate('items.productid').sort({ purchaseDate: -1 }).limit(12).skip(12*val)
+            const orderdata = await order.find({status:'delivered'}).populate('items.productid').sort({ purchaseDate: -1 }).limit(12).skip(12*val)
+          
             res.render('salesreport', { orderdata, week1,id,reportpagecount })
 
         }
@@ -609,13 +632,21 @@ const salesreport = async (req, res) => {
         // console.log(orderproducts);
         const week1 = await order.find({ status: "delivered" }).count()
         console.log(week1);
-        const orderdata = await order.find().populate('items.productid').sort({ purchaseDate: -1 }).limit(12)
+        const orderdata = await order.find({status:'delivered'}).populate('items.productid').sort({ purchaseDate: -1 }).limit(12)
+        if(orderdata!=0){
+            res.render('salesreport', { orderdata, week1,id:1,reportpagecount })
+
+        }else{
+            
+            res.render('salesreport', { orderdata:0, week1,id:1,reportpagecount })
+
+        }
 
         console.log(data);
-        res.render('salesreport', { orderdata, week1,id:1,reportpagecount })
         }
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -638,6 +669,7 @@ const salessort = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -703,17 +735,22 @@ const downloadreport = async (req, res) => {
             ];
             // Add rows from the reportData to the worksheet
             orderdata.forEach((data) => {
+                var values = data.items
+                for(let i=0;i<values.length;i++){
+                    
                 
+                var productid = values[i].productid
               worksheet.addRow({
                 orderId: data._id,
-                productName: data.items.productid,
-                qty: data.items.count,
+                productName: productid.productname,
+                qty: values[i].count,
                 date: data.purchaseDate.toLocaleDateString('en-US', { year:
                   'numeric', month: 'short', day: '2-digit' }).replace(/\//g,
                   '-'),
                 customer: data.deliveryDetails.name,
                 totalAmount: data.totalAmount,
               });
+            }
             });
       
             res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
@@ -727,6 +764,7 @@ const downloadreport = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -738,6 +776,7 @@ const couponmanagement = async (req, res) => {
         res.render('coupon', { coupondata });
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -748,6 +787,7 @@ const addcoupon = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -771,6 +811,7 @@ const coupondata = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -783,6 +824,7 @@ const editingcoupon = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 
 }
@@ -808,6 +850,7 @@ const editedcoupondata = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -825,6 +868,7 @@ const blockunblockcoupon = async (req, res) => {
         }
     } catch (error) {
         console.log(error.message);
+        res.render('500');
 
     }
 }
@@ -838,6 +882,7 @@ const deletecoupon = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -851,6 +896,7 @@ const logout = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -864,6 +910,7 @@ const offermanagement = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -873,12 +920,12 @@ const addoffer = async (req, res) => {
         res.render('addoffer', { categorydata });
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
 const categoryofferdata = async (req, res) => {
     try {
-        console.log("ghfhgfjgjg");
         const categoryname = req.body.categoryname;
         const startdate = req.body.startingdate;
         const enddate = req.body.expirydate;
@@ -925,6 +972,7 @@ const categoryofferdata = async (req, res) => {
         }
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -934,6 +982,7 @@ const editoffer = async (req, res) => {
         res.render('editoffer', { categorydata })
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -957,6 +1006,7 @@ const blockunblockoffer = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -980,6 +1030,7 @@ const deleteoffer = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -989,6 +1040,7 @@ const productoffer = async (req, res) => {
         res.render('productoffer', { productofferdata })
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -999,6 +1051,7 @@ const addproductoffer = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -1049,7 +1102,7 @@ const productofferdata = async (req, res) => {
         }
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.render(500).json({ error: 'Internal Server Error' });
     }
 };
 
@@ -1069,6 +1122,7 @@ const deleteproductoffer = async (req, res) => {
         }
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -1091,6 +1145,7 @@ const blockunblockproductoffer = async (req, res) => {
         }
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -1101,6 +1156,7 @@ const editproductoffer = async (req, res) => {
         res.render('editproductoffer', { productofferdata, productdata })
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -1112,6 +1168,7 @@ const bannermanagement = async(req,res)=>{
         
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -1123,6 +1180,7 @@ const addbanner = async(req,res)=>{
         
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -1140,6 +1198,7 @@ const bannerdata = async(req,res)=>{
         
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -1158,6 +1217,7 @@ const blockunblockbanner = async (req,res)=>{
         
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -1169,6 +1229,7 @@ const deletebanner = async(req,res)=>{
         
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 

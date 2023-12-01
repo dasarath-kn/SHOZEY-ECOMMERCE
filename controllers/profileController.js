@@ -25,6 +25,7 @@ const profile = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500');
 
     }
 }
@@ -37,6 +38,7 @@ const securepassword = async (password) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500');
 
     }
 }
@@ -88,6 +90,7 @@ const resetPassword = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500');vvvvv
     }
 }
 
@@ -107,6 +110,7 @@ const editprofile = async(req,res)=>{
 
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -126,6 +130,7 @@ const wallet = async(req,res)=>{
         
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 

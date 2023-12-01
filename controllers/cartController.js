@@ -38,6 +38,7 @@ const cartRendering = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 //=================================== ADDING TO CART =====================================//
@@ -112,6 +113,7 @@ const cartAdding = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
+        res.render('500');
 
     }
 }
@@ -166,6 +168,7 @@ const AddingProductCount = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500');
 
     }
 }
@@ -191,6 +194,7 @@ const deleteCartItems = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500');
 
     }
 }
@@ -231,6 +235,7 @@ const addtowishlist =async(req,res)=>{
         
     } catch (error) {
         console.log(error.message);
+        res.render('500');
         
     }
 }
@@ -249,6 +254,7 @@ const wishlistview = async(req,res)=>{
         }
     } catch (error) {
        console.log(error.message); 
+       res.render('500');
     }
 } 
 
@@ -267,6 +273,7 @@ const deletewishlist = async(req,res)=>{
         
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 

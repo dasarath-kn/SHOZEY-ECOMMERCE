@@ -107,6 +107,7 @@
 
 
                     <tr>
+                      <% if(orderdata!=0){%>
                       <% let count=1%>
                         <% for(let i=0 ;i<orderdata.length; i++){%>
                           <% let item=orderdata[i].items %>
@@ -137,6 +138,7 @@
                     </tr>
                     <%}%>
                       <%} %>
+                      <%}else{%><%}%>
 
 
 

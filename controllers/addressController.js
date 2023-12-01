@@ -8,7 +8,8 @@ const useraddress = async (req, res) => {
         const cartdata = await cart.find().populate("items.productid")
         res.render('address', { user: req.session.name, cartdata })
     } catch (error) {
-        console.log(error.message);;
+        console.log(error.message);
+        res.render('500')
     }
 }
 
@@ -59,6 +60,7 @@ const addingAddress = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
+        res.render('500')
     }
 }
 
@@ -74,6 +76,7 @@ const editaddress = async (req, res) => {
         res.render('editaddress', { data, user: req.session.name, cartdata,id });
     } catch (error) {
         console.log(error.message);
+        res.render('500')
 
     }
 }
@@ -105,6 +108,7 @@ const updatingaddress = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500')
 
     }
 
@@ -166,6 +170,7 @@ const addnewaddress =async(req,res)=>{
         
     } catch (error) {
         console.log(error.message);
+        res.render('500')
     }
 }
 

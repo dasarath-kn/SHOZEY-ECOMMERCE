@@ -36,6 +36,7 @@ const admin = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -48,6 +49,7 @@ const securepassword = async (password) => {
     }
     catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 //=================================== HOME =====================================//
@@ -74,7 +76,9 @@ const home = async (req, res) => {
 
     }
     catch (error) {
+        
         console.log(error.message);
+        res.render('500');
     }
 }
 //=================================== LOG-IN =====================================//
@@ -90,6 +94,8 @@ const register = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
+        res.render('500');
+
     }
 
 }
@@ -131,6 +137,8 @@ const forgetpasswordcheck =async(req,res)=>{
         }
     } catch (error) {
         console.log(error.message);
+        res.render('500');
+
     }
 }
 
@@ -149,6 +157,8 @@ const forgetpasswordotpVerify = async(req,res)=>{
         
     } catch (error) {
         console.log(error.message);
+        res.render('500');
+
     }
 }
 
@@ -166,6 +176,8 @@ const resendotpforpassword =async(req,res)=>{
         
     } catch (error) {
         console.log(error.message);
+        res.render('500');
+
     }
 }
 
@@ -180,6 +192,8 @@ const newpasswordpage = async(req,res)=>{
         res.render('newpassword',{message:"Password is not match", user: req.session.name, cartdata,id})
     } catch (error) {
         console.log(error.message);
+        res.render('500');
+
     }
 }
 
@@ -204,6 +218,8 @@ const newpassword = async(req,res)=>{
         
     } catch (error) {
         console.log(error.message);
+        res.render('500');
+
     }
 }
 
@@ -220,6 +236,8 @@ const productdetails = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
+        res.render('500');
+
     }
 }
 ////////////////////////////////////////// LOGIN /////////////////////////////////////  
@@ -273,6 +291,8 @@ const validation = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500');
+
 
     }
 }
@@ -287,6 +307,8 @@ const sign = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
+        res.render('500');
+        
     }
 
 }
@@ -375,6 +397,8 @@ const insertdata = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
+        res.render('500');
+
     }
 }
 //=================================== SEND FOR MAIL =====================================//
@@ -449,6 +473,8 @@ const verifymail = async (req, res) => {
 
     catch (error) {
         console.log(error.message);
+        res.render('500');
+
 
     }
 }
@@ -467,7 +493,9 @@ const resendOTP = async (req, res) => {
     }
 
     catch (error) {
-        console.log(error);
+        console.log(error.message);
+        res.render('500');
+
     }
 }
 
@@ -480,6 +508,8 @@ const otp = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
+        res.render('500');
+
     }
 
 }
@@ -557,6 +587,8 @@ const shop = async (req, res) => {
     }
     } catch (error) {
         console.log(error.message);
+        res.render('500');
+
     }
 }
 //=================================== SEARCH =====================================//
@@ -564,20 +596,21 @@ const shop = async (req, res) => {
 const search = async (req, res) => {
 
     try {
-        console.log("fsfsfsdfds");
         const data = req.body.product
         const id = req.session.userId
         const sessionid = req.session.id
         var pagecount =0
         var productcategory=await category.find()
         const productdata = await product.find({ productname: { $regex: data, $options: 'i' } });
-
+        const categorydata = await category.find()
         const cartdata = await cart.find({ userid: id }).populate("items.productid")
 
-        res.render('shop', { user: req.session.name, productdata, cartdata, id,sessionid,pagecount,productcategory })
+        res.render('shop', { user: req.session.name, productdata, cartdata, id,sessionid,pagecount,productcategory,categorys:0,categorydata })
 
     } catch (error) {
         console.log(error.message);
+        res.render('500');
+
     }
 
 }
@@ -594,6 +627,8 @@ const pricesort = async (req, res) => {
     } catch (error) {
 
         console.log(error.message);
+        res.render('500');
+
     }
 }
 
@@ -630,6 +665,8 @@ const categorysort = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500');
+
     }
 }
 
@@ -643,6 +680,8 @@ const sortproduct= async(req,res)=>{
 
     } catch (error) {
         console.log(error.message);
+        res.render('500');
+
     }
 }
 
@@ -659,6 +698,8 @@ const logout = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
+        res.render('500');
+
     }
 }
 

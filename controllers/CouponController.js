@@ -52,6 +52,7 @@ const coupondata = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 
 }
@@ -73,6 +74,7 @@ const deletecoupon = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 
 }

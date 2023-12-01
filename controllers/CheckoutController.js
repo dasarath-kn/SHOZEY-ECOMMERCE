@@ -49,6 +49,7 @@ const checkoutdata = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -83,6 +84,7 @@ const ProceedtoCheckout = async (req, res) => {
     
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -193,6 +195,7 @@ const ProceedOrder = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 
 
@@ -218,6 +221,7 @@ const addwalletamount = async(req,res)=>{
         
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -249,6 +253,7 @@ const verifywalletpayment =async(req,res)=>{
                 res.json({ placed: true }) }
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -271,6 +276,7 @@ const orderdetails = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500');
 
     }
 
@@ -370,6 +376,7 @@ const cancelorder = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -383,6 +390,7 @@ const orderplaced = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -424,6 +432,7 @@ const verifypayment = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500');
     }
 }
 
@@ -479,6 +488,8 @@ const returnorder = async(req,res)=>{
         const orderdata  = await order.find({_id:id}).populate('items.productid')
         res.render('invoice',{orderdata})
     } catch (error) {
+        console.log(error.message);
+        res.render('500');
         
     }
  }
