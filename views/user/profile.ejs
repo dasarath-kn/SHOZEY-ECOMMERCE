@@ -573,13 +573,15 @@
 
 
 		function formsubmit() {
-			const name = document.getElementById('userName').value
+		
+			const name = document.getElementById('user-Name').value
 			const phonenumber = document.getElementById('mobile').value
 			const address = document.getElementById('address').value
 			const city = document.getElementById('city').value
 			const state = document.getElementById('state').value
 			const country = document.getElementById('country').value
 			const pincode = document.getElementById('pinCode').value
+			console.log("ohofjodj");
 			$.ajax({
 				method: 'post',
 				url: '/addaddress',

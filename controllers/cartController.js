@@ -13,6 +13,7 @@ const cartRendering = async (req, res) => {
         const coupondata = await coupon.find()
         const id = req.session.userId;
         const data = await cart.find({ userid: id });
+        if(data!=0){
         const total = await cart.findOne({ userid: id }).populate('items.total');
         const standard = 49
         const express = 99
@@ -26,14 +27,19 @@ const cartRendering = async (req, res) => {
                 return x + y;
             });
         }
-        
-
+        const cartvalue = await cart.find({userid:id})
+        console.log(cartvalue);
+   
         
         const cartdata = await cart.find({ userid: id }).populate("items.productid");
-            
         
             res.render('cart', { user: req.session.name, cartdata, data, id, totalsum, express, standard, coupondata });
     
+    }else{
+        res.render('cart', { user: req.session.name, cartdata:0, data, id, totalsum:0, express:0, standard:0, coupondata:0 });
+
+    }
+ 
         
     }
     catch (error) {
