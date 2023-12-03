@@ -161,7 +161,7 @@ const ProceedOrder = async (req, res) => {
                     let count = data[i].count
 
                     await product.updateOne({ _id: products }, { $inc: { quantity: -count } })
-                    await category.updateOne({productcategory:products.category},{$inc:{salescount:1}})
+                   
                 }
                 await cart.deleteOne({ userid: id })
                 return res.json({ success: true,orderid } )

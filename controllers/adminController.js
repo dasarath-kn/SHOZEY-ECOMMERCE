@@ -464,10 +464,19 @@ const cartstatus = async (req, res) => {
         const id = req.body.id
         const datas = req.body.data
         const productid = req.body.product
-
+        if(datas=="delivered"){
         await order.updateOne({ _id: id, "items.productid": productid }, { $set: { 'items.$.status': datas } })
-        console.log("ugygu");
+        const productcategory = await product.findOne({_id:productid})
+       const value = productcategory.category
+        const categorydata = await category.updateOne({productcategory:value},{$inc:{salescount:1}})
         res.json({ result: true })
+        }
+        else{
+            await order.updateOne({ _id: id, "items.productid": productid }, { $set: { 'items.$.status': datas } })
+            res.json({ result: true })
+        }
+
+        
 
     } catch (error) {
         console.log(error.message);
@@ -615,6 +624,7 @@ const salesreport = async (req, res) => {
      
         const count = await order.find().count()
         var reportpagecount = Math.floor(count/12);
+        const categorydata = await category.find()
         if(count/12!==0){
             reportpagecount +=1
         }
@@ -624,7 +634,7 @@ const salesreport = async (req, res) => {
             console.log(week1);
             const orderdata = await order.find({status:'delivered'}).populate('items.productid').sort({ purchaseDate: -1 }).limit(12).skip(12*val)
           
-            res.render('salesreport', { orderdata, week1,id,reportpagecount })
+            res.render('salesreport', { orderdata, week1,id,reportpagecount,categorydata })
 
         }
         else{
@@ -634,11 +644,11 @@ const salesreport = async (req, res) => {
         console.log(week1);
         const orderdata = await order.find({status:'delivered'}).populate('items.productid').sort({ purchaseDate: -1 }).limit(12)
         if(orderdata!=0){
-            res.render('salesreport', { orderdata, week1,id:1,reportpagecount })
+            res.render('salesreport', { orderdata, week1,id:1,reportpagecount,categorydata })
 
         }else{
             
-            res.render('salesreport', { orderdata:0, week1,id:1,reportpagecount })
+            res.render('salesreport', { orderdata:0, week1,id:1,reportpagecount,categorydata })
 
         }
 
@@ -720,7 +730,6 @@ const downloadreport = async (req, res) => {
             
 
             const orderdata = await order.find({ purchaseDate: { $gte: isoDate1, $lte: isoDate2 } }).populate('items.productid')
-
             const workbook = new ExcelJS.Workbook();
             const worksheet = workbook.addWorksheet('Sales Report');
       
@@ -739,10 +748,10 @@ const downloadreport = async (req, res) => {
                 for(let i=0;i<values.length;i++){
                     
                 
-                var productid = values[i].productid
+                var products = values[i].productid
               worksheet.addRow({
                 orderId: data._id,
-                productName: productid.productname,
+                productName: products.productname,
                 qty: values[i].count,
                 date: data.purchaseDate.toLocaleDateString('en-US', { year:
                   'numeric', month: 'short', day: '2-digit' }).replace(/\//g,
