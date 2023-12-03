@@ -9,6 +9,7 @@ const crypto = require("crypto");
 const Return = require('../models/returnModel');
 const Wallet = require('../models/walletModel');
 const { log } = require('console');
+const category =require('../models/categoryModel')
 require('dotenv').config()
 
 var instance = new Razorpay({
@@ -55,7 +56,6 @@ const checkoutdata = async (req, res) => {
 
 const ProceedtoCheckout = async (req, res) => {
     try {
-        console.log("fikhgfhjjkfjkuhfhffjhhjdshdjdhjfdjhjhd");
 
         const coupondata = await coupon.find()
         const useraddress = await address.find({ userId: req.session.userId });
@@ -134,7 +134,6 @@ const ProceedOrder = async (req, res) => {
             }
 
             if(addressid){
-                console.log("ererer");
            
 
             const datas = new order({
@@ -160,11 +159,10 @@ const ProceedOrder = async (req, res) => {
                 for (let i = 0; i < data.length; i++) {
                     let products = data[i].productid
                     let count = data[i].count
-                    // console.log(product);
 
                     await product.updateOne({ _id: products }, { $inc: { quantity: -count } })
+                    await category.updateOne({productcategory:products.category},{$inc:{salescount:1}})
                 }
-                console.log("sdfewssdgdf");
                 await cart.deleteOne({ userid: id })
                 return res.json({ success: true,orderid } )
             } else if (payment == "Wallet") {
@@ -399,9 +397,7 @@ const verifypayment = async (req, res) => {
         const user_id = req.session.userId
         const paymentData = req.body
         const cartData = await cart.findOne({ userid: user_id })
-        console.log(cartData);
         const orderid=req.body.orderid
-        console.log(orderid+"gfhdfdjhfgj");
 
         const hmac = crypto.createHmac("sha256", process.env.ROZORPAYSECRETKEY);
         hmac.update(paymentData.payment.razorpay_order_id + "|" + paymentData.payment.razorpay_payment_id);

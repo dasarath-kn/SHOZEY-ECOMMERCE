@@ -2,14 +2,14 @@
     <main class="main">
         <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
             <div class="container">
-                <h1 class="page-title">Wishlist<span>Shop</span></h1>
+                <h1 class="page-title">Wishlist<span>Your wishlist</span></h1>
             </div><!-- End .container -->
         </div><!-- End .page-header -->
         <nav aria-label="breadcrumb" class="breadcrumb-nav">
             <div class="container">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/shop">Shop</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Wishlist</li>
                 </ol>
             </div><!-- End .container -->
@@ -17,6 +17,7 @@
 
         <div class="page-content" >
             <div class="container" >
+                <% if(wishlistdata.length!=0){%>
                 <table class="table table-wishlist table-mobile "   >
                     <thead>
                         <tr>
@@ -28,7 +29,7 @@
                         </tr>
                     </thead>
 
-                    <% if(wishlistdata.length!=0){%>
+                 
                     <% let product=wishlistdata[0].productid %>
                         <% for(let i=0; i < product.length; i++) { %>
                             
@@ -77,9 +78,10 @@
                                
                             </tbody>
                             <% } %>
-                            <%} else{%>
-                                <h1>sjhfdsjkfhhk</h1><%}%>
-                </table><!-- End .table table-wishlist -->
+                        </table><!-- End .table table-wishlist -->
+                        <%} else{%>
+                            <h1 style="text-align: center; font-style: inherit;">Your wishlist is empty.</h1>
+                            <%}%>
               
             </div><!-- End .container -->
         </div><!-- End .page-content -->

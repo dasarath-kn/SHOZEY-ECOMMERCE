@@ -7,6 +7,10 @@ const productcategory= new mongoose.Schema({
     status:{
         type:Number,
         required:true
+    },
+    salescount:{
+        type:Number,
+        default:0
     }
 
 
