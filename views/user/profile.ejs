@@ -245,6 +245,7 @@
 												<div class="col-lg-12 grid-margin stretch-card">
 													<div class="card">
 														<div class="card-body">
+															<% if(orderdata){%>
 															<h4 class="card-title">Order Details</h4>
 															<!-- <p class="card-description"> Add class <code>.table</code> -->
 															</p>
@@ -265,6 +266,7 @@
 																			</b>
 																		</tr>
 																	</thead>
+																	
 																	<tbody>
 																		<% let count=1; %>
 																			<% for(let i=0;i<orderdata.length; i++){%>
@@ -295,7 +297,11 @@
 
 																	</tbody>
 																</table>
+																
 															</div>
+															<%}else{%>
+																<h2 style="text-align: center; font-style: inherit;">No orders.</h1>
+																<%}%>
 														</div>
 													</div>
 												</div>

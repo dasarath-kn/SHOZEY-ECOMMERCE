@@ -18,11 +18,17 @@ const profile = async (req, res) => {
         const _id = req.query.id;
         const data = userdata
         
+        
         const orderdata = await order.find({ user_Id: req.session.userId }).sort({ purchaseDate: -1 })
+        
         const currentPassword =users.password
         const email =users.email
+        if(orderdata!=0){
         res.render('profile', { data, user: req.session.name, cartdata, orderdata,users,id,currentPassword,email })
-
+        }else{
+            res.render('profile', { data, user: req.session.name, cartdata, orderdata:0,users,id,currentPassword,email })
+   
+        }
     } catch (error) {
         console.log(error.message);
         res.render('500');

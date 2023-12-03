@@ -85,6 +85,7 @@
 
                         <div class="products mb-3">
                             <div class="row justify-content-center">
+                                <% if(productdata){%>
                                 <% for(let i=0; i<productdata.length;i++){%>
                                     <% if(productdata[i].status==0){%>
                                 <div class="col-6 col-md-4 col-lg-4">
@@ -158,6 +159,7 @@
                                                     <span class="original-price">Rs.<%= productdata[i].price %></span>
 
                                                 <% } %>
+
                                                 
                                                 
                                             </div><!-- End .product-price -->
@@ -188,10 +190,12 @@
                                 <%} %>
                                 
                                 <%}%>
+                                <%}else{%>
+                                    <h1 style="text-align: center; font-style: inherit;">No Products found!</h1><%}%>
                                 
                             </div><!-- End .row -->
                         </div><!-- End .products -->
-
+                        <%if(productdata){%>
                         <nav aria-label="Page navigation">
                             <ul class="pagination justify-content-center">
                                 <li class="page-item ">
@@ -223,6 +227,7 @@
                                 </li>
                             </ul>
                         </nav>
+                        <%} else{%><%}%>
                     </div><!-- End .col-lg-9 -->
                     <aside class="col-lg-3 order-lg-first">
                         <div class="sidebar sidebar-shop">

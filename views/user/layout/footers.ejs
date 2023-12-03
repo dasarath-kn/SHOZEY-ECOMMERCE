@@ -84,6 +84,32 @@
     
     <nav class="mobile-nav">
         <ul class="mobile-menu">
+            <% if (!id) { %>
+                <li>
+                    <a href="/signin" class="sf-with-ul">Login</a>
+                    <!-- <ul>
+                        <li><a href="/signin">Login</a></li>
+                         <li><a href="/profile">Profile</a></li>
+                              <li><a href="/cart">Cart</a></li>
+-->
+
+
+                    <!-- </ul>  -->
+                </li>
+                <% } else { %>
+
+                    <li>
+                        <a href="#" class="sf-with-ul">Profile</a>
+                        <ul>
+                            <li><a href="/logout">Logout</a></li>
+                            <li><a href="/profile">Profile</a></li>
+                            <li><a href="/cart">Cart</a></li>
+                            <li><a href="/wishlist">Wishlist</a></li>
+
+                        </ul>
+                    </li>
+                    <% } %>
+            
             <li class="active">
                 <a href="/">Home</a>
 
@@ -93,34 +119,7 @@
                 <a href="/shop">Shop</a>
                
             </li>
-            <% if (!user) { %>
-                <li>
-                    <a href="#" class="sf-with-ul">Profile</a>
-                    <ul>
-                        <li><a href="/signin">Login</a></li>
-                        <!-- <li><a href="/profile">Profile</a></li>
-                              <li><a href="/cart">Cart</a></li>
--->
-
-
-                    </ul>
-                </li>
-                <% } else { %>
-
-                    <li>
-                        <a href="#" class="sf-with-ul">Profile</a>
-                        <ul>
-                            <li><a href="/signin">Login</a></li>
-                            <li><a href="/logout">Logout</a></li>
-                            <li><a href="/profile">Profile</a></li>
-
-                            <li><a href="/cart">Cart</a></li>
-                            <li><a href="/wishlist">Wishlist</a></li>
-
-                        </ul>
-                    </li>
-                    <% } %>
-            
+           
            
            
         </ul>

@@ -537,6 +537,9 @@ const shop = async (req, res) => {
         }else{
             val=0
         }
+        const data = await product.find()
+        console.log(data);
+        if(data!=0){
         const cartdata = await cart.find({ userid: sessionid }).populate("items.productid")
         const productcount = await product.find().count();
          const categorys = req.query.categorys
@@ -584,6 +587,11 @@ const shop = async (req, res) => {
 
             res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata,pagecount,categorys,Categoryofferdata,Productofferdata,id})
         }
+    }}
+    else{
+
+        res.render('shop', { user: req.session.name, cartdata:0, productdata:0, sessionid, categorydata,pagecount,categorys:0,Categoryofferdata:0,Productofferdata:0,id})
+
     }
     } catch (error) {
         console.log(error.message);
