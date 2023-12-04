@@ -17,7 +17,7 @@
 
         <div class="page-content" >
             <div class="container" >
-                <% if(wishlistdata.length!=0 ){%>
+                <% if(wishlistdata.length!=0 && wishlistdata[0].productid !=0 ){%>
                 <table class="table table-wishlist table-mobile "   >
                     <thead>
                         <tr>
@@ -31,6 +31,7 @@
 
                  
                     <% let product=wishlistdata[0].productid %>
+                   
                         <% for(let i=0; i < product.length; i++) { %>
                             
                     <tbody >
@@ -78,10 +79,21 @@
                                
                             </tbody>
                             <% } %>
+                           
                         </table><!-- End .table table-wishlist -->
                         <%} else{%>
-                            <h1 style="text-align: center; font-style: inherit;">Your wishlist is empty.</h1>
-                            <%}%>
+                            <div class="error-content text-center">
+                                <div class="container">
+                                  <h1 class="error-title">Empty Wishlist</h1>
+                                  <!-- End .error-title -->
+                                  <p>Your Wishlist is empty.</p>
+                                  <a href="/shop" class="btn btn-outline-primary-2 btn-minwidth-lg">
+                                    <span>COLLECT YOUR WISHES</span>
+                                    <i class="icon-long-arrow-right"></i>
+                                  </a>
+                                </div>
+                                <!-- End .container -->
+                              </div>                       <%}%>
               
             </div><!-- End .container -->
         </div><!-- End .page-content -->

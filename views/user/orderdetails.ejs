@@ -33,8 +33,11 @@
                                                     <div class="product">
                                                         <figure class="product-media">
                                                             <a href="#">
+                                                                <% if(productdata){%>
                                                                 <img src="/sharpedimages/<%= productdata.image[0] %>"
                                                                     alt="Product image">
+                                                                    <%}else{%>
+                                                                        Not found<%}%>
                                                             </a>
                                                         </figure>
                                                     </div><!-- End .product -->
@@ -42,22 +45,32 @@
                                                 <td class="price-col" style="margin-left: 20%;">
                                                     <h3 class="product-title">
                                                         <a href="#">
+                                                            <% if(productdata){%>
                                                             <%= productdata.productname%>
+                                                            <%}else{%>
+                                                               Not found <%} %>
                                                         </a>
                                                     </h3><!-- End .product-title -->
                                                 </td>
                                                 <td class="price-col">
+                                                    <% if(productdata){%>
                                                     <%= productdata. category %>
+                                                    <%}else{%>
+                                                        Not found<%} %>
                                                 </td>
-                                                <td class="price-col">₹<%= productdata.price%>
+                                                <td class="price-col"><% if(productdata){%>
+                                                    ₹<%= productdata.price%>
+                                                    <%}else{%>Not found<%} %>
                                                 </td>
                                                 <td class="price-col">
                                                     <%= product[j].count%>
                                                     
                                                 </td>
+                                                <% if(productdata){%>
                                                 <td class="price-col">₹<%= product[j].count *productdata.price %>
                                                     <input type="hidden" id="productid" name="user_Id" value="<%= product[j].productid%>">
                                                 </td>
+                                                <%}else{%><%} %>
                                                 <td class="price-col" id="status">₹<%= product[j].status %>
                                                 </td>
                                                 <% if (product[j].status=="delivered" ){%>
@@ -71,8 +84,10 @@
                                                                 <option value="Accidental order">Accidental order</option>
                                                                 <option value="Other reason">Other reason</option>
                                                               </select></td>
+                                                              <% if(productdata){%>
                                                               <td class="price-col" id="statusbuttons"><button
                                                                 class="btn btn-primary btn-block"  type="button" onclick="returnorder('<%= productdata._id%>','<%=orderdata[0]._id %>','<%= product[j].count *productdata.price %>','<%= product[j].count%>')" >ReturnOrder</button></td>
+                                                                <%}else{%><%} %>
                                                     <%} else if(product[j].status=="cancelled" ){%>
 
                                                         <%}else if(product[j].status=="returned" ){%>
@@ -116,13 +131,17 @@
                         <div class="card-body">
                             <h3>Order summary</h3>
                             <p>Order id:<%= orderdata[0]._id %> <br>
+                                <%  if(orderdata[0].paymentMethod =='Online Payment'){%>
+                                    Transaction id: <%= orderdata[0].transationid %>
+                                    <br>
+                                <%}else{%><%}%>
                                     Purchase date: <%= orderdata[0].purchaseDate.toLocaleDateString('en-US', {
                                         year: 'numeric' , month: 'short' , day: '2-digit' }).replace(/\//g, '-') %><br>
                                         Total amount:<%= orderdata[0].totalAmount %> <br>
-                                            Status:<%= orderdata[0].totalAmount %> <br>
+                                            Status:<%= orderdata[0].status %> <br>
                                                 Payment method:<%= orderdata[0].paymentMethod %> <br>
-                                                    Shipping method:<%= orderdata[0].ShippingMethod %> <br>
-                                                        Shipping charge:<%= orderdata[0].Shippingfee %> <br>
+                                                    Shipping method:<%= orderdata[0].shippingMethod %> <br>
+                                                        <!-- Shipping charge:<%= orderdata[0].Shippingfee %> <br> -->
                             </p>
                         </div><!-- End .card-body -->
                     </div><!-- End .card-dashboard -->

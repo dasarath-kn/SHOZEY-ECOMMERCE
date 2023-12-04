@@ -10,7 +10,6 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
                     <li class="breadcrumb-item"><a href="#">Shop</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Grid 3 Columns</li>
                 </ol>
             </div><!-- End .container -->
         </nav><!-- End .breadcrumb-nav -->
@@ -37,7 +36,7 @@
                                         </select>
                                     </div>
                                 </div> -->
-                                <div class="toolbox-layout">
+                                <!-- <div class="toolbox-layout">
                                     <a href="category-list.html" class="btn-layout">
                                         <svg width="16" height="10">
                                             <rect x="0" y="0" width="4" height="4" />
@@ -79,7 +78,7 @@
                                             <rect x="18" y="6" width="4" height="4" />
                                         </svg>
                                     </a>
-                                </div><!-- End .toolbox-layout -->
+                                </div> -->
                             </div><!-- End .toolbox-right -->
                         </div><!-- End .toolbox -->
 
@@ -199,7 +198,7 @@
                         <nav aria-label="Page navigation">
                             <ul class="pagination justify-content-center">
                                 <li class="page-item ">
-                                    <a class="page-link page-link-prev" href="/shop?id=-1" aria-label="Previous" 
+                                    <a class="page-link page-link-prev" href="/shop?val=<%= value-1 %>" aria-label="Previous" 
                                        >
                                         <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>Prev
                                     </a>
@@ -221,7 +220,7 @@
                                 <li class="page-item"><a class="page-link" href="#">3</a></li> -->
                                 <li class="page-item-total">of <%= pagecount%></li>
                                 <li class="page-item">
-                                    <a class="page-link page-link-next" href="/shop?id=1" aria-label="Next">
+                                    <a class="page-link page-link-next" href="/shop?val=<%= parseInt(value)+1  %>" aria-label="Next">
                                         Next <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
                                     </a>
                                 </li>

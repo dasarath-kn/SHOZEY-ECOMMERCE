@@ -28,6 +28,8 @@
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <!-- Main CSS File -->
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 </head>
 
 <body>
@@ -72,9 +74,16 @@
                                             </a>
                                             <ul>
                                                 
-                                                <li><a href="/logout">Logout</a></li>
-                                                <li><a href="/profile">Profile</a></li>
-                                                
+                                                <li>
+                                                    <a href="/logout">
+                                                      <i class="fas fa-sign-out-alt"></i> Logout
+                                                    </a>
+                                                  </li>
+                                                  <li>
+                                                    <a href="/profile">
+                                                      <i class="fas fa-user"></i> Profile
+                                                    </a>
+                                                  </li>
                                             </ul>
                                         </li>
                                     <% } %>
@@ -143,6 +152,7 @@
                                         <%}) %>
                                             <% })%>
                                             <%}else{%>
+                                                
                                                 <%}%>
 
                                                 <div class="dropdown-cart-total">
@@ -173,8 +183,8 @@
             <nav aria-label="breadcrumb" class="breadcrumb-nav">
                 <div class="container">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item"><a href="/shop">Shop</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Shopping Cart</li>
                     </ol>
                 </div><!-- End .container -->
@@ -186,6 +196,9 @@
                         <div class="row">
                             <div class="col-lg-9">
                                 <table class="table table-cart table-mobile">
+                                   <% if(cartdata.length >0){%>
+                                    <% cartdata.forEach((item)=> { %>
+                                        <% if(item.items!=0){%>
                                     <thead>
                                         <p id="shipping" style="color: red;"></p>
                                         <tr>
@@ -196,12 +209,16 @@
 
                                         </tr>
                                     </thead>
+                                    <%}else{%><%}%>
+                                    <%}) %>
+                                    <%}else{%><%}%>
 
                                     <tbody>
                                         
                                         <% if (id) { %>
                                             <% if (cartdata.length> 0) { %>
                                                 <% cartdata.forEach((item)=> { %>
+                                                    <% if(item.items!=0){%>
                                                     <% item.items.forEach((element)=> { %>
                                                         <tr>
                                                             <td class="product-col">
@@ -259,16 +276,48 @@
                                                             </td>
                                                         </tr>
                                                         <% }) %>
+                                                        <%} else{%><div class="error-content text-center">
+                                                            <div class="container">
+                                                              <h1 class="error-title">Empty Cart</h1>
+                                                              <!-- End .error-title -->
+                                                              <p>Your cart is empty.</p>
+                                                              <a href="/shop" class="btn btn-outline-primary-2 btn-minwidth-lg">
+                                                                <span>FILL YOUR CART</span>
+                                                                <i class="icon-long-arrow-right"></i>
+                                                              </a>
+                                                            </div>
+                                                            <!-- End .container -->
+                                                          </div><%}%>
                                                             <% }) %>
                                                                 <% } else { %>
                                                                     <tr>
-                                                                        <td colspan="5"><h2 style="text-align: center; font-style: inherit;">Your cart is empty.</h1></td>
-                                                                    </tr>
+                                                                        <div class="error-content text-center">
+                                                                            <div class="container">
+                                                                              <h1 class="error-title">Empty Cart</h1>
+                                                                              <!-- End .error-title -->
+                                                                              <p>Your cart is empty.</p>
+                                                                              <a href="/shop" class="btn btn-outline-primary-2 btn-minwidth-lg">
+                                                                                <span>FILL YOUR CART</span>
+                                                                                <i class="icon-long-arrow-right"></i>
+                                                                              </a>
+                                                                            </div>
+                                                                            <!-- End .container -->
+                                                                          </div>                                                                    </tr>
                                                                     <% } %>
                                                                         <% } else { %>
                                                                             <tr>
-                                                                                <td>This is the content for the table
-                                                                                    row.</td>
+                                                                                <div class="error-content text-center">
+                                                                                    <div class="container">
+                                                                                      <h1 class="error-title">Empty Cart</h1>
+                                                                                      <!-- End .error-title -->
+                                                                                      <p>Your cart is empty.</p>
+                                                                                      <a href="/shop" class="btn btn-outline-primary-2 btn-minwidth-lg">
+                                                                                        <span>FILL YOUR CART</span>
+                                                                                        <i class="icon-long-arrow-right"></i>
+                                                                                      </a>
+                                                                                    </div>
+                                                                                    <!-- End .container -->
+                                                                                  </div>     
                                                                             </tr>
                                                                             <% } %>
 
@@ -279,7 +328,9 @@
                               
                             </div><!-- End .col-lg-9 -->
                             <% if(id){%>
-
+                                <%if(cartdata.length >0){%>
+                                    <% cartdata.forEach((item)=> { %>
+                                        <% if(item.items!=0){%>
                                 <aside class="col-lg-3">
                                     <div class="summary summary-cart" id="shipping-options">
                                         <h3 class="summary-title">Cart Total</h3><!-- End .summary-title -->
@@ -358,7 +409,9 @@
 
                                    
                                 </aside><!-- End .col-lg-3 -->
-
+                                <%}else{%><%}%>
+                                <%}) %>
+                                <%}else{%><%}%>
                                 <%}%>
 
                         </div><!-- End .row -->

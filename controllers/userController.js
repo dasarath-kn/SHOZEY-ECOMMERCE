@@ -544,12 +544,20 @@ const shop = async (req, res) => {
         const productcount = await product.find().count();
          const categorys = req.query.categorys
          if(categorys){
-          
-                const productdata = await product.find({category:categorys}).sort({price:val})
+          if(value){
+            const values = value -1
+                const productdata = await product.find({category:categorys}).sort({price:val}).limit(6).skip(6*values)
                 console.log(productdata);
             var products =0
             res.render('shop', { user: req.session.name, cartdata, productdata,products, sessionid, categorydata ,pagecount,categorys,Categoryofferdata,Productofferdata,id})
-         }
+          }else{
+            const productdata = await product.find().limit(6).sort({price:val})
+    
+            res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata ,pagecount,categorys,Categoryofferdata,Productofferdata,id,value:1})
+            
+
+          } 
+        }
         else{
             
         var pagecount = Math.floor(productcount / 6);
@@ -567,7 +575,7 @@ const shop = async (req, res) => {
    }else{
     const productdata = await product.find().limit(6).sort({price:val})
     
-        res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata ,pagecount,categorys,Categoryofferdata,Productofferdata,id,value})
+        res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata ,pagecount,categorys,Categoryofferdata,Productofferdata,id,value:1})
         
    }
           

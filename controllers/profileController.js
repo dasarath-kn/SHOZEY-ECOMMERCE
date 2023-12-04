@@ -105,12 +105,12 @@ const editprofile = async(req,res)=>{
         const id =req.session.userId
         const firstname =req.body.firstname
         const lastname = req.body.lastname
-        const email = req.body.email
+        const phonenumber = req.body.phonenumber
         
         const edit = await user.updateOne({_id:id},{$set:{
             firstname:firstname,
             lastname:lastname,
-            email:email
+            phonenumber:phonenumber
         }})
         res.json({result:true})
 

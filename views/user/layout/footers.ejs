@@ -86,26 +86,37 @@
         <ul class="mobile-menu">
             <% if (!id) { %>
                 <li>
-                    <a href="/signin" class="sf-with-ul">Login</a>
-                    <!-- <ul>
-                        <li><a href="/signin">Login</a></li>
-                         <li><a href="/profile">Profile</a></li>
-                              <li><a href="/cart">Cart</a></li>
--->
-
-
-                    <!-- </ul>  -->
-                </li>
+                    <a href="/signin">
+                      <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                  </li>
                 <% } else { %>
 
                     <li>
                         <a href="#" class="sf-with-ul">Profile</a>
                         <ul>
-                            <li><a href="/logout">Logout</a></li>
-                            <li><a href="/profile">Profile</a></li>
-                            <li><a href="/cart">Cart</a></li>
-                            <li><a href="/wishlist">Wishlist</a></li>
+                            <li>
+                                <a href="/logout">
+                                  <i class="fas fa-sign-out-alt"></i> Logout
+                                </a>
+                              </li>
+                              <li>
+                                <a href="/profile">
+                                  <i class="fas fa-user"></i> Profile
+                                </a>
+                              </li>
 
+                              <li>
+                                <a href="/cart">
+                                  <i class="fas fa-shopping-cart"></i> Cart
+                                </a>
+                              </li>
+
+                              <li>
+                                <a href="/wishlist">
+                                  <i class="fas fa-heart"></i> Wishlist
+                                </a>
+                              </li>
                         </ul>
                     </li>
                     <% } %>

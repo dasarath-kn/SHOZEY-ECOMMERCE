@@ -10,7 +10,6 @@
 			<div class="container">
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="/">Home</a></li>
-					<li class="breadcrumb-item"><a href="#">Shop</a></li>
 					<li class="breadcrumb-item active" aria-current="page">My Account</li>
 				</ol>
 			</div><!-- End .container -->
@@ -67,6 +66,10 @@
 											<input type="email" class="form-control" required
 												value="<%= users.email  %>" name="Email" disabled>
 											<div id="email-error-message" class="text-danger"></div>
+											<label>Phonenumber *</label>
+											<input type="email" class="form-control" required
+												value="<%= users.phonenumber  %>" name="Phonenumber" disabled>
+											<div id="email-error-message" class="text-danger"></div>
 											<label>Referal Code *</label>
 											<input type="text" class="form-control" value="<%= users.refercode  %> "
 												required disabled>
@@ -98,7 +101,7 @@
 																			<input type="text" class="form-control"
 																				id="firstname" name="firstname" value="<%= users.firstname %>"
 																				placeholder="" required>
-																			<span id="nameError" style="color: red;"></span>
+																			<span id="nameEr" style="color: red;"></span>
 		
 																		</div>
 																	</div>
@@ -109,7 +112,7 @@
 																			<input type="text" class="form-control" id="lastname"
 																				name="lastname" value="<%= users.lastname %>"
 																				placeholder="" required>
-																			<span id="lastnameError"
+																			<span id="lastError"
 																				style="color: red;"></span>
 		
 		
@@ -119,11 +122,11 @@
 		
 																	<div class="form-group row">
 																		<div class="col-sm-9">
-																			<h5>Email:</h5>
-																			<input type="text" class="form-control" id="Email"
-																				name="Email" placeholder="" value="<%= users.email %>"
+																			<h5>Phonenumber:</h5>
+																			<input type="text" class="form-control" id="Phonenumber"
+																				name="phonenumber" placeholder="" value="<%= users.phonenumber %>"
 																				required>
-																			<span id="addressError" style="color: red;"></span>
+																			<span id="phonenumber-Err" style="color: red;"></span>
 		
 																		</div>
 																	</div>		
@@ -460,10 +463,10 @@
 																											class="icon-edit"></i></a>
 																</p>
 																<a style="color: initial; cursor: pointer;"
-																	onmouseover="this.style.color='blueviolet'"
+																	onmouseover="this.style.color='red'"
 																	onmouseout="this.style.color='initial'"
 																	onclick="deleteaddress('<%= item._id %>')">Delete <i
-																		class="icon-edit"></i></a>
+																		class="icon-delete"></i></a>
 
 														</div><!-- End .card-body -->
 													</div><!-- End .card-dashboard -->
@@ -472,17 +475,7 @@
 										</div>
 
 
-										<div class="col-lg-6">
-											<div class="card card-dashboard">
-												<div class="card-body">
-													<h3 class="card-title">Shipping Address</h3><!-- End .card-title -->
-
-													<p>You have not set up this type of address yet.<br>
-														<a href="#">Edit <i class="icon-edit"></i></a>
-													</p>
-												</div><!-- End .card-body -->
-											</div><!-- End .card-dashboard -->
-										</div><!-- End .col-lg-6 -->
+										
 									</div><!-- End .row -->
 								</div><!-- .End .tab-pane -->
 
@@ -617,12 +610,12 @@
 		function editprofile(){
 			const firstname =document.getElementById('firstname').value;
 			const lastname = document.getElementById('lastname').value;
-			const email = document.getElementById('Email').value
-			console.log("hfgfjgfhyjghygj"+lastname,firstname,email);
+			const phonenumber = document.getElementById('Phonenumber').value
+			console.log("hfgfjgfhyjghygj"+lastname,firstname,phonenumber);
 			$.ajax({
 				method:'put',
 				url:'/editprofile',
-				data:JSON.stringify({firstname:firstname,lastname:lastname,email:email}),
+				data:JSON.stringify({firstname:firstname,lastname:lastname,phonenumber:phonenumber}),
 				contentType:'application/json',
 				success:function(response){
 					if(response.result == true){
@@ -647,7 +640,73 @@
 					}
 				}
 			})
+		};
+
+		const num = document.getElementById('Phonenumber');
+		num.addEventListener('input', phone);
+		function phone() {
+			const phones = document.getElementById('Phonenumber').value;
+			const phonenumberpattern = /\b\d{10}\b/;
+			if (phones.trim() == "") {
+				document.getElementById("phonenumber-Err").innerHTML = "Please enter a valid phonenumber"
+				num.setCustomValidity(" Enter a valid phonenumber");
+			}
+			if (!phones.match(phonenumberpattern)) {
+				document.getElementById('phonenumber-Err').innerHTML = "Phonenumber must contain 10 digits";
+				num.setCustomValidity("Phonenumber must contain 10 digits");
+			} else {
+				document.getElementById('phonenumber-Err').innerHTML = "";
+				num.setCustomValidity("");
+			}
 		}
+
+		const names = document.getElementById("firstname");
+		names.addEventListener('input', name);
+
+		function name() {
+			const name = document.getElementById("firstname").value;
+			const namepattern = /^[A-Za-z0-9]{5,15}$/;
+
+			if (name.trim() === "") {
+				document.getElementById('nameEr').innerHTML = " Enter a name";
+				names.setCustomValidity("Enter a name");
+			} else {
+				
+				if (!name.match(namepattern)) {
+					document.getElementById('nameEr').innerHTML = "Name must be alphanumeric and between 5-15 characters";
+					names.setCustomValidity("Enter a name");
+				} else {
+					document.getElementById('nameEr').innerHTML = "";
+					names.setCustomValidity("");
+				}
+			}
+		}
+
+		const lastname = document.getElementById("lastname");
+lastname.addEventListener('input',valid);
+
+function valid(){
+	const name =document.getElementById('lastname').value;
+
+	if(name.trim() === ""){
+		document.getElementById('lastError').innerHTML = "Please enter a name ";
+		lastname.setCustomValidity("Please enter a lastname");
+	}
+	else{
+		const namepattern = /^[A-Za-z0-9]{2,10}$/;
+		if(!name.match(namepattern)){
+		document.getElementById('lastError').innerHTML = "Lastname must be alphanumeric and between 2-10 characters";
+		lastname.setCustomValidity("Invalid name format");
+		}
+		else{
+			document.getElementById('lastError').innerHTML = " " ;
+			lastname.setCustomValidity("");
+		}
+	}
+
+}
+
+		
 ////////////////////////// Change-password//////////////////
 		const Email = document.getElementById("E-mail");
 	

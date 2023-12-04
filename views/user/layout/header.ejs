@@ -41,6 +41,7 @@
     <link rel="stylesheet" href="/assets/css/skins/skin-demo-10.css">
     <link rel="stylesheet" href="/assets/css/demos/demo-10.css">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 </head>
 
@@ -90,7 +91,11 @@
                                 <li>
                                     <a href="#" class="sf-with-ul">Profile</a>
                                     <ul>
-                                        <li><a href="/signin">Login</a></li>
+                                        <li>
+                                            <a href="/signin">
+                                              <i class="fas fa-sign-in-alt"></i> Login
+                                            </a>
+                                          </li>
                                         <!-- <li><a href="/profile">Profile</a></li>
                                               <li><a href="/cart">Cart</a></li>
  -->
@@ -104,10 +109,22 @@
                                         <a href="#" class="sf-with-ul"><%= user%></a>
                                         <ul>
                                            
-                                            <li><a href="/logout">Logout</a></li>
-                                            <li><a href="/profile">Profile</a></li>
+                                            <li>
+                                                <a href="/logout">
+                                                  <i class="fas fa-sign-out-alt"></i> Logout
+                                                </a>
+                                              </li>
+                                              <li>
+                                                <a href="/profile">
+                                                  <i class="fas fa-user"></i> Profile
+                                                </a>
+                                              </li>
 
-                                            <li><a href="/cart">Cart</a></li>
+                                              <li>
+                                                <a href="/cart">
+                                                  <i class="fas fa-shopping-cart"></i> Cart
+                                                </a>
+                                              </li>
 
                                         </ul>
                                     </li>
@@ -146,6 +163,7 @@
                                 <% if(cartdata){%>
                                     <% cartdata.forEach((item)=>{%>
                                         <% item.items.forEach((element)=>{%>
+                                            <% if(element.productid!=0){%>
                                             <div class="dropdown-cart-products">
 
                                                 <div class="product">
@@ -178,6 +196,8 @@
 
 
                                             </div><!-- End .cart-product -->
+                                            <%}else{%>
+                                               <%}%>
                                             <%}) %>
                                                 <% })%>
                                                     <%} else{%>
