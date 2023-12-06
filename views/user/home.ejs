@@ -227,7 +227,7 @@
                                                   
                                                 </span>
                                             <% } %>
-                                                              <a href="/productdetails?id=<%= item._id %>">
+                                                              <a href="/productdetails?id=<%= item._id %>" >
                                                             <img src="/sharpedimages/<%= item.image[0] %>"
                                                                 alt="Product image" class="product-image">
                                                         </a>
@@ -576,7 +576,7 @@
                                                 <%}
                                             else{%>
                                                 <%}%>
-                                        <a href="product.html">
+                                        <a href="/productdetails?id=<%= products[i]._id %>">
                                             <img src="/sharpedimages/<%= products[i].image[0]%>"
                                                 alt="Product image" class="product-image">
                                         </a>

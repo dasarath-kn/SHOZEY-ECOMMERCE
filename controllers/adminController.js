@@ -629,6 +629,40 @@ const salesreport = async (req, res) => {
         const count = await order.find().count()
         var reportpagecount = Math.floor(count/12);
         const categorydata = await category.find()
+        const MensSportShoes =await category.find({productcategory:"Men's Sport Shoes"})
+        if(MensSportShoes){
+            var mensport = MensSportShoes[0].salescount
+        }
+        const MenCasualShoes =await category.find({productcategory:"Men's Casual Shoes"})
+        if(MenCasualShoes){
+            var mencasual = MenCasualShoes[0].salescount
+        }
+
+        const 	MensFormalShoes =await category.find({productcategory:"Men's Formal Shoes"})
+        if(MensFormalShoes){
+            var formalshoes = MensFormalShoes[0].salescount
+        }
+
+        const MensBoots	= await category.find({productcategory:"Men's Boots"})
+        if(MensBoots){
+            var mensboots = MensBoots[0].salescount
+        }
+
+        const WomensSportShoes = await category.find({productcategory:"Women's Sport Shoes"})
+        if(WomensSportShoes){
+            var womensport =WomensSportShoes[0].salescount
+
+        }
+        console.log(womensport);
+        const Womenscasualshoes = await category.find({productcategory:"Women's casual shoes"})	
+        if(WomensSportShoes){
+            var womenscasual = Womenscasualshoes[0].salescount
+        }
+        const WomensBoots = await category.find({productcategory:"Women's Boots"})
+        if(WomensBoots){
+            var womensBoots = WomensBoots[0].salescount 
+        }	
+        
         if(count/12!==0){
             reportpagecount +=1
         }
@@ -638,7 +672,7 @@ const salesreport = async (req, res) => {
             console.log(week1);
             const orderdata = await order.find({status:'delivered'}).populate('items.productid').sort({ purchaseDate: -1 }).limit(12).skip(12*val)
           
-            res.render('salesreport', { orderdata, week1,id,reportpagecount,categorydata })
+            res.render('salesreport', { orderdata, week1,id,reportpagecount,categorydata,mensport,mencasual,formalshoes,mensboots,womensport,womenscasual,womensBoots })
 
         }
         else{
@@ -648,11 +682,11 @@ const salesreport = async (req, res) => {
         console.log(week1);
         const orderdata = await order.find({status:'delivered'}).populate('items.productid').sort({ purchaseDate: -1 }).limit(12)
         if(orderdata!=0){
-            res.render('salesreport', { orderdata, week1,id:1,reportpagecount,categorydata })
+            res.render('salesreport', { orderdata, week1,id:1,reportpagecount,categorydata,mensport,mencasual,formalshoes,mensboots,womensport,womenscasual,womensBoots })
 
         }else{
             
-            res.render('salesreport', { orderdata:0, week1,id:1,reportpagecount,categorydata })
+            res.render('salesreport', { orderdata:0, week1,id:1,reportpagecount,categorydata,mensport,mencasual,formalshoes,mensboots,womensport,womenscasual,womensBoots })
 
         }
 

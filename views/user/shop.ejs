@@ -107,7 +107,7 @@
                                                             <%}%>
                                                     <%}else{%>
                                                         <%}%>
-                                            <a href="product.html">
+                                            <a href="/productdetails?id=<%= productdata[i]._id %>">
                                                 <img src="/sharpedimages/<%= productdata[i].image[0]%>" alt="Product image"
                                                     class="product-image">
                                             </a>
@@ -164,16 +164,16 @@
                                             </div><!-- End .product-price -->
                                            
                                             <div class="product-nav product-nav-thumbs">
-                                                <a href="#" class="active">
+                                                <a href="/productdetails?id=<%= productdata[i]._id %>" class="active">
                                                     <img src="/sharpedimages/<%= productdata[i].image[1]%>"
                                                         alt="product desc">
                                                 </a>
-                                                <a href="#">
+                                                <a href="/productdetails?id=<%= productdata[i]._id %>">
                                                     <img src="/sharpedimages/<%= productdata[i].image[2]%>"
                                                         alt="product desc">
                                                 </a>
 
-                                                <a href="#">
+                                                <a href="/productdetails?id=<%= productdata[i]._id %>">
                                                     <img src="/sharpedimages/<%= productdata[i].image[3]%>"
                                                         alt="product desc">
                                                 </a>
