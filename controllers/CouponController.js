@@ -69,7 +69,7 @@ const deletecoupon = async (req, res) => {
         if (data) {
             res.json({ result: true, total: total })
         } else {
-            res.json({ result: false })
+            res.json({ res:true  })
         }
 
     } catch (error) {

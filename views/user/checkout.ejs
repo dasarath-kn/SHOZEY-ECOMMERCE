@@ -46,7 +46,7 @@
                                         </button>
 
                                     </div><!-- .End .input-group-append -->
-                                    <button type="button" id="proceed-to-checkout" data-toggle="modal"
+                                    <button type="button" id="selectcoupon" data-toggle="modal"
                                         data-target="#exampleModalLong"
                                         class="btn btn-outline-primary-2 btn-order btn-block">Select Coupon
                                     </button>
@@ -76,11 +76,11 @@
                                                                             <%= coupondata[i]. couponname %>
                                                                         </h3>
                                                                         <div class="coupon-code-container mt-2">
-                                                                            <h4 class="card-subtitle mb-2 text-muted">
+                                                                            <h4 class="card-subtitle mb-2 text-muted" id="data-coupon-code">
                                                                                 Code: <%= coupondata[i]. couponcode %>
                                                                             </h4>
                                                                             <span class="copy-icon"
-                                                                                onclick="console.log(this.getAttribute('data-coupon-code')); copyCouponCode(this.getAttribute('data-coupon-code'))">
+                                                                                onclick=" copyCouponCode()">
                                                                                 <i class="fas fa-copy"></i>
                                                                             </span>
                                                                         </div>
@@ -359,6 +359,30 @@
     </main><!-- End .main -->
 
     <script>
+var couponContainers = document.getElementsByClassName("coupon-code-container");
+
+for (let i = 0; i < couponContainers.length; i++) {
+    couponContainers[i].addEventListener("click", function () {
+        copyCouponCode(i);
+    });
+}
+
+function copyCouponCode(couponIndex) {
+    const couponElements = couponContainers[couponIndex].getElementsByClassName("card-subtitle");
+
+    if (couponElements.length > 0) {
+        const value = couponElements[0].innerText;
+        var couponCode = value.match(/Code: (.+)/)[1].trim();
+
+        const inputElement = document.getElementById('couponcode');
+
+        inputElement.value = couponCode;
+    } else {
+        console.error("Coupon code element not found in container");
+    }
+}
+
+
          function couponsubmit(amount) {
             const value = document.getElementById('couponcode').value
             console.log(value);
@@ -420,6 +444,10 @@
 
         function coupondelete(amount) {
             const value = document.getElementById('couponcode').value
+            if(value ==0){
+                console.log("nothhing");
+                preventDefault()
+            }
             const total = document.getElementById('total')
 
             $.ajax({
@@ -433,6 +461,8 @@
                         $('#couponamount').text('Rs.' + 0);
 
                         $('#couponfield').load('/ProceedtoCheckout #couponfield')
+                        $('#selectcoupon').load('/ProceedtoCheckout #selectcoupon')
+
                         $('#reload').load('/cart #reload')
 
                         const Toast = Swal.mixin({
@@ -452,7 +482,13 @@
                             title: "Coupon Removed Successfully"
                         });
 
-                    } else {
+                    }else if(response.res == true){
+                        $('#couponfield').load('/ProceedtoCheckout #couponfield')
+                        $('#selectcoupon').load('/ProceedtoCheckout #selectcoupon')
+
+
+                    }
+                     else {
                         console.log("Nothing to delete");
 
                     }
