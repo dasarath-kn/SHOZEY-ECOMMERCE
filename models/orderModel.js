@@ -66,6 +66,10 @@ const orderdetails = mongoose.Schema({
        },
        transationid:{
         type:String
+       },
+       isverified:{
+        type:Number,
+        default:0
        }
 });
 

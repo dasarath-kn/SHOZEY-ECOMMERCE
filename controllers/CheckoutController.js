@@ -147,13 +147,14 @@ const ProceedOrder = async (req, res) => {
                 paymentStatus: "Pending",
                 shippingMethod: "Express",
                 shippingFee: "0",
-                discountamount: totalAmount
+                discountamount: totalAmount,
+                
             })
             const orderdata = await datas.save();
             const orderid =orderdata._id
             console.log(orderid);
             if (payment == "Cash on delivery") {
-               
+               const value = await order.updateOne({_id:orderid},{$inc:{isverified:1}})
                 let data = cartData.items
 
                 for (let i = 0; i < data.length; i++) {
@@ -416,7 +417,7 @@ const verifypayment = async (req, res) => {
 
             await order.updateOne(
                 { _id: orderid },
-                { $set: { paymentStatus: "placed", transationid: paymentid } });
+                { $set: { paymentStatus: "placed", transationid: paymentid,isverified:1 } });
 
             await cart.deleteOne({ userid: user_id })
             res.json({ placed: true ,orderid})

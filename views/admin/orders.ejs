@@ -27,6 +27,7 @@
                           <tbody>
                             <% let count=1; %>
                             <% for(let i=0;i<orderdata.length; i++){%>
+                              <% if(orderdata[i].isverified==1){%>
                                     <tr>
                                       <td>
                                         <%= count++ %>
@@ -51,6 +52,7 @@
                                           href="/admin/orderdetails?id=<%= orderdata[i]._id%>">Details</a>
                                       </td>
                                     </tr>
+                                    <%}%>
                                     <%}%>
                                       
                         </tbody>

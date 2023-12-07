@@ -391,18 +391,18 @@ const orders = async (req, res) => {
     try {
         const id = req.query.id;
         console.log(id);
-        const ordercount = await order.find().count()
+        const ordercount = await order.find({isverified:1}).count()
         var orderpagecount = Math.floor(ordercount/12)
         if(ordercount % 12 !==0){
             orderpagecount +=1;
         }
         if(id){
             const val = id-1
-            const orderdata = await order.find().sort({ purchaseDate: -1 }).limit(12).skip(12*val)
+            const orderdata = await order.find({isverified:1}).sort({ purchaseDate: -1 }).limit(12).skip(12*val)
             res.render('orders', { orderdata,id,orderpagecount });
  
         }else{
-        const orderdata = await order.find().sort({ purchaseDate: -1 }).limit(12)
+        const orderdata = await order.find({isverified:1}).sort({ purchaseDate: -1 }).limit(12)
         var count = 0
 
         for (let i = 0; i < orderdata.length; i++) {
@@ -510,7 +510,7 @@ const orderdetails = async (req, res) => {
 
 const dashboard = async (req, res) => {
     try {
-        const orders = await order.find().sort({ purchaseDate: -1 }).populate("items.productid");
+        const orders = await order.find({status:"delivered",isverified  :1}).sort({ purchaseDate: -1 }).populate("items.productid");
         console.log(orders);
         if(orders.length!=0){
             const customer = await user.find().count();
@@ -787,9 +787,10 @@ const downloadreport = async (req, res) => {
                     
                 
                 var products = values[i].productid
-              worksheet.addRow({
+                    
+                worksheet.addRow({
                 orderId: data._id,
-                productName: products.productname,
+                 productName: products.productname,
                 qty: values[i].count,
                 date: data.purchaseDate.toLocaleDateString('en-US', { year:
                   'numeric', month: 'short', day: '2-digit' }).replace(/\//g,
