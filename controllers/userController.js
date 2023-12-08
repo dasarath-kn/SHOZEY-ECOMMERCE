@@ -620,8 +620,13 @@ const search = async (req, res) => {
         const productdata = await product.find({ productname: { $regex: data, $options: 'i' } });
         const categorydata = await category.find()
         const cartdata = await cart.find({ userid: id }).populate("items.productid")
+        if(productdata!=0){
+            res.render('shop', { user: req.session.name, productdata, cartdata, id,sessionid,pagecount,productcategory,categorys:0,categorydata,value:0,message:'' })
 
-        res.render('shop', { user: req.session.name, productdata, cartdata, id,sessionid,pagecount,productcategory,categorys:0,categorydata })
+        }else{
+            res.render('shop', { user: req.session.name, productdata, cartdata, id,sessionid,pagecount,productcategory,categorys:0,categorydata,value:0,message:"Products not found" })
+
+        }
 
     } catch (error) {
         console.log(error.message);
