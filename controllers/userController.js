@@ -549,11 +549,11 @@ const shop = async (req, res) => {
                 const productdata = await product.find({category:categorys}).sort({price:val}).limit(6).skip(6*values)
                 console.log(productdata);
             var products =0
-            res.render('shop', { user: req.session.name, cartdata, productdata,products, sessionid, categorydata ,pagecount,categorys,Categoryofferdata,Productofferdata,id})
+            res.render('shop', { user: req.session.name, cartdata, productdata,products, sessionid, categorydata ,pagecount,categorys,Categoryofferdata,Productofferdata,id,message:""})
           }else{
             const productdata = await product.find().limit(6).sort({price:val})
     
-            res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata ,pagecount,categorys,Categoryofferdata,Productofferdata,id,value:1})
+            res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata ,pagecount,categorys,Categoryofferdata,Productofferdata,id,value:1,message:""})
             
 
           } 
@@ -565,40 +565,40 @@ const shop = async (req, res) => {
             pagecount += 1;
           }
         
-   if(value){
+   if(value!=0){
     const values = value-1
     const productdata = await product.find().skip(6*values).limit(6).sort({price:val})
     
    
-        res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata ,pagecount,categorys,Categoryofferdata,Productofferdata,id,value})
+        res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata ,pagecount,categorys,Categoryofferdata,Productofferdata,id,value,message:""})
         
    }else{
     const productdata = await product.find().limit(6).sort({price:val})
     
-        res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata ,pagecount,categorys,Categoryofferdata,Productofferdata,id,value:1})
+        res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata ,pagecount,categorys,Categoryofferdata,Productofferdata,id,value:1,message:""})
         
    }
           
         if(_id =='W'){
             const productdata = await product.find({category:{$regex:/^W/i}}).limit(6).sort({price:val})
  
-            res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata,pagecount,categorys,Categoryofferdata,Productofferdata,id})
+            res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata,pagecount,categorys,Categoryofferdata,Productofferdata,id,message:""})
 
         }else if(_id =='M'){
             const productdata = await product.find({category:{$regex:/^M/i}}).limit(6).sort({price:val})
  
-            res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata,pagecount,categorys,Categoryofferdata,Productofferdata,id})
+            res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata,pagecount,categorys,Categoryofferdata,Productofferdata,id,message:""})
 
         }
         else {
             const productdata = await product.find().limit(6).sort({price:val})
 
-            res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata,pagecount,categorys,Categoryofferdata,Productofferdata,id})
+            res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata,pagecount,categorys,Categoryofferdata,Productofferdata,id,message:""})
         }
     }}
     else{
 
-        res.render('shop', { user: req.session.name, cartdata:0, productdata:0, sessionid, categorydata,pagecount,categorys:0,Categoryofferdata:0,Productofferdata:0,id})
+        res.render('shop', { user: req.session.name, cartdata:0, productdata:0, sessionid, categorydata,pagecount,categorys:0,Categoryofferdata:0,Productofferdata:0,id,message:""})
 
     }
     } catch (error) {

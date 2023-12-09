@@ -112,8 +112,11 @@
                             <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false" data-display="static">
                                 <i class="icon-shopping-cart"></i>
-                                <span class="cart-count"><%= cartdata.length %></span>
-                            </a>
+                                <% if(cartdata!=0){%>
+                                    <span class="cart-count"><%= cartdata[0].items.length %></span>
+                                    <%} else{%>
+                                        <span class="cart-count">0</span>
+                                        <%}%>                            </a>
 
                             <div class="dropdown-menu dropdown-menu-right">
                                 
