@@ -24,8 +24,8 @@
 						 
 								<div class="w-100">
 									<p class="social-media d-flex justify-content-end">
-										<a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-facebook"></span></a>
-										<a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-twitter"></span></a>
+										<a href="" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-facebook"></span></a>
+										<a href="" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-twitter"></span></a>
 									</p>
 								</div>
 			      	</div>
@@ -64,5 +64,25 @@
 			</div>
 		</div>
 	</section>
+	<script>
+		function Signin(){
+			const email = document.getElementById('Email').value;
+			const password = document.getElementById('Password').value;
+			console.log(email,password)
+			$.ajax({
+				method:'post',
+				url:'/login',
+				data:JSON.stringify({email:email,password:password}),
+				contentType: 'application/json',
+				success:function(response){
+					if(response.result==true){
+						window.location.href='/home'
+					}else if(response.res ==true){
+						window.location.href ='/signin'
+					}
+				}
+			})
+		}
+	</script>
 
 	<%- include('../user/layout/footers.ejs')-%>

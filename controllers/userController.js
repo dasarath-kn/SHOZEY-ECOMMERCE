@@ -326,7 +326,7 @@ const insertdata = async (req, res) => {
 
         if (item) {
             console.log("Already exist");
-            res.render('signup',{ user: req.session.name, cartdata,message:"User already exist"});
+            res.render('signup',{ user: req.session.name,id, cartdata,message:"User already exist"});
         }
         else {
             const referalcode = req.body.referalcode
@@ -352,7 +352,9 @@ const insertdata = async (req, res) => {
             const walletitems = await walletdata.save();
 
             if (referalcode) {
+
                 const id = await user.findOne({ refercode: referalcode })
+               if(id){
                 const value = await Wallet.updateOne(
                     { userid: id._id },
                     {
@@ -367,6 +369,7 @@ const insertdata = async (req, res) => {
                         }
                     }
                 );
+                
 
                 const userwallet = await Wallet.updateOne({ userid: userdatas._id }, {
                     $inc: { balance: 100 },
@@ -379,9 +382,14 @@ const insertdata = async (req, res) => {
                         }
                     }
                 })
+            }else{
+                const id = req.session.userId
+                res.render('signup',{ user: req.session.name,id, cartdata,message:"Invalid referalcode "});
 
             }
 
+
+            }
             if (userdata) {
                 sendVerifyMail(req.body.firstname, req.body.email);
                 email2 = req.body.email
@@ -549,7 +557,7 @@ const shop = async (req, res) => {
                 const productdata = await product.find({category:categorys}).sort({price:val}).limit(6).skip(6*values)
                 console.log(productdata);
             var products =0
-            res.render('shop', { user: req.session.name, cartdata, productdata,products, sessionid, categorydata ,pagecount,categorys,Categoryofferdata,Productofferdata,id,message:""})
+            res.render('shop', { user: req.session.name, cartdata, productdata,products, sessionid, categorydata ,pagecount,categorys,Categoryofferdata,Productofferdata,id,message:"",hightolow,lowtohigh})
           }else{
             const productdata = await product.find().limit(6).sort({price:val})
     

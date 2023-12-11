@@ -20,8 +20,8 @@
         <nav aria-label="breadcrumb" class="breadcrumb-nav">
             <div class="container">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/shop">Shop</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Checkout</li>
                 </ol>
             </div><!-- End .container -->
@@ -32,7 +32,7 @@
                 <div class="container">
                     <div class="checkout-container" style="display: flex;">
                         <div class="cart-discount" id="couponfield">
-                            <form action="#">
+                            <form action="">
                                 <div class="input-group">
 
                                     <input type="text" id="couponcode" class="form-control" required
@@ -222,7 +222,7 @@
                     </div>
 
                    
-                    <form action="#" id="myForm">
+                    <form action="" id="myForm">
     
                         <div class="row">
                             <div class="col-lg-9">
@@ -280,7 +280,7 @@
                                             <% cartdata.forEach((item)=>{%>
                                                 <% item.items.forEach((element)=>{%>
                                                     <tr>
-                                                        <td><a href="#">
+                                                        <td><a href="">
                                                                 <%= element.productid.productname %>
                                                             </a></td>
                                                         <td>

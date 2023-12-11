@@ -240,7 +240,7 @@
                                         </figure>
                                         <div class="product-body">
                                             <div class="product-cat">
-                                                <a href="#">
+                                                <a href="/productdetails?id=<%= item._id %>">
                                                     <%= item.category %>
                                                 </a>
                                             </div>
@@ -295,9 +295,9 @@
                                                 <span class="ratings-text">(4 Reviews)</span> -->
                                             </div>
                                             <div class="product-nav product-nav-dots">
-                                                <a href="#" class="active" style="background: #5f554b;"><span
+                                                <a href="" class="active" style="background: #5f554b;"><span
                                                         class="sr-only">Color name</span></a>
-                                                <a href="#" style="background: #806f55;"><span class="sr-only">Color
+                                                <a href="" style="background: #806f55;"><span class="sr-only">Color
                                                         name</span></a>
                                             </div>
                                             <div class="product-action">
@@ -492,7 +492,7 @@
             <div class="row justify-content-center">
                 <div class="col-sm-6 col-md-4">
                     <div class="banner banner-cat">
-                        <a href="#">
+                        <a href="/shop">
                             <img src="assets/images/demos/demo-10/banners/banner-5.jpg" alt="Banner">
                         </a>
 
@@ -506,7 +506,7 @@
 
                 <div class="col-sm-6 col-md-4">
                     <div class="banner banner-cat">
-                        <a href="#">
+                        <a href="/shop">
                             <img src="assets/images/demos/demo-10/banners/banner-6.jpg" alt="Banner">
                         </a>
 
@@ -596,7 +596,7 @@
                                     <div class="product-body">
                                         <div class="product-cat">
                                             <!-- <a href="#">Men’s</a>, -->
-                                            <a href="#"><%= products[i].category%></a>
+                                            <a href="/productdetails?id=<%= products[i]._id %>"><%= products[i].category%></a>
                                         </div><!-- End .product-cat -->
                                         <h3 class="product-title"><a href="/productdetails?id=<%= products[i]._id %>"><%= products[i].productname%></a>
                                         </h3><!-- End .product-title -->
@@ -636,11 +636,11 @@
                                         </div> -->
 
                                         <div class="product-nav product-nav-dots">
-                                            <a href="#" class="active" style="background: #af5f23;"><span
+                                            <a href="" class="active" style="background: #af5f23;"><span
                                                     class="sr-only">Color name</span></a>
-                                            <a href="#" style="background: #806f55;"><span class="sr-only">Color
+                                            <a href="" style="background: #806f55;"><span class="sr-only">Color
                                                     name</span></a>
-                                            <a href="#" style="background: #333333;"><span class="sr-only">Color
+                                            <a href="" style="background: #333333;"><span class="sr-only">Color
                                                     name</span></a>
                                         </div><!-- End .product-nav -->
 

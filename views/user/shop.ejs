@@ -9,7 +9,7 @@
             <div class="container">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                    <li class="breadcrumb-item"><a href="/shop">Shop</a></li>
                 </ol>
             </div><!-- End .container -->
         </nav><!-- End .breadcrumb-nav -->
@@ -123,7 +123,7 @@
 
                                             <div class="product-action">
                                                 <% if (id){%>
-                                                    <a href="#" onclick="toAddCart('<%= productdata[i]._id %>')" class="btn-product btn-cart"><span>add to cart</span></a>  
+                                                    <a href="" onclick="toAddCart('<%= productdata[i]._id %>')" class="btn-product btn-cart"><span>add to cart</span></a>  
                                                     <%}
                                                     else{%>
                                                         <p id="carts" onclick="loginrequired()" class="btn-product btn-cart"><span>add to cart</span></p>  
@@ -136,7 +136,7 @@
 
                                         <div class="product-body">
                                             <div class="product-cat">
-                                                <a href="#"><%= productdata[i].category %></a>
+                                                <a href=""><%= productdata[i].category %></a>
                                             </div><!-- End .product-cat -->
                                             <h3 class="product-title"><a href="/productdetails?id=<%= productdata[i]._id %>"><%= productdata[i].productname%>
                                                     skirt</a></h3><!-- End .product-title -->
@@ -275,7 +275,7 @@
 													</div>
 													<span class="item-count"></span> 
 												</div> -->
-                                                <form method="get">
+                                                <form method="get" >
                                                 
                                                 <% for(let i=0;i<categorydata.length;i++){%>
                                                 <div class="form-check">
@@ -480,8 +480,6 @@ function lowtohigh(id){
 // }
 
 function wishlist(id) {
-            console.log("hshfjfl");
-
             $.ajax({
                 method: "post",
                 url: "/addtowishlist",
