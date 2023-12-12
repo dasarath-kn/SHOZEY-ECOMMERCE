@@ -150,18 +150,18 @@
                     <a href="/profile"><button class="btn btn-primary btn-block">Go Back</button></a>
                 
                 </div>
+                <% if(orderdata[0].status==='delivered'){%>
                  <div class="col-md-6">
-                    <% if(orderdata[0].status==='delivered'){%>
                         <a class="btn btn-primary btn-block"  href="/downloadinvoice?id=<%= orderdata[0]._id %>" >Download invoice</a></td>
-    
+                    </div> 
+                
                         <%}
                         
                         else{%>
 
                             <%}%>
                 
-                </div> 
-                
+              
 
             </div>
         </div>

@@ -252,12 +252,17 @@ const wishlistview = async(req,res)=>{
         const data = await product.find()
         const cartdata = await cart.find({ userid: id }).populate("items.productid")
 
-        if(id){
+        
             const wishlistdata = await wishlist.find({userid:req.session.userId}).populate("productid");
-            
+            if(wishlistdata!=0){
+                res.render('wishlist',{wishlistdata,user:req.session.name,data,cartdata,id})
+
+            }else{
+                res.render('wishlist',{wishlistdata,user:req.session.name,data,cartdata,id})
+      
+            }
            
-       res.render('wishlist',{wishlistdata,user:req.session.name,data,cartdata,id})
-        }
+        
     } catch (error) {
        console.log(error.message); 
        res.render('500');
