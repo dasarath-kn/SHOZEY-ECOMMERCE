@@ -528,7 +528,7 @@ const shop = async (req, res) => {
     try {
         const sessionid = req.session.id
         const _id = req.query.id
-        console.log(_id+"llllllllll");
+        console.log(_id);
         const id = req.session.userId
         const categorydata = await category.find()
         const lowtohigh = req.query.lowtohigh;
