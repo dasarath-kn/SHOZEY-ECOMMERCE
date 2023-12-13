@@ -528,7 +528,7 @@ const shop = async (req, res) => {
     try {
         const sessionid = req.session.id
         const _id = req.query.id
-        console.log(_id);
+        console.log(_id+"llllllllll");
         const id = req.session.userId
         const categorydata = await category.find()
         const lowtohigh = req.query.lowtohigh;
@@ -559,7 +559,7 @@ const shop = async (req, res) => {
             var products =0
             res.render('shop', { user: req.session.name, cartdata, productdata,products, sessionid, categorydata ,pagecount,categorys,Categoryofferdata,Productofferdata,id,message:"",hightolow,lowtohigh})
           }else{
-            const productdata = await product.find().limit(6).sort({price:val})
+            const productdata = await product.find({category:categorys}).limit(6).sort({price:val})
     
             res.render('shop', { user: req.session.name, cartdata, productdata, sessionid, categorydata ,pagecount,categorys,Categoryofferdata,Productofferdata,id,value:1,message:""})
             
