@@ -1,7 +1,7 @@
 const user = require('../models/userModel');
 const address = require('../models/addressModel');
 const cart = require('../models/cartModel')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const order = require('../models/orderModel');
 const Wallet = require('../models/walletModel');
 
